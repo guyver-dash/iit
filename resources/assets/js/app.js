@@ -1,20 +1,33 @@
+import axios from 'axios'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import { store } from './vuex/store.js'
+import {routes} from './router/route.js'
+import Vuetify from 'vuetify'
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import master from './components/layouts/master.vue'
 
-require('./bootstrap');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+window.base_api = 'http://localhost/iit/public/api/';
+window.base = 'http://localhost/iit/public/';
 
-Vue.component('example', require('./components/Example.vue'));
+
+
+Vue.use(Vuetify)
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  routes
+})
+
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    router,
+    store,
+    components: {
+    	master
+    }
+    
 });
+
