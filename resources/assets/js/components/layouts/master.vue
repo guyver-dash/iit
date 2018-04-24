@@ -16,7 +16,7 @@
           >
             <v-flex xs6>
               <v-subheader v-if="item.heading">
-                {{ item.heading }}
+                {{ item.heading }} 
               </v-subheader>
             </v-flex>
             <v-flex xs6 class="text-xs-center">
@@ -33,7 +33,7 @@
             <v-list-tile slot="activator">
               <v-list-tile-content>
                 <v-list-tile-title>
-                  {{ item.text }}
+                  {{ item.text }} 
                 </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
@@ -47,18 +47,18 @@
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title>
-                  {{ child.text }}
+                  {{ child.text }} 
                 </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
           </v-list-group>
-          <v-list-tile v-else @click="" :key="item.text">
+          <v-list-tile v-else @click="sidebarClick(item.text)" :key="item.text">
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                {{ item.text }}
+                {{ item.text }} 
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -119,7 +119,7 @@
     >
       <v-avatar size="100px" tile class="mt-4 pt-3">
           <img
-            :src= "base + 'images/logos/logo.png'"
+            :src= "base + '/images/logos/logo.png'"
             alt="Vuetify"
           >
        </v-avatar>
@@ -209,6 +209,13 @@
       items(){
         return this.$store.getters.items
       }
+    },
+    methods: {
+        sidebarClick(value){
+          if(value === 'Admission'){
+              this.$store.dispatch('dialogAdmission', true)
+          }
+        } 
     },
     props: {
       source: String

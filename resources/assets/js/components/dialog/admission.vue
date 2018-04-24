@@ -1,9 +1,9 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <v-dialog v-model="dialogAdmission" fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-card>
         <v-toolbar dark color="green darken-3">
-          <v-btn icon @click.native="dialog = false" dark>
+          <v-btn icon @click.native="closeDialog" dark>
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Application for Admission</v-toolbar-title>
@@ -12,28 +12,24 @@
             <v-btn dark flat @click.native="dialog = false">Save</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-list three-line subheader class="mt-2">
-          <v-list-tile avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>INSTRUCTIONS:</v-list-tile-title>
-              <v-list-tile-sub-title class="ml-2">
-                1. Student-Applicant accomplishes this Application Form properly. 
-              </v-list-tile-sub-title>
-              <v-list-tile-sub-title class="ml-2">
-                2. Fill-up information. Leave the field blank (if not applicable). 
-              </v-list-tile-sub-title>
-              <v-list-tile-sub-title class="ml-2">
-                3. Submit all the requirements as needed.
-              </v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>Password</v-list-tile-title>
-              <v-list-tile-sub-title>Require password for purchase or use password to restrict purchase</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
+         <v-layout>
+          <v-flex xs12 >
+            <v-card flat>
+              <v-card-title primary-title>
+                <div>
+                  <h3 class="headline mb-0">INSTRUCTIONS:</h3>
+                  <div class="ml-5">
+                    <ol>
+                      <li>Student-Applicant accomplishes this Application Form properly.</li>
+                      <li>Fill-up information. Leave the field blank (if not applicable).</li>
+                      <li>Submit all the requirements as needed.</li>
+                    </ol>
+                  </div>
+                </div>
+              </v-card-title>
+            </v-card>
+          </v-flex>
+        </v-layout>
         <v-divider></v-divider>
         <v-list three-line subheader>
           <v-subheader>General</v-subheader>
@@ -73,11 +69,24 @@
   export default {
     data () {
       return {
-        dialog: true,
         notifications: false,
         sound: true,
         widgets: false
       }
+    },
+    computed: {
+
+        dialogAdmission(){
+
+            return this.$store.getters.dialogAdmission
+        }
+    },
+    methods: {
+
+      closeDialog(){
+        this.$store.dispatch('dialogAdmission', false)
+      }
     }
+
   }
 </script>

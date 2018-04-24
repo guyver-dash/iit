@@ -1,5 +1,5 @@
 export const state = {
- 
+     dialogAdmission: false,
      items: [
         { icon: 'home', text: 'Home' },
         {

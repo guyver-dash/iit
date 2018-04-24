@@ -8,8 +8,11 @@ import Vuetify from 'vuetify'
 import master from './components/layouts/master.vue'
 
 
-window.base_api = 'http://localhost/iit/public/api/';
-window.base = 'http://localhost/iit/public/';
+// window.base_api = 'http://localhost/iit/public/api/';
+// window.base = 'http://localhost/iit/public/';
+
+window.base_api = 'http://cebu.it.nfpublic/api';
+window.base = 'http://cebu.it.nf/public';
 
 
 
