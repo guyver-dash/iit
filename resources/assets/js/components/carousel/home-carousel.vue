@@ -6,7 +6,7 @@
 				</v-carousel>
 		 </v-flex>
 		<v-flex xl6 lg6>
-      <home-desc v-bind:image="lecture3"  v-bind:height="'700px'"></home-desc>
+      <home-desc v-bind:image="lecture3"  v-bind:title="'K12 READY!'" v-bind:height="'700px'"></home-desc>
 			<home-desc v-bind:image="lecture1" v-bind:title="title1" v-bind:desc="desc1" v-bind:height="'300px'"></home-desc>
       <home-desc v-bind:image="lecture2" v-bind:title="title2" v-bind:desc="desc2" v-bind:height="'300px'"></home-desc>
       

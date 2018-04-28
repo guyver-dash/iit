@@ -1,5 +1,7 @@
 export const state = {
+     provinces:[],
      dialogAdmission: false,
+     courses: [],
      items: [
         { icon: 'home', text: 'Home' },
         {

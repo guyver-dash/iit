@@ -23,9 +23,16 @@ class CreateEnrolleesTable extends Migration
             $table->string('age');
             $table->date('birthday');
             $table->string('birth_place');
+            $table->string('sex');
+            $table->string('civil');
+            $table->string('spouse_lastname');
+            $table->string('spouse_firstname');
+            $table->string('spouse_middlename');
             $table->string('landline');
             $table->string('mobile');
             $table->string('email');
+            $table->string('religion');
+            $table->string('citizenship');
             $table->string('present_address');
             $table->integer('present_province_id');
             $table->integer('present_city_id');
