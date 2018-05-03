@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <v-form v-model="valid" ref="form" lazy-validation>
     <v-layout row wrap>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
@@ -12,9 +13,8 @@
         <v-text-field
                 label="Admission No:"
                 v-model="admissionNo"
-                :rules="[() => first.length > 0 || 'This field is required']"
+               
                 disabled
-                required
               ></v-text-field>
       </v-flex>
 
@@ -25,24 +25,30 @@
                 v-model="course"
                 item-text="name"
                 item-value="id"
+                :rules="[v => !!v || 'Please select course.']"
                 required
               ></v-select>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-select
                 label="School Year"
-                :items="items"
+                :items="schoolYears"
                 v-model="schoolYear"
-                item-value="text"
+                item-value="id"
+                item-text="sy"
+                :rules="[v => !!v || 'Please select school year.']"
+                @change="schoolYearChange"
                 required
               ></v-select>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-select
                 label="Year level"
-                :items="items"
+                :items="yearLevels"
                 v-model="yearLevel"
-                item-value="text"
+                item-value="id"
+                item-text="name"
+                :rules="[v => !!v || 'Please select year level.']"
                 required
               ></v-select>
       </v-flex>
@@ -52,6 +58,7 @@
                 :items="items"
                 v-model="semester"
                 item-value="text"
+                :rules="[v => !!v || 'Please select semester.']"
                 required
               ></v-select>
       </v-flex>
@@ -61,6 +68,7 @@
                 :items="items"
                 v-model="schedule"
                 item-value="text"
+                :rules="[v => !!v || 'Please select schedule.']"
                 required
               ></v-select>
       </v-flex>
@@ -90,24 +98,31 @@
               <v-text-field
                 label="Lastname"
                 v-model="perInfo.lastname"
+                 :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Firstname"
                 v-model="perInfo.firstname"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Middlename"
+                :rules="[v => !!v || 'This field is required.']"
                 v-model="perInfo.middlename"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Suffix"
                 v-model="perInfo.suffix"
+
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -120,15 +135,21 @@
             <v-text-field
                 label="Age"
                 v-model="perInfo.age"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <time-picker v-bind:label="'Birthday'"></time-picker>
+            <date-picker>
+              
+            </date-picker>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Birth Place"
                 v-model="perInfo.birthplace"
+                required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -138,6 +159,7 @@
                 v-model="perInfo.sex"
                 item-value="text"
                 required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -146,6 +168,7 @@
                 :items="items"
                 v-model="perInfo.civlStatus"
                 item-value="text"
+                :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-select>
       </v-flex>
@@ -160,28 +183,27 @@
            <v-text-field
                 label="Phone Number"
                 v-model="perInfo.phone_number"
+                :rules="[v => !!v || 'This field is required.']"
+                required
                 prepend-icon="phone_android"
-              ></v-text-field>
-      </v-flex>
-      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-           <v-text-field
-                label="Phone Number"
-                v-model="perInfo.email"
-                prepend-icon="email"
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
                 label="Religion"
                 v-model="perInfo.religion"
-                prepend-icon="email"
+                prepend-icon="pages"
+                required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
                 label="Citizenship"
                 v-model="perInfo.citizenship"
-                prepend-icon="email"
+                prepend-icon="public"
+                required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-text-field>
       </v-flex>
 </v-layout>
@@ -200,6 +222,7 @@
                 item-text="name"
                 item-value="id"
                 required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -211,12 +234,15 @@
                 item-text="name"
                 item-value="id"
                 required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
                 label="Present Zipcode"
                 v-model="presentZipCode"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       
@@ -226,6 +252,8 @@
                 v-model="presentAddress"
                 color="grey"
                 textarea
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
     </v-layout>
@@ -242,6 +270,7 @@
                 v-model="permanentProvinceId"
                 item-value="id"
                 item-text="name"
+                :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-select>
       </v-flex>
@@ -252,6 +281,7 @@
                 v-model="permanentCityId"
                 item-value="id"
                 item-text="name"
+                :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-select>
       </v-flex>
@@ -259,6 +289,8 @@
            <v-text-field
                 label="Permanent Zipcode"
                 v-model="permanentZipCode"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -267,6 +299,8 @@
                 v-model="permanentAddress"
                 color="grey"
                 textarea
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
     </v-layout>
@@ -285,30 +319,39 @@
               <v-text-field
                 label="Father's lastname"
                 v-model="fatherLastname"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl2 lg2 md2 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Father's firstname"
                 v-model="fatherFirstname"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl2 lg2 md2 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Father's middlename"
                 v-model="fatherMiddlename"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Occupation"
                 v-model="fatherOccupation"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Contact Number"
                 v-model="fatherContactNo"
+
               ></v-text-field>
       </v-flex>
       
@@ -319,7 +362,9 @@
                 v-model="fatherProvinceId"
                 item-value="id"
                 item-text="name"
+                autocomplete
                 required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -329,6 +374,8 @@
                 v-model="fatherCityId"
                 item-value="id"
                 item-text="name"
+                autocomplete
+                :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-select>
       </v-flex>
@@ -337,6 +384,8 @@
            <v-text-field
                 label="Zipcode"
                 v-model="fatherZipCode"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -345,6 +394,8 @@
                 v-model="fatherAddress"
                 color="grey"
                 textarea
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
     </v-layout>
@@ -357,24 +408,32 @@
               <v-text-field
                 label="Mother's lastname"
                 v-model="motherLastname"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl2 lg2 md2 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Mother's firstname"
                 v-model="motherFirstname"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl2 lg2 md2 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Mother's middlename"
                 v-model="motherMiddlename"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Occupation"
                 v-model="motherOccupation"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -386,21 +445,25 @@
       
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
              <v-select
+                autocomplete
                 label="Province"
                 :items="provinces"
                 v-model="motherProvinceId"
-                item-value="name"
-                item-text="id"
+                item-value="id"
+                item-text="name"
                 required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-select
+                autocomplete
                 label="City"
                 :items="motherCities"
                 v-model="motherCityId"
-                item-value="name"
-                item-text="id"
+                item-value="id"
+                item-text="name"
+                :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-select>
       </v-flex>
@@ -408,6 +471,8 @@
            <v-text-field
                 label="Zipcode"
                 v-model="motherZipCode"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -416,6 +481,8 @@
                 v-model="motherAddress"
                 color="grey"
                 textarea
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
     </v-layout>
@@ -426,37 +493,41 @@
          <span class="subheading">Siblings(Brothers & Sisters)</span>
     </v-flex>
     <v-layout row wrap>
+      <v-flex xl12 lg12 md12 sm12 xs12>
+          <v-chip close  v-for="(sibling, i) in siblings" :key="i" @input="removeSibling(i)">{{ sibling.name }}</v-chip>
+      </v-flex>
       
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
               <v-text-field
                 label="Name"
-                v-model="perInfo.lastname"
+                v-model="siblingName"
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
               <v-text-field
                 label="Age"
-                v-model="perInfo.lastname"
+                v-model="siblingAge"
+                :type="'number'"
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
               <v-text-field
                 label="Occupation"
-                v-model="perInfo.lastname"
+                v-model="siblingOcc"
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
               <v-text-field
                 label="Name of school"
-                v-model="perInfo.lastname"
+                v-model="siblingNameOfSchool"
               ></v-text-field>
       </v-flex>
-      <v-btn fab dark color="indigo">
-        <v-icon dark>add</v-icon>
+      <v-btn dark color="indigo" @click="addSibling">
+        More Sibling
+        
       </v-btn>
+       
       </v-layout>
-
-
 
     <v-divider></v-divider>
     <v-flex xl12>
@@ -465,52 +536,54 @@
     </v-flex>
     <v-layout row wrap>
       
-      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
+      <v-flex xl12 lg12 md12 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Name of school"
-                v-model="perInfo.firstname"
+                v-model="schoolName"
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
       
-      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-text-field
-                label="Present Address(House No:, street)"
-                v-model="perInfo.age"
-                color="grey"
-                textarea
-              ></v-text-field>
-      </v-flex>
+     
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
              <v-select
                 label="Province"
-                :items="items"
-                v-model="course"
-                item-value="text"
+                :items="provinces"
+                v-model="schoolProvinceId"
+                item-value="id"
+                item-text="name"
                 required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-select
                 label="City"
-                :items="items"
-                v-model="course"
-                item-value="text"
+                :items="schoolCities"
+                v-model="schoolCityId"
+                item-value="id"
+                item-text="name"
                 required
-              ></v-select>
-      </v-flex>
-      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-select
-                label="Barangay"
-                :items="items"
-                v-model="course"
-                item-value="text"
-                required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
                 label="Zipcode"
-                v-model="perInfo.age"
+                v-model="schoolZipCode"
+                :rules="[v => !!v || 'This field is required.']"
+                required
+              ></v-text-field>
+      </v-flex>
+       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
+            <v-text-field
+                label="Present Address(House No:, street)"
+                v-model="schoolAddress"
+                color="grey"
+                textarea
+                :rules="[v => !!v || 'This field is required.']"
+                required
               ></v-text-field>
       </v-flex>
     </v-layout>
@@ -521,33 +594,38 @@
       
       <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
             <v-select
-                label="My Parents Are"
-                :items="items"
-                v-model="course"
-                item-value="text"
+                :label="'My Parents Are'"
+                :items="answers1"
+                item-value="id"
+                item-text="text"
+                v-model="selectedAnswer1"
+                :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-select>
       </v-flex>
-      
       <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
             <v-select
-                label="Who are you living with"
-                :items="items"
-                v-model="course"
-                item-value="text"
+                :label="'Who are you living with'"
+                :items="answers2"
+                item-value="id"
+                item-text="text"
+                v-model="selectedAnswer2"
                 required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
-      <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
-             <v-select
-                label="Where will you live during school days:"
-                :items="items"
-                v-model="course"
-                item-value="text"
+       <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
+            <v-select
+                :label="'Where will you live during school days'"
+                :items="answers2"
+                item-value="id"
+                item-text="text"
+                v-model="selectedAnswer3"
                 required
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
-      
+
     </v-layout>
 
 
@@ -561,44 +639,47 @@
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-select
                 label="For Highschool Graduate"
-                :items="items"
-                v-model="course"
-                item-value="text"
-                required
+                :items="requireHighschool"
+                item-value="id"
+                item-text="text"
+                multiple
+                :rules="[v => !!v || 'This field is required.']"
               ></v-select>
       </v-flex>
-      
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-select
                 label="For ALS"
-                :items="items"
-                v-model="course"
-                item-value="text"
-                required
+                :items="requireAls"
+                v-model="answerRequiredAls"
+                item-value="id"
+                item-text="text"
+                multiple
               ></v-select>
       </v-flex>
-      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-             <v-select
+        <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
+            <v-select
                 label="For College (Level/Degree)"
-                :items="items"
-                v-model="course"
-                item-value="text"
-                required
+                :items="requireCollege"
+                v-model="answerRequiredCollege"
+                item-value="id"
+                item-text="text"
+                multiple
               ></v-select>
       </v-flex>
-      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-             <v-select
-                label="Additional Requirements"
-                :items="items"
-                v-model="course"
-                item-value="text"
-                required
+         <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
+            <v-select
+                label="ADDITIONAL REQUIREMENTS"
+                :items="requireAdd"
+                v-model="answerRequiredAdd"
+                item-value="id"
+                item-text="text"
+                multiple
               ></v-select>
       </v-flex>
       <v-flex xl12 lg12 md12 sm12 xs12 class="pa-2">
              <v-checkbox
               label="I understand that I’m temporarily enrolled at Intellisense Institute of Technology and I am aware that I will only be officially enrolled once the following school requirements have been completed and submitted."
-              v-model="checkbox"
+              v-model="policy1"
               :rules="[v => !!v || 'You must agree to continue!']"
               required
               class="ma-0 pa-0"
@@ -606,7 +687,7 @@
             <br />
             <v-checkbox
               label=" understand that all fees are NON-REFUNDABLE UPON ENROLLMENT. I have read/understand this policy and I certify all entries are true and correct."
-              v-model="checkbox"
+              v-model="policy2"
               :rules="[v => !!v || 'You must agree to continue!']"
               required
               class="ma-0 pa-0"
@@ -617,14 +698,23 @@
         <br />
          <span class="subheading red--text">Your personal information will be kept in strictest confidence. None of your information will be disclosed without your consent.</span>
          <br />
-         <v-btn color="indigo" class="white--text">Save</v-btn>
+         <v-btn
+          color="info"
+          @click="submit"
+          :disabled="!valid"
+        >
+          submit
+        </v-btn>
     </v-flex>
-
+     </v-form>
+     <snackbar v-bind:color="'error'" v-bind:text="'Please correct the errors!'"></snackbar>
   </v-container>
 </template>
 
 <script>
   import timePicker from '../../pickers/time-picker.vue'
+  import datePicker from '../../pickers/date-picker.vue'
+  import snackbar from '../../snackbar/snackbar.vue'
 
   export default {
     data () {
@@ -652,6 +742,7 @@
             citizenship: ''
         },
         course: '',
+        schoolYearError: ['Please select school year'],
         schoolYear: '',
         yearLevel: '',
         semester: '',
@@ -694,16 +785,60 @@
         motherAddress: '',
 
 
+        siblingName: '',
+        siblingAge: '',
+        siblingOcc: '',
+        siblingNameOfSchool: '',
 
-        parentsAre: '',
-        livingWith: '',
-        liveSchoolDays: '',
-        nameOfSchool: '',
+        schoolName: '',
         schoolAddress: '',
         schoolProvinceId: '',
+        schoolCities: [],
         schoolCityId: '',
         schoolZipCode: '',
-        requirementsDoc: '',
+
+        answers1: [
+          { id: 1, text: 'Living Together'},
+          { id: 2, text: 'Father/Mother working abroad'},
+          { id: 3, text: 'Separated'},
+          { id: 4, text: 'Deceased Mother/Father'}
+        ],
+        answers2: [
+          { id: 1, text: 'Parents/in Laws'},
+          { id: 2, text: 'Stepfather/Stepmother'},
+          { id: 3, text: 'Guardians/Relatives'},
+          { id: 4, text: 'Spouse'}
+        ],
+        selectedAnswer1: '',
+        selectedAnswer2: '',
+        selectedAnswer3: '',
+
+        requireHighschool:[
+          { id: 1, text: 'Report card (original)'},
+          { id: 2, text: 'Good moral' },
+          { id: 3, text: 'FORM 137(school to school)' }
+        ],
+        requireAls:[
+          { id: 1, text: 'ALS Certification'}
+        ],
+        requireCollege:[
+          { id: 1, text: 'Honorable Dismissal'},
+          { id: 2, text: 'TOR' },
+          { id: 3, text: 'Good Moral' }
+        ],
+        requireAdd:[
+          { id: 1, text: 'NSO Birth Certificate (original)'},
+          { id: 2, text: '2x2 colored picture white background (2 pcs)  ' },
+          { id: 3, text: 'long brown envelope with plastic' }
+        ],
+        answerRequiredHighschool: [],
+        answerRequiredAls: [],
+        answerRequiredCollege: [],
+        answerRequiredAdd: [],
+        snackbar: true,
+
+        policy1: '',
+        policy2: '',
         items: [
           { text: 'State 1' },
           { text: 'State 2' },
@@ -713,10 +848,11 @@
           { text: 'State 6' },
           { text: 'State 7' }
         ],
+        valid: true,
       }
     },
     components: {
-      timePicker
+      timePicker, datePicker, snackbar
     },
     computed: {
 
@@ -733,11 +869,57 @@
       provinces(){
         return this.$store.getters.provinces
       },
+      schoolYears(){
+        return this.$store.getters.schoolYears
+      },
       courses(){
 
         return this.$store.getters.courses
       },
+      siblings(){
 
+        return this.$store.getters.siblings
+      },
+      answers(){
+
+        return this.$store.getters.answers
+      },
+      yearLevels(){
+        return this.$store.getters.yearLevel
+      }
+
+    },
+    methods: {
+      schoolYearChange(schoolYear){
+        if(schoolYear != ''){
+          this.schoolYearError = []
+        }else{
+          this.schoolYearError = ['Please select school year']
+        }
+      },
+      addSibling(){
+          this.$store.dispatch('addSibling', {
+              name: this.siblingName,
+              age: this.siblingAge,
+              occupation: this.siblingOcc,
+              school_name: this.siblingNameOfSchool
+          })
+          this.siblingName = ''
+          this.siblingAge = ''
+          this.siblingOcc = ''
+          this.siblingNameOfSchool = ''
+      },
+      removeSibling(index){
+        this.$store.dispatch('removeSibling', index)
+      },
+      submit () {
+        if (this.$refs.form.validate()) {
+          
+          
+        }else{
+            this.$store.dispatch('snackbar', true)
+        }
+      },
     },
     watch: {
 
@@ -797,7 +979,21 @@
         .then(function(res){
             data.motherZipCode = res.data.city.zipcode
         })
-      }
+      },
+      schoolProvinceId(){
+        var data = this
+        this.$http.get(base_api + '/cities/' + this.schoolProvinceId)
+        .then(function(res){
+            data.schoolCities = res.data.cities
+        })
+      },
+      schoolCityId(){
+        var data = this
+        this.$http.get(base_api + '/get-city-zipcode/' + this.schoolCityId)
+        .then(function(res){
+            data.schoolZipCode = res.data.city.zipcode
+        })
+      },
 
     }
   }

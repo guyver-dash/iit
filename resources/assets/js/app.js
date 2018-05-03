@@ -39,6 +39,8 @@ const app = new Vue({
 	      .then(function(response){
             data.$store.dispatch('courses', response.data.courses)
             data.$store.dispatch('provinces', response.data.provinces)
+            data.$store.dispatch('schoolYears', response.data.schoolYears)
+            data.$store.dispatch('yearLevel', response.data.yearLevels)
           }) 
 	  }
     

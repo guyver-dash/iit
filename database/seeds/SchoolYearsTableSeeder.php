@@ -16,8 +16,12 @@ class SchoolYearsTableSeeder extends Seeder
         DB::table('school_years')->truncate();
 
         SchoolYear::create([
-        		'start_date' =>  Carbon::now(),
-        		'end_date' => Carbon::now()->addYears(1),
+        		'sy' => 2018 . '-' . 2019
+        		
         	]);
+        SchoolYear::create([
+                'sy' => 2019 . '-' . 2020
+                
+            ]);
     }
 }

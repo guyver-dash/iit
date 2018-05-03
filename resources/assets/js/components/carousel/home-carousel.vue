@@ -1,17 +1,17 @@
 <template>
 	<v-layout row wrap>
-		<v-flex xl12 lg12>
+		<v-flex xl12 lg12 md12 sm12 xs12>
 		        <v-carousel delimiter-icon="stop" prev-icon="mdi-arrow-left" next-icon="mdi-arrow-right">
 				    <v-carousel-item v-for="(item,i) in items" :src="item.src" :key="i"></v-carousel-item>
 				</v-carousel>
-		 </v-flex>
-		<v-flex xl6 lg6>
-      <home-desc v-bind:image="lecture3"  v-bind:title="'K12 READY!'" v-bind:height="'700px'"></home-desc>
+		</v-flex>
+		<v-flex xl6 lg6 md6 sm6 xs12>
+      <home-special v-bind:image="lecture3"  v-bind:title="'K12 READY!'"></home-special>
 			<home-desc v-bind:image="lecture1" v-bind:title="title1" v-bind:desc="desc1" v-bind:height="'300px'"></home-desc>
       <home-desc v-bind:image="lecture2" v-bind:title="title2" v-bind:desc="desc2" v-bind:height="'300px'"></home-desc>
       
 		</v-flex>
-	 	<v-flex xl6 lg6 class="pa-1 elevation-2">
+	 	<v-flex xl6 lg6 md6 sm6 xs12 class="pa-1 elevation-2">
 		       <a class="twitter-timeline" href="https://twitter.com/IIT_Mandaue?ref_src=twsrc%5Etfw" data-tweet-limit="6">Tweets by IIT_Mandaue</a> 
 		 </v-flex>
 	 </v-layout>
@@ -19,6 +19,7 @@
 </template>
 <script>
   import homeDesc from '../../components/cards/home-desc.vue'
+  import homeSpecial from '../../components/cards/home-special.vue'
   export default {
     data () {
       return {
@@ -48,7 +49,7 @@
       }
     },
     components: {
-    	homeDesc
+    	homeDesc, homeSpecial
     }
   }
 </script>

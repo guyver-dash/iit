@@ -68,7 +68,7 @@ class CreateEnrolleesTable extends Migration
             $table->integer('mother_province_id');
             $table->integer('mother_city_id');
             $table->integer('mother_barangay');
-             $table->integer('mother_zipcode');
+            $table->integer('mother_zipcode');
 
             $table->string('name_of_school');
              $table->string('school_address');

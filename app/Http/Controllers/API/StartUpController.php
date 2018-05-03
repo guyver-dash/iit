@@ -11,8 +11,7 @@ use App\Model\Semester;
 use App\Model\Schedule;
 use App\Model\Province;
 use App\Model\City;
-
-
+use App\Model\Question;
 
 class StartUpController extends Controller
 {
@@ -45,4 +44,16 @@ class StartUpController extends Controller
     			'city' => City::where('id', $cityId)->first()
     		]);
     }
+
+
+    public function getQuestionAns(){
+
+        return response()->json([
+                'questions' => Question::with('answers')->get()
+            ]);
+
+        
+    }
+
+    
 }

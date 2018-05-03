@@ -1,6 +1,12 @@
 export const state = {
+
+     siblings: null,
+     snackbar: false,
      provinces:[],
+     answers:[],
      dialogAdmission: false,
+     schoolYears: [],
+     yearLevel:[],
      courses: [],
      items: [
         { icon: 'home', text: 'Home' },
