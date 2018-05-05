@@ -41,6 +41,13 @@ const app = new Vue({
             data.$store.dispatch('provinces', response.data.provinces)
             data.$store.dispatch('schoolYears', response.data.schoolYears)
             data.$store.dispatch('yearLevel', response.data.yearLevels)
+            data.$store.dispatch('schedules', response.data.schedules)
+            data.$store.dispatch('semesters', response.data.semesters)
+            data.$store.dispatch('questions', response.data.questions)
+            data.$store.dispatch('requirements', response.data.requirements)
+            data.$store.dispatch('policies', response.data.policies)
+            data.$store.dispatch('civilStatus', response.data.civilStatus)
+            data.$store.dispatch('educAtt', response.data.educAtt)
           }) 
 	  }
     

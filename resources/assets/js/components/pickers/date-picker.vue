@@ -30,6 +30,11 @@
     data: () => ({
       date: null,
       modal: false,
-    })
+    }),
+    watch: {
+      date(){
+        this.$store.dispatch('birthday', this.date)
+      }
+    }
   }
 </script>

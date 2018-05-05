@@ -12,6 +12,14 @@ use App\Model\Schedule;
 use App\Model\Province;
 use App\Model\City;
 use App\Model\Question;
+use App\Model\Answer;
+use App\Model\Requirement;
+use App\Model\Policy;
+use App\Model\CivilStatus;
+use App\Model\Enrollee;
+use App\Model\EducAtt;
+
+
 
 class StartUpController extends Controller
 {
@@ -22,9 +30,15 @@ class StartUpController extends Controller
     			'courses' => Course::all(),
     			'schoolYears' => SchoolYear::all(),
     			'yearLevels' => YearLevel::all(),
-    			'semeters' => Semester::all(),
     			'schedules' => Schedule::all(),
     			'provinces' => Province::all(),
+                'semesters' => Semester::all(),
+                'schedules' => Schedule::all(),
+                'questions' => Question::with('answers')->get(),
+                'requirements' => Requirement::with('requirementsDoc')->get(),
+                'policies' => Policy::all(),
+                'civilStatus' => CivilStatus::all(),
+                'educAtt' => EducAtt::all()
 
     		]);
     }
@@ -46,13 +60,31 @@ class StartUpController extends Controller
     }
 
 
-    public function getQuestionAns(){
+    public function getQuestionId($answerId){
+
+        $answer = Answer::where('id', $answerId)->first();
 
         return response()->json([
-                'questions' => Question::with('answers')->get()
+                'questionId' => $answer->question_id
             ]);
 
         
+    }
+
+    public function enrollment(){
+
+        $request = app()->make('request');
+
+        $enrollee = Enrollee::create($request->all());
+
+        // foreach ($request->answers as $key => $value) {
+        //      Enrollee::find($enrollee->id)->answers()->attach($enrollee->id, [
+        //             'enrollee_id' => $enrollee->id,
+        //             'answer_id' => $value->id
+        //         ] );    
+        // }
+        return response()->json($request->answers)
+       
     }
 
     

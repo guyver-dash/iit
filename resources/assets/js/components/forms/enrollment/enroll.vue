@@ -55,9 +55,10 @@
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-select
                 label="Semester"
-                :items="items"
+                :items="semesters"
                 v-model="semester"
-                item-value="text"
+                item-value="id"
+                item-text="name"
                 :rules="[v => !!v || 'Please select semester.']"
                 required
               ></v-select>
@@ -65,9 +66,10 @@
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-select
                 label="Schedule"
-                :items="items"
+                :items="schedules"
                 v-model="schedule"
-                item-value="text"
+                item-value="id"
+                item-text="name"
                 :rules="[v => !!v || 'Please select schedule.']"
                 required
               ></v-select>
@@ -97,7 +99,7 @@
        
               <v-text-field
                 label="Lastname"
-                v-model="perInfo.lastname"
+                v-model="lastname"
                  :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-text-field>
@@ -105,7 +107,7 @@
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Firstname"
-                v-model="perInfo.firstname"
+                v-model="firstname"
                 :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-text-field>
@@ -114,27 +116,27 @@
             <v-text-field
                 label="Middlename"
                 :rules="[v => !!v || 'This field is required.']"
-                v-model="perInfo.middlename"
+                v-model="middlename"
                 required
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Suffix"
-                v-model="perInfo.suffix"
+                v-model="suffix"
 
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Nick name"
-                v-model="perInfo.nickName"
+                v-model="nickName"
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Age"
-                v-model="perInfo.age"
+                v-model="age"
                 :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-text-field>
@@ -147,16 +149,27 @@
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
             <v-text-field
                 label="Birth Place"
-                v-model="perInfo.birthplace"
+                v-model="birthplace"
                 required
                 :rules="[v => !!v || 'This field is required.']"
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-select
+                label="Educational Attainment"
+                :items="educAtt"
+                v-model="selectedEducAtt"
+                item-value="id"
+                item-text="name"
+                :rules="[v => !!v || 'This field is required.']"
+                required
+              ></v-select>
+      </v-flex>
+      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
+           <v-select
                 label="Sex"
-                :items="items"
-                v-model="perInfo.sex"
+                :items="sexs"
+                v-model="sex"
                 item-value="text"
                 required
                 :rules="[v => !!v || 'This field is required.']"
@@ -165,33 +178,65 @@
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-select
                 label="Civil Status"
-                :items="items"
-                v-model="perInfo.civlStatus"
-                item-value="text"
+                :items="civilStatus"
+                v-model="selectedCivil"
+                item-value="id"
+                item-text="name"
                 :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-select>
       </v-flex>
-      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
+     
+
+       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2"  v-if="selectedCivil == 1">
+             <v-text-field
+                label="Spouse lastname"
+                v-model="spouseLastname"
+              ></v-text-field>
+      </v-flex>
+      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2" v-if="selectedCivil == 1">
+            <v-text-field
+                label="Spouse firstname"
+                v-model="spouseFirstname"
+              ></v-text-field>
+      </v-flex>
+      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2" v-if="selectedCivil == 1">
+           <v-text-field
+                label="Spouse middlename"
+                v-model="spouseMiddlename"
+              ></v-text-field>
+      </v-flex>
+      
+       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
                 label="Landline"
-                v-model="perInfo.landline"
+                v-model="landline"
                 prepend-icon="phone"
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
                 label="Phone Number"
-                v-model="perInfo.phone_number"
+                v-model="mobile"
                 :rules="[v => !!v || 'This field is required.']"
                 required
                 prepend-icon="phone_android"
               ></v-text-field>
       </v-flex>
+      
+      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
+           <v-text-field
+                label="Email"
+                v-model="email"
+                :rules="[v => !!v || 'This field is required.']"
+                required
+                prepend-icon="email"
+              ></v-text-field>
+      </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
                 label="Religion"
-                v-model="perInfo.religion"
+                v-model="religion"
                 prepend-icon="pages"
                 required
                 :rules="[v => !!v || 'This field is required.']"
@@ -200,7 +245,7 @@
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
                 label="Citizenship"
-                v-model="perInfo.citizenship"
+                v-model="citizenship"
                 prepend-icon="public"
                 required
                 :rules="[v => !!v || 'This field is required.']"
@@ -592,40 +637,16 @@
     
     <v-layout row wrap>
       
-      <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
+      <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2" v-for="question in questions" :key="question.id">
             <v-select
-                :label="'My Parents Are'"
-                :items="answers1"
+                :label="question.name"
+                :items="question.answers"
                 item-value="id"
-                item-text="text"
-                v-model="selectedAnswer1"
-                :rules="[v => !!v || 'This field is required.']"
-                required
+                item-text="name"
+                @change="myAnswer"
               ></v-select>
       </v-flex>
-      <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
-            <v-select
-                :label="'Who are you living with'"
-                :items="answers2"
-                item-value="id"
-                item-text="text"
-                v-model="selectedAnswer2"
-                required
-                :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
-      </v-flex>
-       <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
-            <v-select
-                :label="'Where will you live during school days'"
-                :items="answers2"
-                item-value="id"
-                item-text="text"
-                v-model="selectedAnswer3"
-                required
-                :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
-      </v-flex>
-
+     
     </v-layout>
 
 
@@ -636,59 +657,32 @@
     </v-flex>
     <v-layout row wrap>
       
-      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
+      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2" v-for="requirement in requirements" :key="requirement.id">
             <v-select
-                label="For Highschool Graduate"
-                :items="requireHighschool"
+                :label="requirement.name"
+                :items="requirement.requirements_doc"
+                v-model="requirementsDocs"
                 item-value="id"
-                item-text="text"
-                multiple
-                :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
-      </v-flex>
-      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-select
-                label="For ALS"
-                :items="requireAls"
-                v-model="answerRequiredAls"
-                item-value="id"
-                item-text="text"
+                item-text="name"
                 multiple
               ></v-select>
       </v-flex>
-        <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-select
-                label="For College (Level/Degree)"
-                :items="requireCollege"
-                v-model="answerRequiredCollege"
-                item-value="id"
-                item-text="text"
-                multiple
-              ></v-select>
-      </v-flex>
-         <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-select
-                label="ADDITIONAL REQUIREMENTS"
-                :items="requireAdd"
-                v-model="answerRequiredAdd"
-                item-value="id"
-                item-text="text"
-                multiple
-              ></v-select>
-      </v-flex>
+        
       <v-flex xl12 lg12 md12 sm12 xs12 class="pa-2">
              <v-checkbox
-              label="I understand that I’m temporarily enrolled at Intellisense Institute of Technology and I am aware that I will only be officially enrolled once the following school requirements have been completed and submitted."
+              label="I will only be officially enrolled once the following school requirements have been completed and submitted."
               v-model="policy1"
               :rules="[v => !!v || 'You must agree to continue!']"
+              value="1"
               required
               class="ma-0 pa-0"
-            ></v-checkbox>
+            ></v-checkbox> <span></span>
             <br />
             <v-checkbox
-              label=" understand that all fees are NON-REFUNDABLE UPON ENROLLMENT. I have read/understand this policy and I certify all entries are true and correct."
+              label="I understand that all fees are NON-REFUNDABLE UPON ENROLLMENT. I have read/understand this policy and I certify all entries are true and correct."
               v-model="policy2"
               :rules="[v => !!v || 'You must agree to continue!']"
+              value="2"
               required
               class="ma-0 pa-0"
             ></v-checkbox>
@@ -720,27 +714,25 @@
     data () {
       return {
         checkbox: '',
-        first: '',
-        perInfo: {
-
-            firstname: '',
-            middlename: '',
-            lastname: '',
-            suffix: '',
-            age: '',
-            birthday: '',
-            birthplace: '',
-            sex: '',
-            civilStatus: '',
-            spouseLastname: '',
-            spouseFirstname: '',
-            spouseMiddlename: '',
-            landline: '',
-            mobile: '',
-            email: '',
-            religion: '',
-            citizenship: ''
-        },
+        firstname: '',
+        middlename: '',
+        lastname: '',
+        suffix: '',
+        age: '',
+        birthplace: '',
+        selectedEducAtt: '',
+        sex: '',
+        sexs:['Male', 'Female'],
+        selectedCivil: '',
+        nickName: '',
+        spouseLastname: '',
+        spouseFirstname: '',
+        spouseMiddlename: '',
+        landline: '',
+        mobile: '',
+        email: '',
+        religion: '',
+        citizenship: '',
         course: '',
         schoolYearError: ['Please select school year'],
         schoolYear: '',
@@ -796,58 +788,11 @@
         schoolCities: [],
         schoolCityId: '',
         schoolZipCode: '',
-
-        answers1: [
-          { id: 1, text: 'Living Together'},
-          { id: 2, text: 'Father/Mother working abroad'},
-          { id: 3, text: 'Separated'},
-          { id: 4, text: 'Deceased Mother/Father'}
-        ],
-        answers2: [
-          { id: 1, text: 'Parents/in Laws'},
-          { id: 2, text: 'Stepfather/Stepmother'},
-          { id: 3, text: 'Guardians/Relatives'},
-          { id: 4, text: 'Spouse'}
-        ],
-        selectedAnswer1: '',
-        selectedAnswer2: '',
-        selectedAnswer3: '',
-
-        requireHighschool:[
-          { id: 1, text: 'Report card (original)'},
-          { id: 2, text: 'Good moral' },
-          { id: 3, text: 'FORM 137(school to school)' }
-        ],
-        requireAls:[
-          { id: 1, text: 'ALS Certification'}
-        ],
-        requireCollege:[
-          { id: 1, text: 'Honorable Dismissal'},
-          { id: 2, text: 'TOR' },
-          { id: 3, text: 'Good Moral' }
-        ],
-        requireAdd:[
-          { id: 1, text: 'NSO Birth Certificate (original)'},
-          { id: 2, text: '2x2 colored picture white background (2 pcs)  ' },
-          { id: 3, text: 'long brown envelope with plastic' }
-        ],
-        answerRequiredHighschool: [],
-        answerRequiredAls: [],
-        answerRequiredCollege: [],
-        answerRequiredAdd: [],
+        answer: [],
+        requirementsDocs: [],
         snackbar: true,
-
         policy1: '',
         policy2: '',
-        items: [
-          { text: 'State 1' },
-          { text: 'State 2' },
-          { text: 'State 3' },
-          { text: 'State 4' },
-          { text: 'State 5' },
-          { text: 'State 6' },
-          { text: 'State 7' }
-        ],
         valid: true,
       }
     },
@@ -880,12 +825,33 @@
 
         return this.$store.getters.siblings
       },
-      answers(){
+      questions(){
 
-        return this.$store.getters.answers
+        return this.$store.getters.questions
       },
       yearLevels(){
         return this.$store.getters.yearLevel
+      },
+      semesters(){
+        return this.$store.getters.semesters
+      },
+      schedules(){
+        return this.$store.getters.schedules
+      },
+      requirements(){
+        return this.$store.getters.requirements
+      },
+      policies(){
+        return this.$store.getters.policies
+      },
+      civilStatus(){
+        return this.$store.getters.civilStatus
+      },
+      birthday(){
+        return this.$store.getters.birthday
+      },
+      educAtt(){
+        return this.$store.getters.educAtt
       }
 
     },
@@ -912,9 +878,111 @@
       removeSibling(index){
         this.$store.dispatch('removeSibling', index)
       },
+      myAnswer(answerId){
+        var data = this
+        this.$http.get(base_api + '/get-question-id/' + answerId)
+        .then(function(res){
+
+            if ( data.answer.length > 0) {
+              for (var i=0; i < data.answer.length; i++) {
+
+                 if(data.answer[i].questionId === res.data.questionId){
+                   delete data.answer[i] 
+                 }
+              }
+
+              data.answer.push({
+                  questionId: res.data.questionId,
+                  answerId: answerId
+                })
+
+              var cleanArray = []
+              for (var a=0; a < data.answer.length; a++) {
+                if(data.answer[a] != undefined){
+                  cleanArray.push(data.answer[a])
+                }
+                
+              }
+
+              data.answer = cleanArray
+            }
+
+            if (data.answer.length === 0) {
+              data.answer.push({
+                  questionId: res.data.questionId,
+                  answerId: answerId
+                })
+            }
+
+            
+        })
+      },
       submit () {
         if (this.$refs.form.validate()) {
           
+          var data = this
+          this.$http.post(base_api + '/enrollment', {
+            admissionNo: this.admissionNo,
+            course_id: this.course,
+            firstname: this.firstname,
+            middlename: this.middlename,
+            lastname: this.lastname,
+            suffix: this.suffix,
+            nickname: this.nickName,
+            age: this.age,
+            birthday: this.birthday,
+            birth_place: this.birthplace,
+            sex: this.sex,
+            educ_at_id: this.EducAtt,
+            civil: this.selectedCivil,
+            spouse_lastname: this.spouseLastname,
+            spouse_firstname: this.spouseFirstname,
+            spouse_middlename: this.spouseMiddlename,
+            landline: this.landline,
+            mobile: this.mobile,
+            email: this.email,
+            religion: this.religion,
+            citizenship: this.citizenship,
+            present_address: this.presentAddress,
+            present_province_id: this.presentProvinceId,
+            present_city_id: this.presentCityId,
+            present_zipcode: this.presentZipCode,
+            permanent_address: this.permanentAddress,
+            permanent_province_id: this.permanentProvinceId,
+            permanent_city_id: this.permanentCityId,
+            permanent_zipcode: this.permanentZipCode,
+            father_firstname: this.fatherFirstname,
+            father_lastname: this.fatherLastname,
+            father_middlename: this.fatherMiddlename,
+            father_occupation: this.fatherOccupation,
+            father_contact_number: this.fatherContactNo,
+            father_address: this.fatherAddress,
+            father_province_id: this.fatherProvinceId,
+            father_city_id: this.fatherCityId,
+            father_zipcode: this.fatherZipCode,
+            mother_firstname: this.motherFirstname,
+            mother_lastname: this.motherLastname,
+            mother_middlename: this.motherMiddlename,
+            mother_occupation: this.motherOccupation,
+            mother_contact_number: this.motherContactNo,
+            mother_address: this.motherAddress,
+            mother_province_id: this.motherProvinceId,
+            mother_city_id: this.motherCityId,
+            mother_zipcode: this.motherZipCode,
+            name_of_school: this.schoolName,
+            school_address: this.schoolAddress,
+            school_province_id: this.schoolProvinceId,
+            school_city_id: this.schoolCityId,
+            school_zipcode: this.schoolZipCode,
+            siblings: this.siblings,
+            answers: this.answer,
+            requirementsDocs: this.requirementsDocs
+            
+            
+          })
+          .then(function(res){
+              console.log(res)
+          })
           
         }else{
             this.$store.dispatch('snackbar', true)

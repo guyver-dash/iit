@@ -18,9 +18,22 @@ class SchedulesTableSeeder extends Seeder
 
         Schedule::create([
 
-        		'name' => 'Morning Session',
-        		'start' =>  Carbon::now(),
-        		'end' => Carbon::now()
+        		'name' => '8:00AM - 12:00PM',
+        		'start' =>  Carbon::parse('08:00:00.00'),
+        		'end' => Carbon::parse('12:00:00.00')
         	]);
+         Schedule::create([
+
+                'name' => '12:00NN - 5:00PM',
+                'start' =>  Carbon::parse('13:00:00.00'),
+                'end' => Carbon::parse('17:00:00.00')
+            ]);
+
+         Schedule::create([
+
+                'name' => '5:00PM - 9:00PM',
+                'start' =>  Carbon::parse('17:00:00.00'),
+                'end' => Carbon::parse('21:00:00.00')
+            ]);
     }
 }

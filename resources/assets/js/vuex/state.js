@@ -1,13 +1,19 @@
 export const state = {
-
+     birthday: '',
      siblings: null,
      snackbar: false,
      provinces:[],
-     answers:[],
      dialogAdmission: false,
      schoolYears: [],
      yearLevel:[],
+     semesters: [],
+     schedules: [],
      courses: [],
+     questions:[],
+     requirements: [],
+     policies:[],
+     civilStatus: [],
+     educAtt:[],
      items: [
         { icon: 'home', text: 'Home' },
         {

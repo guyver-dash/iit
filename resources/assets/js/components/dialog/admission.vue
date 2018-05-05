@@ -9,7 +9,7 @@
           <v-toolbar-title>Application for Admission</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">Save</v-btn>
+            <v-btn dark flat @click.native="dialog = false">Submit</v-btn>
           </v-toolbar-items>
         </v-toolbar>
          <v-layout>

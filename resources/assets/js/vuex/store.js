@@ -8,6 +8,9 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		birthday(state, birthday){
+			state.birthday = birthday
+		},
 		snackbar(state, snackbar){
 			state.snackbar = snackbar
 		},
@@ -29,11 +32,29 @@ export const store = new Vuex.Store({
 		provinces(state, provinces){
 			state.provinces = provinces
 		},
-		answers(state, answers){
-			state.answers = answers
+		questions(state, questions){
+			state.questions = questions
 		},
 		yearLevel(state, yearLevel){
 			state.yearLevel = yearLevel
+		},
+		semesters(state, semesters){
+			state.semesters = semesters
+		},
+		schedules(state, schedules){
+			state.schedules = schedules
+		},
+		requirements(state, requirements){
+			state.requirements = requirements
+		},
+		policies(state, policies){
+			state.policies = policies
+		},
+		civilStatus(state, civilStatus){
+			state.civilStatus = civilStatus
+		},
+		educAtt(state, educAtt){
+			state.educAtt = educAtt
 		}
 	},
 	actions: {
@@ -65,8 +86,8 @@ export const store = new Vuex.Store({
 			}
 
 		},	
-		answers(store, answers){
-			store.commit('answers', answers)
+		questions(store, questions){
+			store.commit('questions', questions)
 		},
 		provinces(store, provinces){
 			store.commit('provinces', provinces);
@@ -88,6 +109,27 @@ export const store = new Vuex.Store({
 		},
 		yearLevel(store, yearLevel){
 			store.commit('yearLevel', yearLevel)
+		},
+		semesters(store, semesters){
+			store.commit('semesters', semesters)
+		},
+		schedules(store, schedules){
+			store.commit('schedules', schedules)
+		},
+		requirements(store, requirements){
+			store.commit('requirements', requirements)
+		},
+		policies(store, policies){
+			store.commit('policies', policies)
+		},
+		civilStatus(store, civilStatus){
+			store.commit('civilStatus', civilStatus)
+		},
+		birthday(store, birthday){
+			store.commit('birthday', birthday)
+		},
+		educAtt(store, educAtt){
+			store.commit('educAtt', educAtt)
 		}
 	},
 	getters: {
@@ -111,14 +153,35 @@ export const store = new Vuex.Store({
 		courses(){
 			return store.state.courses
 		},
-		answers(){
-			return store.state.answers
+		questions(){
+			return store.state.questions
 		},
 		snackbar(){
 			return store.state.snackbar
 		},
 		yearLevel(){
 			return store.state.yearLevel
+		},
+		semesters(){
+			return store.state.semesters
+		},
+		schedules(){
+			return store.state.schedules
+		},
+		requirements(){
+			return store.state.requirements
+		},
+		policies(){
+			return store.state.policies
+		},
+		civilStatus(){
+			return store.state.civilStatus
+		},
+		birthday(){
+			return store.state.birthday
+		},
+		educAtt(){
+			return store.state.educAtt
 		}
 	}
 	

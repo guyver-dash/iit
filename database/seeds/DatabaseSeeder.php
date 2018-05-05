@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(RequirementsTableSeeder::class);
-        $this->call(RequirementsDocTableSeeder::class);
         $this->call(PoliciesTableSeeder::class);
         $this->call(YearLevelsTableSeeder::class);
         $this->call(EducationalAttainmentTableSeeder::class);
@@ -23,6 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SchoolYearsTableSeeder::class);
         $this->call(SchedulesTableSeeder::class);
         $this->call(CoursesTableSeeder::class);
+        $this->call(QuestionsTableSeeder::class);
+        $this->call(CivilStatusTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
     }

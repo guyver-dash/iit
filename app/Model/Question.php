@@ -11,6 +11,6 @@ class Question extends Model
 
     public function answers(){
 
-    	return $this->belongsToMany('App\Model\Answer', 'answer_question', 'question_id', 'answer_id');
+    	return $this->hasMany('App\Model\Answer', 'question_id', 'id');
     }
 }

@@ -20,7 +20,7 @@ class SemestersTableSeeder extends Seeder
         foreach ($semesters as $key => $value) {
         	
         	Semester::create([
-        			'semesters' => $value
+        			'name' => $value
         		]);
         }
     }

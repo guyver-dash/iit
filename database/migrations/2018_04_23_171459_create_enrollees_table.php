@@ -15,20 +15,24 @@ class CreateEnrolleesTable extends Migration
     {
         Schema::create('enrollees', function (Blueprint $table) {
             $table->increments('id');
+            $table->bigInteger('admissionNo');
+            $table->integer('course_id')->unsigned()->nullable();
+            $table->foreign('course_id')->references('id')
+                ->on('courses');
             $table->string('firstname');
             $table->string('middlename');
             $table->string('lastname');
-            $table->string('suffix');
-            $table->string('nickname');
+            $table->string('suffix')->nullable();
+            $table->string('nickname')->nullable();
             $table->string('age');
-            $table->date('birthday');
+            $table->date('birthday')->nullable();
             $table->string('birth_place');
             $table->string('sex');
             $table->string('civil');
-            $table->string('spouse_lastname');
-            $table->string('spouse_firstname');
-            $table->string('spouse_middlename');
-            $table->string('landline');
+            $table->string('spouse_lastname')->nullable();
+            $table->string('spouse_firstname')->nullable();
+            $table->string('spouse_middlename')->nullable();
+            $table->string('landline')->nullable();
             $table->string('mobile');
             $table->string('email');
             $table->string('religion');
@@ -36,17 +40,14 @@ class CreateEnrolleesTable extends Migration
             $table->string('present_address');
             $table->integer('present_province_id');
             $table->integer('present_city_id');
-            $table->integer('present_barangay');
             $table->integer('present_zipcode');
             $table->string('permanent_address');
             $table->integer('permanent_province_id');
             $table->integer('permanent_city_id');
-            $table->integer('permanent_barangay');
              $table->integer('permanent_zipcode');
             $table->integer('educ_at_id')->unsigned()->nullable();
             $table->foreign('educ_at_id')->references('id')
                 ->on('educational_attainments');
-            $table->string('educ_course');
 
             $table->string('father_firstname');
             $table->string('father_lastname');
@@ -56,7 +57,6 @@ class CreateEnrolleesTable extends Migration
             $table->string('father_address');
             $table->integer('father_province_id');
             $table->integer('father_city_id');
-            $table->integer('father_barangay');
              $table->integer('father_zipcode');
 
             $table->string('mother_firstname');
@@ -67,18 +67,14 @@ class CreateEnrolleesTable extends Migration
             $table->string('mother_address');
             $table->integer('mother_province_id');
             $table->integer('mother_city_id');
-            $table->integer('mother_barangay');
             $table->integer('mother_zipcode');
 
             $table->string('name_of_school');
-             $table->string('school_address');
+            $table->string('school_address');
             $table->integer('school_province_id');
             $table->integer('school_city_id');
-            $table->integer('school_barangay');
             $table->integer('school_zipcode');
-
-            $table->string('remarks');
-
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }
