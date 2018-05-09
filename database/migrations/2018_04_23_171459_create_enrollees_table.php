@@ -53,7 +53,7 @@ class CreateEnrolleesTable extends Migration
             $table->string('father_lastname');
             $table->string('father_middlename');
             $table->string('father_occupation');
-            $table->string('father_contact_number');
+            $table->string('father_contact_number')->nullable();
             $table->string('father_address');
             $table->integer('father_province_id');
             $table->integer('father_city_id');
@@ -63,7 +63,7 @@ class CreateEnrolleesTable extends Migration
             $table->string('mother_lastname');
             $table->string('mother_middlename');
             $table->string('mother_occupation');
-            $table->string('mother_contact_number');
+            $table->string('mother_contact_number')->nullable();
             $table->string('mother_address');
             $table->integer('mother_province_id');
             $table->integer('mother_city_id');

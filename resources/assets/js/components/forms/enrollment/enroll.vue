@@ -137,6 +137,7 @@
             <v-text-field
                 label="Age"
                 v-model="age"
+                :type="'number'"
                 :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-text-field>
@@ -211,6 +212,7 @@
            <v-text-field
                 label="Landline"
                 v-model="landline"
+                :type="'number'"
                 prepend-icon="phone"
               ></v-text-field>
       </v-flex>
@@ -218,6 +220,7 @@
            <v-text-field
                 label="Phone Number"
                 v-model="mobile"
+                :type="'number'"
                 :rules="[v => !!v || 'This field is required.']"
                 required
                 prepend-icon="phone_android"
@@ -228,6 +231,7 @@
            <v-text-field
                 label="Email"
                 v-model="email"
+                :type="'email'"
                 :rules="[v => !!v || 'This field is required.']"
                 required
                 prepend-icon="email"
@@ -286,6 +290,7 @@
            <v-text-field
                 label="Present Zipcode"
                 v-model="presentZipCode"
+                :type="'number'"
                 :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-text-field>
@@ -334,6 +339,7 @@
            <v-text-field
                 label="Permanent Zipcode"
                 v-model="permanentZipCode"
+                :type="'number'"
                 :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-text-field>
@@ -396,6 +402,7 @@
             <v-text-field
                 label="Contact Number"
                 v-model="fatherContactNo"
+                :type="'number'"
 
               ></v-text-field>
       </v-flex>
@@ -429,6 +436,7 @@
            <v-text-field
                 label="Zipcode"
                 v-model="fatherZipCode"
+                :type="'number'"
                 :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-text-field>
@@ -485,6 +493,7 @@
             <v-text-field
                 label="Contact Number"
                 v-model="motherContactNo"
+                :type="'number'"
               ></v-text-field>
       </v-flex>
       
@@ -516,6 +525,7 @@
            <v-text-field
                 label="Zipcode"
                 v-model="motherZipCode"
+                :type="'number'"
                 :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-text-field>
@@ -617,6 +627,7 @@
            <v-text-field
                 label="Zipcode"
                 v-model="schoolZipCode"
+                :type="'number'"
                 :rules="[v => !!v || 'This field is required.']"
                 required
               ></v-text-field>
@@ -701,7 +712,8 @@
         </v-btn>
     </v-flex>
      </v-form>
-     <snackbar v-bind:color="'error'" v-bind:text="'Please correct the errors!'"></snackbar>
+     <snackbar v-bind:color="snackbarColor" v-bind:text="snackbarText" ></snackbar>
+     <registration-completed v-bind:color="snackbarColor" v-bind:text="snackbarText" ></registration-completed>
   </v-container>
 </template>
 
@@ -709,6 +721,7 @@
   import timePicker from '../../pickers/time-picker.vue'
   import datePicker from '../../pickers/date-picker.vue'
   import snackbar from '../../snackbar/snackbar.vue'
+  import registrationCompleted from '../../snackbar/registration-completed.vue'
 
   export default {
     data () {
@@ -791,13 +804,15 @@
         answer: [],
         requirementsDocs: [],
         snackbar: true,
+        snackbarColor: 'error',
+        snackbarText: '',
         policy1: '',
         policy2: '',
         valid: true,
       }
     },
     components: {
-      timePicker, datePicker, snackbar
+      timePicker, datePicker, snackbar, registrationCompleted
     },
     computed: {
 
@@ -852,6 +867,12 @@
       },
       educAtt(){
         return this.$store.getters.educAtt
+      },
+      startTime(){
+        return this.$store.getters.startTime
+      },
+      endTime(){
+        return this.$store.getters.endTime
       }
 
     },
@@ -864,6 +885,8 @@
         }
       },
       addSibling(){
+
+        if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
           this.$store.dispatch('addSibling', {
               name: this.siblingName,
               age: this.siblingAge,
@@ -874,6 +897,14 @@
           this.siblingAge = ''
           this.siblingOcc = ''
           this.siblingNameOfSchool = ''
+          this.$store.dispatch('snackbar', false)
+         
+        }else {
+            this.snackbarColor = 'error'
+            this.snackbarText = 'Sibling fields are required!'
+            this.$store.dispatch('snackbar', true)
+        }
+          
       },
       removeSibling(index){
         this.$store.dispatch('removeSibling', index)
@@ -918,10 +949,23 @@
         })
       },
       submit () {
+        if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
+            this.addSibling()
+          }
+
+        
+
         if (this.$refs.form.validate()) {
           
           var data = this
           this.$http.post(base_api + '/enrollment', {
+            start_time: this.startTime,
+            end_time: this.endTime,
+            semester_id: this.semester,
+            school_year_id: this.schoolYear,
+            year_level_id: this.yearLevel,
+            schedule_id: this.schedule,
+            start_time: this.startTime,
             admissionNo: this.admissionNo,
             course_id: this.course,
             firstname: this.firstname,
@@ -981,10 +1025,14 @@
             
           })
           .then(function(res){
-              console.log(res)
+              data.snackbarColor = 'success'
+              data.snackbarText = 'Registration completed!'
+              data.$store.dispatch('registrationCompleted', true)
           })
           
         }else{
+            this.snackbarColor = 'error'
+            this.snackbarText = 'Please correct some errors!'
             this.$store.dispatch('snackbar', true)
         }
       },

@@ -33,6 +33,17 @@
         menu2: false,
         modal2: false
       }
+    },
+    watch: {
+      time(){
+        if (this.label == 'Start time') {
+          this.$store.dispatch('startTime', this.time)
+        }
+        if(this.label == 'End time'){
+          this.$store.dispatch('endTime', this.time)
+        }
+
+      }
     }
   }
 </script>

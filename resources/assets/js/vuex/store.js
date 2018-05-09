@@ -8,8 +8,23 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		authUser(state, authUser){
+			state.authUser = authUser
+		},
+		userLogin(state, userLogin){
+			state.userLogin = userLogin
+		},
+		endTime(state, endTime){
+			state.endTime = endTime
+		},
+		startTime(state, startTime){
+			state.startTime = startTime
+		},
 		birthday(state, birthday){
 			state.birthday = birthday
+		},
+		registrationCompleted(state, registrationCompleted){
+			state.registrationCompleted = registrationCompleted
 		},
 		snackbar(state, snackbar){
 			state.snackbar = snackbar
@@ -107,6 +122,9 @@ export const store = new Vuex.Store({
 		snackbar(store, snackbar){
 			store.commit('snackbar', snackbar)
 		},
+		registrationCompleted(store, registrationCompleted){
+			store.commit('registrationCompleted', registrationCompleted)
+		},
 		yearLevel(store, yearLevel){
 			store.commit('yearLevel', yearLevel)
 		},
@@ -130,6 +148,18 @@ export const store = new Vuex.Store({
 		},
 		educAtt(store, educAtt){
 			store.commit('educAtt', educAtt)
+		},
+		startTime(store, startTime){
+			store.commit('startTime', startTime)
+		},
+		endTime(store, endTime){
+			store.commit('endTime', endTime)
+		},
+		userLogin(store, userLogin){
+			store.commit('userLogin', userLogin)
+		},
+		authUser(store, authUser){
+			store.commit('authUser', authUser)
 		}
 	},
 	getters: {
@@ -159,6 +189,9 @@ export const store = new Vuex.Store({
 		snackbar(){
 			return store.state.snackbar
 		},
+		registrationCompleted(){
+			return store.state.registrationCompleted
+		},
 		yearLevel(){
 			return store.state.yearLevel
 		},
@@ -182,6 +215,18 @@ export const store = new Vuex.Store({
 		},
 		educAtt(){
 			return store.state.educAtt
+		},
+		startTime(){
+			return store.state.startTime
+		},
+		endTime(){
+			return store.state.endTime
+		},
+		userLogin(){
+			return store.state.userLogin
+		},
+		authUser(){
+			return store.state.authUser
 		}
 	}
 	

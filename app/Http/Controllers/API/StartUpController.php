@@ -18,8 +18,8 @@ use App\Model\Policy;
 use App\Model\CivilStatus;
 use App\Model\Enrollee;
 use App\Model\EducAtt;
-
-
+use App\Model\Sibling;
+use App\Model\ConfirmEnroll;
 
 class StartUpController extends Controller
 {
@@ -77,13 +77,51 @@ class StartUpController extends Controller
 
         $enrollee = Enrollee::create($request->all());
 
-        // foreach ($request->answers as $key => $value) {
-        //      Enrollee::find($enrollee->id)->answers()->attach($enrollee->id, [
-        //             'enrollee_id' => $enrollee->id,
-        //             'answer_id' => $value->id
-        //         ] );    
-        // }
-        return response()->json($request->answers)
+        foreach ($request->answers as $key => $value) {
+             Enrollee::find($enrollee->id)->answers()->attach($enrollee->id, [
+                    'enrollee_id' => $enrollee->id,
+                    'answer_id' => $value['answerId']
+                ] );    
+        }
+
+        foreach ($request->requirementsDocs as $key => $value) {
+            
+            Enrollee::find($enrollee->id)->requirementsDoc()->attach($enrollee->id, [
+                    'enrollee_id' => $enrollee->id,
+                    'requirement_doc_id' => $value
+                ]);
+        }
+
+        foreach ($request->siblings as $key => $value) {
+            $sibling = Sibling::create([
+
+                    'name' => $value['name'],
+                    'age' => $value['age'],
+                    'occupation' => $value['occupation'],
+                    'school_name' => $value['school_name']
+
+                ]);
+            Enrollee::find($enrollee->id)->siblings()->attach($enrollee->id, [
+                    'enrollee_id' => $enrollee->id,
+                    'sibling_id' => $sibling->id
+                ]);
+        }
+
+        ConfirmEnroll::create([
+                'enrollee_id' => $enrollee->id,
+                'school_year_id' => $request->school_year_id,
+                'year_level_id' => $request->year_level_id,
+                'semester_id' => $request->semester_id,
+                'schedule_id' => $request->schedule_id,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time
+            ]);
+
+
+
+        return response()->json([
+                'success' => true
+            ]);
        
     }
 

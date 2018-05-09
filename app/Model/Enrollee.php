@@ -27,4 +27,15 @@ class Enrollee extends Model
 
         return $this->belongsToMany('App\Model\Answer', 'answer_enrollee', 'enrollee_id', 'answer_id');
     }
+
+    public function requirementsDoc(){
+        return $this->belongsToMany('App\Model\RequirementDoc', 'enrollee_requirements_doc', 'enrollee_id', 'requirement_doc_id');
+
+    }
+
+    public function siblings(){
+
+        return $this->belongsToMany('App\Model\Sibling', 'enrollee_sibling', 'enrollee_id', 'sibling_id');
+    }
+
 }

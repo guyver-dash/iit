@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEnrolledTable extends Migration
+class CreateEnrolleeSibling extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateEnrolledTable extends Migration
      */
     public function up()
     {
-        Schema::create('enrolled', function (Blueprint $table) {
+        Schema::create('enrollee_sibling', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('enrollee_id')->unsigned()->nullable();
+            $table->integer('sibling_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateEnrolledTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enrolled');
+        Schema::dropIfExists('enrollee_sibling');
     }
 }

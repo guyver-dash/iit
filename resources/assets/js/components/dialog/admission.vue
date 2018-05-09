@@ -9,7 +9,7 @@
           <v-toolbar-title>Application for Admission</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">Submit</v-btn>
+            <v-btn dark flat @click.native="submitForm">Submit</v-btn>
           </v-toolbar-items>
         </v-toolbar>
          <v-layout>
@@ -33,7 +33,7 @@
         <v-divider></v-divider>
         <v-list three-line subheader>
           <v-subheader>Enrollment Details</v-subheader>
-          <enroll></enroll>
+          <enroll ref="enroll"></enroll>
         </v-list>
       </v-card>
     </v-dialog>
@@ -63,6 +63,9 @@
 
       closeDialog(){
         this.$store.dispatch('dialogAdmission', false)
+      },
+      submitForm(){
+        this.$refs.enroll.submit()
       }
     }
 

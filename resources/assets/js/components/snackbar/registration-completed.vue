@@ -3,7 +3,7 @@
     <v-snackbar
       :timeout="0"
       :color="color"
-      v-model="snackbar"
+      v-model="registrationCompleted"
     >
       {{ text }}
       <v-btn dark flat @click.native="snackbarClose">Close</v-btn>
@@ -19,9 +19,9 @@
       }
     },
     computed: {
-       snackbar: {
+       registrationCompleted: {
           get(){
-            return this.$store.getters.snackbar
+            return this.$store.getters.registrationCompleted
           },
           set(){
 
@@ -30,7 +30,8 @@
     },
     methods: {
       snackbarClose(){
-        this.$store.dispatch('snackbar', false);
+        this.$store.dispatch('registrationCompleted', false);
+        this.$store.dispatch('dialogAdmission', false)
       }
     }
   }

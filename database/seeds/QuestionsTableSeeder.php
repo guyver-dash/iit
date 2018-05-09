@@ -15,6 +15,7 @@ class QuestionsTableSeeder extends Seeder
     public function run()
     {
          DB::table('questions')->truncate();
+         DB::table('answers')->truncate();
 
          $question = Question::create([
          		'name' => 'My parents are:'

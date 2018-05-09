@@ -1,4 +1,9 @@
 export const state = {
+     authUser: [],
+     userLogin: false,
+     registrationCompleted: false,
+     startTime: '',
+     endTime: '',
      birthday: '',
      siblings: null,
      snackbar: false,

@@ -11,32 +11,25 @@ import master from './components/layouts/master.vue'
 window.base_api = 'http://localhost/iit/public/api';
 window.base = 'http://localhost/iit/public/';
 
-// window.base_api = 'http://cebu.it.nfpublic/api';
-// window.base = 'http://cebu.it.nf/public';
+// window.base_api = 'http://cebu.it.nf/public/api';
+// window.base = 'http://cebu.it.nf/public/';
 
 
 
 Vue.use(Vuetify)
 Vue.use(VueRouter)
+
+//Adding axios globally
 Vue.prototype.$http = axios;
 
-const router = new VueRouter({
-  routes
-})
+var allStartUp = {
+  created: function () {
 
-
-const app = new Vue({
-    el: '#app',
-    router,
-    store,
-    components: {
-    	master
-    },
-	  mounted () {
-	  	var data = this
-	    this.$http
-	      .get(base_api + '/start-up')
-	      .then(function(response){
+    let token = localStorage.getItem('tokenKey');
+    let data = this
+     this.$http
+          .get(base_api + '/start-up')
+          .then(function(response){
             data.$store.dispatch('courses', response.data.courses)
             data.$store.dispatch('provinces', response.data.provinces)
             data.$store.dispatch('schoolYears', response.data.schoolYears)
@@ -49,7 +42,41 @@ const app = new Vue({
             data.$store.dispatch('civilStatus', response.data.civilStatus)
             data.$store.dispatch('educAtt', response.data.educAtt)
           }) 
-	  }
+    if(token != null && token.length > 30){
+        
+        this.$http.get(base_api + '/user?token=' + token)
+        .then(function(response){
+            
+            data.$store.dispatch('userLogin', true)
+            data.$store.dispatch('authUser', response.data.user)
+            
+        })
+        .catch(function(error){
+            data.$store.dispatch('userLogin', false)
+            localStorage.setItem('tokenKey', 'token_expired')
+        });
+    }
+
+    
+
+
+  }
+
+}
+
+const router = new VueRouter({
+  routes
+})
+
+
+const app = new Vue({
+    el: '#app',
+    router,
+    store,
+    mixins: [allStartUp],
+    components: {
+    	master
+    }
     
 });
 

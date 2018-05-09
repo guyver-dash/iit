@@ -85,18 +85,24 @@
         class="hidden-sm-and-down"
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
+        <v-btn icon  v-if="userLogin"
+        :to="'/user/' + toLowerCase(authUser.firstname + '-' + authUser.lastname)"
+        >
+          <v-icon>dashboard</v-icon>
+        </v-btn>
+        <v-btn icon  v-if="userLogin" @click.stop="logout">
+          <v-icon>power_settings_new</v-icon>
+        </v-btn>
       <v-btn icon
          @click.stop="dialog = !dialog"
-         class="mr-4"
+         v-if="userLogin == false"
       >
+        <v-icon>lock</v-icon>
+      </v-btn>
+      <v-btn icon class="mr-4">
         <v-icon>account_circle</v-icon>
       </v-btn>
+
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-content>
@@ -130,84 +136,87 @@
         <v-card-title
           class="grey lighten-4 py-4 title"
         >
-          Create contact
+          Sign-in
         </v-card-title>
         <v-container grid-list-sm class="pa-4">
+        <v-form v-model="valid" ref="login" lazy-validation>
           <v-layout row wrap>
-            <v-flex xs12 align-center justify-space-between>
-              <v-layout align-center>
-                <v-avatar size="40px" class="mr-3">
-                  <img
-                    src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
-                    alt=""
-                  >
-                </v-avatar>
-                <v-text-field
-                  placeholder="Name"
-                ></v-text-field>
-              </v-layout>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                prepend-icon="business"
-                placeholder="Company"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                placeholder="Job title"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                prepend-icon="mail"
-                placeholder="Email"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                type="tel"
-                prepend-icon="phone"
-                placeholder="(000) 000 - 0000"
-                mask="phone"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                prepend-icon="notes"
-                placeholder="Notes"
-              ></v-text-field>
-            </v-flex>
+            
+                <v-flex xs12 lg12 sm12 md 12 lx12>
+                  <v-text-field
+                    prepend-icon="mail"
+                    placeholder="Email"
+                    v-model="email"
+                    :rules="emailRules"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 lg12 sm12 md 12 lx12>
+                    <v-text-field
+                    name="input-10-1"
+                    label="Enter your password"
+                    hint="At least 8 characters"
+                    v-model="password"
+                    :rules="passwordRules"
+                    :prepend-icon= "e1 ? 'visibility' : 'visibility_off'""
+                    :prepend-icon-cb="() => (e1 = !e1)"
+                    :type="e1 ? 'password' : 'text'"
+                    counter
+                    >
+                      
+                    </v-text-field>
+                </v-flex>
           </v-layout>
+         </v-form>
         </v-container>
         <v-card-actions>
-          <v-btn flat color="primary">More</v-btn>
           <v-spacer></v-spacer>
           <v-btn flat color="primary" @click="dialog = false">Cancel</v-btn>
-          <v-btn flat @click="dialog = false">Save</v-btn>
+          <v-btn flat @click="signin">Sign-in</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <admission></admission>
+    <main-snack-bar v-bind:text="snackbarText" v-bind:color="snackbarColor"></main-snack-bar>
   </v-app>
 </template>
 
 <script>
   import admission from '../../components/dialog/admission.vue'
+  import mainSnackBar from '../../components/snackbar/snackbar.vue'
 
   export default {
     data: () => ({
+      snackbarColor: '',
+      snackbarText: '',
+      e1: true,
       dialog: false,
       drawer: null,
+      password: '',
+      email: '',
+       passwordRules: [
+        (v) => !!v || 'Password is required',
+        (v) => v.length >= 8 || 'Password must be at least 8 characters'
+        ],
+      emailRules: [
+      (v) => !!v || 'E-mail is required',
+      (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      ],
+      valid: true,
       base: window.base
      
     }),
     components: {
-      admission
+      admission, mainSnackBar
     },
     computed: {
       items(){
         return this.$store.getters.items
+      },
+      userLogin(){
+        return this.$store.getters.userLogin
+      },
+      authUser(){
+        return this.$store.getters.authUser
       }
     },
     methods: {
@@ -215,7 +224,45 @@
           if(value === 'Admission'){
               this.$store.dispatch('dialogAdmission', true)
           }
-        } 
+        },
+        signin(){
+          var data = this
+          if(this.$refs.login.validate()){
+              this.$http.post(base_api + '/auth/login',{
+
+                email: this.email,
+                password: this.password
+              }).then((res)=>{
+
+                  localStorage.setItem('tokenKey', res.data.token)
+                  data.$store.dispatch('authUser', res.data.user)
+                  data.$store.dispatch('userLogin', true)
+                  data.dialog = false
+                  data.snackbarColor = 'success'
+                  data.snackbarText = 'You have successfully sign-in!'
+                  data.$store.dispatch('snackbar', true)
+
+              })
+          }
+          
+        },
+        logout(){
+          var data = this
+          this.$http.get(base_api + '/auth/logout?token=' + localStorage.getItem('tokenKey'))
+            .then((res) => {
+               localStorage.setItem('tokenKey', res.data.result)
+               data.$store.dispatch('userLogin', false)
+               data.snackbarColor = 'success'
+               data.snackbarText = 'You have successfully log-out!'
+               data.$store.dispatch('snackbar', true)
+            })
+          
+        },
+        toLowerCase(str){
+
+          return str.replace(/\s+/g, '-').toLowerCase();
+
+        }
     },
     props: {
       source: String
