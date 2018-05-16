@@ -1,15 +1,17 @@
 <template>
-  <v-container fluid>
+	<v-container fluid fill-height>
+	   
     <v-form v-model="valid" ref="form" lazy-validation>
-    <div>
-                  <h3 class="headline mb-0">INSTRUCTIONS:</h3>
-                    <ol>
-                      <li>Student-Applicant accomplishes this Application Form properly.</li>
-                      <li>Fill-up information. Leave the field blank (if not applicable).</li>
-                      <li>Submit all the requirements as needed.</li>
-                    </ol>
-                </div>
+                  
     <v-layout row wrap>
+      <v-flex xl12 lg12 md12 sm12 xs12>
+            <h3 class="headline">INSTRUCTIONS:</h3>
+            <ol class="ml-4">
+               <li>Student-Applicant accomplishes this Application Form properly.</li>
+               <li>Fill-up information. Leave the field blank (if not applicable).</li>
+               <li>Submit all the requirements as needed.</li>
+            </ol>
+      </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
                 label="Date"
@@ -720,16 +722,11 @@
         </v-btn>
     </v-flex>
      </v-form>
-     <snackbar v-bind:color="snackbarColor" v-bind:text="snackbarText" ></snackbar>
-     <registration-completed v-bind:color="snackbarColor" v-bind:text="snackbarText" ></registration-completed>
-  </v-container>
+	</v-container>
 </template>
-
 <script>
-  import timePicker from '../../pickers/time-picker.vue'
-  import datePicker from '../../pickers/date-picker.vue'
-  import snackbar from '../../snackbar/snackbar.vue'
-  import registrationCompleted from '../../snackbar/registration-completed.vue'
+  import timePicker from '../../components/pickers/time-picker.vue'
+  import datePicker from '../../components/pickers/date-picker.vue'
 
   export default {
     data () {
@@ -820,7 +817,7 @@
       }
     },
     components: {
-      timePicker, datePicker, snackbar, registrationCompleted
+      timePicker, datePicker
     },
     computed: {
 
@@ -908,8 +905,8 @@
           this.$store.dispatch('snackbar', false)
          
         }else {
-            this.snackbarColor = 'error'
-            this.snackbarText = 'Sibling fields are required!'
+            this.$store.dispatch('snackbarText', 'Sibling fields are required!')
+            this.$store.dispatch('snackbarColor', 'error')
             this.$store.dispatch('snackbar', true)
         }
           
@@ -957,15 +954,16 @@
         })
       },
       submit () {
+
+         var data = this
         if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
             this.addSibling()
           }
 
-        
 
         if (this.$refs.form.validate()) {
           
-          var data = this
+         
           this.$http.post(base_api + '/enrollment', {
             start_time: this.startTime,
             end_time: this.endTime,
@@ -1033,15 +1031,17 @@
             
           })
           .then(function(res){
-              data.snackbarColor = 'success'
-              data.snackbarText = 'Registration completed!'
-              data.$store.dispatch('registrationCompleted', true)
+
+              data.$store.dispatch('snackbarText', 'Registration completed!')
+              data.$store.dispatch('snackbarColor', 'success')
+              data.$store.dispatch('snackbar', true)
           })
           
         }else{
-            this.snackbarColor = 'error'
-            this.snackbarText = 'Please correct some errors!'
-            this.$store.dispatch('snackbar', true)
+            data.$store.dispatch('snackbarText', 'Please correct some errors!')
+            data.$store.dispatch('snackbarColor', 'error')
+            data.$store.dispatch('snackbar', true)
+
         }
       },
     },

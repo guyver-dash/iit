@@ -29,6 +29,12 @@ export const store = new Vuex.Store({
 		snackbar(state, snackbar){
 			state.snackbar = snackbar
 		},
+		snackbarText(state, snackbarText){
+			state.snackbarText = snackbarText
+		},
+		snackbarColor(state, snackbarColor){
+			state.snackbarColor = snackbarColor
+		},
 		siblings(state, siblings){
 			state.siblings = siblings
 		},
@@ -120,7 +126,13 @@ export const store = new Vuex.Store({
 			store.commit('items', items);
 		},
 		snackbar(store, snackbar){
-			store.commit('snackbar', snackbar)
+			store.commit('snackbar', snackbar);
+		},
+		snackbarText(store, snackbarText){
+			store.commit('snackbarText', snackbarText)
+		},
+		snackbarColor(store, snackbarColor){
+			store.commit('snackbarColor', snackbarColor)
 		},
 		registrationCompleted(store, registrationCompleted){
 			store.commit('registrationCompleted', registrationCompleted)
@@ -188,6 +200,12 @@ export const store = new Vuex.Store({
 		},
 		snackbar(){
 			return store.state.snackbar
+		},
+		snackbarText(){
+			return store.state.snackbarText
+		},
+		snackbarColor(){
+			return store.state.snackbarColor
 		},
 		registrationCompleted(){
 			return store.state.registrationCompleted

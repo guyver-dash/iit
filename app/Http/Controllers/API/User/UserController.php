@@ -33,4 +33,9 @@ class UserController extends Controller
 
        return $this->user->logout($request);
     }
+
+    public function hasRole(){
+        
+        return $this->user->hasRole();
+    }
 }

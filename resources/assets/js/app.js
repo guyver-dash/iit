@@ -4,9 +4,9 @@ import VueRouter from 'vue-router'
 import { store } from './vuex/store.js'
 import {routes} from './router/route.js'
 import Vuetify from 'vuetify'
+import MyPlugin from './plugins/my-vue-plugin.js'
 
 import master from './components/layouts/master.vue'
-
 
 window.base_api = 'http://localhost/iit/public/api';
 window.base = 'http://localhost/iit/public/';
@@ -18,12 +18,49 @@ window.base = 'http://localhost/iit/public/';
 
 Vue.use(Vuetify)
 Vue.use(VueRouter)
+Vue.use(MyPlugin)
 
 //Adding axios globally
 Vue.prototype.$http = axios;
 
-var allStartUp = {
-  created: function () {
+const router = new VueRouter({
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.meta.requiresAuth){
+    var userLogin = JSON.parse(window.localStorage.getItem('userLogin'))
+    var roles = window.localStorage.getItem('roles')
+    var roles = roles.split(',')
+    if (userLogin ) {
+        if (to.path === '/admin/payment' || to.path === '/admin/shs' || to.path === '/admin/jhs') {
+            if(!roles.includes('admin')){
+                next({name: 'home'})
+            }
+        }
+        
+    }
+    else {
+        next({ name: 'home'})
+    }
+  }else{
+    next()
+  }
+  next()
+
+})
+
+
+
+
+const app = new Vue({
+    el: '#app',
+    router,
+    store,
+    components: {
+    	master
+    },
+    created: function () {
 
     let token = localStorage.getItem('tokenKey');
     let data = this
@@ -49,34 +86,20 @@ var allStartUp = {
             
             data.$store.dispatch('userLogin', true)
             data.$store.dispatch('authUser', response.data.user)
+            window.localStorage.setItem('roles', response.data.roles)
+            window.localStorage.setItem('userLogin', true)
             
         })
         .catch(function(error){
             data.$store.dispatch('userLogin', false)
             localStorage.setItem('tokenKey', 'token_expired')
+            window.localStorage.setItem('roles', null)
+             window.localStorage.setItem('userLogin', false)
         });
     }
 
-    
-
 
   }
-
-}
-
-const router = new VueRouter({
-  routes
-})
-
-
-const app = new Vue({
-    el: '#app',
-    router,
-    store,
-    mixins: [allStartUp],
-    components: {
-    	master
-    }
     
 });
 

@@ -13,7 +13,7 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         DB::table('roles')->truncate();
-        $roles = ['Admin', 'Registrar', 'Student'];
+        $roles = ['admin', 'registrar', 'student'];
 
 
         foreach ($roles as $key => $value) {

@@ -52,7 +52,7 @@
               </v-list-tile-content>
             </v-list-tile>
           </v-list-group>
-          <v-list-tile v-else @click="sidebarClick(item.text)" :key="item.text">
+          <v-list-tile v-else :to="item.to" :key="item.text">
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
@@ -86,7 +86,7 @@
       ></v-text-field>
       <v-spacer></v-spacer>
         <v-btn icon  v-if="userLogin"
-        :to="'/user/' + toLowerCase(authUser.firstname + '-' + authUser.lastname)"
+        :to="'/dashboard'" 
         >
           <v-icon>dashboard</v-icon>
         </v-btn>
@@ -108,7 +108,7 @@
     <v-content>
 
        <v-fade-transition mode="out-in">
-          <v-container fluid fill-height class="ma-1 pa-0">
+          <v-container fluid class="ma-1 pa-0">
                 <router-view></router-view>
           </v-container>
       </v-fade-transition>
@@ -186,8 +186,7 @@
 
   export default {
     data: () => ({
-      snackbarColor: '',
-      snackbarText: '',
+     
       e1: true,
       dialog: false,
       drawer: null,
@@ -217,6 +216,12 @@
       },
       authUser(){
         return this.$store.getters.authUser
+      },
+      snackbarText(){
+        return this.$store.getters.snackbarText
+      },
+      snackbarColor(){
+        return this.$store.getters.snackbarColor
       }
     },
     methods: {
@@ -237,9 +242,12 @@
                   localStorage.setItem('tokenKey', res.data.token)
                   data.$store.dispatch('authUser', res.data.user)
                   data.$store.dispatch('userLogin', true)
+                  window.localStorage.setItem('userLogin', true)
+                  window.localStorage.setItem('roles', res.data.roles)
                   data.dialog = false
-                  data.snackbarColor = 'success'
-                  data.snackbarText = 'You have successfully sign-in!'
+
+                  data.$store.dispatch('snackbarText', 'You have successfully sign-in!')
+                  data.$store.dispatch('snackbarColor', 'info')
                   data.$store.dispatch('snackbar', true)
 
               })
@@ -251,17 +259,15 @@
           this.$http.get(base_api + '/auth/logout?token=' + localStorage.getItem('tokenKey'))
             .then((res) => {
                localStorage.setItem('tokenKey', res.data.result)
+               data.$router.push('/')
                data.$store.dispatch('userLogin', false)
-               data.snackbarColor = 'success'
-               data.snackbarText = 'You have successfully log-out!'
+               data.$store.dispatch('snackbarText', 'You have successfully log-out!')
+               data.$store.dispatch('snackbarColor', 'info')
                data.$store.dispatch('snackbar', true)
+               window.localStorage.setItem('roles', null)
+               window.localStorage.setItem('userLogin', false)
             })
           
-        },
-        toLowerCase(str){
-
-          return str.replace(/\s+/g, '-').toLowerCase();
-
         }
     },
     props: {

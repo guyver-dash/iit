@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->truncate();
         $faker = Faker\Factory::create();
 
-        User::create([
+        $user = User::create([
         		'firstname' => 'Jhon',
         		'lastname' => 'Doe',
         		'email' => 'jhoaan@rbestore.com',
@@ -23,13 +23,24 @@ class UsersTableSeeder extends Seeder
 
         	]);
 
-        User::create([
+        $user->roles()->attach($user->id,[
+                'user_id' => $user->id,
+                'role_id' => 1
+            ]);
+
+
+       $user = User::create([
                 'firstname' => 'user 1',
                 'lastname' => 'user 1',
                 'email' => 'user1@rbestore.com',
                 'mobile' => '12345678914',
                 'password' => Hash::make('12345678')
 
+            ]);
+
+       $user->roles()->attach($user->id,[
+                'user_id' => $user->id,
+                'role_id' => 2
             ]);
 
     }

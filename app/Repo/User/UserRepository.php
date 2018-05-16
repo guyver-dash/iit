@@ -40,24 +40,29 @@ class UserRepository extends BaseRepository implements UserInterface{
         }
 
         $user = JWTAuth::toUser($token);
-
+        $user = $user->with('roles')->first();
+        $roles = $user->roles()->pluck('name');
         return response()->json([
                 'token' => $token,
-                'user' => $user
+                'user' => $user,
+                'roles' => $roles
             ]);
 	}
 
 	public function getAuthUser($request){
         
-        $user = JWTAuth::toUser($request->token);
-        
-        return response()->json(['user' => $user]);
+        $user = JWTAuth::toUser($request->token)->with('roles')->first();
+        $user = $user->with('roles')->first();
+        $roles = $user->roles()->pluck('name');
+        return response()->json(['user' => $user, 'roles' => $roles]);
     }
 
     public function logout($request){
 
         JWTAuth::setToken($request->token)->invalidate();
-        return response()->json(['result' => 'logout']);
+        return response()->json([
+            'result' => 'logout',
+            ]);
     }
 
     

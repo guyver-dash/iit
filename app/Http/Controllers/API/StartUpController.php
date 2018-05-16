@@ -92,20 +92,24 @@ class StartUpController extends Controller
                 ]);
         }
 
-        foreach ($request->siblings as $key => $value) {
-            $sibling = Sibling::create([
+        if(count($request->siblings) > 0){
 
-                    'name' => $value['name'],
-                    'age' => $value['age'],
-                    'occupation' => $value['occupation'],
-                    'school_name' => $value['school_name']
+            foreach ($request->siblings as $key => $value) {
+                $sibling = Sibling::create([
 
-                ]);
-            Enrollee::find($enrollee->id)->siblings()->attach($enrollee->id, [
-                    'enrollee_id' => $enrollee->id,
-                    'sibling_id' => $sibling->id
-                ]);
+                        'name' => $value['name'],
+                        'age' => $value['age'],
+                        'occupation' => $value['occupation'],
+                        'school_name' => $value['school_name']
+
+                    ]);
+                Enrollee::find($enrollee->id)->siblings()->attach($enrollee->id, [
+                        'enrollee_id' => $enrollee->id,
+                        'sibling_id' => $sibling->id
+                    ]);
+            }
         }
+        
 
         ConfirmEnroll::create([
                 'enrollee_id' => $enrollee->id,

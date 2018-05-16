@@ -7,6 +7,8 @@ export const state = {
      birthday: '',
      siblings: null,
      snackbar: false,
+     snackbarColor: '',
+     snackbarText: '',
      provinces:[],
      dialogAdmission: false,
      schoolYears: [],
@@ -20,11 +22,12 @@ export const state = {
      civilStatus: [],
      educAtt:[],
      items: [
-        { icon: 'home', text: 'Home' },
+        { icon: 'home', text: 'Home', to: '/' },
         {
           icon: 'keyboard_arrow_up',
           'icon-alt': 'keyboard_arrow_down',
           text: 'About',
+          to: '/about-us',
           model: false,
           children: [
             { text: 'School' },
@@ -34,9 +37,9 @@ export const state = {
             { text: 'Industry Partner' }
           ]
         },
-        { icon: 'assignment_ind', text: 'Admission' },
-        { icon: 'phone', text: 'Contact Us' },
-        { icon: 'chat_bubble', text: 'Send feedback' },
-        { icon: 'tag_faces', text: 'Facebook Page' }
+        { icon: 'assignment_ind', text: 'Admission', to: '/admission' },
+        { icon: 'phone', text: 'Contact Us', to: '/contact-us'},
+        { icon: 'chat_bubble', text: 'Send feedback', to: 'feedback' },
+        { icon: 'tag_faces', text: 'Facebook Page', to: 'facebook-page' }
       ]
 }
