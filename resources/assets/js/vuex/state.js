@@ -1,5 +1,5 @@
 export const state = {
-     authUser: [],
+     authUser: {firstname: '', lastname: ''},
      userLogin: false,
      registrationCompleted: false,
      startTime: '',

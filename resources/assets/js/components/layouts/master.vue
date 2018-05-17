@@ -190,7 +190,7 @@
       e1: true,
       dialog: false,
       drawer: null,
-      password: '',
+      password: ' ',
       email: '',
        passwordRules: [
         (v) => !!v || 'Password is required',
