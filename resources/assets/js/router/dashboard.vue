@@ -6,8 +6,9 @@
 
 <script>
 import startUp from '../mixins/start-up.js'
+
   export default {
-        mixins: [startUp],
+      mixins: [startUp],
     	computed: {
     		authUser(){
     			return this.$store.getters.authUser

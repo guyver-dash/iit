@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Enrollee extends Model
 {
@@ -38,4 +39,8 @@ class Enrollee extends Model
         return $this->belongsToMany('App\Model\Sibling', 'enrollee_sibling', 'enrollee_id', 'sibling_id');
     }
 
+    public function getCreatedAtAttribute($value){
+        return  Carbon::parse($value)->toDayDateTimeString();
+        
+    }
 }

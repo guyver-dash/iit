@@ -1,5 +1,9 @@
 export const state = {
-     authUser: {firstname: '', lastname: ''},
+     authUser: {firstname: '', lastname: '', email: ''},
+     profile: {firstname: '', lastname: '', email: '', password: '', newPassword: ''},
+     enrollees: [],
+     roles: [],
+     role: [],
      userLogin: false,
      registrationCompleted: false,
      startTime: '',

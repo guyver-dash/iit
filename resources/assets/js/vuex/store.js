@@ -8,6 +8,9 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		enrollees(state, enrollees){
+			state.enrollees = enrollees
+		},
 		authUser(state, authUser){
 			state.authUser = authUser
 		},
@@ -76,9 +79,30 @@ export const store = new Vuex.Store({
 		},
 		educAtt(state, educAtt){
 			state.educAtt = educAtt
+		},
+		profile(state, profile){
+			state.profile[profile[0]] = profile[1]
+		},
+		roles(state, roles){
+			state.roles = roles
+		},
+		role(state, role){
+			state.role = role
 		}
 	},
 	actions: {
+		enrollees(store, enrollees){
+			store.commit('enrollees', enrollees)
+		},
+		role(store, role){
+			store.commit('role', role)
+		},
+		roles(store, roles){
+			store.commit('roles', roles) 
+		},
+		profile(store, value){
+			store.commit('profile', value)
+		},
 		removeSibling(store, key){
 
 			var siblings = store.state.siblings
@@ -175,6 +199,9 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		enrollees(){
+			return store.state.enrollees
+		},
 		siblings(){
 			return store.state.siblings
 		},
@@ -245,6 +272,15 @@ export const store = new Vuex.Store({
 		},
 		authUser(){
 			return store.state.authUser
+		},
+		profile(){
+			return store.state.profile
+		},
+		roles(){
+			return store.state.roles
+		},
+		role(){
+			return store.state.role
 		}
 	}
 	

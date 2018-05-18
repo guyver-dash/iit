@@ -162,6 +162,7 @@ return [
         App\Providers\CourseServiceProvider::class,
         App\Providers\RoleServiceProvider::class,
         App\Providers\UserServiceProvider::class,
+        App\Providers\EnrolleeServiceProvider::class,
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
     ],
 

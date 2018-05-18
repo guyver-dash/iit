@@ -42,10 +42,12 @@ class UserRepository extends BaseRepository implements UserInterface{
         $user = JWTAuth::toUser($token);
         $user = $user->with('roles')->first();
         $roles = $user->roles()->pluck('name');
+        $myRoles = $user->roles()->pluck('roles.id');
         return response()->json([
                 'token' => $token,
                 'user' => $user,
-                'roles' => $roles
+                'roles' => $roles,
+                'myRoles' => $myRoles
             ]);
 	}
 
@@ -54,7 +56,8 @@ class UserRepository extends BaseRepository implements UserInterface{
         $user = JWTAuth::toUser($request->token)->with('roles')->first();
         $user = $user->with('roles')->first();
         $roles = $user->roles()->pluck('name');
-        return response()->json(['user' => $user, 'roles' => $roles]);
+        $myRoles = $user->roles()->pluck('roles.id');
+        return response()->json(['user' => $user, 'roles' => $roles, 'myRoles' => $myRoles]);
     }
 
     public function logout($request){
@@ -63,6 +66,26 @@ class UserRepository extends BaseRepository implements UserInterface{
         return response()->json([
             'result' => 'logout',
             ]);
+    }
+
+    public function profileUpdate($request){
+
+         $user = JWTAuth::toUser($request->token);
+         $user->roles()->sync($request->roles);
+
+         if( $request->user['password'] != ''){
+            $user->password = Hash::make($request->user['password']);
+         }
+         $user->firstname = $request->user['firstname'];
+         $user->lastname = $request->user['lastname'];
+         $user->email = $request->user['email'];
+         $user->update();
+
+         return response()->json($user);
+
+        
+
+
     }
 
     

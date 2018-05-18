@@ -38,4 +38,8 @@ class UserController extends Controller
         
         return $this->user->hasRole();
     }
+    public function profileUpdate(){
+        $request = app()->make('request');
+        return $this->user->profileUpdate($request);
+    }
 }

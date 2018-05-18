@@ -20,6 +20,8 @@ use App\Model\Enrollee;
 use App\Model\EducAtt;
 use App\Model\Sibling;
 use App\Model\ConfirmEnroll;
+use App\Model\Role;
+
 
 class StartUpController extends Controller
 {
@@ -127,6 +129,13 @@ class StartUpController extends Controller
                 'success' => true
             ]);
        
+    }
+
+    public function getRoles(){
+
+        return response()->json([
+                'roles' => Role::all()
+            ]);
     }
 
     
