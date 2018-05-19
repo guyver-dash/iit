@@ -29,6 +29,7 @@
           <v-text-field
           label="Change password"
           hint="At least 8 characters"
+          :rules="passwordRules"
           v-model="password"
           :prepend-icon= "e1 ? 'visibility' : 'visibility_off'""
           :prepend-icon-cb="() => (e1 = !e1)"
@@ -50,13 +51,16 @@
     data: () => ({
       valid: true,
       e1: true,
-      password: '',
       valid: false,
       name: '',
       nameRules: [
       v => !!v || 'Name is required',
       v => v.length <= 20 || 'Name must be less than 10 characters'
       ],
+      passwordRules: [
+        (v) => !!v || 'Password is required',
+        (v) => v.length >= 8 || 'Password must be at least 8 characters'
+        ],
       email: '',
       emailRules: [
       v => !!v || 'E-mail is required',
@@ -78,8 +82,14 @@
       authUser(){
        return this.$store.getters.authUser
      },
-      profile(){
-        return this.$store.getters.profile
+      password: {
+        get(){
+          return this.$store.getters.password
+        },
+        set(val){
+          this.$store.dispatch('password', val)
+        }
+        
       },
       role(){
         return this.$store.getters.role
@@ -90,8 +100,9 @@
       if (this.$refs.form.validate()) {
           var data = this
           this.$http.post(base_api + '/profile-update', 
-              { 'user': this.profile, 
-                'roles': this.role, 
+              { 'user': this.authUser, 
+                'roles': this.role,
+                'password': this.password,
                 'token': window.localStorage.getItem('tokenKey')
               })
           .then(function(res){
@@ -111,23 +122,18 @@
     },
     watch: {
       'authUser.firstname'(val){
-        this.$store.dispatch('profile', [
+        this.$store.dispatch('authUserField', [
           'firstname', val
           ])
       },
       'authUser.lastname'(val){
-        this.$store.dispatch('profile', [
+        this.$store.dispatch('authUserField', [
           'lastname', val
           ])
       },
       'authUser.email'(val){
-        this.$store.dispatch('profile', [
+        this.$store.dispatch('authUserField', [
           'email', val
-          ])
-      },
-      password(val){
-        this.$store.dispatch('profile', [
-          'password', val
           ])
       }
     }

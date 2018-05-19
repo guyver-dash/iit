@@ -9,7 +9,9 @@ Route::get('courses', 'API\Course\CourseController@index');
 Route::get('roles', 'API\StartUpController@getRoles');
 Route::get('enrollees', 'API\Enrollee\EnrolleeController@getEnrollees');
 
-
+Route::get('confirm-enrolled', 'API\ConfirmEnrolled\ConfirmedEnrolledController@index');
+Route::get('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@edit');
+Route::put('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@update');
 Route::post('auth/register', 'API\User\UserController@register');
 Route::post('auth/login', 'API\User\UserController@login');
 Route::get('auth/logout', 'API\User\UserController@logout');

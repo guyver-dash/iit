@@ -7,13 +7,13 @@
       class="elevation-1 mt-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.admissionNo }}</td>
-        <td>{{ props.item.firstname }}</td>
-        <td>{{ props.item.lastname }}</td>
-        <td>status</td>
-        <td>{{ props.item.created_at }}</td>
+        <td>{{ props.item.enrollee.admissionNo }}</td>
+        <td>{{ props.item.enrollee.firstname }}</td>
+        <td>{{ props.item.enrollee.lastname }}</td>
+        <td>{{ props.item.status}}</td>
+        <td>{{ props.item.enrollee.created_at }}</td>
         <td class="justify-center layout px-0">
-          <v-btn icon class="mx-0" @click="editItem(props.item)">
+          <v-btn icon class="mx-0" :to="'/admin/admission/'+props.item.id">
             <v-icon color="teal">edit</v-icon>
           </v-btn>
           <v-btn icon class="mx-0" @click="deleteItem(props.item)">
@@ -78,7 +78,7 @@
 
     created () {
       let data = this
-      this.$http.get(base_api + '/enrollees')
+      this.$http.get(base_api + '/confirm-enrolled')
       .then(function(res){
         data.$store.dispatch('enrollees', res.data.enrollees)
       })

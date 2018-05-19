@@ -11,8 +11,14 @@ export const store = new Vuex.Store({
 		enrollees(state, enrollees){
 			state.enrollees = enrollees
 		},
+		password(state, password){
+			state.password = password
+		},
 		authUser(state, authUser){
 			state.authUser = authUser
+		},
+		authUserField(state, authUserField){
+			state.authUser[authUserField[0]] = authUserField[1]
 		},
 		userLogin(state, userLogin){
 			state.userLogin = userLogin
@@ -80,9 +86,7 @@ export const store = new Vuex.Store({
 		educAtt(state, educAtt){
 			state.educAtt = educAtt
 		},
-		profile(state, profile){
-			state.profile[profile[0]] = profile[1]
-		},
+		
 		roles(state, roles){
 			state.roles = roles
 		},
@@ -100,8 +104,11 @@ export const store = new Vuex.Store({
 		roles(store, roles){
 			store.commit('roles', roles) 
 		},
-		profile(store, value){
-			store.commit('profile', value)
+		authUserField(store, authUserField){
+			store.commit('authUserField', authUserField)
+		},
+		password(store, password){
+			store.commit('password', password)
 		},
 		removeSibling(store, key){
 
@@ -273,8 +280,8 @@ export const store = new Vuex.Store({
 		authUser(){
 			return store.state.authUser
 		},
-		profile(){
-			return store.state.profile
+		password(){
+			return store.state.password
 		},
 		roles(){
 			return store.state.roles

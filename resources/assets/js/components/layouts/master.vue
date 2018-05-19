@@ -140,8 +140,10 @@
         </v-card-title>
         <v-container grid-list-sm class="pa-4">
         <v-form v-model="valid" ref="login" lazy-validation>
+           <v-alert :value="loginAlert" outline color="error" icon="warning" dismissible @click="loginAlert = false">
+            {{ alertText }}
+          </v-alert>
           <v-layout row wrap>
-            
                 <v-flex xs12 lg12 sm12 md 12 lx12>
                   <v-text-field
                     prepend-icon="mail"
@@ -189,6 +191,8 @@
      
       e1: true,
       dialog: false,
+      alertText: '',
+      loginAlert: false,
       drawer: null,
       password: '',
       email: '',
@@ -250,6 +254,10 @@
                   data.$store.dispatch('snackbarColor', 'info')
                   data.$store.dispatch('snackbar', true)
 
+              })
+              .catch(function(error){
+                data.alertText = error.response.data
+                data.loginAlert = true
               })
           }
           

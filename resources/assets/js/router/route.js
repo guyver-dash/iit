@@ -3,6 +3,7 @@ import home from './home/index.vue'
 import dashboard from './dashboard.vue'
 import profile from './profile/index.vue'
 import admission from './admission/index.vue'
+import editAdmission from './admission/editAdmission.vue'
 import payment from './profile/payment.vue'
 import enrollees from './enrollees.vue'
 
@@ -20,6 +21,9 @@ export const routes = [
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/enrollees', component: enrollees, name: 'enrollees', 
+			meta: { requiresAuth: true}
+		},
+		{ path: '/admin/admission/:id', component: editAdmission, name: 'editAdmission', 
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/shs', component: payment, name: 'shs', 

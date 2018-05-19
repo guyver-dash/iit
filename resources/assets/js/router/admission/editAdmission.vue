@@ -840,6 +840,8 @@
         data.$store.dispatch('civilStatus', response.data.civilStatus)
         data.$store.dispatch('educAtt', response.data.educAtt)
       }) 
+
+      this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id)
     },
     computed: {
 

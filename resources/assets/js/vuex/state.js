@@ -1,6 +1,6 @@
 export const state = {
      authUser: {firstname: '', lastname: '', email: ''},
-     profile: {firstname: '', lastname: '', email: '', password: '', newPassword: ''},
+     password: '',
      enrollees: [],
      roles: [],
      role: [],

@@ -19,7 +19,7 @@ use App\Model\CivilStatus;
 use App\Model\Enrollee;
 use App\Model\EducAtt;
 use App\Model\Sibling;
-use App\Model\ConfirmEnroll;
+use App\Model\ConfirmEnrolled;
 use App\Model\Role;
 
 
@@ -113,7 +113,7 @@ class StartUpController extends Controller
         }
         
 
-        ConfirmEnroll::create([
+        ConfirmEnrolled::create([
                 'enrollee_id' => $enrollee->id,
                 'school_year_id' => $request->school_year_id,
                 'year_level_id' => $request->year_level_id,

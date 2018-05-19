@@ -73,8 +73,8 @@ class UserRepository extends BaseRepository implements UserInterface{
          $user = JWTAuth::toUser($request->token);
          $user->roles()->sync($request->roles);
 
-         if( $request->user['password'] != ''){
-            $user->password = Hash::make($request->user['password']);
+         if( $request->password != ''){
+            $user->password = Hash::make($request->password);
          }
          $user->firstname = $request->user['firstname'];
          $user->lastname = $request->user['lastname'];

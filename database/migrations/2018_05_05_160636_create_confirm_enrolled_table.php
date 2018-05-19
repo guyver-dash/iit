@@ -28,6 +28,7 @@ class CreateConfirmEnrolledTable extends Migration
             $table->foreign('semester_id')->references('id')
                 ->on('semesters');
             $table->integer('schedule_id')->nullable();
+            $table->boolean('status')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->timestamps();
