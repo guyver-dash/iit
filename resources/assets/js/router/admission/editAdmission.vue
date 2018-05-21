@@ -32,7 +32,7 @@
         <v-select
         label="Select Course"
         :items="courses"
-        v-model="course"
+        v-model="confirmedEnrolled.enrollee.course_id"
         item-text="name"
         item-value="id"
         :rules="[v => !!v || 'Please select course.']"
@@ -43,7 +43,7 @@
         <v-select
         label="School Year"
         :items="schoolYears"
-        v-model="schoolYear"
+        v-model="confirmedEnrolled.school_year_id"
         item-value="id"
         item-text="sy"
         :rules="[v => !!v || 'Please select school year.']"
@@ -55,7 +55,7 @@
         <v-select
         label="Year level"
         :items="yearLevels"
-        v-model="yearLevel"
+        v-model="confirmedEnrolled.year_level_id"
         item-value="id"
         item-text="name"
         :rules="[v => !!v || 'Please select year level.']"
@@ -66,7 +66,7 @@
         <v-select
         label="Semester"
         :items="semesters"
-        v-model="semester"
+        v-model="confirmedEnrolled.semester_id"
         item-value="id"
         item-text="name"
         :rules="[v => !!v || 'Please select semester.']"
@@ -77,7 +77,7 @@
         <v-select
         label="Schedule"
         :items="schedules"
-        v-model="schedule"
+        v-model="confirmedEnrolled.schedule_id"
         item-value="id"
         item-text="name"
         :rules="[v => !!v || 'Please select schedule.']"
@@ -91,8 +91,8 @@
             
             <v-layout row wrap>
               <span class="subheading">Modular (Specify your 4 hours time range:)</span>
-              <time-picker v-bind:label="'Start time'"></time-picker>
-              <time-picker v-bind:label="'End time'"></time-picker>
+              <start-time></start-time>
+              <end-time></end-time>
             </v-layout>
           </v-card-text>
         </v-card>
@@ -109,7 +109,7 @@
        
         <v-text-field
         label="Lastname"
-        v-model="lastname"
+        v-model="confirmedEnrolled.enrollee.lastname"
         :rules="[v => !!v || 'This field is required.']"
         required
         ></v-text-field>
@@ -117,7 +117,7 @@
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
         label="Firstname"
-        v-model="firstname"
+        v-model="confirmedEnrolled.enrollee.firstname"
         :rules="[v => !!v || 'This field is required.']"
         required
         ></v-text-field>
@@ -126,41 +126,41 @@
         <v-text-field
         label="Middlename"
         :rules="[v => !!v || 'This field is required.']"
-        v-model="middlename"
+        v-model="confirmedEnrolled.enrollee.middlename"
         required
         ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
         label="Suffix"
-        v-model="suffix"
+        v-model="confirmedEnrolled.enrollee.suffix"
 
         ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
         label="Nick name"
-        v-model="nickName"
+        v-model="confirmedEnrolled.enrollee.nickname"
         ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
         label="Age"
-        v-model="age"
+        v-model="confirmedEnrolled.enrollee.age"
         :type="'number'"
         :rules="[v => !!v || 'This field is required.']"
         required
         ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-        <date-picker>
+        <edit-date-picker>
           
-        </date-picker>
+        </edit-date-picker>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
         label="Birth Place"
-        v-model="birthplace"
+        v-model="confirmedEnrolled.enrollee.birth_place"
         required
         :rules="[v => !!v || 'This field is required.']"
         ></v-text-field>
@@ -169,7 +169,7 @@
        <v-select
        label="Educational Attainment"
        :items="educAtt"
-       v-model="selectedEducAtt"
+       v-model="confirmedEnrolled.enrollee.educ_at_id"
        item-value="id"
        item-text="name"
        :rules="[v => !!v || 'This field is required.']"
@@ -180,8 +180,9 @@
        <v-select
        label="Sex"
        :items="sexs"
-       v-model="sex"
-       item-value="text"
+       v-model="confirmedEnrolled.enrollee.sex"
+       item-value="id"
+       item-text="text"
        required
        :rules="[v => !!v || 'This field is required.']"
        ></v-select>
@@ -190,7 +191,7 @@
        <v-select
        label="Civil Status"
        :items="civilStatus"
-       v-model="selectedCivil"
+       v-model="confirmedEnrolled.enrollee.civil"
        item-value="id"
        item-text="name"
        :rules="[v => !!v || 'This field is required.']"
@@ -202,26 +203,26 @@
      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2"  v-if="selectedCivil == 1">
        <v-text-field
        label="Spouse lastname"
-       v-model="spouseLastname"
+       v-model="confirmedEnrolled.enrollee.spouse_lastname"
        ></v-text-field>
      </v-flex>
      <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2" v-if="selectedCivil == 1">
       <v-text-field
       label="Spouse firstname"
-      v-model="spouseFirstname"
+      v-model="confirmedEnrolled.enrollee.spouse_firstname"
       ></v-text-field>
     </v-flex>
     <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2" v-if="selectedCivil == 1">
      <v-text-field
      label="Spouse middlename"
-     v-model="spouseMiddlename"
+     v-model="confirmedEnrolled.enrollee.spouse_middlename"
      ></v-text-field>
    </v-flex>
    
    <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
      <v-text-field
      label="Landline"
-     v-model="landline"
+     v-model="confirmedEnrolled.enrollee.landline"
      :type="'number'"
      prepend-icon="phone"
      ></v-text-field>
@@ -229,7 +230,7 @@
    <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
      <v-text-field
      label="Phone Number"
-     v-model="mobile"
+     v-model="confirmedEnrolled.enrollee.mobile"
      :type="'number'"
      :rules="[v => !!v || 'This field is required.']"
      required
@@ -240,7 +241,7 @@
    <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
      <v-text-field
      label="Email"
-     v-model="email"
+     v-model="confirmedEnrolled.enrollee.email"
      :type="'email'"
      :rules="emailRules"
      required
@@ -250,7 +251,7 @@
    <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
      <v-text-field
      label="Religion"
-     v-model="religion"
+     v-model="confirmedEnrolled.enrollee.religion"
      prepend-icon="pages"
      required
      :rules="[v => !!v || 'This field is required.']"
@@ -259,7 +260,7 @@
    <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
      <v-text-field
      label="Citizenship"
-     v-model="citizenship"
+     v-model="confirmedEnrolled.enrollee.citizenship"
      prepend-icon="public"
      required
      :rules="[v => !!v || 'This field is required.']"
@@ -277,7 +278,7 @@
    autocomplete
    label="Present Province"
    :items="provinces"
-   v-model="presentProvinceId"
+   v-model="confirmedEnrolled.enrollee.present_province_id"
    item-text="name"
    item-value="id"
    required
@@ -289,7 +290,7 @@
   autocomplete
   label="Present City"
   :items="presentCities"
-  v-model="presentCityId"
+  v-model="confirmedEnrolled.enrollee.present_city_id"
   item-text="name"
   item-value="id"
   required
@@ -299,7 +300,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
  <v-text-field
  label="Present Zipcode"
- v-model="presentZipCode"
+ v-model="confirmedEnrolled.enrollee.present_zipcode"
  :type="'number'"
  :rules="[v => !!v || 'This field is required.']"
  required
@@ -309,7 +310,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
   <v-text-field
   label="Present Address(House No:, street)"
-  v-model="presentAddress"
+  v-model="confirmedEnrolled.enrollee.present_address"
   color="grey"
   textarea
   :rules="[v => !!v || 'This field is required.']"
@@ -327,7 +328,7 @@
    <v-select
    label="Permanent Province"
    :items="provinces"
-   v-model="permanentProvinceId"
+   v-model="confirmedEnrolled.enrollee.permanent_province_id"
    item-value="id"
    item-text="name"
    :rules="[v => !!v || 'This field is required.']"
@@ -338,7 +339,7 @@
   <v-select
   label="Permanent City"
   :items="permanentCities"
-  v-model="permanentCityId"
+  v-model="confirmedEnrolled.enrollee.permanent_city_id"
   item-value="id"
   item-text="name"
   :rules="[v => !!v || 'This field is required.']"
@@ -348,7 +349,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
  <v-text-field
  label="Permanent Zipcode"
- v-model="permanentZipCode"
+ v-model="confirmedEnrolled.enrollee.permanent_zipcode"
  :type="'number'"
  :rules="[v => !!v || 'This field is required.']"
  required
@@ -357,7 +358,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
   <v-text-field
   label="Permanent Address(House No:, street)"
-  v-model="permanentAddress"
+  v-model="confirmedEnrolled.enrollee.permanent_address"
   color="grey"
   textarea
   :rules="[v => !!v || 'This field is required.']"
@@ -379,7 +380,7 @@
    
     <v-text-field
     label="Father's lastname"
-    v-model="fatherLastname"
+    v-model="confirmedEnrolled.enrollee.father_lastname"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
@@ -387,7 +388,7 @@
   <v-flex xl2 lg2 md2 sm6 xs12 class="pa-2">
     <v-text-field
     label="Father's firstname"
-    v-model="fatherFirstname"
+    v-model="confirmedEnrolled.enrollee.father_firstname"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
@@ -395,7 +396,7 @@
   <v-flex xl2 lg2 md2 sm6 xs12 class="pa-2">
     <v-text-field
     label="Father's middlename"
-    v-model="fatherMiddlename"
+    v-model="confirmedEnrolled.enrollee.father_middlename"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
@@ -403,7 +404,7 @@
   <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
     <v-text-field
     label="Occupation"
-    v-model="fatherOccupation"
+    v-model="confirmedEnrolled.enrollee.father_occupation"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
@@ -411,7 +412,7 @@
   <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
     <v-text-field
     label="Contact Number"
-    v-model="fatherContactNo"
+    v-model="confirmedEnrolled.enrollee.father_contact_number"
     :type="'number'"
 
     ></v-text-field>
@@ -421,7 +422,7 @@
    <v-select
    label="Province"
    :items="provinces"
-   v-model="fatherProvinceId"
+   v-model="confirmedEnrolled.enrollee.father_province_id"
    item-value="id"
    item-text="name"
    autocomplete
@@ -433,7 +434,7 @@
   <v-select
   label="City"
   :items="fatherCities"
-  v-model="fatherCityId"
+  v-model="confirmedEnrolled.enrollee.father_city_id"
   item-value="id"
   item-text="name"
   autocomplete
@@ -445,7 +446,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
  <v-text-field
  label="Zipcode"
- v-model="fatherZipCode"
+ v-model="confirmedEnrolled.enrollee.father_zipcode"
  :type="'number'"
  :rules="[v => !!v || 'This field is required.']"
  required
@@ -454,7 +455,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
   <v-text-field
   label="Present Address(House No:, street)"
-  v-model="fatherAddress"
+  v-model="confirmedEnrolled.enrollee.father_address"
   color="grey"
   textarea
   :rules="[v => !!v || 'This field is required.']"
@@ -470,7 +471,7 @@
    
     <v-text-field
     label="Mother's lastname"
-    v-model="motherLastname"
+    v-model="confirmedEnrolled.enrollee.mother_lastname"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
@@ -478,7 +479,7 @@
   <v-flex xl2 lg2 md2 sm6 xs12 class="pa-2">
     <v-text-field
     label="Mother's firstname"
-    v-model="motherFirstname"
+    v-model="confirmedEnrolled.enrollee.mother_firstname"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
@@ -486,7 +487,7 @@
   <v-flex xl2 lg2 md2 sm6 xs12 class="pa-2">
     <v-text-field
     label="Mother's middlename"
-    v-model="motherMiddlename"
+    v-model="confirmedEnrolled.enrollee.mother_middlename"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
@@ -494,7 +495,7 @@
   <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
     <v-text-field
     label="Occupation"
-    v-model="motherOccupation"
+    v-model="confirmedEnrolled.enrollee.mother_occupation"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
@@ -502,7 +503,7 @@
   <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
     <v-text-field
     label="Contact Number"
-    v-model="motherContactNo"
+    v-model="confirmedEnrolled.enrollee.mother_contact_number"
     :type="'number'"
     ></v-text-field>
   </v-flex>
@@ -512,7 +513,7 @@
    autocomplete
    label="Province"
    :items="provinces"
-   v-model="motherProvinceId"
+   v-model="confirmedEnrolled.enrollee.mother_province_id"
    item-value="id"
    item-text="name"
    required
@@ -524,7 +525,7 @@
   autocomplete
   label="City"
   :items="motherCities"
-  v-model="motherCityId"
+  v-model="confirmedEnrolled.enrollee.mother_city_id"
   item-value="id"
   item-text="name"
   :rules="[v => !!v || 'This field is required.']"
@@ -534,7 +535,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
  <v-text-field
  label="Zipcode"
- v-model="motherZipCode"
+ v-model="confirmedEnrolled.enrollee.mother_zipcode"
  :type="'number'"
  :rules="[v => !!v || 'This field is required.']"
  required
@@ -543,7 +544,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
   <v-text-field
   label="Present Address(House No:, street)"
-  v-model="motherAddress"
+  v-model="confirmedEnrolled.enrollee.mother_address"
   color="grey"
   textarea
   :rules="[v => !!v || 'This field is required.']"
@@ -559,7 +560,7 @@
 </v-flex>
 <v-layout row wrap>
   <v-flex xl12 lg12 md12 sm12 xs12>
-    <v-chip close  v-for="(sibling, i) in siblings" :key="i" @input="removeSibling(i)">{{ sibling.name }}</v-chip>
+    <v-chip close  v-for="(sibling, i) in confirmedEnrolled.enrollee.siblings" :key="i" @input="removeSibling(i)">{{ sibling.name }}</v-chip>
   </v-flex>
   
   <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -604,7 +605,7 @@
   <v-flex xl12 lg12 md12 sm6 xs12 class="pa-2">
     <v-text-field
     label="Name of school"
-    v-model="schoolName"
+    v-model="confirmedEnrolled.enrollee.name_of_school"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
@@ -615,7 +616,7 @@
    <v-select
    label="Province"
    :items="provinces"
-   v-model="schoolProvinceId"
+   v-model="confirmedEnrolled.enrollee.school_province_id"
    item-value="id"
    item-text="name"
    required
@@ -626,7 +627,7 @@
   <v-select
   label="City"
   :items="schoolCities"
-  v-model="schoolCityId"
+  v-model="confirmedEnrolled.enrollee.school_city_id"
   item-value="id"
   item-text="name"
   required
@@ -636,7 +637,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
  <v-text-field
  label="Zipcode"
- v-model="schoolZipCode"
+ v-model="confirmedEnrolled.enrollee.school_zipcode"
  :type="'number'"
  :rules="[v => !!v || 'This field is required.']"
  required
@@ -645,7 +646,7 @@
 <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
   <v-text-field
   label="Present Address(House No:, street)"
-  v-model="schoolAddress"
+  v-model="confirmedEnrolled.enrollee.school_address"
   color="grey"
   textarea
   :rules="[v => !!v || 'This field is required.']"
@@ -656,16 +657,39 @@
 
 <v-divider></v-divider>
 
-<v-layout row wrap>
-  
-  <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2" v-for="question in questions" :key="question.id">
-    <v-select
-    :label="question.name"
-    :items="question.answers"
-    item-value="id"
-    item-text="name"
-    @change="myAnswer"
-    ></v-select>
+<v-layout row wrap> 
+  <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
+        <v-select
+            :label="'My parents are:'"
+            :items="questions1"
+            item-value="id"
+            item-text="text"
+            v-model="answer1"
+            >
+        </v-select>
+   
+  </v-flex>
+  <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
+        <v-select
+            :label="'Who are you living with:'"
+            :items="questions2"
+            item-value="id"
+            item-text="text"
+            v-model="answer2"
+            >
+        </v-select>
+   
+  </v-flex>
+  <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
+        <v-select
+            :label="'Who are you living with:'"
+            :items="questions3"
+            item-value="id"
+            item-text="text"
+            v-model="answer3"
+            >
+        </v-select>
+   
   </v-flex>
   
 </v-layout>
@@ -725,22 +749,45 @@
 </v-container>
 </template>
 <script>
-  import timePicker from '../../components/pickers/time-picker.vue'
-  import datePicker from '../../components/pickers/date-picker.vue'
+  import startTime from '../../components/pickers/start-time.vue'
+  import endTime from '../../components/pickers/end-time.vue'
+  import editDatePicker from '../../components/pickers/edit-date-picker.vue'
 
   export default {
     data () {
       return {
+        questions1: [
+          {id: 1, text: 'Living Together'},
+          {id: 2, text: 'Father/Mother working abroad'},
+          {id: 3, text: 'Separated'},
+          {id: 4, text: 'Deceased Mother/Father'},
+        ],
+        answer1: '',
+        questions2: [
+          {id: 5, text: 'Parents/in law'},
+          {id: 6, text: 'Stepfather/Stepmother'},
+          {id: 7, text: 'Guardians/Relatives'},
+          {id: 8, text: 'Spoused'},
+        ],
+        answer2: '',
+        questions3: [
+          {id: 9, text: 'Parents/in law'},
+          {id: 10, text: 'Stepfather/Stepmother'},
+          {id: 11, text: 'Guardians/Relatives'},
+          {id: 12, text: 'Spoused'},
+        ],
+        answer3: '',
+        questionSecond: 6,
+        questionThird: 9,
+        date:null,
         checkbox: '',
-        firstname: '',
-        middlename: '',
-        lastname: '',
-        suffix: '',
-        age: '',
         birthplace: '',
         selectedEducAtt: '',
-        sex: '',
-        sexs:['Male', 'Female'],
+        sexs:[
+            {id: 1, text: 'Male'}, 
+            {id: 2, text: 'Female'}
+        ]
+        ,
         selectedCivil: '',
         nickName: '',
         spouseLastname: '',
@@ -751,7 +798,6 @@
         email: '',
         religion: '',
         citizenship: '',
-        course: '',
         schoolYearError: ['Please select school year'],
         schoolYear: '',
         yearLevel: '',
@@ -821,7 +867,7 @@
       }
     },
     components: {
-      timePicker, datePicker
+      startTime, endTime, editDatePicker
     },
     created(){
       let data = this
@@ -842,9 +888,33 @@
       }) 
 
       this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id)
+        .then(function(res){
+
+            data.$store.dispatch('confirmedEnrolled',  res.data.enrollee)
+
+                for (var i=0; res.data.enrollee.enrollee.answers.length -1 >= i; i++){
+                    if(res.data.enrollee.enrollee.answers[i].question.id === 1){
+                      data.answer1 = res.data.enrollee.enrollee.answers[i].id
+                      }
+                      if(res.data.enrollee.enrollee.answers[i].question.id === 2){
+                          data.answer2 = res.data.enrollee.enrollee.answers[i].id
+                      }
+                      if(res.data.enrollee.enrollee.answers[i].question.id === 3){
+                          data.answer3 = res.data.enrollee.enrollee.answers[i].id
+                      }
+                }
+
+              // data.requirementsDocs = res.data.enrollee.enrollee.requirementsDocs.map(a=>{a.id})
+              // console.log(data.requirementsDocs)
+            
+        })
+        
     },
     computed: {
-
+      confirmedEnrolled(){
+        return this.$store.getters.confirmedEnrolled
+      },
+      
       dateNow(){
         var d = new Date();
         return  d.getDate() + '/' + d.getDay() + '/' + d.getFullYear();
@@ -906,6 +976,10 @@
 
     },
     methods: {
+      questionEnrollee(questionId, index){
+        console.log(questionId, index)
+         
+      },
       schoolYearChange(schoolYear){
         if(schoolYear != ''){
           this.schoolYearError = []
@@ -1071,77 +1145,78 @@
   },
   watch: {
 
-    presentProvinceId(){
+    'confirmedEnrolled.enrollee.present_province_id' : function(){
       var data = this
-      this.$http.get(base_api + '/cities/' + this.presentProvinceId)
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.present_province_id)
       .then(function(res){
         data.presentCities = res.data.cities
       })
     },
-    presentCityId(){
+    'confirmedEnrolled.enrollee.present_city_id' : function(){
       var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.presentCityId)
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.present_city_id)
       .then(function(res){
         data.presentZipCode = res.data.city.zipcode
       })
     },
-    permanentProvinceId(){
+    'confirmedEnrolled.enrollee.permanent_province_id': function(){
       var data = this
-      this.$http.get(base_api + '/cities/' + this.permanentProvinceId)
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.permanent_province_id)
       .then(function(res){
         data.permanentCities = res.data.cities
       })
 
     },
-    permanentCityId(){
+    'confirmedEnrolled.enrollee.permanent_city_id': function(){
       var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.permanentCityId)
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.permanent_city_id)
       .then(function(res){
         data.permanentZipCode = res.data.city.zipcode
       })
     },
-    fatherProvinceId(){
+    'confirmedEnrolled.enrollee.father_province_id': function(){
       var data = this
-      this.$http.get(base_api + '/cities/' + this.fatherProvinceId)
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.father_province_id)
       .then(function(res){
         data.fatherCities = res.data.cities
       })
     },
-    fatherCityId(){
+    'confirmedEnrolled.enrollee.father_city_id': function(){
       var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.fatherCityId)
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.father_city_id)
       .then(function(res){
         data.fatherZipCode = res.data.city.zipcode
       })
     },
-    motherProvinceId(){
+    'confirmedEnrolled.enrollee.mother_province_id': function(){
       var data = this
-      this.$http.get(base_api + '/cities/' + this.motherProvinceId)
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.mother_province_id)
       .then(function(res){
         data.motherCities = res.data.cities
       })
     },
-    motherCityId(){
+    'confirmedEnrolled.enrollee.mother_city_id': function(){
       var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.motherCityId)
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.mother_city_id)
       .then(function(res){
         data.motherZipCode = res.data.city.zipcode
       })
     },
-    schoolProvinceId(){
+    'confirmedEnrolled.enrollee.school_province_id': function(){
       var data = this
-      this.$http.get(base_api + '/cities/' + this.schoolProvinceId)
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.school_province_id)
       .then(function(res){
         data.schoolCities = res.data.cities
       })
     },
-    schoolCityId(){
+    'confirmedEnrolled.enrollee.school_city_id': function(){
       var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.schoolCityId)
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.school_city_id)
       .then(function(res){
         data.schoolZipCode = res.data.city.zipcode
       })
     },
+    
 
   }
 }

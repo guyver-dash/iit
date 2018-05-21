@@ -9,8 +9,8 @@ class Answer extends Model
     
     protected $table = 'answers';
 
-    public function questions(){
+    public function question(){
 
-    	
+    	return $this->belongsTo('App\Model\Question', 'question_id', 'id');
     }
 }

@@ -180,8 +180,9 @@
        <v-select
        label="Sex"
        :items="sexs"
-       v-model="sex"
-       item-value="text"
+       v-model="confirmedEnrolled.enrollee.sex"
+       item-value="id"
+       item-text="text"
        required
        :rules="[v => !!v || 'This field is required.']"
        ></v-select>
@@ -740,7 +741,10 @@
         birthplace: '',
         selectedEducAtt: '',
         sex: '',
-        sexs:['Male', 'Female'],
+        sexs:[
+            {id: 1, text: 'Male'}, 
+            {id: 2, text: 'Female'}
+        ],
         selectedCivil: '',
         nickName: '',
         spouseLastname: '',

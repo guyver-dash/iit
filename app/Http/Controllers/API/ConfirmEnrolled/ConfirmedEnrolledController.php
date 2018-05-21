@@ -20,7 +20,7 @@ class ConfirmedEnrolledController extends Controller
 
     public function edit($id){
     	return response()->json([
-    			'enrollee' => ConfirmEnrolled::find($id)->with('enrollee')->first()
+    			'enrollee' => ConfirmEnrolled::find($id)->with(['enrollee.siblings', 'enrollee.answers.question', 'enrollee.requirementsDoc'])->first()
     		]);
     }
 

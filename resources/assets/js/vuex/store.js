@@ -8,6 +8,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		confirmedEnrolled(state, confirmedEnrolled){
+			state.confirmedEnrolled = confirmedEnrolled
+		},
+		confirmedEnrolledEnrollee(state, payload){
+			state.confirmedEnrolled.enrollee[payload['field']] = payload['value']
+		},
 		enrollees(state, enrollees){
 			state.enrollees = enrollees
 		},
@@ -95,6 +101,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		confirmedEnrolledEnrollee(store, payload){
+			store.commit('confirmedEnrolledEnrollee', payload)
+		},
+		confirmedEnrolled(store, confirmedEnrolled){
+			store.commit('confirmedEnrolled', confirmedEnrolled)
+		},
 		enrollees(store, enrollees){
 			store.commit('enrollees', enrollees)
 		},
@@ -206,6 +218,9 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		confirmedEnrolled(){
+			return store.state.confirmedEnrolled
+		},
 		enrollees(){
 			return store.state.enrollees
 		},

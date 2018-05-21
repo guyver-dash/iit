@@ -12103,6 +12103,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	state: __WEBPACK_IMPORTED_MODULE_2__state_js__["a" /* state */],
 	mutations: {
+		confirmedEnrolled: function confirmedEnrolled(state, _confirmedEnrolled) {
+			state.confirmedEnrolled = _confirmedEnrolled;
+		},
+		confirmedEnrolledEnrollee: function confirmedEnrolledEnrollee(state, payload) {
+			state.confirmedEnrolled.enrollee[payload['field']] = payload['value'];
+		},
 		enrollees: function enrollees(state, _enrollees) {
 			state.enrollees = _enrollees;
 		},
@@ -12189,6 +12195,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		}
 	},
 	actions: {
+		confirmedEnrolledEnrollee: function confirmedEnrolledEnrollee(store, payload) {
+			store.commit('confirmedEnrolledEnrollee', payload);
+		},
+		confirmedEnrolled: function confirmedEnrolled(store, _confirmedEnrolled2) {
+			store.commit('confirmedEnrolled', _confirmedEnrolled2);
+		},
 		enrollees: function enrollees(store, _enrollees2) {
 			store.commit('enrollees', _enrollees2);
 		},
@@ -12298,6 +12310,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		}
 	},
 	getters: {
+		confirmedEnrolled: function confirmedEnrolled() {
+			return store.state.confirmedEnrolled;
+		},
 		enrollees: function enrollees() {
 			return store.state.enrollees;
 		},
@@ -12486,9 +12501,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(93)
+var __vue_script__ = __webpack_require__(105)
 /* template */
-var __vue_template__ = __webpack_require__(94)
+var __vue_template__ = __webpack_require__(106)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -12531,7 +12546,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-module.exports = __webpack_require__(101);
+module.exports = __webpack_require__(113);
 
 
 /***/ }),
@@ -12547,11 +12562,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_store_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router_route_js__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__plugins_my_vue_plugin_js__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__plugins_my_vue_plugin_js__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mixins_start_up_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_layouts_master_vue__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_layouts_master_vue__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_layouts_master_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_layouts_master_vue__);
 
 
@@ -17346,6 +17361,21 @@ var index_esm = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return state; });
 var state = {
   authUser: { firstname: '', lastname: '', email: '' },
+  confirmedEnrolled: {
+    enrollee: {
+      course_id: '',
+      birthday: null,
+      sex: 1,
+      answers: {
+        id: null,
+        question: {
+          id: null
+        }
+      }
+
+    },
+    school_year_id: ''
+  },
   password: '',
   enrollees: [],
   roles: [],
@@ -17396,11 +17426,11 @@ var state = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profile_index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__profile_index_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admission_index_vue__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admission_index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__admission_index_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__admission_editAdmission_vue__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__admission_editAdmission_vue__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__admission_editAdmission_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__admission_editAdmission_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__profile_payment_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__enrollees_vue__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__enrollees_vue__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__enrollees_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__enrollees_vue__);
 
 
@@ -19747,6 +19777,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -19763,7 +19794,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       birthplace: '',
       selectedEducAtt: '',
       sex: '',
-      sexs: ['Male', 'Female'],
+      sexs: [{ id: 1, text: 'Male' }, { id: 2, text: 'Female' }],
       selectedCivil: '',
       nickName: '',
       spouseLastname: '',
@@ -20972,7 +21003,8 @@ var render = function() {
                     attrs: {
                       label: "Sex",
                       items: _vm.sexs,
-                      "item-value": "text",
+                      "item-value": "id",
+                      "item-text": "text",
                       required: "",
                       rules: [
                         function(v) {
@@ -20981,11 +21013,11 @@ var render = function() {
                       ]
                     },
                     model: {
-                      value: _vm.sex,
+                      value: _vm.confirmedEnrolled.enrollee.sex,
                       callback: function($$v) {
-                        _vm.sex = $$v
+                        _vm.$set(_vm.confirmedEnrolled.enrollee, "sex", $$v)
                       },
-                      expression: "sex"
+                      expression: "confirmedEnrolled.enrollee.sex"
                     }
                   })
                 ],
@@ -22561,7 +22593,4216 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(77)
 /* template */
-var __vue_template__ = __webpack_require__(78)
+var __vue_template__ = __webpack_require__(87)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\router\\admission\\editAdmission.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-38ba1ab8", Component.options)
+  } else {
+    hotAPI.reload("data-v-38ba1ab8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pickers_start_time_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pickers_start_time_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_pickers_start_time_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_pickers_end_time_vue__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_pickers_end_time_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_pickers_end_time_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_pickers_edit_date_picker_vue__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_pickers_edit_date_picker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_pickers_edit_date_picker_vue__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      questions1: [{ id: 1, text: 'Living Together' }, { id: 2, text: 'Father/Mother working abroad' }, { id: 3, text: 'Separated' }, { id: 4, text: 'Deceased Mother/Father' }],
+      answer1: '',
+      questions2: [{ id: 5, text: 'Parents/in law' }, { id: 6, text: 'Stepfather/Stepmother' }, { id: 7, text: 'Guardians/Relatives' }, { id: 8, text: 'Spoused' }],
+      answer2: '',
+      questions3: [{ id: 9, text: 'Parents/in law' }, { id: 10, text: 'Stepfather/Stepmother' }, { id: 11, text: 'Guardians/Relatives' }, { id: 12, text: 'Spoused' }],
+      answer3: '',
+      questionSecond: 6,
+      questionThird: 9,
+      date: null,
+      checkbox: '',
+      birthplace: '',
+      selectedEducAtt: '',
+      sexs: [{ id: 1, text: 'Male' }, { id: 2, text: 'Female' }],
+
+      selectedCivil: '',
+      nickName: '',
+      spouseLastname: '',
+      spouseFirstname: '',
+      spouseMiddlename: '',
+      landline: '',
+      mobile: '',
+      email: '',
+      religion: '',
+      citizenship: '',
+      schoolYearError: ['Please select school year'],
+      schoolYear: '',
+      yearLevel: '',
+      semester: '',
+      schedule: '',
+
+      presentProvinceId: '',
+      presentCityId: '',
+      presentCities: [],
+      presentZipCode: '',
+      presentAddress: '',
+
+      permanentProvinceId: '',
+      permanentCityId: '',
+      permanentCities: [],
+      permanentZipCode: '',
+      permanentAddress: '',
+
+      fatherLastname: '',
+      fatherMiddlename: '',
+      fatherFirstname: '',
+      fatherOccupation: '',
+      fatherContactNo: '',
+      fatherProvinceId: '',
+      fatherCities: [],
+      fatherCityId: '',
+      fatherZipCode: '',
+      fatherAddress: '',
+
+      motherLastname: '',
+      motherMiddlename: '',
+      motherFirstname: '',
+      motherOccupation: '',
+      motherContactNo: '',
+      motherProvinceId: '',
+      motherCities: [],
+      motherCityId: '',
+      motherZipCode: '',
+      motherAddress: '',
+
+      siblingName: '',
+      siblingAge: '',
+      siblingOcc: '',
+      siblingNameOfSchool: '',
+
+      schoolName: '',
+      schoolAddress: '',
+      schoolProvinceId: '',
+      schoolCities: [],
+      schoolCityId: '',
+      schoolZipCode: '',
+      answer: [],
+      requirementsDocs: [],
+      snackbar: true,
+      snackbarColor: 'error',
+      snackbarText: '',
+      policy1: '',
+      policy2: '',
+      valid: true,
+      emailRules: [function (v) {
+        return !!v || 'E-mail is required';
+      }, function (v) {
+        return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        );
+      }]
+    };
+  },
+
+  components: {
+    startTime: __WEBPACK_IMPORTED_MODULE_0__components_pickers_start_time_vue___default.a, endTime: __WEBPACK_IMPORTED_MODULE_1__components_pickers_end_time_vue___default.a, editDatePicker: __WEBPACK_IMPORTED_MODULE_2__components_pickers_edit_date_picker_vue___default.a
+  },
+  created: function created() {
+    var data = this;
+    this.$http.get(base_api + '/start-up').then(function (response) {
+      data.$store.dispatch('courses', response.data.courses);
+      data.$store.dispatch('provinces', response.data.provinces);
+      data.$store.dispatch('schoolYears', response.data.schoolYears);
+      data.$store.dispatch('yearLevel', response.data.yearLevels);
+      data.$store.dispatch('schedules', response.data.schedules);
+      data.$store.dispatch('semesters', response.data.semesters);
+      data.$store.dispatch('questions', response.data.questions);
+      data.$store.dispatch('requirements', response.data.requirements);
+      data.$store.dispatch('policies', response.data.policies);
+      data.$store.dispatch('civilStatus', response.data.civilStatus);
+      data.$store.dispatch('educAtt', response.data.educAtt);
+    });
+
+    this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id).then(function (res) {
+
+      data.$store.dispatch('confirmedEnrolled', res.data.enrollee);
+
+      for (var i = 0; res.data.enrollee.enrollee.answers.length - 1 >= i; i++) {
+        if (res.data.enrollee.enrollee.answers[i].question.id === 1) {
+          data.answer1 = res.data.enrollee.enrollee.answers[i].id;
+        }
+        if (res.data.enrollee.enrollee.answers[i].question.id === 2) {
+          data.answer2 = res.data.enrollee.enrollee.answers[i].id;
+        }
+        if (res.data.enrollee.enrollee.answers[i].question.id === 3) {
+          data.answer3 = res.data.enrollee.enrollee.answers[i].id;
+        }
+      }
+
+      // data.requirementsDocs = res.data.enrollee.enrollee.requirementsDocs.map(a=>{a.id})
+      // console.log(data.requirementsDocs)
+    });
+  },
+
+  computed: {
+    confirmedEnrolled: function confirmedEnrolled() {
+      return this.$store.getters.confirmedEnrolled;
+    },
+    dateNow: function dateNow() {
+      var d = new Date();
+      return d.getDate() + '/' + d.getDay() + '/' + d.getFullYear();
+    },
+    admissionNo: function admissionNo() {
+
+      return new Date().valueOf();
+    },
+    provinces: function provinces() {
+      return this.$store.getters.provinces;
+    },
+    schoolYears: function schoolYears() {
+      return this.$store.getters.schoolYears;
+    },
+    courses: function courses() {
+
+      return this.$store.getters.courses;
+    },
+    siblings: function siblings() {
+
+      return this.$store.getters.siblings;
+    },
+    questions: function questions() {
+
+      return this.$store.getters.questions;
+    },
+    yearLevels: function yearLevels() {
+      return this.$store.getters.yearLevel;
+    },
+    semesters: function semesters() {
+      return this.$store.getters.semesters;
+    },
+    schedules: function schedules() {
+      return this.$store.getters.schedules;
+    },
+    requirements: function requirements() {
+      return this.$store.getters.requirements;
+    },
+    policies: function policies() {
+      return this.$store.getters.policies;
+    },
+    civilStatus: function civilStatus() {
+      return this.$store.getters.civilStatus;
+    },
+    birthday: function birthday() {
+      return this.$store.getters.birthday;
+    },
+    educAtt: function educAtt() {
+      return this.$store.getters.educAtt;
+    },
+    startTime: function startTime() {
+      return this.$store.getters.startTime;
+    },
+    endTime: function endTime() {
+      return this.$store.getters.endTime;
+    }
+  },
+  methods: {
+    questionEnrollee: function questionEnrollee(questionId, index) {
+      console.log(questionId, index);
+    },
+    schoolYearChange: function schoolYearChange(schoolYear) {
+      if (schoolYear != '') {
+        this.schoolYearError = [];
+      } else {
+        this.schoolYearError = ['Please select school year'];
+      }
+    },
+    addSibling: function addSibling() {
+
+      if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
+        this.$store.dispatch('addSibling', {
+          name: this.siblingName,
+          age: this.siblingAge,
+          occupation: this.siblingOcc,
+          school_name: this.siblingNameOfSchool
+        });
+        this.siblingName = '';
+        this.siblingAge = '';
+        this.siblingOcc = '';
+        this.siblingNameOfSchool = '';
+        this.$store.dispatch('snackbar', false);
+      } else {
+        this.$store.dispatch('snackbarText', 'Sibling fields are required!');
+        this.$store.dispatch('snackbarColor', 'error');
+        this.$store.dispatch('snackbar', true);
+      }
+    },
+    removeSibling: function removeSibling(index) {
+      this.$store.dispatch('removeSibling', index);
+    },
+    myAnswer: function myAnswer(answerId) {
+      var data = this;
+      this.$http.get(base_api + '/get-question-id/' + answerId).then(function (res) {
+
+        if (data.answer.length > 0) {
+          for (var i = 0; i < data.answer.length; i++) {
+
+            if (data.answer[i].questionId === res.data.questionId) {
+              delete data.answer[i];
+            }
+          }
+
+          data.answer.push({
+            questionId: res.data.questionId,
+            answerId: answerId
+          });
+
+          var cleanArray = [];
+          for (var a = 0; a < data.answer.length; a++) {
+            if (data.answer[a] != undefined) {
+              cleanArray.push(data.answer[a]);
+            }
+          }
+
+          data.answer = cleanArray;
+        }
+
+        if (data.answer.length === 0) {
+          data.answer.push({
+            questionId: res.data.questionId,
+            answerId: answerId
+          });
+        }
+      });
+    },
+    submit: function submit() {
+
+      var data = this;
+      if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
+        this.addSibling();
+      }
+
+      if (this.$refs.form.validate()) {
+        var _$http$post;
+
+        this.$http.post(base_api + '/enrollment', (_$http$post = {
+          start_time: this.startTime,
+          end_time: this.endTime,
+          semester_id: this.semester,
+          school_year_id: this.schoolYear,
+          year_level_id: this.yearLevel,
+          schedule_id: this.schedule
+        }, _defineProperty(_$http$post, 'start_time', this.startTime), _defineProperty(_$http$post, 'admissionNo', this.admissionNo), _defineProperty(_$http$post, 'course_id', this.course), _defineProperty(_$http$post, 'firstname', this.firstname), _defineProperty(_$http$post, 'middlename', this.middlename), _defineProperty(_$http$post, 'lastname', this.lastname), _defineProperty(_$http$post, 'suffix', this.suffix), _defineProperty(_$http$post, 'nickname', this.nickName), _defineProperty(_$http$post, 'age', this.age), _defineProperty(_$http$post, 'birthday', this.birthday), _defineProperty(_$http$post, 'birth_place', this.birthplace), _defineProperty(_$http$post, 'sex', this.sex), _defineProperty(_$http$post, 'educ_at_id', this.EducAtt), _defineProperty(_$http$post, 'civil', this.selectedCivil), _defineProperty(_$http$post, 'spouse_lastname', this.spouseLastname), _defineProperty(_$http$post, 'spouse_firstname', this.spouseFirstname), _defineProperty(_$http$post, 'spouse_middlename', this.spouseMiddlename), _defineProperty(_$http$post, 'landline', this.landline), _defineProperty(_$http$post, 'mobile', this.mobile), _defineProperty(_$http$post, 'email', this.email), _defineProperty(_$http$post, 'religion', this.religion), _defineProperty(_$http$post, 'citizenship', this.citizenship), _defineProperty(_$http$post, 'present_address', this.presentAddress), _defineProperty(_$http$post, 'present_province_id', this.presentProvinceId), _defineProperty(_$http$post, 'present_city_id', this.presentCityId), _defineProperty(_$http$post, 'present_zipcode', this.presentZipCode), _defineProperty(_$http$post, 'permanent_address', this.permanentAddress), _defineProperty(_$http$post, 'permanent_province_id', this.permanentProvinceId), _defineProperty(_$http$post, 'permanent_city_id', this.permanentCityId), _defineProperty(_$http$post, 'permanent_zipcode', this.permanentZipCode), _defineProperty(_$http$post, 'father_firstname', this.fatherFirstname), _defineProperty(_$http$post, 'father_lastname', this.fatherLastname), _defineProperty(_$http$post, 'father_middlename', this.fatherMiddlename), _defineProperty(_$http$post, 'father_occupation', this.fatherOccupation), _defineProperty(_$http$post, 'father_contact_number', this.fatherContactNo), _defineProperty(_$http$post, 'father_address', this.fatherAddress), _defineProperty(_$http$post, 'father_province_id', this.fatherProvinceId), _defineProperty(_$http$post, 'father_city_id', this.fatherCityId), _defineProperty(_$http$post, 'father_zipcode', this.fatherZipCode), _defineProperty(_$http$post, 'mother_firstname', this.motherFirstname), _defineProperty(_$http$post, 'mother_lastname', this.motherLastname), _defineProperty(_$http$post, 'mother_middlename', this.motherMiddlename), _defineProperty(_$http$post, 'mother_occupation', this.motherOccupation), _defineProperty(_$http$post, 'mother_contact_number', this.motherContactNo), _defineProperty(_$http$post, 'mother_address', this.motherAddress), _defineProperty(_$http$post, 'mother_province_id', this.motherProvinceId), _defineProperty(_$http$post, 'mother_city_id', this.motherCityId), _defineProperty(_$http$post, 'mother_zipcode', this.motherZipCode), _defineProperty(_$http$post, 'name_of_school', this.schoolName), _defineProperty(_$http$post, 'school_address', this.schoolAddress), _defineProperty(_$http$post, 'school_province_id', this.schoolProvinceId), _defineProperty(_$http$post, 'school_city_id', this.schoolCityId), _defineProperty(_$http$post, 'school_zipcode', this.schoolZipCode), _defineProperty(_$http$post, 'siblings', this.siblings), _defineProperty(_$http$post, 'answers', this.answer), _defineProperty(_$http$post, 'requirementsDocs', this.requirementsDocs), _$http$post)).then(function (res) {
+
+          data.$store.dispatch('snackbarText', 'Registration completed!');
+          data.$store.dispatch('snackbarColor', 'success');
+          data.$store.dispatch('snackbar', true);
+        });
+      } else {
+        data.$store.dispatch('snackbarText', 'Please correct some errors!');
+        data.$store.dispatch('snackbarColor', 'error');
+        data.$store.dispatch('snackbar', true);
+      }
+    }
+  },
+  watch: {
+
+    'confirmedEnrolled.enrollee.present_province_id': function confirmedEnrolledEnrolleePresent_province_id() {
+      var data = this;
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.present_province_id).then(function (res) {
+        data.presentCities = res.data.cities;
+      });
+    },
+    'confirmedEnrolled.enrollee.present_city_id': function confirmedEnrolledEnrolleePresent_city_id() {
+      var data = this;
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.present_city_id).then(function (res) {
+        data.presentZipCode = res.data.city.zipcode;
+      });
+    },
+    'confirmedEnrolled.enrollee.permanent_province_id': function confirmedEnrolledEnrolleePermanent_province_id() {
+      var data = this;
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.permanent_province_id).then(function (res) {
+        data.permanentCities = res.data.cities;
+      });
+    },
+    'confirmedEnrolled.enrollee.permanent_city_id': function confirmedEnrolledEnrolleePermanent_city_id() {
+      var data = this;
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.permanent_city_id).then(function (res) {
+        data.permanentZipCode = res.data.city.zipcode;
+      });
+    },
+    'confirmedEnrolled.enrollee.father_province_id': function confirmedEnrolledEnrolleeFather_province_id() {
+      var data = this;
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.father_province_id).then(function (res) {
+        data.fatherCities = res.data.cities;
+      });
+    },
+    'confirmedEnrolled.enrollee.father_city_id': function confirmedEnrolledEnrolleeFather_city_id() {
+      var data = this;
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.father_city_id).then(function (res) {
+        data.fatherZipCode = res.data.city.zipcode;
+      });
+    },
+    'confirmedEnrolled.enrollee.mother_province_id': function confirmedEnrolledEnrolleeMother_province_id() {
+      var data = this;
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.mother_province_id).then(function (res) {
+        data.motherCities = res.data.cities;
+      });
+    },
+    'confirmedEnrolled.enrollee.mother_city_id': function confirmedEnrolledEnrolleeMother_city_id() {
+      var data = this;
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.mother_city_id).then(function (res) {
+        data.motherZipCode = res.data.city.zipcode;
+      });
+    },
+    'confirmedEnrolled.enrollee.school_province_id': function confirmedEnrolledEnrolleeSchool_province_id() {
+      var data = this;
+      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.school_province_id).then(function (res) {
+        data.schoolCities = res.data.cities;
+      });
+    },
+    'confirmedEnrolled.enrollee.school_city_id': function confirmedEnrolledEnrolleeSchool_city_id() {
+      var data = this;
+      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.school_city_id).then(function (res) {
+        data.schoolZipCode = res.data.city.zipcode;
+      });
+    }
+
+  }
+});
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(79)
+/* template */
+var __vue_template__ = __webpack_require__(80)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pickers\\start-time.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-10e72806", Component.options)
+  } else {
+    hotAPI.reload("data-v-10e72806", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      menu2: false,
+      modal2: false
+    };
+  },
+
+  computed: {
+    time: function time() {
+      return this.$store.getters.confirmedEnrolled.start_time;
+    }
+  },
+  watch: {
+    time: function time(val) {}
+  }
+});
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-flex",
+    { attrs: { xl6: "" } },
+    [
+      _c(
+        "v-dialog",
+        {
+          ref: "dialog",
+          attrs: {
+            persistent: "",
+            lazy: "",
+            "full-width": "",
+            width: "290px",
+            "return-value": _vm.time
+          },
+          on: {
+            "update:returnValue": function($event) {
+              _vm.time = $event
+            }
+          },
+          model: {
+            value: _vm.modal2,
+            callback: function($$v) {
+              _vm.modal2 = $$v
+            },
+            expression: "modal2"
+          }
+        },
+        [
+          _c("v-text-field", {
+            attrs: {
+              slot: "activator",
+              label: "Start time",
+              "prepend-icon": "access_time",
+              readonly: ""
+            },
+            slot: "activator",
+            model: {
+              value: _vm.time,
+              callback: function($$v) {
+                _vm.time = $$v
+              },
+              expression: "time"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-time-picker",
+            {
+              attrs: { actions: "" },
+              model: {
+                value: _vm.time,
+                callback: function($$v) {
+                  _vm.time = $$v
+                },
+                expression: "time"
+              }
+            },
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { flat: "", color: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.modal2 = false
+                    }
+                  }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { flat: "", color: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.$refs.dialog.save(_vm.time)
+                    }
+                  }
+                },
+                [_vm._v("OK")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-10e72806", module.exports)
+  }
+}
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(82)
+/* template */
+var __vue_template__ = __webpack_require__(83)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pickers\\end-time.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b29d2da6", Component.options)
+  } else {
+    hotAPI.reload("data-v-b29d2da6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      menu2: false,
+      modal2: false
+    };
+  },
+
+  computed: {
+    time: function time() {
+      return this.$store.getters.confirmedEnrolled.end_time;
+    }
+  },
+  watch: {
+    time: function time(val) {
+
+      console.log(val);
+    }
+  }
+});
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-flex",
+    { attrs: { xl6: "" } },
+    [
+      _c(
+        "v-dialog",
+        {
+          ref: "dialog",
+          attrs: {
+            persistent: "",
+            lazy: "",
+            "full-width": "",
+            width: "290px",
+            "return-value": _vm.time
+          },
+          on: {
+            "update:returnValue": function($event) {
+              _vm.time = $event
+            }
+          },
+          model: {
+            value: _vm.modal2,
+            callback: function($$v) {
+              _vm.modal2 = $$v
+            },
+            expression: "modal2"
+          }
+        },
+        [
+          _c("v-text-field", {
+            attrs: {
+              slot: "activator",
+              label: "End time",
+              "prepend-icon": "access_time",
+              readonly: ""
+            },
+            slot: "activator",
+            model: {
+              value: _vm.time,
+              callback: function($$v) {
+                _vm.time = $$v
+              },
+              expression: "time"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-time-picker",
+            {
+              attrs: { actions: "" },
+              model: {
+                value: _vm.time,
+                callback: function($$v) {
+                  _vm.time = $$v
+                },
+                expression: "time"
+              }
+            },
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { flat: "", color: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.modal2 = false
+                    }
+                  }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { flat: "", color: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.$refs.dialog.save(_vm.time)
+                    }
+                  }
+                },
+                [_vm._v("OK")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-b29d2da6", module.exports)
+  }
+}
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(85)
+/* template */
+var __vue_template__ = __webpack_require__(86)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pickers\\edit-date-picker.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7fb43d78", Component.options)
+  } else {
+    hotAPI.reload("data-v-7fb43d78", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      modal: false
+    };
+  },
+  computed: {
+    birthday: {
+      get: function get() {
+        return this.$store.getters.confirmedEnrolled.enrollee.birthday;
+      },
+      set: function set(val) {
+        this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field': 'birthday',
+          'value': val
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-flex",
+    [
+      _c(
+        "v-dialog",
+        {
+          ref: "dialog",
+          attrs: {
+            persistent: "",
+            lazy: "",
+            "full-width": "",
+            width: "290px",
+            "return-value": _vm.birthday
+          },
+          on: {
+            "update:returnValue": function($event) {
+              _vm.birthday = $event
+            }
+          },
+          model: {
+            value: _vm.modal,
+            callback: function($$v) {
+              _vm.modal = $$v
+            },
+            expression: "modal"
+          }
+        },
+        [
+          _c("v-text-field", {
+            attrs: {
+              slot: "activator",
+              label: "Birthday",
+              "prepend-icon": "event",
+              readonly: ""
+            },
+            slot: "activator",
+            model: {
+              value: _vm.birthday,
+              callback: function($$v) {
+                _vm.birthday = $$v
+              },
+              expression: "birthday"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-date-picker",
+            {
+              attrs: { scrollable: "" },
+              model: {
+                value: _vm.birthday,
+                callback: function($$v) {
+                  _vm.birthday = $$v
+                },
+                expression: "birthday"
+              }
+            },
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { flat: "", color: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.modal = false
+                    }
+                  }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { flat: "", color: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.$refs.dialog.save(_vm.birthday)
+                    }
+                  }
+                },
+                [_vm._v("OK")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7fb43d78", module.exports)
+  }
+}
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    { attrs: { fluid: "", "fill-height": "" } },
+    [
+      _c(
+        "v-form",
+        {
+          ref: "form",
+          attrs: { "lazy-validation": "" },
+          model: {
+            value: _vm.valid,
+            callback: function($$v) {
+              _vm.valid = $$v
+            },
+            expression: "valid"
+          }
+        },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
+                [
+                  _c("h3", { staticClass: "headline" }, [
+                    _vm._v("INSTRUCTIONS:")
+                  ]),
+                  _vm._v(" "),
+                  _c("ol", { staticClass: "ml-4" }, [
+                    _c("li", [
+                      _vm._v(
+                        "Student-Applicant accomplishes this Application Form properly."
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v(
+                        "Fill-up information. Leave the field blank (if not applicable)."
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [_vm._v("Submit all the requirements as needed.")])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Date", disabled: "" },
+                    model: {
+                      value: _vm.dateNow,
+                      callback: function($$v) {
+                        _vm.dateNow = $$v
+                      },
+                      expression: "dateNow"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Admission No:", disabled: "" },
+                    model: {
+                      value: _vm.admissionNo,
+                      callback: function($$v) {
+                        _vm.admissionNo = $$v
+                      },
+                      expression: "admissionNo"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Select Course",
+                      items: _vm.courses,
+                      "item-text": "name",
+                      "item-value": "id",
+                      rules: [
+                        function(v) {
+                          return !!v || "Please select course."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.course_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "course_id",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.course_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "School Year",
+                      items: _vm.schoolYears,
+                      "item-value": "id",
+                      "item-text": "sy",
+                      rules: [
+                        function(v) {
+                          return !!v || "Please select school year."
+                        }
+                      ],
+                      required: ""
+                    },
+                    on: { change: _vm.schoolYearChange },
+                    model: {
+                      value: _vm.confirmedEnrolled.school_year_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled, "school_year_id", $$v)
+                      },
+                      expression: "confirmedEnrolled.school_year_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Year level",
+                      items: _vm.yearLevels,
+                      "item-value": "id",
+                      "item-text": "name",
+                      rules: [
+                        function(v) {
+                          return !!v || "Please select year level."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.year_level_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled, "year_level_id", $$v)
+                      },
+                      expression: "confirmedEnrolled.year_level_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Semester",
+                      items: _vm.semesters,
+                      "item-value": "id",
+                      "item-text": "name",
+                      rules: [
+                        function(v) {
+                          return !!v || "Please select semester."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.semester_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled, "semester_id", $$v)
+                      },
+                      expression: "confirmedEnrolled.semester_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Schedule",
+                      items: _vm.schedules,
+                      "item-value": "id",
+                      "item-text": "name",
+                      rules: [
+                        function(v) {
+                          return !!v || "Please select schedule."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.schedule_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled, "schedule_id", $$v)
+                      },
+                      expression: "confirmedEnrolled.schedule_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c(
+                    "v-card",
+                    { staticClass: "elevation-0" },
+                    [
+                      _c(
+                        "v-card-text",
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
+                            [
+                              _c("span", { staticClass: "subheading" }, [
+                                _vm._v(
+                                  "Modular (Specify your 4 hours time range:)"
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("start-time"),
+                              _vm._v(" "),
+                              _c("end-time")
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c("v-flex", { attrs: { xl12: "" } }, [
+            _c("br"),
+            _vm._v(" "),
+            _c("span", { staticClass: "subheading" }, [
+              _vm._v("Personal informations:")
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Lastname",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.lastname,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "lastname",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.lastname"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Firstname",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.firstname,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "firstname",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.firstname"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Middlename",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.middlename,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "middlename",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.middlename"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Suffix" },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.suffix,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled.enrollee, "suffix", $$v)
+                      },
+                      expression: "confirmedEnrolled.enrollee.suffix"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Nick name" },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.nickname,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "nickname",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.nickname"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Age",
+                      type: "number",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.age,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled.enrollee, "age", $$v)
+                      },
+                      expression: "confirmedEnrolled.enrollee.age"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [_c("edit-date-picker")],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Birth Place",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.birth_place,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "birth_place",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.birth_place"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Educational Attainment",
+                      items: _vm.educAtt,
+                      "item-value": "id",
+                      "item-text": "name",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.educ_at_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "educ_at_id",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.educ_at_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Sex",
+                      items: _vm.sexs,
+                      "item-value": "id",
+                      "item-text": "text",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.sex,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled.enrollee, "sex", $$v)
+                      },
+                      expression: "confirmedEnrolled.enrollee.sex"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Civil Status",
+                      items: _vm.civilStatus,
+                      "item-value": "id",
+                      "item-text": "name",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.civil,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled.enrollee, "civil", $$v)
+                      },
+                      expression: "confirmedEnrolled.enrollee.civil"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.selectedCivil == 1
+                ? _c(
+                    "v-flex",
+                    {
+                      staticClass: "pa-2",
+                      attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                    },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Spouse lastname" },
+                        model: {
+                          value: _vm.confirmedEnrolled.enrollee.spouse_lastname,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.confirmedEnrolled.enrollee,
+                              "spouse_lastname",
+                              $$v
+                            )
+                          },
+                          expression:
+                            "confirmedEnrolled.enrollee.spouse_lastname"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.selectedCivil == 1
+                ? _c(
+                    "v-flex",
+                    {
+                      staticClass: "pa-2",
+                      attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                    },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Spouse firstname" },
+                        model: {
+                          value:
+                            _vm.confirmedEnrolled.enrollee.spouse_firstname,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.confirmedEnrolled.enrollee,
+                              "spouse_firstname",
+                              $$v
+                            )
+                          },
+                          expression:
+                            "confirmedEnrolled.enrollee.spouse_firstname"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.selectedCivil == 1
+                ? _c(
+                    "v-flex",
+                    {
+                      staticClass: "pa-2",
+                      attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                    },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Spouse middlename" },
+                        model: {
+                          value:
+                            _vm.confirmedEnrolled.enrollee.spouse_middlename,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.confirmedEnrolled.enrollee,
+                              "spouse_middlename",
+                              $$v
+                            )
+                          },
+                          expression:
+                            "confirmedEnrolled.enrollee.spouse_middlename"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Landline",
+                      type: "number",
+                      "prepend-icon": "phone"
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.landline,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "landline",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.landline"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Phone Number",
+                      type: "number",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: "",
+                      "prepend-icon": "phone_android"
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.mobile,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled.enrollee, "mobile", $$v)
+                      },
+                      expression: "confirmedEnrolled.enrollee.mobile"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Email",
+                      type: "email",
+                      rules: _vm.emailRules,
+                      required: "",
+                      "prepend-icon": "email"
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.email,
+                      callback: function($$v) {
+                        _vm.$set(_vm.confirmedEnrolled.enrollee, "email", $$v)
+                      },
+                      expression: "confirmedEnrolled.enrollee.email"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Religion",
+                      "prepend-icon": "pages",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.religion,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "religion",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.religion"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Citizenship",
+                      "prepend-icon": "public",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.citizenship,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "citizenship",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.citizenship"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-flex", { attrs: { xl12: "" } }, [
+            _c("br"),
+            _vm._v(" "),
+            _c("span", { staticClass: "subheading" }, [
+              _vm._v("Present address")
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      autocomplete: "",
+                      label: "Present Province",
+                      items: _vm.provinces,
+                      "item-text": "name",
+                      "item-value": "id",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.present_province_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "present_province_id",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "confirmedEnrolled.enrollee.present_province_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      autocomplete: "",
+                      label: "Present City",
+                      items: _vm.presentCities,
+                      "item-text": "name",
+                      "item-value": "id",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.present_city_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "present_city_id",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.present_city_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Present Zipcode",
+                      type: "number",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.present_zipcode,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "present_zipcode",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.present_zipcode"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Present Address(House No:, street)",
+                      color: "grey",
+                      textarea: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.present_address,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "present_address",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.present_address"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-flex", { attrs: { xl12: "" } }, [
+            _c("br"),
+            _vm._v(" "),
+            _c("span", { staticClass: "subheading" }, [
+              _vm._v("Permanent address")
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Permanent Province",
+                      items: _vm.provinces,
+                      "item-value": "id",
+                      "item-text": "name",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value:
+                        _vm.confirmedEnrolled.enrollee.permanent_province_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "permanent_province_id",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "confirmedEnrolled.enrollee.permanent_province_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Permanent City",
+                      items: _vm.permanentCities,
+                      "item-value": "id",
+                      "item-text": "name",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.permanent_city_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "permanent_city_id",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.permanent_city_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Permanent Zipcode",
+                      type: "number",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.permanent_zipcode,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "permanent_zipcode",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.permanent_zipcode"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Permanent Address(House No:, street)",
+                      color: "grey",
+                      textarea: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.permanent_address,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "permanent_address",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.permanent_address"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c("v-flex", { attrs: { xl12: "" } }, [
+            _c("br"),
+            _vm._v(" "),
+            _c("span", { staticClass: "subheading" }, [
+              _vm._v("Family informations:")
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Father's lastname",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.father_lastname,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "father_lastname",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.father_lastname"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Father's firstname",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.father_firstname,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "father_firstname",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.father_firstname"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Father's middlename",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.father_middlename,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "father_middlename",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.father_middlename"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Occupation",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.father_occupation,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "father_occupation",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.father_occupation"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Contact Number", type: "number" },
+                    model: {
+                      value:
+                        _vm.confirmedEnrolled.enrollee.father_contact_number,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "father_contact_number",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "confirmedEnrolled.enrollee.father_contact_number"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Province",
+                      items: _vm.provinces,
+                      "item-value": "id",
+                      "item-text": "name",
+                      autocomplete: "",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.father_province_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "father_province_id",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "confirmedEnrolled.enrollee.father_province_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "City",
+                      items: _vm.fatherCities,
+                      "item-value": "id",
+                      "item-text": "name",
+                      autocomplete: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.father_city_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "father_city_id",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.father_city_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Zipcode",
+                      type: "number",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.father_zipcode,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "father_zipcode",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.father_zipcode"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Present Address(House No:, street)",
+                      color: "grey",
+                      textarea: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.father_address,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "father_address",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.father_address"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Mother's lastname",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.mother_lastname,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "mother_lastname",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.mother_lastname"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Mother's firstname",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.mother_firstname,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "mother_firstname",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.mother_firstname"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Mother's middlename",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.mother_middlename,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "mother_middlename",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.mother_middlename"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Occupation",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.mother_occupation,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "mother_occupation",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.mother_occupation"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Contact Number", type: "number" },
+                    model: {
+                      value:
+                        _vm.confirmedEnrolled.enrollee.mother_contact_number,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "mother_contact_number",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "confirmedEnrolled.enrollee.mother_contact_number"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      autocomplete: "",
+                      label: "Province",
+                      items: _vm.provinces,
+                      "item-value": "id",
+                      "item-text": "name",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.mother_province_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "mother_province_id",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "confirmedEnrolled.enrollee.mother_province_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      autocomplete: "",
+                      label: "City",
+                      items: _vm.motherCities,
+                      "item-value": "id",
+                      "item-text": "name",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.mother_city_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "mother_city_id",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.mother_city_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Zipcode",
+                      type: "number",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.mother_zipcode,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "mother_zipcode",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.mother_zipcode"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Present Address(House No:, street)",
+                      color: "grey",
+                      textarea: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.mother_address,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "mother_address",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.mother_address"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c("v-flex", { attrs: { xl12: "" } }, [
+            _c("br"),
+            _vm._v(" "),
+            _c("span", { staticClass: "subheading" }, [
+              _vm._v("Siblings(Brothers & Sisters)")
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
+                _vm._l(_vm.confirmedEnrolled.enrollee.siblings, function(
+                  sibling,
+                  i
+                ) {
+                  return _c(
+                    "v-chip",
+                    {
+                      key: i,
+                      attrs: { close: "" },
+                      on: {
+                        input: function($event) {
+                          _vm.removeSibling(i)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(sibling.name))]
+                  )
+                })
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Name" },
+                    model: {
+                      value: _vm.siblingName,
+                      callback: function($$v) {
+                        _vm.siblingName = $$v
+                      },
+                      expression: "siblingName"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Age", type: "number" },
+                    model: {
+                      value: _vm.siblingAge,
+                      callback: function($$v) {
+                        _vm.siblingAge = $$v
+                      },
+                      expression: "siblingAge"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Occupation" },
+                    model: {
+                      value: _vm.siblingOcc,
+                      callback: function($$v) {
+                        _vm.siblingOcc = $$v
+                      },
+                      expression: "siblingOcc"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Name of school" },
+                    model: {
+                      value: _vm.siblingNameOfSchool,
+                      callback: function($$v) {
+                        _vm.siblingNameOfSchool = $$v
+                      },
+                      expression: "siblingNameOfSchool"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { dark: "", color: "indigo" },
+                  on: { click: _vm.addSibling }
+                },
+                [_vm._v("\n    More Sibling\n    \n  ")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c("v-flex", { attrs: { xl12: "" } }, [
+            _c("br"),
+            _vm._v(" "),
+            _c("span", { staticClass: "subheading" }, [
+              _vm._v("School Background:")
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl12: "", lg12: "", md12: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Name of school",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.name_of_school,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "name_of_school",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.name_of_school"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Province",
+                      items: _vm.provinces,
+                      "item-value": "id",
+                      "item-text": "name",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.school_province_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "school_province_id",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "confirmedEnrolled.enrollee.school_province_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "City",
+                      items: _vm.schoolCities,
+                      "item-value": "id",
+                      "item-text": "name",
+                      required: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ]
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.school_city_id,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "school_city_id",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.school_city_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Zipcode",
+                      type: "number",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.school_zipcode,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "school_zipcode",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.school_zipcode"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Present Address(House No:, street)",
+                      color: "grey",
+                      textarea: "",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.confirmedEnrolled.enrollee.school_address,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "school_address",
+                          $$v
+                        )
+                      },
+                      expression: "confirmedEnrolled.enrollee.school_address"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl4: "", lg4: "", md4: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "My parents are:",
+                      items: _vm.questions1,
+                      "item-value": "id",
+                      "item-text": "text"
+                    },
+                    model: {
+                      value: _vm.answer1,
+                      callback: function($$v) {
+                        _vm.answer1 = $$v
+                      },
+                      expression: "answer1"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl4: "", lg4: "", md4: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Who are you living with:",
+                      items: _vm.questions2,
+                      "item-value": "id",
+                      "item-text": "text"
+                    },
+                    model: {
+                      value: _vm.answer2,
+                      callback: function($$v) {
+                        _vm.answer2 = $$v
+                      },
+                      expression: "answer2"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl4: "", lg4: "", md4: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Who are you living with:",
+                      items: _vm.questions3,
+                      "item-value": "id",
+                      "item-text": "text"
+                    },
+                    model: {
+                      value: _vm.answer3,
+                      callback: function($$v) {
+                        _vm.answer3 = $$v
+                      },
+                      expression: "answer3"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c("v-flex", { attrs: { xl12: "" } }, [
+            _c("br"),
+            _vm._v(" "),
+            _c("span", { staticClass: "subheading" }, [
+              _vm._v("REQUIREMENTS: (Please check the documents submitted)")
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _vm._l(_vm.requirements, function(requirement) {
+                return _c(
+                  "v-flex",
+                  {
+                    key: requirement.id,
+                    staticClass: "pa-2",
+                    attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
+                  },
+                  [
+                    _c("v-select", {
+                      attrs: {
+                        label: requirement.name,
+                        items: requirement.requirements_doc,
+                        "item-value": "id",
+                        "item-text": "name",
+                        multiple: ""
+                      },
+                      model: {
+                        value: _vm.requirementsDocs,
+                        callback: function($$v) {
+                          _vm.requirementsDocs = $$v
+                        },
+                        expression: "requirementsDocs"
+                      }
+                    })
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" }
+                },
+                [
+                  _c("v-checkbox", {
+                    staticClass: "ma-0 pa-0",
+                    attrs: {
+                      label:
+                        "I will only be officially enrolled once the following school requirements have been completed and submitted.",
+                      rules: [
+                        function(v) {
+                          return !!v || "You must agree to continue!"
+                        }
+                      ],
+                      value: "1",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.policy1,
+                      callback: function($$v) {
+                        _vm.policy1 = $$v
+                      },
+                      expression: "policy1"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span"),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("v-checkbox", {
+                    staticClass: "ma-0 pa-0",
+                    attrs: {
+                      label:
+                        "I understand that all fees are NON-REFUNDABLE UPON ENROLLMENT. I have read/understand this policy and I certify all entries are true and correct.",
+                      rules: [
+                        function(v) {
+                          return !!v || "You must agree to continue!"
+                        }
+                      ],
+                      value: "2",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.policy2,
+                      callback: function($$v) {
+                        _vm.policy2 = $$v
+                      },
+                      expression: "policy2"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "v-flex",
+            { attrs: { xl12: "" } },
+            [
+              _c("br"),
+              _vm._v(" "),
+              _c("span", { staticClass: "subheading red--text" }, [
+                _vm._v(
+                  "Your personal information will be kept in strictest confidence. None of your information will be disclosed without your consent."
+                )
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "info", disabled: !_vm.valid },
+                  on: { click: _vm.submit }
+                },
+                [_vm._v("\n  submit\n")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-38ba1ab8", module.exports)
+  }
+}
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(89)
+/* template */
+var __vue_template__ = __webpack_require__(90)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -22600,7 +26841,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 77 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22625,7 +26866,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 78 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22649,15 +26890,15 @@ if (false) {
 }
 
 /***/ }),
-/* 79 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(80)
+var __vue_script__ = __webpack_require__(92)
 /* template */
-var __vue_template__ = __webpack_require__(84)
+var __vue_template__ = __webpack_require__(96)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -22696,13 +26937,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 80 */
+/* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_start_up_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_data_tables_enrollees_vue__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_data_tables_enrollees_vue__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_data_tables_enrollees_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_data_tables_enrollees_vue__);
 //
 //
@@ -22731,15 +26972,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 81 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(82)
+var __vue_script__ = __webpack_require__(94)
 /* template */
-var __vue_template__ = __webpack_require__(83)
+var __vue_template__ = __webpack_require__(95)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -22778,7 +27019,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 82 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22958,7 +27199,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 83 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -23070,7 +27311,7 @@ if (false) {
 }
 
 /***/ }),
-/* 84 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -23108,7 +27349,7 @@ if (false) {
 }
 
 /***/ }),
-/* 85 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -40777,7 +45018,7 @@ function install(Vue) {
 //# sourceMappingURL=vuetify.js.map
 
 /***/ }),
-/* 86 */
+/* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40791,15 +45032,15 @@ function install(Vue) {
 });
 
 /***/ }),
-/* 87 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(88)
+var __vue_script__ = __webpack_require__(100)
 /* template */
-var __vue_template__ = __webpack_require__(100)
+var __vue_template__ = __webpack_require__(112)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -40838,12 +45079,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 88 */
+/* 100 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_dialog_admission_vue__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_dialog_admission_vue__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_dialog_admission_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_dialog_admission_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_snackbar_snackbar_vue__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_snackbar_snackbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_snackbar_snackbar_vue__);
@@ -41133,15 +45374,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 89 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(90)
+var __vue_script__ = __webpack_require__(102)
 /* template */
-var __vue_template__ = __webpack_require__(99)
+var __vue_template__ = __webpack_require__(111)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -41180,12 +45421,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 90 */
+/* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__forms_enrollment_enroll_vue__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__forms_enrollment_enroll_vue__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__forms_enrollment_enroll_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__forms_enrollment_enroll_vue__);
 //
 //
@@ -41260,15 +45501,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 91 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(92)
+var __vue_script__ = __webpack_require__(104)
 /* template */
-var __vue_template__ = __webpack_require__(98)
+var __vue_template__ = __webpack_require__(110)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -41307,7 +45548,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 92 */
+/* 104 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -41318,7 +45559,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pickers_date_picker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__pickers_date_picker_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__snackbar_snackbar_vue__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__snackbar_snackbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__snackbar_snackbar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__snackbar_registration_completed_vue__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__snackbar_registration_completed_vue__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__snackbar_registration_completed_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__snackbar_registration_completed_vue__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -42361,7 +46602,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 });
 
 /***/ }),
-/* 93 */
+/* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42403,7 +46644,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 94 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -42457,15 +46698,15 @@ if (false) {
 }
 
 /***/ }),
-/* 95 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(96)
+var __vue_script__ = __webpack_require__(108)
 /* template */
-var __vue_template__ = __webpack_require__(97)
+var __vue_template__ = __webpack_require__(109)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -42504,7 +46745,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 96 */
+/* 108 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42547,7 +46788,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 97 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -42601,7 +46842,7 @@ if (false) {
 }
 
 /***/ }),
-/* 98 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44750,7 +48991,7 @@ if (false) {
 }
 
 /***/ }),
-/* 99 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44912,7 +49153,7 @@ if (false) {
 }
 
 /***/ }),
-/* 100 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45454,3275 +49695,10 @@ if (false) {
 }
 
 /***/ }),
-/* 101 */
+/* 113 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(106)
-/* template */
-var __vue_template__ = __webpack_require__(107)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\router\\admission\\editAdmission.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-38ba1ab8", Component.options)
-  } else {
-    hotAPI.reload("data-v-38ba1ab8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 106 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pickers_time_picker_vue__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pickers_time_picker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_pickers_time_picker_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_pickers_date_picker_vue__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_pickers_date_picker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_pickers_date_picker_vue__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      checkbox: '',
-      firstname: '',
-      middlename: '',
-      lastname: '',
-      suffix: '',
-      age: '',
-      birthplace: '',
-      selectedEducAtt: '',
-      sex: '',
-      sexs: ['Male', 'Female'],
-      selectedCivil: '',
-      nickName: '',
-      spouseLastname: '',
-      spouseFirstname: '',
-      spouseMiddlename: '',
-      landline: '',
-      mobile: '',
-      email: '',
-      religion: '',
-      citizenship: '',
-      course: '',
-      schoolYearError: ['Please select school year'],
-      schoolYear: '',
-      yearLevel: '',
-      semester: '',
-      schedule: '',
-
-      presentProvinceId: '',
-      presentCityId: '',
-      presentCities: [],
-      presentZipCode: '',
-      presentAddress: '',
-
-      permanentProvinceId: '',
-      permanentCityId: '',
-      permanentCities: [],
-      permanentZipCode: '',
-      permanentAddress: '',
-
-      fatherLastname: '',
-      fatherMiddlename: '',
-      fatherFirstname: '',
-      fatherOccupation: '',
-      fatherContactNo: '',
-      fatherProvinceId: '',
-      fatherCities: [],
-      fatherCityId: '',
-      fatherZipCode: '',
-      fatherAddress: '',
-
-      motherLastname: '',
-      motherMiddlename: '',
-      motherFirstname: '',
-      motherOccupation: '',
-      motherContactNo: '',
-      motherProvinceId: '',
-      motherCities: [],
-      motherCityId: '',
-      motherZipCode: '',
-      motherAddress: '',
-
-      siblingName: '',
-      siblingAge: '',
-      siblingOcc: '',
-      siblingNameOfSchool: '',
-
-      schoolName: '',
-      schoolAddress: '',
-      schoolProvinceId: '',
-      schoolCities: [],
-      schoolCityId: '',
-      schoolZipCode: '',
-      answer: [],
-      requirementsDocs: [],
-      snackbar: true,
-      snackbarColor: 'error',
-      snackbarText: '',
-      policy1: '',
-      policy2: '',
-      valid: true,
-      emailRules: [function (v) {
-        return !!v || 'E-mail is required';
-      }, function (v) {
-        return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-        );
-      }]
-    };
-  },
-
-  components: {
-    timePicker: __WEBPACK_IMPORTED_MODULE_0__components_pickers_time_picker_vue___default.a, datePicker: __WEBPACK_IMPORTED_MODULE_1__components_pickers_date_picker_vue___default.a
-  },
-  created: function created() {
-    var data = this;
-    this.$http.get(base_api + '/start-up').then(function (response) {
-      data.$store.dispatch('courses', response.data.courses);
-      data.$store.dispatch('provinces', response.data.provinces);
-      data.$store.dispatch('schoolYears', response.data.schoolYears);
-      data.$store.dispatch('yearLevel', response.data.yearLevels);
-      data.$store.dispatch('schedules', response.data.schedules);
-      data.$store.dispatch('semesters', response.data.semesters);
-      data.$store.dispatch('questions', response.data.questions);
-      data.$store.dispatch('requirements', response.data.requirements);
-      data.$store.dispatch('policies', response.data.policies);
-      data.$store.dispatch('civilStatus', response.data.civilStatus);
-      data.$store.dispatch('educAtt', response.data.educAtt);
-    });
-
-    this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id);
-  },
-
-  computed: {
-    dateNow: function dateNow() {
-      var d = new Date();
-      return d.getDate() + '/' + d.getDay() + '/' + d.getFullYear();
-    },
-    admissionNo: function admissionNo() {
-
-      return new Date().valueOf();
-    },
-    provinces: function provinces() {
-      return this.$store.getters.provinces;
-    },
-    schoolYears: function schoolYears() {
-      return this.$store.getters.schoolYears;
-    },
-    courses: function courses() {
-
-      return this.$store.getters.courses;
-    },
-    siblings: function siblings() {
-
-      return this.$store.getters.siblings;
-    },
-    questions: function questions() {
-
-      return this.$store.getters.questions;
-    },
-    yearLevels: function yearLevels() {
-      return this.$store.getters.yearLevel;
-    },
-    semesters: function semesters() {
-      return this.$store.getters.semesters;
-    },
-    schedules: function schedules() {
-      return this.$store.getters.schedules;
-    },
-    requirements: function requirements() {
-      return this.$store.getters.requirements;
-    },
-    policies: function policies() {
-      return this.$store.getters.policies;
-    },
-    civilStatus: function civilStatus() {
-      return this.$store.getters.civilStatus;
-    },
-    birthday: function birthday() {
-      return this.$store.getters.birthday;
-    },
-    educAtt: function educAtt() {
-      return this.$store.getters.educAtt;
-    },
-    startTime: function startTime() {
-      return this.$store.getters.startTime;
-    },
-    endTime: function endTime() {
-      return this.$store.getters.endTime;
-    }
-  },
-  methods: {
-    schoolYearChange: function schoolYearChange(schoolYear) {
-      if (schoolYear != '') {
-        this.schoolYearError = [];
-      } else {
-        this.schoolYearError = ['Please select school year'];
-      }
-    },
-    addSibling: function addSibling() {
-
-      if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
-        this.$store.dispatch('addSibling', {
-          name: this.siblingName,
-          age: this.siblingAge,
-          occupation: this.siblingOcc,
-          school_name: this.siblingNameOfSchool
-        });
-        this.siblingName = '';
-        this.siblingAge = '';
-        this.siblingOcc = '';
-        this.siblingNameOfSchool = '';
-        this.$store.dispatch('snackbar', false);
-      } else {
-        this.$store.dispatch('snackbarText', 'Sibling fields are required!');
-        this.$store.dispatch('snackbarColor', 'error');
-        this.$store.dispatch('snackbar', true);
-      }
-    },
-    removeSibling: function removeSibling(index) {
-      this.$store.dispatch('removeSibling', index);
-    },
-    myAnswer: function myAnswer(answerId) {
-      var data = this;
-      this.$http.get(base_api + '/get-question-id/' + answerId).then(function (res) {
-
-        if (data.answer.length > 0) {
-          for (var i = 0; i < data.answer.length; i++) {
-
-            if (data.answer[i].questionId === res.data.questionId) {
-              delete data.answer[i];
-            }
-          }
-
-          data.answer.push({
-            questionId: res.data.questionId,
-            answerId: answerId
-          });
-
-          var cleanArray = [];
-          for (var a = 0; a < data.answer.length; a++) {
-            if (data.answer[a] != undefined) {
-              cleanArray.push(data.answer[a]);
-            }
-          }
-
-          data.answer = cleanArray;
-        }
-
-        if (data.answer.length === 0) {
-          data.answer.push({
-            questionId: res.data.questionId,
-            answerId: answerId
-          });
-        }
-      });
-    },
-    submit: function submit() {
-
-      var data = this;
-      if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
-        this.addSibling();
-      }
-
-      if (this.$refs.form.validate()) {
-        var _$http$post;
-
-        this.$http.post(base_api + '/enrollment', (_$http$post = {
-          start_time: this.startTime,
-          end_time: this.endTime,
-          semester_id: this.semester,
-          school_year_id: this.schoolYear,
-          year_level_id: this.yearLevel,
-          schedule_id: this.schedule
-        }, _defineProperty(_$http$post, 'start_time', this.startTime), _defineProperty(_$http$post, 'admissionNo', this.admissionNo), _defineProperty(_$http$post, 'course_id', this.course), _defineProperty(_$http$post, 'firstname', this.firstname), _defineProperty(_$http$post, 'middlename', this.middlename), _defineProperty(_$http$post, 'lastname', this.lastname), _defineProperty(_$http$post, 'suffix', this.suffix), _defineProperty(_$http$post, 'nickname', this.nickName), _defineProperty(_$http$post, 'age', this.age), _defineProperty(_$http$post, 'birthday', this.birthday), _defineProperty(_$http$post, 'birth_place', this.birthplace), _defineProperty(_$http$post, 'sex', this.sex), _defineProperty(_$http$post, 'educ_at_id', this.EducAtt), _defineProperty(_$http$post, 'civil', this.selectedCivil), _defineProperty(_$http$post, 'spouse_lastname', this.spouseLastname), _defineProperty(_$http$post, 'spouse_firstname', this.spouseFirstname), _defineProperty(_$http$post, 'spouse_middlename', this.spouseMiddlename), _defineProperty(_$http$post, 'landline', this.landline), _defineProperty(_$http$post, 'mobile', this.mobile), _defineProperty(_$http$post, 'email', this.email), _defineProperty(_$http$post, 'religion', this.religion), _defineProperty(_$http$post, 'citizenship', this.citizenship), _defineProperty(_$http$post, 'present_address', this.presentAddress), _defineProperty(_$http$post, 'present_province_id', this.presentProvinceId), _defineProperty(_$http$post, 'present_city_id', this.presentCityId), _defineProperty(_$http$post, 'present_zipcode', this.presentZipCode), _defineProperty(_$http$post, 'permanent_address', this.permanentAddress), _defineProperty(_$http$post, 'permanent_province_id', this.permanentProvinceId), _defineProperty(_$http$post, 'permanent_city_id', this.permanentCityId), _defineProperty(_$http$post, 'permanent_zipcode', this.permanentZipCode), _defineProperty(_$http$post, 'father_firstname', this.fatherFirstname), _defineProperty(_$http$post, 'father_lastname', this.fatherLastname), _defineProperty(_$http$post, 'father_middlename', this.fatherMiddlename), _defineProperty(_$http$post, 'father_occupation', this.fatherOccupation), _defineProperty(_$http$post, 'father_contact_number', this.fatherContactNo), _defineProperty(_$http$post, 'father_address', this.fatherAddress), _defineProperty(_$http$post, 'father_province_id', this.fatherProvinceId), _defineProperty(_$http$post, 'father_city_id', this.fatherCityId), _defineProperty(_$http$post, 'father_zipcode', this.fatherZipCode), _defineProperty(_$http$post, 'mother_firstname', this.motherFirstname), _defineProperty(_$http$post, 'mother_lastname', this.motherLastname), _defineProperty(_$http$post, 'mother_middlename', this.motherMiddlename), _defineProperty(_$http$post, 'mother_occupation', this.motherOccupation), _defineProperty(_$http$post, 'mother_contact_number', this.motherContactNo), _defineProperty(_$http$post, 'mother_address', this.motherAddress), _defineProperty(_$http$post, 'mother_province_id', this.motherProvinceId), _defineProperty(_$http$post, 'mother_city_id', this.motherCityId), _defineProperty(_$http$post, 'mother_zipcode', this.motherZipCode), _defineProperty(_$http$post, 'name_of_school', this.schoolName), _defineProperty(_$http$post, 'school_address', this.schoolAddress), _defineProperty(_$http$post, 'school_province_id', this.schoolProvinceId), _defineProperty(_$http$post, 'school_city_id', this.schoolCityId), _defineProperty(_$http$post, 'school_zipcode', this.schoolZipCode), _defineProperty(_$http$post, 'siblings', this.siblings), _defineProperty(_$http$post, 'answers', this.answer), _defineProperty(_$http$post, 'requirementsDocs', this.requirementsDocs), _$http$post)).then(function (res) {
-
-          data.$store.dispatch('snackbarText', 'Registration completed!');
-          data.$store.dispatch('snackbarColor', 'success');
-          data.$store.dispatch('snackbar', true);
-        });
-      } else {
-        data.$store.dispatch('snackbarText', 'Please correct some errors!');
-        data.$store.dispatch('snackbarColor', 'error');
-        data.$store.dispatch('snackbar', true);
-      }
-    }
-  },
-  watch: {
-    presentProvinceId: function presentProvinceId() {
-      var data = this;
-      this.$http.get(base_api + '/cities/' + this.presentProvinceId).then(function (res) {
-        data.presentCities = res.data.cities;
-      });
-    },
-    presentCityId: function presentCityId() {
-      var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.presentCityId).then(function (res) {
-        data.presentZipCode = res.data.city.zipcode;
-      });
-    },
-    permanentProvinceId: function permanentProvinceId() {
-      var data = this;
-      this.$http.get(base_api + '/cities/' + this.permanentProvinceId).then(function (res) {
-        data.permanentCities = res.data.cities;
-      });
-    },
-    permanentCityId: function permanentCityId() {
-      var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.permanentCityId).then(function (res) {
-        data.permanentZipCode = res.data.city.zipcode;
-      });
-    },
-    fatherProvinceId: function fatherProvinceId() {
-      var data = this;
-      this.$http.get(base_api + '/cities/' + this.fatherProvinceId).then(function (res) {
-        data.fatherCities = res.data.cities;
-      });
-    },
-    fatherCityId: function fatherCityId() {
-      var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.fatherCityId).then(function (res) {
-        data.fatherZipCode = res.data.city.zipcode;
-      });
-    },
-    motherProvinceId: function motherProvinceId() {
-      var data = this;
-      this.$http.get(base_api + '/cities/' + this.motherProvinceId).then(function (res) {
-        data.motherCities = res.data.cities;
-      });
-    },
-    motherCityId: function motherCityId() {
-      var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.motherCityId).then(function (res) {
-        data.motherZipCode = res.data.city.zipcode;
-      });
-    },
-    schoolProvinceId: function schoolProvinceId() {
-      var data = this;
-      this.$http.get(base_api + '/cities/' + this.schoolProvinceId).then(function (res) {
-        data.schoolCities = res.data.cities;
-      });
-    },
-    schoolCityId: function schoolCityId() {
-      var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.schoolCityId).then(function (res) {
-        data.schoolZipCode = res.data.city.zipcode;
-      });
-    }
-  }
-});
-
-/***/ }),
-/* 107 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-container",
-    { attrs: { fluid: "", "fill-height": "" } },
-    [
-      _c(
-        "v-form",
-        {
-          ref: "form",
-          attrs: { "lazy-validation": "" },
-          model: {
-            value: _vm.valid,
-            callback: function($$v) {
-              _vm.valid = $$v
-            },
-            expression: "valid"
-          }
-        },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
-                [
-                  _c("h3", { staticClass: "headline" }, [
-                    _vm._v("INSTRUCTIONS:")
-                  ]),
-                  _vm._v(" "),
-                  _c("ol", { staticClass: "ml-4" }, [
-                    _c("li", [
-                      _vm._v(
-                        "Student-Applicant accomplishes this Application Form properly."
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _vm._v(
-                        "Fill-up information. Leave the field blank (if not applicable)."
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [_vm._v("Submit all the requirements as needed.")])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Date", disabled: "" },
-                    model: {
-                      value: _vm.dateNow,
-                      callback: function($$v) {
-                        _vm.dateNow = $$v
-                      },
-                      expression: "dateNow"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Admission No:", disabled: "" },
-                    model: {
-                      value: _vm.admissionNo,
-                      callback: function($$v) {
-                        _vm.admissionNo = $$v
-                      },
-                      expression: "admissionNo"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Select Course",
-                      items: _vm.courses,
-                      "item-text": "name",
-                      "item-value": "id",
-                      rules: [
-                        function(v) {
-                          return !!v || "Please select course."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.course,
-                      callback: function($$v) {
-                        _vm.course = $$v
-                      },
-                      expression: "course"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "School Year",
-                      items: _vm.schoolYears,
-                      "item-value": "id",
-                      "item-text": "sy",
-                      rules: [
-                        function(v) {
-                          return !!v || "Please select school year."
-                        }
-                      ],
-                      required: ""
-                    },
-                    on: { change: _vm.schoolYearChange },
-                    model: {
-                      value: _vm.schoolYear,
-                      callback: function($$v) {
-                        _vm.schoolYear = $$v
-                      },
-                      expression: "schoolYear"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Year level",
-                      items: _vm.yearLevels,
-                      "item-value": "id",
-                      "item-text": "name",
-                      rules: [
-                        function(v) {
-                          return !!v || "Please select year level."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.yearLevel,
-                      callback: function($$v) {
-                        _vm.yearLevel = $$v
-                      },
-                      expression: "yearLevel"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Semester",
-                      items: _vm.semesters,
-                      "item-value": "id",
-                      "item-text": "name",
-                      rules: [
-                        function(v) {
-                          return !!v || "Please select semester."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.semester,
-                      callback: function($$v) {
-                        _vm.semester = $$v
-                      },
-                      expression: "semester"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Schedule",
-                      items: _vm.schedules,
-                      "item-value": "id",
-                      "item-text": "name",
-                      rules: [
-                        function(v) {
-                          return !!v || "Please select schedule."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.schedule,
-                      callback: function($$v) {
-                        _vm.schedule = $$v
-                      },
-                      expression: "schedule"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c(
-                    "v-card",
-                    { staticClass: "elevation-0" },
-                    [
-                      _c(
-                        "v-card-text",
-                        [
-                          _c(
-                            "v-layout",
-                            { attrs: { row: "", wrap: "" } },
-                            [
-                              _c("span", { staticClass: "subheading" }, [
-                                _vm._v(
-                                  "Modular (Specify your 4 hours time range:)"
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("time-picker", {
-                                attrs: { label: "Start time" }
-                              }),
-                              _vm._v(" "),
-                              _c("time-picker", {
-                                attrs: { label: "End time" }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-divider"),
-          _vm._v(" "),
-          _c("v-flex", { attrs: { xl12: "" } }, [
-            _c("br"),
-            _vm._v(" "),
-            _c("span", { staticClass: "subheading" }, [
-              _vm._v("Personal informations:")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Lastname",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.lastname,
-                      callback: function($$v) {
-                        _vm.lastname = $$v
-                      },
-                      expression: "lastname"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Firstname",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.firstname,
-                      callback: function($$v) {
-                        _vm.firstname = $$v
-                      },
-                      expression: "firstname"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Middlename",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.middlename,
-                      callback: function($$v) {
-                        _vm.middlename = $$v
-                      },
-                      expression: "middlename"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Suffix" },
-                    model: {
-                      value: _vm.suffix,
-                      callback: function($$v) {
-                        _vm.suffix = $$v
-                      },
-                      expression: "suffix"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Nick name" },
-                    model: {
-                      value: _vm.nickName,
-                      callback: function($$v) {
-                        _vm.nickName = $$v
-                      },
-                      expression: "nickName"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Age",
-                      type: "number",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.age,
-                      callback: function($$v) {
-                        _vm.age = $$v
-                      },
-                      expression: "age"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [_c("date-picker")],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Birth Place",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.birthplace,
-                      callback: function($$v) {
-                        _vm.birthplace = $$v
-                      },
-                      expression: "birthplace"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Educational Attainment",
-                      items: _vm.educAtt,
-                      "item-value": "id",
-                      "item-text": "name",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.selectedEducAtt,
-                      callback: function($$v) {
-                        _vm.selectedEducAtt = $$v
-                      },
-                      expression: "selectedEducAtt"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Sex",
-                      items: _vm.sexs,
-                      "item-value": "text",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.sex,
-                      callback: function($$v) {
-                        _vm.sex = $$v
-                      },
-                      expression: "sex"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Civil Status",
-                      items: _vm.civilStatus,
-                      "item-value": "id",
-                      "item-text": "name",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.selectedCivil,
-                      callback: function($$v) {
-                        _vm.selectedCivil = $$v
-                      },
-                      expression: "selectedCivil"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _vm.selectedCivil == 1
-                ? _c(
-                    "v-flex",
-                    {
-                      staticClass: "pa-2",
-                      attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                    },
-                    [
-                      _c("v-text-field", {
-                        attrs: { label: "Spouse lastname" },
-                        model: {
-                          value: _vm.spouseLastname,
-                          callback: function($$v) {
-                            _vm.spouseLastname = $$v
-                          },
-                          expression: "spouseLastname"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.selectedCivil == 1
-                ? _c(
-                    "v-flex",
-                    {
-                      staticClass: "pa-2",
-                      attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                    },
-                    [
-                      _c("v-text-field", {
-                        attrs: { label: "Spouse firstname" },
-                        model: {
-                          value: _vm.spouseFirstname,
-                          callback: function($$v) {
-                            _vm.spouseFirstname = $$v
-                          },
-                          expression: "spouseFirstname"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.selectedCivil == 1
-                ? _c(
-                    "v-flex",
-                    {
-                      staticClass: "pa-2",
-                      attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                    },
-                    [
-                      _c("v-text-field", {
-                        attrs: { label: "Spouse middlename" },
-                        model: {
-                          value: _vm.spouseMiddlename,
-                          callback: function($$v) {
-                            _vm.spouseMiddlename = $$v
-                          },
-                          expression: "spouseMiddlename"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Landline",
-                      type: "number",
-                      "prepend-icon": "phone"
-                    },
-                    model: {
-                      value: _vm.landline,
-                      callback: function($$v) {
-                        _vm.landline = $$v
-                      },
-                      expression: "landline"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Phone Number",
-                      type: "number",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: "",
-                      "prepend-icon": "phone_android"
-                    },
-                    model: {
-                      value: _vm.mobile,
-                      callback: function($$v) {
-                        _vm.mobile = $$v
-                      },
-                      expression: "mobile"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Email",
-                      type: "email",
-                      rules: _vm.emailRules,
-                      required: "",
-                      "prepend-icon": "email"
-                    },
-                    model: {
-                      value: _vm.email,
-                      callback: function($$v) {
-                        _vm.email = $$v
-                      },
-                      expression: "email"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Religion",
-                      "prepend-icon": "pages",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.religion,
-                      callback: function($$v) {
-                        _vm.religion = $$v
-                      },
-                      expression: "religion"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Citizenship",
-                      "prepend-icon": "public",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.citizenship,
-                      callback: function($$v) {
-                        _vm.citizenship = $$v
-                      },
-                      expression: "citizenship"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-flex", { attrs: { xl12: "" } }, [
-            _c("br"),
-            _vm._v(" "),
-            _c("span", { staticClass: "subheading" }, [
-              _vm._v("Present address")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      autocomplete: "",
-                      label: "Present Province",
-                      items: _vm.provinces,
-                      "item-text": "name",
-                      "item-value": "id",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.presentProvinceId,
-                      callback: function($$v) {
-                        _vm.presentProvinceId = $$v
-                      },
-                      expression: "presentProvinceId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      autocomplete: "",
-                      label: "Present City",
-                      items: _vm.presentCities,
-                      "item-text": "name",
-                      "item-value": "id",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.presentCityId,
-                      callback: function($$v) {
-                        _vm.presentCityId = $$v
-                      },
-                      expression: "presentCityId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Present Zipcode",
-                      type: "number",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.presentZipCode,
-                      callback: function($$v) {
-                        _vm.presentZipCode = $$v
-                      },
-                      expression: "presentZipCode"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Present Address(House No:, street)",
-                      color: "grey",
-                      textarea: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.presentAddress,
-                      callback: function($$v) {
-                        _vm.presentAddress = $$v
-                      },
-                      expression: "presentAddress"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-flex", { attrs: { xl12: "" } }, [
-            _c("br"),
-            _vm._v(" "),
-            _c("span", { staticClass: "subheading" }, [
-              _vm._v("Permanent address")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Permanent Province",
-                      items: _vm.provinces,
-                      "item-value": "id",
-                      "item-text": "name",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.permanentProvinceId,
-                      callback: function($$v) {
-                        _vm.permanentProvinceId = $$v
-                      },
-                      expression: "permanentProvinceId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Permanent City",
-                      items: _vm.permanentCities,
-                      "item-value": "id",
-                      "item-text": "name",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.permanentCityId,
-                      callback: function($$v) {
-                        _vm.permanentCityId = $$v
-                      },
-                      expression: "permanentCityId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Permanent Zipcode",
-                      type: "number",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.permanentZipCode,
-                      callback: function($$v) {
-                        _vm.permanentZipCode = $$v
-                      },
-                      expression: "permanentZipCode"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Permanent Address(House No:, street)",
-                      color: "grey",
-                      textarea: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.permanentAddress,
-                      callback: function($$v) {
-                        _vm.permanentAddress = $$v
-                      },
-                      expression: "permanentAddress"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-divider"),
-          _vm._v(" "),
-          _c("v-flex", { attrs: { xl12: "" } }, [
-            _c("br"),
-            _vm._v(" "),
-            _c("span", { staticClass: "subheading" }, [
-              _vm._v("Family informations:")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Father's lastname",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.fatherLastname,
-                      callback: function($$v) {
-                        _vm.fatherLastname = $$v
-                      },
-                      expression: "fatherLastname"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Father's firstname",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.fatherFirstname,
-                      callback: function($$v) {
-                        _vm.fatherFirstname = $$v
-                      },
-                      expression: "fatherFirstname"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Father's middlename",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.fatherMiddlename,
-                      callback: function($$v) {
-                        _vm.fatherMiddlename = $$v
-                      },
-                      expression: "fatherMiddlename"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Occupation",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.fatherOccupation,
-                      callback: function($$v) {
-                        _vm.fatherOccupation = $$v
-                      },
-                      expression: "fatherOccupation"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Contact Number", type: "number" },
-                    model: {
-                      value: _vm.fatherContactNo,
-                      callback: function($$v) {
-                        _vm.fatherContactNo = $$v
-                      },
-                      expression: "fatherContactNo"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Province",
-                      items: _vm.provinces,
-                      "item-value": "id",
-                      "item-text": "name",
-                      autocomplete: "",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.fatherProvinceId,
-                      callback: function($$v) {
-                        _vm.fatherProvinceId = $$v
-                      },
-                      expression: "fatherProvinceId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "City",
-                      items: _vm.fatherCities,
-                      "item-value": "id",
-                      "item-text": "name",
-                      autocomplete: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.fatherCityId,
-                      callback: function($$v) {
-                        _vm.fatherCityId = $$v
-                      },
-                      expression: "fatherCityId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Zipcode",
-                      type: "number",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.fatherZipCode,
-                      callback: function($$v) {
-                        _vm.fatherZipCode = $$v
-                      },
-                      expression: "fatherZipCode"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Present Address(House No:, street)",
-                      color: "grey",
-                      textarea: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.fatherAddress,
-                      callback: function($$v) {
-                        _vm.fatherAddress = $$v
-                      },
-                      expression: "fatherAddress"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-divider"),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Mother's lastname",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.motherLastname,
-                      callback: function($$v) {
-                        _vm.motherLastname = $$v
-                      },
-                      expression: "motherLastname"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Mother's firstname",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.motherFirstname,
-                      callback: function($$v) {
-                        _vm.motherFirstname = $$v
-                      },
-                      expression: "motherFirstname"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl2: "", lg2: "", md2: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Mother's middlename",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.motherMiddlename,
-                      callback: function($$v) {
-                        _vm.motherMiddlename = $$v
-                      },
-                      expression: "motherMiddlename"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Occupation",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.motherOccupation,
-                      callback: function($$v) {
-                        _vm.motherOccupation = $$v
-                      },
-                      expression: "motherOccupation"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Contact Number", type: "number" },
-                    model: {
-                      value: _vm.motherContactNo,
-                      callback: function($$v) {
-                        _vm.motherContactNo = $$v
-                      },
-                      expression: "motherContactNo"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      autocomplete: "",
-                      label: "Province",
-                      items: _vm.provinces,
-                      "item-value": "id",
-                      "item-text": "name",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.motherProvinceId,
-                      callback: function($$v) {
-                        _vm.motherProvinceId = $$v
-                      },
-                      expression: "motherProvinceId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      autocomplete: "",
-                      label: "City",
-                      items: _vm.motherCities,
-                      "item-value": "id",
-                      "item-text": "name",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.motherCityId,
-                      callback: function($$v) {
-                        _vm.motherCityId = $$v
-                      },
-                      expression: "motherCityId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Zipcode",
-                      type: "number",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.motherZipCode,
-                      callback: function($$v) {
-                        _vm.motherZipCode = $$v
-                      },
-                      expression: "motherZipCode"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Present Address(House No:, street)",
-                      color: "grey",
-                      textarea: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.motherAddress,
-                      callback: function($$v) {
-                        _vm.motherAddress = $$v
-                      },
-                      expression: "motherAddress"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-divider"),
-          _vm._v(" "),
-          _c("v-flex", { attrs: { xl12: "" } }, [
-            _c("br"),
-            _vm._v(" "),
-            _c("span", { staticClass: "subheading" }, [
-              _vm._v("Siblings(Brothers & Sisters)")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
-                _vm._l(_vm.siblings, function(sibling, i) {
-                  return _c(
-                    "v-chip",
-                    {
-                      key: i,
-                      attrs: { close: "" },
-                      on: {
-                        input: function($event) {
-                          _vm.removeSibling(i)
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(sibling.name))]
-                  )
-                })
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Name" },
-                    model: {
-                      value: _vm.siblingName,
-                      callback: function($$v) {
-                        _vm.siblingName = $$v
-                      },
-                      expression: "siblingName"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Age", type: "number" },
-                    model: {
-                      value: _vm.siblingAge,
-                      callback: function($$v) {
-                        _vm.siblingAge = $$v
-                      },
-                      expression: "siblingAge"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Occupation" },
-                    model: {
-                      value: _vm.siblingOcc,
-                      callback: function($$v) {
-                        _vm.siblingOcc = $$v
-                      },
-                      expression: "siblingOcc"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Name of school" },
-                    model: {
-                      value: _vm.siblingNameOfSchool,
-                      callback: function($$v) {
-                        _vm.siblingNameOfSchool = $$v
-                      },
-                      expression: "siblingNameOfSchool"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { dark: "", color: "indigo" },
-                  on: { click: _vm.addSibling }
-                },
-                [_vm._v("\n    More Sibling\n    \n  ")]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-divider"),
-          _vm._v(" "),
-          _c("v-flex", { attrs: { xl12: "" } }, [
-            _c("br"),
-            _vm._v(" "),
-            _c("span", { staticClass: "subheading" }, [
-              _vm._v("School Background:")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl12: "", lg12: "", md12: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Name of school",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.schoolName,
-                      callback: function($$v) {
-                        _vm.schoolName = $$v
-                      },
-                      expression: "schoolName"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "Province",
-                      items: _vm.provinces,
-                      "item-value": "id",
-                      "item-text": "name",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.schoolProvinceId,
-                      callback: function($$v) {
-                        _vm.schoolProvinceId = $$v
-                      },
-                      expression: "schoolProvinceId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: "City",
-                      items: _vm.schoolCities,
-                      "item-value": "id",
-                      "item-text": "name",
-                      required: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ]
-                    },
-                    model: {
-                      value: _vm.schoolCityId,
-                      callback: function($$v) {
-                        _vm.schoolCityId = $$v
-                      },
-                      expression: "schoolCityId"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Zipcode",
-                      type: "number",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.schoolZipCode,
-                      callback: function($$v) {
-                        _vm.schoolZipCode = $$v
-                      },
-                      expression: "schoolZipCode"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Present Address(House No:, street)",
-                      color: "grey",
-                      textarea: "",
-                      rules: [
-                        function(v) {
-                          return !!v || "This field is required."
-                        }
-                      ],
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.schoolAddress,
-                      callback: function($$v) {
-                        _vm.schoolAddress = $$v
-                      },
-                      expression: "schoolAddress"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-divider"),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            _vm._l(_vm.questions, function(question) {
-              return _c(
-                "v-flex",
-                {
-                  key: question.id,
-                  staticClass: "pa-2",
-                  attrs: { xl4: "", lg4: "", md4: "", sm6: "", xs12: "" }
-                },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      label: question.name,
-                      items: question.answers,
-                      "item-value": "id",
-                      "item-text": "name"
-                    },
-                    on: { change: _vm.myAnswer }
-                  })
-                ],
-                1
-              )
-            })
-          ),
-          _vm._v(" "),
-          _c("v-divider"),
-          _vm._v(" "),
-          _c("v-flex", { attrs: { xl12: "" } }, [
-            _c("br"),
-            _vm._v(" "),
-            _c("span", { staticClass: "subheading" }, [
-              _vm._v("REQUIREMENTS: (Please check the documents submitted)")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _vm._l(_vm.requirements, function(requirement) {
-                return _c(
-                  "v-flex",
-                  {
-                    key: requirement.id,
-                    staticClass: "pa-2",
-                    attrs: { xl3: "", lg3: "", md3: "", sm6: "", xs12: "" }
-                  },
-                  [
-                    _c("v-select", {
-                      attrs: {
-                        label: requirement.name,
-                        items: requirement.requirements_doc,
-                        "item-value": "id",
-                        "item-text": "name",
-                        multiple: ""
-                      },
-                      model: {
-                        value: _vm.requirementsDocs,
-                        callback: function($$v) {
-                          _vm.requirementsDocs = $$v
-                        },
-                        expression: "requirementsDocs"
-                      }
-                    })
-                  ],
-                  1
-                )
-              }),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "pa-2",
-                  attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" }
-                },
-                [
-                  _c("v-checkbox", {
-                    staticClass: "ma-0 pa-0",
-                    attrs: {
-                      label:
-                        "I will only be officially enrolled once the following school requirements have been completed and submitted.",
-                      rules: [
-                        function(v) {
-                          return !!v || "You must agree to continue!"
-                        }
-                      ],
-                      value: "1",
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.policy1,
-                      callback: function($$v) {
-                        _vm.policy1 = $$v
-                      },
-                      expression: "policy1"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span"),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("v-checkbox", {
-                    staticClass: "ma-0 pa-0",
-                    attrs: {
-                      label:
-                        "I understand that all fees are NON-REFUNDABLE UPON ENROLLMENT. I have read/understand this policy and I certify all entries are true and correct.",
-                      rules: [
-                        function(v) {
-                          return !!v || "You must agree to continue!"
-                        }
-                      ],
-                      value: "2",
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.policy2,
-                      callback: function($$v) {
-                        _vm.policy2 = $$v
-                      },
-                      expression: "policy2"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { xl12: "" } },
-            [
-              _c("br"),
-              _vm._v(" "),
-              _c("span", { staticClass: "subheading red--text" }, [
-                _vm._v(
-                  "Your personal information will be kept in strictest confidence. None of your information will be disclosed without your consent."
-                )
-              ]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { color: "info", disabled: !_vm.valid },
-                  on: { click: _vm.submit }
-                },
-                [_vm._v("\n  submit\n")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-38ba1ab8", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

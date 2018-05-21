@@ -27,8 +27,8 @@ class CreateEnrolleesTable extends Migration
             $table->string('age');
             $table->date('birthday')->nullable();
             $table->string('birth_place');
-            $table->string('sex');
-            $table->string('civil');
+            $table->integer('sex');
+            $table->integer('civil');
             $table->string('spouse_lastname')->nullable();
             $table->string('spouse_firstname')->nullable();
             $table->string('spouse_middlename')->nullable();

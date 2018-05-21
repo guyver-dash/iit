@@ -1,5 +1,20 @@
 export const state = {
      authUser: {firstname: '', lastname: '', email: ''},
+     confirmedEnrolled:{
+        enrollee: {
+            course_id: '',
+            birthday: null,
+            sex: 1,
+            answers: {
+                id: null,
+                question: {
+                    id: null
+                }
+            }
+
+        },
+        school_year_id: ''
+     },
      password: '',
      enrollees: [],
      roles: [],

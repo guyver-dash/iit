@@ -29,6 +29,7 @@ class Enrollee extends Model
         return $this->belongsToMany('App\Model\Answer', 'answer_enrollee', 'enrollee_id', 'answer_id');
     }
 
+
     public function requirementsDoc(){
         return $this->belongsToMany('App\Model\RequirementDoc', 'enrollee_requirements_doc', 'enrollee_id', 'requirement_doc_id');
 
@@ -42,5 +43,14 @@ class Enrollee extends Model
     public function getCreatedAtAttribute($value){
         return  Carbon::parse($value)->toDayDateTimeString();
         
+    }
+
+    public function getSexAttribute($value){
+
+        return (int)$value;
+    }
+    public function getCivilAttribute($value){
+
+        return (int)$value;
     }
 }
