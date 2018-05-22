@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
 		confirmedEnrolled(state, confirmedEnrolled){
 			state.confirmedEnrolled = confirmedEnrolled
 		},
+		
 		confirmedEnrolledEnrollee(state, payload){
 			state.confirmedEnrolled.enrollee[payload['field']] = payload['value']
 		},
@@ -106,6 +107,9 @@ export const store = new Vuex.Store({
 		},
 		confirmedEnrolled(store, confirmedEnrolled){
 			store.commit('confirmedEnrolled', confirmedEnrolled)
+		},
+		confirmedEnrolledField(store, confirmedEnrolledField){
+			store.commit('confirmedEnrolledField', confirmedEnrolledField)
 		},
 		enrollees(store, enrollees){
 			store.commit('enrollees', enrollees)

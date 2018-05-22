@@ -718,16 +718,16 @@
    label="I will only be officially enrolled once the following school requirements have been completed and submitted."
    v-model="policy1"
    :rules="[v => !!v || 'You must agree to continue!']"
-   value="1"
+    input-value="true"
    required
    class="ma-0 pa-0"
-   ></v-checkbox> <span></span>
+   ></v-checkbox> 
    <br />
    <v-checkbox
    label="I understand that all fees are NON-REFUNDABLE UPON ENROLLMENT. I have read/understand this policy and I certify all entries are true and correct."
    v-model="policy2"
    :rules="[v => !!v || 'You must agree to continue!']"
-   value="2"
+    input-value="true"
    required
    class="ma-0 pa-0"
    ></v-checkbox>
@@ -857,8 +857,8 @@
         snackbar: true,
         snackbarColor: 'error',
         snackbarText: '',
-        policy1: '',
-        policy2: '',
+        policy1: true,
+        policy2: true,
         valid: true,
         emailRules: [
         (v) => !!v || 'E-mail is required',
@@ -903,9 +903,9 @@
                           data.answer3 = res.data.enrollee.enrollee.answers[i].id
                       }
                 }
-
-              // data.requirementsDocs = res.data.enrollee.enrollee.requirementsDocs.map(a=>{a.id})
-              // console.log(data.requirementsDocs)
+              data.requirementsDocs = res.data.enrollee.enrollee.requirements_doc.map(function(req){
+                  return req.id
+              })
             
         })
         
@@ -976,10 +976,7 @@
 
     },
     methods: {
-      questionEnrollee(questionId, index){
-        console.log(questionId, index)
-         
-      },
+      
       schoolYearChange(schoolYear){
         if(schoolYear != ''){
           this.schoolYearError = []
@@ -1144,6 +1141,36 @@
     },
   },
   watch: {
+     'confirmedEnrolled.enrollee.course_id': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'course_id',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.school_year_id': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'school_year_id',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.year_level_id': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'year_level_id',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.semester_id': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'semester_id',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.schedule_id': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'schedule_id',
+          'value' : val
+      })
+    },
 
     'confirmedEnrolled.enrollee.present_province_id' : function(){
       var data = this
