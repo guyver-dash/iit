@@ -7,19 +7,19 @@
         lazy
         full-width
         width="290px"
-        :return-value.sync="time"
+        :return-value.sync="confirmedEnrolled.end_time"
       >
         <v-text-field
           slot="activator"
-          :label="'End time'"
-          v-model="time"
+          :label="'Start time'"
+          v-model="confirmedEnrolled.end_time"
           prepend-icon="access_time"
           readonly
         ></v-text-field>
-        <v-time-picker v-model="time" actions>
+        <v-time-picker v-model="confirmedEnrolled.end_time" actions>
           <v-spacer></v-spacer>
           <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
-          <v-btn flat color="primary" @click="$refs.dialog.save(time)">OK</v-btn>
+          <v-btn flat color="primary" @click="$refs.dialog.save(confirmedEnrolled.end_time)">OK</v-btn>
         </v-time-picker>
       </v-dialog>
     </v-flex>
@@ -33,13 +33,22 @@
       }
     },
     computed: {
-      time(){
-        return this.$store.getters.confirmedEnrolled.end_time
+      confirmedEnrolled: {
+        get(){
+            return this.$store.getters.confirmedEnrolled
+        },
+        set(val){
+        
+        }
+        
       }
     },
     watch: {
-      time(val){
-        
+      'confirmedEnrolled.end_time': function (val){
+          this.$store.dispatch('confirmedEnrolledField',{
+          'field' : 'end_time',
+           'value': val
+          })
       }
     }
   }

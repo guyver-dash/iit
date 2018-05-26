@@ -15,6 +15,7 @@ class CreateEnrolleesTable extends Migration
     {
         Schema::create('enrollees', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('lrn')->unsigned()->nullable();
             $table->bigInteger('admissionNo');
             $table->integer('course_id')->unsigned()->nullable();
             $table->foreign('course_id')->references('id')

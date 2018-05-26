@@ -22,7 +22,6 @@ use App\Model\Sibling;
 use App\Model\ConfirmEnrolled;
 use App\Model\Role;
 
-
 class StartUpController extends Controller
 {
     public function index(){
@@ -45,13 +44,21 @@ class StartUpController extends Controller
     		]);
     }
 
+
+
+
+
     public function getCities($provinceId){
 
     	return response()->json([
-
-    			'cities' => City::where('province_id', $provinceId)->get()
-    		]);
+                'cities' => City::where('province_id', $provinceId)->get()
+            ]) ;
     }
+
+
+
+
+
 
     public function getCityZipCode($cityId){
 

@@ -163,6 +163,7 @@ return [
         App\Providers\RoleServiceProvider::class,
         App\Providers\UserServiceProvider::class,
         App\Providers\EnrolleeServiceProvider::class,
+        App\Providers\ConfirmedEnrolleeServiceProvider::class,
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
     ],
 

@@ -4,13 +4,30 @@
     <v-form v-model="valid" ref="form" lazy-validation>
       
       <v-layout row wrap>
-        <v-flex xl12 lg12 md12 sm12 xs12>
+        <v-flex xl6 lg6 md6 sm6 xs6>
           <h3 class="headline">INSTRUCTIONS:</h3>
           <ol class="ml-4">
            <li>Student-Applicant accomplishes this Application Form properly.</li>
            <li>Fill-up information. Leave the field blank (if not applicable).</li>
            <li>Submit all the requirements as needed.</li>
          </ol>
+       </v-flex>
+       <v-flex xl6 lg6 md6 sm6 xs6>
+          <v-layout row wrap>
+            <v-flex xl12 lg12 md12 sm12 xs12>
+              <v-switch
+                label="Enrollee Status"
+                v-model="confirmedEnrolled.status"
+              ></v-switch>
+            </v-flex>
+            <v-flex xl12 lg12 md12 sm12 xs12>
+              <v-text-field
+              label="LRN"
+              :type="'number'"
+              v-model="confirmedEnrolled.lrn"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
        </v-flex>
        <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
@@ -91,8 +108,8 @@
             
             <v-layout row wrap>
               <span class="subheading">Modular (Specify your 4 hours time range:)</span>
-              <start-time></start-time>
-              <end-time></end-time>
+              <edit-start-time></edit-start-time>
+              <edit-end-time></edit-end-time>
             </v-layout>
           </v-card-text>
         </v-card>
@@ -749,8 +766,8 @@
 </v-container>
 </template>
 <script>
-  import startTime from '../../components/pickers/start-time.vue'
-  import endTime from '../../components/pickers/end-time.vue'
+  import editStartTime from '../../components/pickers/edit-start-time.vue'
+  import editEndTime from '../../components/pickers/edit-end-time.vue'
   import editDatePicker from '../../components/pickers/edit-date-picker.vue'
 
   export default {
@@ -867,7 +884,7 @@
       }
     },
     components: {
-      startTime, endTime, editDatePicker
+      editStartTime, editEndTime, editDatePicker
     },
     created(){
       let data = this
@@ -887,7 +904,7 @@
         data.$store.dispatch('educAtt', response.data.educAtt)
       }) 
 
-      this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id)
+      this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id + '?token=' + window.localStorage.getItem('tokenKey'))
         .then(function(res){
 
             data.$store.dispatch('confirmedEnrolled',  res.data.enrollee)
@@ -987,7 +1004,8 @@
       addSibling(){
 
         if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
-          this.$store.dispatch('addSibling', {
+         
+          this.$store.dispatch('addSiblingEdit', {
             name: this.siblingName,
             age: this.siblingAge,
             occupation: this.siblingOcc,
@@ -1007,7 +1025,7 @@
         
       },
       removeSibling(index){
-        this.$store.dispatch('removeSibling', index)
+        this.$store.dispatch('removeSiblingEdit', index)
       },
       myAnswer(answerId){
         var data = this
@@ -1059,69 +1077,10 @@
       if (this.$refs.form.validate()) {
         
        
-        this.$http.post(base_api + '/enrollment', {
-          start_time: this.startTime,
-          end_time: this.endTime,
-          semester_id: this.semester,
-          school_year_id: this.schoolYear,
-          year_level_id: this.yearLevel,
-          schedule_id: this.schedule,
-          start_time: this.startTime,
-          admissionNo: this.admissionNo,
-          course_id: this.course,
-          firstname: this.firstname,
-          middlename: this.middlename,
-          lastname: this.lastname,
-          suffix: this.suffix,
-          nickname: this.nickName,
-          age: this.age,
-          birthday: this.birthday,
-          birth_place: this.birthplace,
-          sex: this.sex,
-          educ_at_id: this.EducAtt,
-          civil: this.selectedCivil,
-          spouse_lastname: this.spouseLastname,
-          spouse_firstname: this.spouseFirstname,
-          spouse_middlename: this.spouseMiddlename,
-          landline: this.landline,
-          mobile: this.mobile,
-          email: this.email,
-          religion: this.religion,
-          citizenship: this.citizenship,
-          present_address: this.presentAddress,
-          present_province_id: this.presentProvinceId,
-          present_city_id: this.presentCityId,
-          present_zipcode: this.presentZipCode,
-          permanent_address: this.permanentAddress,
-          permanent_province_id: this.permanentProvinceId,
-          permanent_city_id: this.permanentCityId,
-          permanent_zipcode: this.permanentZipCode,
-          father_firstname: this.fatherFirstname,
-          father_lastname: this.fatherLastname,
-          father_middlename: this.fatherMiddlename,
-          father_occupation: this.fatherOccupation,
-          father_contact_number: this.fatherContactNo,
-          father_address: this.fatherAddress,
-          father_province_id: this.fatherProvinceId,
-          father_city_id: this.fatherCityId,
-          father_zipcode: this.fatherZipCode,
-          mother_firstname: this.motherFirstname,
-          mother_lastname: this.motherLastname,
-          mother_middlename: this.motherMiddlename,
-          mother_occupation: this.motherOccupation,
-          mother_contact_number: this.motherContactNo,
-          mother_address: this.motherAddress,
-          mother_province_id: this.motherProvinceId,
-          mother_city_id: this.motherCityId,
-          mother_zipcode: this.motherZipCode,
-          name_of_school: this.schoolName,
-          school_address: this.schoolAddress,
-          school_province_id: this.schoolProvinceId,
-          school_city_id: this.schoolCityId,
-          school_zipcode: this.schoolZipCode,
-          siblings: this.siblings,
-          answers: this.answer,
-          requirementsDocs: this.requirementsDocs
+        this.$http.put(base_api + '/confirm-enrolled/' + this.$route.params.id , {
+          confirmedEnrolled: this.confirmedEnrolled,
+          requirementsDocs: this.requirementsDocs,
+          token: localStorage.getItem('tokenKey')
           
           
         })
@@ -1141,6 +1100,18 @@
     },
   },
   watch: {
+    'confirmedEnrolled.lrn': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'lrn',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.status': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'status',
+          'value' : val
+      })
+    },
      'confirmedEnrolled.enrollee.course_id': function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'course_id',
@@ -1171,80 +1142,367 @@
           'value' : val
       })
     },
-
-    'confirmedEnrolled.enrollee.present_province_id' : function(){
-      var data = this
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.present_province_id)
-      .then(function(res){
-        data.presentCities = res.data.cities
+    'confirmedEnrolled.enrollee.lastname': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'lastname',
+          'value' : val
       })
     },
-    'confirmedEnrolled.enrollee.present_city_id' : function(){
-      var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.present_city_id)
-      .then(function(res){
-        data.presentZipCode = res.data.city.zipcode
+    'confirmedEnrolled.enrollee.firstname': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'firstname',
+          'value' : val
       })
     },
-    'confirmedEnrolled.enrollee.permanent_province_id': function(){
-      var data = this
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.permanent_province_id)
-      .then(function(res){
-        data.permanentCities = res.data.cities
-      })
-
-    },
-    'confirmedEnrolled.enrollee.permanent_city_id': function(){
-      var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.permanent_city_id)
-      .then(function(res){
-        data.permanentZipCode = res.data.city.zipcode
+    'confirmedEnrolled.enrollee.middlename': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'middlename',
+          'value' : val
       })
     },
-    'confirmedEnrolled.enrollee.father_province_id': function(){
-      var data = this
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.father_province_id)
-      .then(function(res){
-        data.fatherCities = res.data.cities
+    'confirmedEnrolled.enrollee.suffix': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'suffix',
+          'value' : val
       })
     },
-    'confirmedEnrolled.enrollee.father_city_id': function(){
-      var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.father_city_id)
-      .then(function(res){
-        data.fatherZipCode = res.data.city.zipcode
+    'confirmedEnrolled.enrollee.nickname': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'nickname',
+          'value' : val
       })
     },
-    'confirmedEnrolled.enrollee.mother_province_id': function(){
-      var data = this
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.mother_province_id)
-      .then(function(res){
-        data.motherCities = res.data.cities
+    'confirmedEnrolled.enrollee.age': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'age',
+          'value' : val
       })
     },
-    'confirmedEnrolled.enrollee.mother_city_id': function(){
-      var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.mother_city_id)
-      .then(function(res){
-        data.motherZipCode = res.data.city.zipcode
+    'confirmedEnrolled.enrollee.birth_place': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'birth_place',
+          'value' : val
+      })
+    },  
+    'confirmedEnrolled.enrollee.educ_at_id': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'educ_at_id',
+          'value' : val
       })
     },
-    'confirmedEnrolled.enrollee.school_province_id': function(){
-      var data = this
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.school_province_id)
-      .then(function(res){
-        data.schoolCities = res.data.cities
-      })
-    },
-    'confirmedEnrolled.enrollee.school_city_id': function(){
-      var data = this
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.school_city_id)
-      .then(function(res){
-        data.schoolZipCode = res.data.city.zipcode
+    'confirmedEnrolled.enrollee.sex': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'sex',
+          'value' : val
       })
     },
     
+    'confirmedEnrolled.enrollee.civil': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'civil',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.landline': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'landline',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.spouse_lastname': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'spouse_lastname',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.spouse_firstname': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'spouse_firstname',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.spouse_middlename': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'spouse_middlename',
+          'value' : val
+      })
+    },
 
+    'confirmedEnrolled.enrollee.mobile': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mobile',
+          'value' : val
+      })
+    },
+     'confirmedEnrolled.enrollee.email': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'email',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.religion': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'religion',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.citizenship': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'citizenship',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.present_province_id' : function(val){
+      var data = this
+      this.$http.get(base_api + '/cities/' + val)
+      .then(function(res){
+        data.presentCities = res.data.cities
+      })
+       this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'present_province_id',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.present_city_id' : function(val){
+      var data = this
+      this.$http.get(base_api + '/get-city-zipcode/' + val)
+      .then(function(res){
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'present_zipcode',
+          'value' : res.data.city.zipcode
+        })
+      })
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'present_city_id',
+          'value' : val
+      })
+      
+    },
+    'confirmedEnrolled.enrollee.present_address': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'present_address',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.permanent_province_id': function(val){
+      var data = this
+      this.$http.get(base_api + '/cities/' + val)
+      .then(function(res){
+        data.permanentCities = res.data.cities
+      })
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'permanent_province_id',
+          'value' : val
+      })
+
+    },
+    'confirmedEnrolled.enrollee.permanent_city_id': function(val){
+      var data = this
+      this.$http.get(base_api + '/get-city-zipcode/' + val)
+      .then(function(res){
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'permanent_zipcode',
+          'value' : res.data.city.zipcode
+        })
+        
+      })
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'permanent_city_id',
+          'value' : val
+        })
+    },
+    'confirmedEnrolled.enrollee.permanent_address': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'permanent_address',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.father_lastname': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'father_lastname',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.father_firstname': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'father_firstname',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.father_middlename': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'father_middlename',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.father_occupation': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'father_occupation',
+          'value' : val
+      })
+    },
+     'confirmedEnrolled.enrollee.father_contact_number': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'father_contact_number',
+          'value' : val
+      })
+    },
+
+    'confirmedEnrolled.enrollee.father_province_id': function(val){
+      var data = this
+      this.$http.get(base_api + '/cities/' + val)
+      .then(function(res){
+        data.fatherCities = res.data.cities
+      })
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'father_province_id',
+          'value' : val
+      })
+
+    },
+    'confirmedEnrolled.enrollee.father_city_id': function(val){
+      var data = this
+      this.$http.get(base_api + '/get-city-zipcode/' + val)
+      .then(function(res){
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'father_zipcode',
+          'value' : res.data.city.zipcode
+        })
+        
+      })
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'father_city_id',
+          'value' : val
+        })
+    },
+    'confirmedEnrolled.enrollee.father_address': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'father_address',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.mother_firstname': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mother_firstname',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.mother_lastname': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mother_lastname',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.mother_middlename': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mother_middlename',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.mother_occupation': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mother_occupation',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.mother_contact_number': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mother_contact_number',
+          'value' : val
+      })
+    },
+
+    'confirmedEnrolled.enrollee.mother_province_id': function(val){
+      var data = this
+      this.$http.get(base_api + '/cities/' + val)
+      .then(function(res){
+        data.motherCities = res.data.cities
+      })
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mother_province_id',
+          'value' : val
+      })
+
+    },
+    'confirmedEnrolled.enrollee.mother_city_id': function(val){
+      var data = this
+      this.$http.get(base_api + '/get-city-zipcode/' + val)
+      .then(function(res){
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mother_zipcode',
+          'value' : res.data.city.zipcode
+        })
+        
+      })
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mother_city_id',
+          'value' : val
+        })
+    },
+    'confirmedEnrolled.enrollee.mother_address': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'mother_address',
+          'value' : val
+      })
+    },
+
+    'confirmedEnrolled.enrollee.name_of_school': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'name_of_school',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.school_province_id': function(val){
+        var data = this
+        this.$http.get(base_api + '/cities/' + val)
+        .then(function(res){
+          data.schoolCities = res.data.cities
+        })
+        this.$store.dispatch('confirmedEnrolledEnrollee', {
+            'field' : 'school_province_id',
+            'value' : val
+        })
+
+    },
+    'confirmedEnrolled.enrollee.school_city_id': function(val){
+      var data = this
+      this.$http.get(base_api + '/get-city-zipcode/' + val)
+      .then(function(res){
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'school_zipcode',
+          'value' : res.data.city.zipcode
+        })
+        
+      })
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'school_city_id',
+          'value' : val
+        })
+    },
+    'confirmedEnrolled.enrollee.school_address': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'school_address',
+          'value' : val
+      })
+    },
+    answer1:function(val){
+      this.$store.dispatch('answersEdit',{
+        'index': 0,
+        'value' : val
+      });
+    },
+    answer2:function(val){
+      this.$store.dispatch('answersEdit',{
+        'index': 1,
+        'value' : val
+      });
+    },
+    answer3:function(val){
+      this.$store.dispatch('answersEdit',{
+        'index': 2,
+        'value' : val
+      });
+    }
   }
 }
 </script>

@@ -7,19 +7,19 @@
         lazy
         full-width
         width="290px"
-        :return-value.sync="birthday"
+        :return-value.sync="confirmedEnrolled.enrollee.birthday"
       >
         <v-text-field
           slot="activator"
           label="Birthday"
-          v-model="birthday"
+          v-model="confirmedEnrolled.enrollee.birthday"
           prepend-icon="event"
           readonly
         ></v-text-field>
-        <v-date-picker v-model="birthday" scrollable>
+        <v-date-picker v-model="confirmedEnrolled.enrollee.birthday" scrollable>
           <v-spacer></v-spacer>
           <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
-          <v-btn flat color="primary" @click="$refs.dialog.save(birthday)">OK</v-btn>
+          <v-btn flat color="primary" @click="$refs.dialog.save(confirmedEnrolled.enrollee.birthday)">OK</v-btn>
         </v-date-picker>
       </v-dialog>
     </v-flex>
@@ -31,16 +31,21 @@
       modal: false,
     }),
     computed: {
-      birthday: {
+      confirmedEnrolled: {
         get(){
-          return this.$store.getters.confirmedEnrolled.enrollee.birthday
+          return this.$store.getters.confirmedEnrolled
         },
         set(val){
-           this.$store.dispatch('confirmedEnrolledEnrollee', {
+           
+        }
+      }
+    },
+    watch: {
+      'confirmedEnrolled.enrollee.birthday': function(val){
+        this.$store.dispatch('confirmedEnrolledEnrollee', {
               'field': 'birthday',
               'value': val
            })
-        }
       }
     }
   }

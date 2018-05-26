@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use JWTAuth;
+use JWTAuthException;
 use Closure;
 
 class RoleMiddleware
@@ -15,14 +16,12 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next, ...$params)
     {
-        $roles = $request->user()->roles()->get();
 
-        $roles = $roles->map(function($item){
+        $request = app()->make('request');
 
-            return $item->name;
-        });
+        $user = JWTAuth::toUser($request->token)->with('roles')->first();
 
-
+        $roles = $user->roles->pluck('name');
 
         foreach ($params as $value) {
             

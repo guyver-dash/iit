@@ -12106,8 +12106,20 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		confirmedEnrolled: function confirmedEnrolled(state, _confirmedEnrolled) {
 			state.confirmedEnrolled = _confirmedEnrolled;
 		},
+		removeSiblingEdit: function removeSiblingEdit(state, siblings) {
+			state.confirmedEnrolled.enrollee.siblings = siblings;
+		},
+		addSiblingEdit: function addSiblingEdit(state, siblings) {
+			state.confirmedEnrolled.enrollee.siblings = siblings;
+		},
+		answersEdit: function answersEdit(state, answers) {
+			state.confirmedEnrolled.enrollee.answers[answers['index']].id = answers['value'];
+		},
 		confirmedEnrolledEnrollee: function confirmedEnrolledEnrollee(state, payload) {
 			state.confirmedEnrolled.enrollee[payload['field']] = payload['value'];
+		},
+		confirmedEnrolledField: function confirmedEnrolledField(state, payload) {
+			state.confirmedEnrolled[payload['field']] = payload['value'];
 		},
 		enrollees: function enrollees(state, _enrollees) {
 			state.enrollees = _enrollees;
@@ -12195,6 +12207,33 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		}
 	},
 	actions: {
+		answersEdit: function answersEdit(store, answers) {
+			store.commit('answersEdit', answers);
+		},
+		addSiblingEdit: function addSiblingEdit(store, sibling) {
+
+			var siblings = store.state.confirmedEnrolled.enrollee.siblings;
+			if (siblings === null) {
+				store.commit('addSiblingEdit', [sibling]);
+			} else {
+				siblings.push(sibling);
+				var newSiblings = store.state.confirmedEnrolled.enrollee.siblings;
+				store.commit('addSiblingEdit', newSiblings);
+			}
+		},
+		removeSiblingEdit: function removeSiblingEdit(store, key) {
+			var siblings = store.state.confirmedEnrolled.enrollee.siblings;
+			delete siblings[key];
+
+			var cleanArray = [];
+			for (var key in siblings) {
+				if (siblings[key] !== null || siblings[key] !== undefined) {
+					cleanArray.push(siblings[key]);
+				}
+			}
+
+			store.commit('removeSiblingEdit', cleanArray);
+		},
 		confirmedEnrolledEnrollee: function confirmedEnrolledEnrollee(store, payload) {
 			store.commit('confirmedEnrolledEnrollee', payload);
 		},
@@ -22640,14 +22679,29 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pickers_start_time_vue__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pickers_start_time_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_pickers_start_time_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_pickers_end_time_vue__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_pickers_end_time_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_pickers_end_time_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pickers_edit_start_time_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pickers_edit_start_time_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_pickers_edit_start_time_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_pickers_edit_end_time_vue__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_pickers_edit_end_time_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_pickers_edit_end_time_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_pickers_edit_date_picker_vue__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_pickers_edit_date_picker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_pickers_edit_date_picker_vue__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -23499,7 +23553,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
 
   components: {
-    startTime: __WEBPACK_IMPORTED_MODULE_0__components_pickers_start_time_vue___default.a, endTime: __WEBPACK_IMPORTED_MODULE_1__components_pickers_end_time_vue___default.a, editDatePicker: __WEBPACK_IMPORTED_MODULE_2__components_pickers_edit_date_picker_vue___default.a
+    editStartTime: __WEBPACK_IMPORTED_MODULE_0__components_pickers_edit_start_time_vue___default.a, editEndTime: __WEBPACK_IMPORTED_MODULE_1__components_pickers_edit_end_time_vue___default.a, editDatePicker: __WEBPACK_IMPORTED_MODULE_2__components_pickers_edit_date_picker_vue___default.a
   },
   created: function created() {
     var data = this;
@@ -23517,7 +23571,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       data.$store.dispatch('educAtt', response.data.educAtt);
     });
 
-    this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id).then(function (res) {
+    this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id + '?token=' + window.localStorage.getItem('tokenKey')).then(function (res) {
 
       data.$store.dispatch('confirmedEnrolled', res.data.enrollee);
 
@@ -23610,7 +23664,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addSibling: function addSibling() {
 
       if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
-        this.$store.dispatch('addSibling', {
+
+        this.$store.dispatch('addSiblingEdit', {
           name: this.siblingName,
           age: this.siblingAge,
           occupation: this.siblingOcc,
@@ -23628,7 +23683,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     removeSibling: function removeSibling(index) {
-      this.$store.dispatch('removeSibling', index);
+      this.$store.dispatch('removeSiblingEdit', index);
     },
     myAnswer: function myAnswer(answerId) {
       var data = this;
@@ -23673,16 +23728,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (this.$refs.form.validate()) {
-        var _$http$post;
 
-        this.$http.post(base_api + '/enrollment', (_$http$post = {
-          start_time: this.startTime,
-          end_time: this.endTime,
-          semester_id: this.semester,
-          school_year_id: this.schoolYear,
-          year_level_id: this.yearLevel,
-          schedule_id: this.schedule
-        }, _defineProperty(_$http$post, 'start_time', this.startTime), _defineProperty(_$http$post, 'admissionNo', this.admissionNo), _defineProperty(_$http$post, 'course_id', this.course), _defineProperty(_$http$post, 'firstname', this.firstname), _defineProperty(_$http$post, 'middlename', this.middlename), _defineProperty(_$http$post, 'lastname', this.lastname), _defineProperty(_$http$post, 'suffix', this.suffix), _defineProperty(_$http$post, 'nickname', this.nickName), _defineProperty(_$http$post, 'age', this.age), _defineProperty(_$http$post, 'birthday', this.birthday), _defineProperty(_$http$post, 'birth_place', this.birthplace), _defineProperty(_$http$post, 'sex', this.sex), _defineProperty(_$http$post, 'educ_at_id', this.EducAtt), _defineProperty(_$http$post, 'civil', this.selectedCivil), _defineProperty(_$http$post, 'spouse_lastname', this.spouseLastname), _defineProperty(_$http$post, 'spouse_firstname', this.spouseFirstname), _defineProperty(_$http$post, 'spouse_middlename', this.spouseMiddlename), _defineProperty(_$http$post, 'landline', this.landline), _defineProperty(_$http$post, 'mobile', this.mobile), _defineProperty(_$http$post, 'email', this.email), _defineProperty(_$http$post, 'religion', this.religion), _defineProperty(_$http$post, 'citizenship', this.citizenship), _defineProperty(_$http$post, 'present_address', this.presentAddress), _defineProperty(_$http$post, 'present_province_id', this.presentProvinceId), _defineProperty(_$http$post, 'present_city_id', this.presentCityId), _defineProperty(_$http$post, 'present_zipcode', this.presentZipCode), _defineProperty(_$http$post, 'permanent_address', this.permanentAddress), _defineProperty(_$http$post, 'permanent_province_id', this.permanentProvinceId), _defineProperty(_$http$post, 'permanent_city_id', this.permanentCityId), _defineProperty(_$http$post, 'permanent_zipcode', this.permanentZipCode), _defineProperty(_$http$post, 'father_firstname', this.fatherFirstname), _defineProperty(_$http$post, 'father_lastname', this.fatherLastname), _defineProperty(_$http$post, 'father_middlename', this.fatherMiddlename), _defineProperty(_$http$post, 'father_occupation', this.fatherOccupation), _defineProperty(_$http$post, 'father_contact_number', this.fatherContactNo), _defineProperty(_$http$post, 'father_address', this.fatherAddress), _defineProperty(_$http$post, 'father_province_id', this.fatherProvinceId), _defineProperty(_$http$post, 'father_city_id', this.fatherCityId), _defineProperty(_$http$post, 'father_zipcode', this.fatherZipCode), _defineProperty(_$http$post, 'mother_firstname', this.motherFirstname), _defineProperty(_$http$post, 'mother_lastname', this.motherLastname), _defineProperty(_$http$post, 'mother_middlename', this.motherMiddlename), _defineProperty(_$http$post, 'mother_occupation', this.motherOccupation), _defineProperty(_$http$post, 'mother_contact_number', this.motherContactNo), _defineProperty(_$http$post, 'mother_address', this.motherAddress), _defineProperty(_$http$post, 'mother_province_id', this.motherProvinceId), _defineProperty(_$http$post, 'mother_city_id', this.motherCityId), _defineProperty(_$http$post, 'mother_zipcode', this.motherZipCode), _defineProperty(_$http$post, 'name_of_school', this.schoolName), _defineProperty(_$http$post, 'school_address', this.schoolAddress), _defineProperty(_$http$post, 'school_province_id', this.schoolProvinceId), _defineProperty(_$http$post, 'school_city_id', this.schoolCityId), _defineProperty(_$http$post, 'school_zipcode', this.schoolZipCode), _defineProperty(_$http$post, 'siblings', this.siblings), _defineProperty(_$http$post, 'answers', this.answer), _defineProperty(_$http$post, 'requirementsDocs', this.requirementsDocs), _$http$post)).then(function (res) {
+        this.$http.put(base_api + '/confirm-enrolled/' + this.$route.params.id, {
+          confirmedEnrolled: this.confirmedEnrolled,
+          requirementsDocs: this.requirementsDocs,
+          token: localStorage.getItem('tokenKey')
+
+        }).then(function (res) {
 
           data.$store.dispatch('snackbarText', 'Registration completed!');
           data.$store.dispatch('snackbarColor', 'success');
@@ -23696,6 +23748,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   watch: {
+    'confirmedEnrolled.lrn': function confirmedEnrolledLrn(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'lrn',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.status': function confirmedEnrolledStatus(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'status',
+        'value': val
+      });
+    },
     'confirmedEnrolled.enrollee.course_id': function confirmedEnrolledEnrolleeCourse_id(val) {
       this.$store.dispatch('confirmedEnrolledEnrollee', {
         'field': 'course_id',
@@ -23726,68 +23790,348 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'value': val
       });
     },
+    'confirmedEnrolled.enrollee.lastname': function confirmedEnrolledEnrolleeLastname(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'lastname',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.firstname': function confirmedEnrolledEnrolleeFirstname(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'firstname',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.middlename': function confirmedEnrolledEnrolleeMiddlename(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'middlename',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.suffix': function confirmedEnrolledEnrolleeSuffix(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'suffix',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.nickname': function confirmedEnrolledEnrolleeNickname(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'nickname',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.age': function confirmedEnrolledEnrolleeAge(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'age',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.birth_place': function confirmedEnrolledEnrolleeBirth_place(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'birth_place',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.educ_at_id': function confirmedEnrolledEnrolleeEduc_at_id(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'educ_at_id',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.sex': function confirmedEnrolledEnrolleeSex(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'sex',
+        'value': val
+      });
+    },
 
-    'confirmedEnrolled.enrollee.present_province_id': function confirmedEnrolledEnrolleePresent_province_id() {
+    'confirmedEnrolled.enrollee.civil': function confirmedEnrolledEnrolleeCivil(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'civil',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.landline': function confirmedEnrolledEnrolleeLandline(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'landline',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.spouse_lastname': function confirmedEnrolledEnrolleeSpouse_lastname(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'spouse_lastname',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.spouse_firstname': function confirmedEnrolledEnrolleeSpouse_firstname(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'spouse_firstname',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.spouse_middlename': function confirmedEnrolledEnrolleeSpouse_middlename(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'spouse_middlename',
+        'value': val
+      });
+    },
+
+    'confirmedEnrolled.enrollee.mobile': function confirmedEnrolledEnrolleeMobile(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'mobile',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.email': function confirmedEnrolledEnrolleeEmail(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'email',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.religion': function confirmedEnrolledEnrolleeReligion(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'religion',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.citizenship': function confirmedEnrolledEnrolleeCitizenship(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'citizenship',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.present_province_id': function confirmedEnrolledEnrolleePresent_province_id(val) {
       var data = this;
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.present_province_id).then(function (res) {
+      this.$http.get(base_api + '/cities/' + val).then(function (res) {
         data.presentCities = res.data.cities;
       });
-    },
-    'confirmedEnrolled.enrollee.present_city_id': function confirmedEnrolledEnrolleePresent_city_id() {
-      var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.present_city_id).then(function (res) {
-        data.presentZipCode = res.data.city.zipcode;
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'present_province_id',
+        'value': val
       });
     },
-    'confirmedEnrolled.enrollee.permanent_province_id': function confirmedEnrolledEnrolleePermanent_province_id() {
+    'confirmedEnrolled.enrollee.present_city_id': function confirmedEnrolledEnrolleePresent_city_id(val) {
       var data = this;
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.permanent_province_id).then(function (res) {
+      this.$http.get(base_api + '/get-city-zipcode/' + val).then(function (res) {
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field': 'present_zipcode',
+          'value': res.data.city.zipcode
+        });
+      });
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'present_city_id',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.present_address': function confirmedEnrolledEnrolleePresent_address(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'present_address',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.permanent_province_id': function confirmedEnrolledEnrolleePermanent_province_id(val) {
+      var data = this;
+      this.$http.get(base_api + '/cities/' + val).then(function (res) {
         data.permanentCities = res.data.cities;
       });
-    },
-    'confirmedEnrolled.enrollee.permanent_city_id': function confirmedEnrolledEnrolleePermanent_city_id() {
-      var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.permanent_city_id).then(function (res) {
-        data.permanentZipCode = res.data.city.zipcode;
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'permanent_province_id',
+        'value': val
       });
     },
-    'confirmedEnrolled.enrollee.father_province_id': function confirmedEnrolledEnrolleeFather_province_id() {
+    'confirmedEnrolled.enrollee.permanent_city_id': function confirmedEnrolledEnrolleePermanent_city_id(val) {
       var data = this;
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.father_province_id).then(function (res) {
+      this.$http.get(base_api + '/get-city-zipcode/' + val).then(function (res) {
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field': 'permanent_zipcode',
+          'value': res.data.city.zipcode
+        });
+      });
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'permanent_city_id',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.permanent_address': function confirmedEnrolledEnrolleePermanent_address(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'permanent_address',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.father_lastname': function confirmedEnrolledEnrolleeFather_lastname(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'father_lastname',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.father_firstname': function confirmedEnrolledEnrolleeFather_firstname(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'father_firstname',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.father_middlename': function confirmedEnrolledEnrolleeFather_middlename(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'father_middlename',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.father_occupation': function confirmedEnrolledEnrolleeFather_occupation(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'father_occupation',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.father_contact_number': function confirmedEnrolledEnrolleeFather_contact_number(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'father_contact_number',
+        'value': val
+      });
+    },
+
+    'confirmedEnrolled.enrollee.father_province_id': function confirmedEnrolledEnrolleeFather_province_id(val) {
+      var data = this;
+      this.$http.get(base_api + '/cities/' + val).then(function (res) {
         data.fatherCities = res.data.cities;
       });
-    },
-    'confirmedEnrolled.enrollee.father_city_id': function confirmedEnrolledEnrolleeFather_city_id() {
-      var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.father_city_id).then(function (res) {
-        data.fatherZipCode = res.data.city.zipcode;
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'father_province_id',
+        'value': val
       });
     },
-    'confirmedEnrolled.enrollee.mother_province_id': function confirmedEnrolledEnrolleeMother_province_id() {
+    'confirmedEnrolled.enrollee.father_city_id': function confirmedEnrolledEnrolleeFather_city_id(val) {
       var data = this;
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.mother_province_id).then(function (res) {
+      this.$http.get(base_api + '/get-city-zipcode/' + val).then(function (res) {
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field': 'father_zipcode',
+          'value': res.data.city.zipcode
+        });
+      });
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'father_city_id',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.father_address': function confirmedEnrolledEnrolleeFather_address(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'father_address',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.mother_firstname': function confirmedEnrolledEnrolleeMother_firstname(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'mother_firstname',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.mother_lastname': function confirmedEnrolledEnrolleeMother_lastname(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'mother_lastname',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.mother_middlename': function confirmedEnrolledEnrolleeMother_middlename(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'mother_middlename',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.mother_occupation': function confirmedEnrolledEnrolleeMother_occupation(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'mother_occupation',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.mother_contact_number': function confirmedEnrolledEnrolleeMother_contact_number(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'mother_contact_number',
+        'value': val
+      });
+    },
+
+    'confirmedEnrolled.enrollee.mother_province_id': function confirmedEnrolledEnrolleeMother_province_id(val) {
+      var data = this;
+      this.$http.get(base_api + '/cities/' + val).then(function (res) {
         data.motherCities = res.data.cities;
       });
-    },
-    'confirmedEnrolled.enrollee.mother_city_id': function confirmedEnrolledEnrolleeMother_city_id() {
-      var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.mother_city_id).then(function (res) {
-        data.motherZipCode = res.data.city.zipcode;
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'mother_province_id',
+        'value': val
       });
     },
-    'confirmedEnrolled.enrollee.school_province_id': function confirmedEnrolledEnrolleeSchool_province_id() {
+    'confirmedEnrolled.enrollee.mother_city_id': function confirmedEnrolledEnrolleeMother_city_id(val) {
       var data = this;
-      this.$http.get(base_api + '/cities/' + this.confirmedEnrolled.enrollee.school_province_id).then(function (res) {
+      this.$http.get(base_api + '/get-city-zipcode/' + val).then(function (res) {
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field': 'mother_zipcode',
+          'value': res.data.city.zipcode
+        });
+      });
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'mother_city_id',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.mother_address': function confirmedEnrolledEnrolleeMother_address(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'mother_address',
+        'value': val
+      });
+    },
+
+    'confirmedEnrolled.enrollee.name_of_school': function confirmedEnrolledEnrolleeName_of_school(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'name_of_school',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.school_province_id': function confirmedEnrolledEnrolleeSchool_province_id(val) {
+      var data = this;
+      this.$http.get(base_api + '/cities/' + val).then(function (res) {
         data.schoolCities = res.data.cities;
       });
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'school_province_id',
+        'value': val
+      });
     },
-    'confirmedEnrolled.enrollee.school_city_id': function confirmedEnrolledEnrolleeSchool_city_id() {
+    'confirmedEnrolled.enrollee.school_city_id': function confirmedEnrolledEnrolleeSchool_city_id(val) {
       var data = this;
-      this.$http.get(base_api + '/get-city-zipcode/' + this.confirmedEnrolled.enrollee.school_city_id).then(function (res) {
-        data.schoolZipCode = res.data.city.zipcode;
+      this.$http.get(base_api + '/get-city-zipcode/' + val).then(function (res) {
+        data.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field': 'school_zipcode',
+          'value': res.data.city.zipcode
+        });
+      });
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'school_city_id',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.school_address': function confirmedEnrolledEnrolleeSchool_address(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'school_address',
+        'value': val
+      });
+    },
+    answer1: function answer1(val) {
+      this.$store.dispatch('answersEdit', {
+        'index': 0,
+        'value': val
+      });
+    },
+    answer2: function answer2(val) {
+      this.$store.dispatch('answersEdit', {
+        'index': 1,
+        'value': val
+      });
+    },
+    answer3: function answer3(val) {
+      this.$store.dispatch('answersEdit', {
+        'index': 2,
+        'value': val
       });
     }
-
   }
 });
 
@@ -23817,7 +24161,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\pickers\\start-time.vue"
+Component.options.__file = "resources\\assets\\js\\components\\pickers\\edit-start-time.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -23826,9 +24170,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-10e72806", Component.options)
+    hotAPI.createRecord("data-v-7a0fe7bd", Component.options)
   } else {
-    hotAPI.reload("data-v-10e72806", Component.options)
+    hotAPI.reload("data-v-7a0fe7bd", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -23880,12 +24224,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   computed: {
-    time: function time() {
-      return this.$store.getters.confirmedEnrolled.start_time;
+    confirmedEnrolled: {
+      get: function get() {
+        return this.$store.getters.confirmedEnrolled;
+      },
+      set: function set(val) {}
     }
   },
   watch: {
-    time: function time(val) {}
+    'confirmedEnrolled.start_time': function confirmedEnrolledStart_time(val) {
+      this.$store.dispatch('confirmedEnrolledField', {
+        'field': 'start_time',
+        'value': val
+      });
+    }
   }
 });
 
@@ -23910,11 +24262,11 @@ var render = function() {
             lazy: "",
             "full-width": "",
             width: "290px",
-            "return-value": _vm.time
+            "return-value": _vm.confirmedEnrolled.start_time
           },
           on: {
             "update:returnValue": function($event) {
-              _vm.time = $event
+              _vm.$set(_vm.confirmedEnrolled, "start_time", $event)
             }
           },
           model: {
@@ -23935,11 +24287,11 @@ var render = function() {
             },
             slot: "activator",
             model: {
-              value: _vm.time,
+              value: _vm.confirmedEnrolled.start_time,
               callback: function($$v) {
-                _vm.time = $$v
+                _vm.$set(_vm.confirmedEnrolled, "start_time", $$v)
               },
-              expression: "time"
+              expression: "confirmedEnrolled.start_time"
             }
           }),
           _vm._v(" "),
@@ -23948,11 +24300,11 @@ var render = function() {
             {
               attrs: { actions: "" },
               model: {
-                value: _vm.time,
+                value: _vm.confirmedEnrolled.start_time,
                 callback: function($$v) {
-                  _vm.time = $$v
+                  _vm.$set(_vm.confirmedEnrolled, "start_time", $$v)
                 },
-                expression: "time"
+                expression: "confirmedEnrolled.start_time"
               }
             },
             [
@@ -23977,7 +24329,7 @@ var render = function() {
                   attrs: { flat: "", color: "primary" },
                   on: {
                     click: function($event) {
-                      _vm.$refs.dialog.save(_vm.time)
+                      _vm.$refs.dialog.save(_vm.confirmedEnrolled.start_time)
                     }
                   }
                 },
@@ -23999,7 +24351,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-10e72806", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7a0fe7bd", module.exports)
   }
 }
 
@@ -24029,7 +24381,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\pickers\\end-time.vue"
+Component.options.__file = "resources\\assets\\js\\components\\pickers\\edit-end-time.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -24038,9 +24390,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-b29d2da6", Component.options)
+    hotAPI.createRecord("data-v-7fa4aaa4", Component.options)
   } else {
-    hotAPI.reload("data-v-b29d2da6", Component.options)
+    hotAPI.reload("data-v-7fa4aaa4", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -24092,14 +24444,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   computed: {
-    time: function time() {
-      return this.$store.getters.confirmedEnrolled.end_time;
+    confirmedEnrolled: {
+      get: function get() {
+        return this.$store.getters.confirmedEnrolled;
+      },
+      set: function set(val) {}
     }
   },
   watch: {
-    time: function time(val) {
-
-      console.log(val);
+    'confirmedEnrolled.end_time': function confirmedEnrolledEnd_time(val) {
+      this.$store.dispatch('confirmedEnrolledField', {
+        'field': 'end_time',
+        'value': val
+      });
     }
   }
 });
@@ -24125,11 +24482,11 @@ var render = function() {
             lazy: "",
             "full-width": "",
             width: "290px",
-            "return-value": _vm.time
+            "return-value": _vm.confirmedEnrolled.end_time
           },
           on: {
             "update:returnValue": function($event) {
-              _vm.time = $event
+              _vm.$set(_vm.confirmedEnrolled, "end_time", $event)
             }
           },
           model: {
@@ -24144,17 +24501,17 @@ var render = function() {
           _c("v-text-field", {
             attrs: {
               slot: "activator",
-              label: "End time",
+              label: "Start time",
               "prepend-icon": "access_time",
               readonly: ""
             },
             slot: "activator",
             model: {
-              value: _vm.time,
+              value: _vm.confirmedEnrolled.end_time,
               callback: function($$v) {
-                _vm.time = $$v
+                _vm.$set(_vm.confirmedEnrolled, "end_time", $$v)
               },
-              expression: "time"
+              expression: "confirmedEnrolled.end_time"
             }
           }),
           _vm._v(" "),
@@ -24163,11 +24520,11 @@ var render = function() {
             {
               attrs: { actions: "" },
               model: {
-                value: _vm.time,
+                value: _vm.confirmedEnrolled.end_time,
                 callback: function($$v) {
-                  _vm.time = $$v
+                  _vm.$set(_vm.confirmedEnrolled, "end_time", $$v)
                 },
-                expression: "time"
+                expression: "confirmedEnrolled.end_time"
               }
             },
             [
@@ -24192,7 +24549,7 @@ var render = function() {
                   attrs: { flat: "", color: "primary" },
                   on: {
                     click: function($event) {
-                      _vm.$refs.dialog.save(_vm.time)
+                      _vm.$refs.dialog.save(_vm.confirmedEnrolled.end_time)
                     }
                   }
                 },
@@ -24214,7 +24571,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-b29d2da6", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7fa4aaa4", module.exports)
   }
 }
 
@@ -24306,16 +24663,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   computed: {
-    birthday: {
+    confirmedEnrolled: {
       get: function get() {
-        return this.$store.getters.confirmedEnrolled.enrollee.birthday;
+        return this.$store.getters.confirmedEnrolled;
       },
-      set: function set(val) {
-        this.$store.dispatch('confirmedEnrolledEnrollee', {
-          'field': 'birthday',
-          'value': val
-        });
-      }
+      set: function set(val) {}
+    }
+  },
+  watch: {
+    'confirmedEnrolled.enrollee.birthday': function confirmedEnrolledEnrolleeBirthday(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'birthday',
+        'value': val
+      });
     }
   }
 });
@@ -24340,11 +24700,11 @@ var render = function() {
             lazy: "",
             "full-width": "",
             width: "290px",
-            "return-value": _vm.birthday
+            "return-value": _vm.confirmedEnrolled.enrollee.birthday
           },
           on: {
             "update:returnValue": function($event) {
-              _vm.birthday = $event
+              _vm.$set(_vm.confirmedEnrolled.enrollee, "birthday", $event)
             }
           },
           model: {
@@ -24365,11 +24725,11 @@ var render = function() {
             },
             slot: "activator",
             model: {
-              value: _vm.birthday,
+              value: _vm.confirmedEnrolled.enrollee.birthday,
               callback: function($$v) {
-                _vm.birthday = $$v
+                _vm.$set(_vm.confirmedEnrolled.enrollee, "birthday", $$v)
               },
-              expression: "birthday"
+              expression: "confirmedEnrolled.enrollee.birthday"
             }
           }),
           _vm._v(" "),
@@ -24378,11 +24738,11 @@ var render = function() {
             {
               attrs: { scrollable: "" },
               model: {
-                value: _vm.birthday,
+                value: _vm.confirmedEnrolled.enrollee.birthday,
                 callback: function($$v) {
-                  _vm.birthday = $$v
+                  _vm.$set(_vm.confirmedEnrolled.enrollee, "birthday", $$v)
                 },
-                expression: "birthday"
+                expression: "confirmedEnrolled.enrollee.birthday"
               }
             },
             [
@@ -24407,7 +24767,9 @@ var render = function() {
                   attrs: { flat: "", color: "primary" },
                   on: {
                     click: function($event) {
-                      _vm.$refs.dialog.save(_vm.birthday)
+                      _vm.$refs.dialog.save(
+                        _vm.confirmedEnrolled.enrollee.birthday
+                      )
                     }
                   }
                 },
@@ -24465,7 +24827,7 @@ var render = function() {
             [
               _c(
                 "v-flex",
-                { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
+                { attrs: { xl6: "", lg6: "", md6: "", sm6: "", xs6: "" } },
                 [
                   _c("h3", { staticClass: "headline" }, [
                     _vm._v("INSTRUCTIONS:")
@@ -24487,6 +24849,72 @@ var render = function() {
                     _c("li", [_vm._v("Submit all the requirements as needed.")])
                   ])
                 ]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                { attrs: { xl6: "", lg6: "", md6: "", sm6: "", xs6: "" } },
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "", wrap: "" } },
+                    [
+                      _c(
+                        "v-flex",
+                        {
+                          attrs: {
+                            xl12: "",
+                            lg12: "",
+                            md12: "",
+                            sm12: "",
+                            xs12: ""
+                          }
+                        },
+                        [
+                          _c("v-switch", {
+                            attrs: { label: "Enrollee Status" },
+                            model: {
+                              value: _vm.confirmedEnrolled.status,
+                              callback: function($$v) {
+                                _vm.$set(_vm.confirmedEnrolled, "status", $$v)
+                              },
+                              expression: "confirmedEnrolled.status"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        {
+                          attrs: {
+                            xl12: "",
+                            lg12: "",
+                            md12: "",
+                            sm12: "",
+                            xs12: ""
+                          }
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: { label: "LRN", type: "number" },
+                            model: {
+                              value: _vm.confirmedEnrolled.lrn,
+                              callback: function($$v) {
+                                _vm.$set(_vm.confirmedEnrolled, "lrn", $$v)
+                              },
+                              expression: "confirmedEnrolled.lrn"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
               ),
               _vm._v(" "),
               _c(
@@ -24720,9 +25148,9 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
-                              _c("start-time"),
+                              _c("edit-start-time"),
                               _vm._v(" "),
-                              _c("end-time")
+                              _c("edit-end-time")
                             ],
                             1
                           )
@@ -27127,7 +27555,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   created: function created() {
     var data = this;
-    this.$http.get(base_api + '/confirm-enrolled').then(function (res) {
+    this.$http.get(base_api + '/confirm-enrolled?token=' + window.localStorage.getItem('tokenKey')).then(function (res) {
       data.$store.dispatch('enrollees', res.data.enrollees);
     }).catch();
   },

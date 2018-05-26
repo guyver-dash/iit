@@ -30,7 +30,7 @@ class BaseRepository{
 	}
 
 	public function update($request, $id){
-
+		
 		return $this->modelName->find($id)->update($request->all());
 	}
 

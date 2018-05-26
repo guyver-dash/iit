@@ -11,9 +11,21 @@ export const store = new Vuex.Store({
 		confirmedEnrolled(state, confirmedEnrolled){
 			state.confirmedEnrolled = confirmedEnrolled
 		},
+		removeSiblingEdit(state, siblings){
+			state.confirmedEnrolled.enrollee.siblings = siblings
+		},
+		addSiblingEdit(state, siblings){
+			state.confirmedEnrolled.enrollee.siblings = siblings
+		},
+		answersEdit(state, answers){
+			state.confirmedEnrolled.enrollee.answers[answers['index']].id = answers['value']
+		},
 		
 		confirmedEnrolledEnrollee(state, payload){
 			state.confirmedEnrolled.enrollee[payload['field']] = payload['value']
+		},
+		confirmedEnrolledField(state, payload){
+			state.confirmedEnrolled[payload['field']] = payload['value']
 		},
 		enrollees(state, enrollees){
 			state.enrollees = enrollees
@@ -51,6 +63,7 @@ export const store = new Vuex.Store({
 		snackbarColor(state, snackbarColor){
 			state.snackbarColor = snackbarColor
 		},
+		
 		siblings(state, siblings){
 			state.siblings = siblings
 		},
@@ -102,6 +115,35 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		answersEdit(store, answers){
+			store.commit('answersEdit', answers);
+		},
+		addSiblingEdit(store, sibling){
+
+			var siblings = store.state.confirmedEnrolled.enrollee.siblings;
+			if(siblings === null){
+				store.commit('addSiblingEdit', [sibling]);
+			}
+			else {
+				siblings.push(sibling);
+				var newSiblings = store.state.confirmedEnrolled.enrollee.siblings;
+				store.commit('addSiblingEdit', newSiblings);
+			}
+
+		},
+		removeSiblingEdit(store, key){
+			var siblings = store.state.confirmedEnrolled.enrollee.siblings
+			delete siblings[key]
+
+			var cleanArray = [];
+            	for(var key in siblings){
+            		if(siblings[key] !== null || siblings[key] !== undefined){
+            			cleanArray.push(siblings[key])
+            		}
+            	}
+
+			store.commit('removeSiblingEdit', cleanArray)
+		},
 		confirmedEnrolledEnrollee(store, payload){
 			store.commit('confirmedEnrolledEnrollee', payload)
 		},

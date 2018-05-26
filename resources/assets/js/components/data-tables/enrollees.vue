@@ -78,7 +78,8 @@
 
     created () {
       let data = this
-      this.$http.get(base_api + '/confirm-enrolled')
+      this.$http.get(base_api + '/confirm-enrolled?token=' + window.localStorage.getItem('tokenKey')
+      )
       .then(function(res){
         data.$store.dispatch('enrollees', res.data.enrollees)
       })

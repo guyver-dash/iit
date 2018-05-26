@@ -12,4 +12,8 @@ class Sibling extends Model
     	'age', 'name', 'occupation', 'school_name'
 
     ];
+
+    public function enrollee(){
+    	return $this->belongsToMany('App\Model\Enrollee', 'enrollee_sibling', 'enrollee_id', 'sibling_id');
+    }
 }

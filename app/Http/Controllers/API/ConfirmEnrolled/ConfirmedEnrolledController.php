@@ -5,10 +5,16 @@ namespace App\Http\Controllers\API\ConfirmEnrolled;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\ConfirmEnrolled;
+use App\Repo\ConfirmedEnrollee\ConfirmedEnrolleeInterface;
 
 class ConfirmedEnrolledController extends Controller
 {
     
+    protected $confirmedEnrollee;
+    public function __construct(ConfirmedEnrolleeInterface $confirmedEnrollee){
+        $this->middleware(['role:admin']);
+        $this->confirmedEnrollee = $confirmedEnrollee;
+    }
 
     public function index(){
 
@@ -25,7 +31,7 @@ class ConfirmedEnrolledController extends Controller
     }
 
     public function update($id){
-
-    	return reponse()->json(['asdf']);
+        $request = app()->make('request');
+        return $this->confirmedEnrollee->update($request, $id);
     }
 }

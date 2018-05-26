@@ -3,12 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Repo\User\UserInterface;
-use App\Repo\User\UserRepository;
-use App\Http\Controllers\API\User\UserController;
+use App\Repo\ConfirmedEnrollee\ConfirmedEnrolleeInterface;
+use App\Repo\ConfirmedEnrollee\ConfirmedEnrolleeRepository;
 use App\Http\Controllers\API\ConfirmEnrolled\ConfirmedEnrolledController;
 
-class UserServiceProvider extends ServiceProvider
+class ConfirmedEnrolleeServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -27,10 +26,8 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-        $this->app->when(UserController::class)
-          ->needs(UserInterface::class)
-          ->give(UserRepository::class);
-        
+        $this->app->when(ConfirmedEnrolledController::class)
+          ->needs(ConfirmedEnrolleeInterface::class)
+          ->give(ConfirmedEnrolleeRepository::class);
     }
 }
