@@ -180,7 +180,7 @@
        <v-select
        label="Sex"
        :items="sexs"
-       v-model="confirmedEnrolled.enrollee.sex"
+       v-model="sex"
        item-value="id"
        item-text="text"
        required
@@ -326,6 +326,7 @@
 <v-layout row wrap>
  <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
    <v-select
+   autocomplete
    label="Permanent Province"
    :items="provinces"
    v-model="permanentProvinceId"
@@ -337,6 +338,7 @@
  </v-flex>
  <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
   <v-select
+  autocomplete
   label="Permanent City"
   :items="permanentCities"
   v-model="permanentCityId"
@@ -420,6 +422,7 @@
   
   <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
    <v-select
+   autocomplete
    label="Province"
    :items="provinces"
    v-model="fatherProvinceId"
@@ -432,6 +435,7 @@
  </v-flex>
  <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
   <v-select
+  autocomplete
   label="City"
   :items="fatherCities"
   v-model="fatherCityId"
@@ -614,6 +618,7 @@
   
   <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
    <v-select
+   autocomplete
    label="Province"
    :items="provinces"
    v-model="schoolProvinceId"
@@ -625,6 +630,7 @@
  </v-flex>
  <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
   <v-select
+  autocomplete
   label="City"
   :items="schoolCities"
   v-model="schoolCityId"
@@ -1010,7 +1016,7 @@
           birth_place: this.birthplace,
           sex: this.sex,
           educ_at_id: this.EducAtt,
-          civil: this.selectedCivil,
+          civil_id: this.selectedCivil,
           spouse_lastname: this.spouseLastname,
           spouse_firstname: this.spouseFirstname,
           spouse_middlename: this.spouseMiddlename,

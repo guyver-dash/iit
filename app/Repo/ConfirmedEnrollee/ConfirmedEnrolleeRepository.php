@@ -6,6 +6,7 @@ use App\Repo\BaseRepository;
 use App\Repo\BaseInterface;
 use App\Model\ConfirmEnrolled;
 use App\Model\Sibling;
+use CodeItNow\BarcodeBundle\Utils\QrCode;
 
 class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnrolleeInterface{
 
@@ -24,9 +25,9 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
         $confirmedEnroll->start_time = $request->confirmedEnrolled['start_time'];
         $confirmedEnroll->end_time = $request->confirmedEnrolled['end_time'];
         $confirmedEnroll->status = $request->confirmedEnrolled['status'];
-        $confirmedEnroll->lrn = $request->confirmedEnrolled['lrn'];
         $confirmedEnroll->update();
 
+        $confirmedEnroll->enrollee->lrn = $request->confirmedEnrolled['enrollee']['lrn'];
         $confirmedEnroll->enrollee->firstname = $request->confirmedEnrolled['enrollee']['firstname'];
         $confirmedEnroll->enrollee->lastname = $request->confirmedEnrolled['enrollee']['lastname'];
         $confirmedEnroll->enrollee->middlename = $request->confirmedEnrolled['enrollee']['middlename'];
@@ -120,6 +121,197 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
 
 
         return response()->json($request->confirmedEnrolled['enrollee']['requirements_doc'] );
+    }
+
+    public function print($id){
+        $confirmedEnroll = $this->modelName->find($id)->with(['enrollee.civil', 'enrollee.course', 'yearLevel', 'semester', 'schedule'])->first();
+        $lrn = $confirmedEnroll->enrollee->lrn;
+        $yearLevel = $confirmedEnroll->yearLevel->name;
+        $semester = $confirmedEnroll->semester->name;
+        $course = $confirmedEnroll->enrollee->course->name;
+        $schedule = $confirmedEnroll->schedule->name;
+
+        $name = $confirmedEnroll->enrollee->lastname . ', ' . $confirmedEnroll->enrollee->firstname . ' ' . $confirmedEnroll->enrollee->middlename . ' ' . $confirmedEnroll->enrollee->suffix; 
+        $nickname = $confirmedEnroll->enrollee->nickname;
+        $sex = $confirmedEnroll->enrollee->sex == 1 ? 'Female' : 'Male';
+        $birthday = $confirmedEnroll->enrollee->birthday;
+        $age = $confirmedEnroll->enrollee->age;
+        $birthPlace = $confirmedEnroll->enrollee->birth_place;
+        $civil = $confirmedEnroll->enrollee->toArray()['civil']['name'];
+        $presentAddress = $confirmedEnroll->enrollee->present_address;
+        $presentCity = $confirmedEnroll->enrollee->city->name;
+        $presentProvince = $confirmedEnroll->enrollee->province->name;
+        $presentZipcode = $confirmedEnroll->enrollee->present_zipcode;
+
+        $permanentAddress = $confirmedEnroll->enrollee->permanent_address;
+        $permanentCity = $confirmedEnroll->enrollee->permanentCity->name;
+        $permanentProvince = $confirmedEnroll->enrollee->permanentProvince->name;
+        $permanentZipcode = $confirmedEnroll->enrollee->present_zipcode;
+
+        $landline = $confirmedEnroll->enrollee->landline;
+        $mobile = $confirmedEnroll->enrollee->mobile;
+        $email = $confirmedEnroll->enrollee->email;
+        $fatherName = $confirmedEnroll->enrollee->father_lastname . ', ' . $confirmedEnroll->enrollee->father_firstname . ' ' . $confirmedEnroll->enrollee->father_middlename;
+        $fatherContact = $confirmedEnroll->enrollee->father_contact_number;
+        $fatherOcc = $confirmedEnroll->enrollee->father_occupation;
+        $fatherAddress = $confirmedEnroll->enrollee->father_address;
+        $fatherCity = $confirmedEnroll->enrollee->fatherCity->name;
+        $fatherProvince = $confirmedEnroll->enrollee->fatherProvince->name;
+        $fatherZipcode = $confirmedEnroll->enrollee->father_zipcode;
+
+        $motherName = $confirmedEnroll->enrollee->mother_lastname . ', ' . $confirmedEnroll->enrollee->mother_firstname . ' ' . $confirmedEnroll->enrollee->mother_middlename;
+        $motherContact = $confirmedEnroll->enrollee->mother_contact_number;
+        $motherOcc = $confirmedEnroll->enrollee->mother_occupation;
+        $motherAddress = $confirmedEnroll->enrollee->mother_address;
+        $motherCity = $confirmedEnroll->enrollee->motherCity->name;
+        $motherProvince = $confirmedEnroll->enrollee->motherProvince->name;
+        $motherZipcode = $confirmedEnroll->enrollee->mother_zipcode;
+
+        $siblings = '';
+        foreach ($confirmedEnroll->enrollee->siblings as $sibling) {
+            
+            $siblings .= '<tr>
+                            <td>Name: ' . $sibling->name . '</td>
+                            <td>Age: ' . $sibling->age . '</td> 
+                            <td>Occupation: ' . $sibling->occupation . '</td>
+                            <td>School Name: ' . $sibling->school_name . '</td> 
+                            </tr>';
+        }
+
+        $qrCode = new QrCode();
+        $qrCode
+            ->setText('QR code by codeitnow.in')
+            ->setSize(300)
+            ->setPadding(10)
+            ->setErrorCorrection('high')
+            ->setForegroundColor(array('r' => 0, 'g' => 0, 'b' => 0, 'a' => 0))
+            ->setBackgroundColor(array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0))
+            ->setLabel('LRN: ' . $lrn)
+            ->setLabelFontSize(16)
+            ->setImageType(QrCode::IMAGE_TYPE_PNG)
+        ;
+        $qrCode = '<img src="data:'.$qrCode->getContentType().';base64,'.$qrCode->generate().'" / width="170" >';
+
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML("
+                        <style>
+                        #first tr, #first td{
+                            padding: 5px; font-size: 12px;
+                            border-collapse: collapse;
+                        }
+                        #second tr, #second td{
+                            padding: 5px; font-size: 12px;
+                            border-collapse: collapse;
+                        }
+                        </style>
+                        <div style='position: absolute;'>
+                            $qrCode
+                        </div>
+                        <div style='position: absolute; float: right; border: 1px solid black; width: 114px; height: 100px;'>
+                            <br />
+                            <br />
+                            <br />
+                            <p align='center'>2x2 Picture</p>
+                        </div>
+                        <p align='center' style='padding-left:90px;margin: 0px;'><img src='images/logos/logo.png' width='120' /> <p>
+                        <h4 align='center' style='padding:0; margin:0;'>Intellisense Institute of Technology</h4>
+                        <p align='center' style='padding:0; margin:0; font-size:12px;'>
+                            2F Aspac Building, Guizo
+                         </p>
+                         <p align='center' style='padding:0; margin:0; font-size:12px;'>
+                                Mandaue City, Cebu
+                                (032) 4172412
+                         </p>
+                         <br />
+                    <table id='first'>
+                        <tr>
+                            <td><strong>ADMISSION TYPE:</strong> </td>
+                            <td><strong>STUDENT ID NO: </td>
+                            <td><strong>DATE: </strong></td>
+                            <td><strong>YEAR LEVEL:  </strong> <u>$yearLevel</u></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><strong>SEMESTER: </strong> <u>$semester</u></td>
+                            <td><strong>COURSE: </strong> <u> $course </u></td>
+                            <td><strong>SCHEDULE: </strong> <u>$schedule </u></td>
+                        </tr>
+
+                    </table> 
+                    <p><strong> PERSONAL INFORMATIONS</strong> </p>
+                   <table id='second'>
+                        <tr>
+                            <td><strong>Name: </strong> <u>$name</u></td>
+                            <td><strong>Nickname: </strong> <u>$nickname</u></td>
+
+                        </tr>
+                        <tr>
+                            <td>Sex: $sex </td>
+                            <td>Age: $age</td>
+                            <td>Birthday: $birthday </td>
+                        </tr>
+                        <tr>
+                            <td>Birth place: $birthPlace </td>
+                            <td>Civil Status: $civil</td>
+                            <td>Birthday: $birthday </td>
+                        </tr>
+                        <tr>
+                            <td>Present address: $presentAddress</td>
+                            <td>City: $presentCity</td>
+                            <td>Province: $presentProvince</td>
+                            <td>Zipcode: $presentZipcode</td>
+
+                        </tr>
+                        <tr>
+                            <td>Permanent/Provincial address: $permanentAddress</td>
+                            <td>City: $permanentCity</td>
+                            <td>Province: $permanentProvince</td>
+                            <td>Zipcode: $permanentZipcode</td>
+
+                        </tr>
+                        <tr>
+                            <td>Landline: $landline </td>
+                            <td>Mobile: $mobile </td>
+                            <td>Email address: $email </td>
+                        </tr>
+                   </table> 
+
+                   <p>Family Informations</p>
+                   <table border='1' id='second'>
+                        <tr>
+                            <td>Father's name: $fatherName</td>
+                            <td>Occupation: $fatherOcc</td>
+                            <td>Contact Number: $fatherContact</td>
+
+                        </tr>
+                        <tr>
+                            <td>Present Address: $fatherAddress</td>
+                            <td>City: $fatherCity</td>
+                            <td>Province: $fatherProvince</td>
+                            <td>Zipcode: $fatherZipcode</td>
+
+                        </tr>
+                        <tr>
+                            <td>Father's name: $motherName</td>
+                            <td>Occupation: $motherOcc</td>
+                            <td>Contact Number: $motherContact</td>
+
+                        </tr>
+                        <tr>
+                            <td>Present Address: $motherAddress</td>
+                            <td>City: $motherCity</td>
+                            <td>Province: $motherProvince</td>
+                            <td>Zipcode: $motherZipcode</td>
+
+                        </tr>
+                   </table>   
+                   <p>Siblings (brothers and sisters)</p>
+                   <table border='1' id='third'>
+                        $siblings
+                   </table>
+            ");
+        return $pdf->stream();
     }
 	
 	

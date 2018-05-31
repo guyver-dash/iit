@@ -165,6 +165,7 @@ return [
         App\Providers\EnrolleeServiceProvider::class,
         App\Providers\ConfirmedEnrolleeServiceProvider::class,
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -215,6 +216,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
         'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
 
     ],

@@ -24,7 +24,7 @@
               <v-text-field
               label="LRN"
               :type="'number'"
-              v-model="confirmedEnrolled.lrn"
+              v-model="confirmedEnrolled.enrollee.lrn"
               ></v-text-field>
             </v-flex>
           </v-layout>
@@ -1100,7 +1100,7 @@
     },
   },
   watch: {
-    'confirmedEnrolled.lrn': function(val){
+    'confirmedEnrolled.enrollee.lrn': function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'lrn',
           'value' : val

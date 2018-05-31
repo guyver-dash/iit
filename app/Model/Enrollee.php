@@ -10,7 +10,7 @@ class Enrollee extends Model
     
     protected $table = 'enrollees';
     protected $fillable = [
-    	'admissionNo', 'firstname', 'middlename', 'lastname',
+        'lrn','admissionNo', 'firstname', 'middlename', 'lastname',
     	'suffix', 'nickname', 'age', 'birthday', 'birth_place',
     	'sex', 'civil', 'spouse_lastname', 'spouse_firstname', 'spouse_middlename',
     	'landline', 'mobile', 'email', 'religion', 'citizenship', 'present_address',
@@ -33,6 +33,48 @@ class Enrollee extends Model
     public function requirementsDoc(){
         return $this->belongsToMany('App\Model\RequirementDoc', 'enrollee_requirements_doc', 'enrollee_id', 'requirement_doc_id');
 
+    }
+
+    public function civil(){
+
+        return $this->hasOne('App\Model\CivilStatus', 'id', 'civil_id');
+    }
+
+    public function city(){
+        return $this->hasOne('App\Model\City', 'id', 'present_city_id');
+    }
+
+    public function province(){
+        return $this->hasOne('App\Model\Province', 'id', 'present_province_id');
+    }
+
+    public function permanentCity(){
+        return $this->hasOne('App\Model\City', 'id', 'permanent_city_id');
+    }
+
+    public function permanentProvince(){
+        return $this->hasOne('App\Model\Province', 'id', 'permanent_province_id');
+    }
+
+    public function fatherCity(){
+         return $this->hasOne('App\Model\City', 'id', 'father_city_id');
+    }
+
+    public function fatherProvince(){
+         return $this->hasOne('App\Model\Province', 'id', 'father_province_id');
+    }
+
+    public function motherCity(){
+         return $this->hasOne('App\Model\City', 'id', 'mother_city_id');
+    }
+    
+    public function motherProvince(){
+         return $this->hasOne('App\Model\Province', 'id', 'mother_province_id');
+    }
+
+    public function course(){
+
+        return $this->hasOne('App\Model\Course', 'id', 'course_id');
     }
 
     public function siblings(){

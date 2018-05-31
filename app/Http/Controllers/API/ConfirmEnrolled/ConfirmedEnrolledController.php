@@ -34,4 +34,9 @@ class ConfirmedEnrolledController extends Controller
         $request = app()->make('request');
         return $this->confirmedEnrollee->update($request, $id);
     }
+
+    public function print($id){
+
+       return $this->confirmedEnrollee->print($id);
+    }
 }

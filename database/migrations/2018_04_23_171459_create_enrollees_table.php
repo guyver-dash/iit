@@ -16,6 +16,7 @@ class CreateEnrolleesTable extends Migration
         Schema::create('enrollees', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lrn')->unsigned()->nullable();
+            $table->string('idno')->nullable();
             $table->bigInteger('admissionNo');
             $table->integer('course_id')->unsigned()->nullable();
             $table->foreign('course_id')->references('id')
@@ -29,7 +30,9 @@ class CreateEnrolleesTable extends Migration
             $table->date('birthday')->nullable();
             $table->string('birth_place');
             $table->integer('sex');
-            $table->integer('civil');
+            $table->integer('civil_id')->unsigned()->nullable();
+            $table->foreign('civil_id')->references('id')
+                ->on('civil_status');
             $table->string('spouse_lastname')->nullable();
             $table->string('spouse_firstname')->nullable();
             $table->string('spouse_middlename')->nullable();

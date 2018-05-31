@@ -11,6 +11,7 @@ Route::get('enrollees', 'API\Enrollee\EnrolleeController@getEnrollees');
 
 Route::get('confirm-enrolled', 'API\ConfirmEnrolled\ConfirmedEnrolledController@index');
 Route::get('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@edit');
+Route::get('confirm-enrolled/print/{confirmEnrolleeId}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@print');
 Route::put('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@update');
 Route::post('auth/register', 'API\User\UserController@register');
 Route::post('auth/login', 'API\User\UserController@login');

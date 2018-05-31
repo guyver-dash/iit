@@ -18,4 +18,20 @@ class ConfirmEnrolled extends Model
     	return $this->hasOne('App\Model\Enrollee', 'id', 'enrollee_id');
     }
 
+    public function yearLevel(){
+
+    	return $this->hasOne('App\Model\YearLevel', 'id', 'year_level_id');
+    }
+
+    public function semester(){
+
+    	return $this->hasOne('App\Model\Semester', 'id', 'semester_id');
+    }
+
+    public function schedule(){
+
+    	return $this->hasOne('App\Model\Schedule', 'id', 'schedule_id');
+    }
+
+
 }

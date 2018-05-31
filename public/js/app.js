@@ -19820,6 +19820,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -20077,7 +20083,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           school_year_id: this.schoolYear,
           year_level_id: this.yearLevel,
           schedule_id: this.schedule
-        }, _defineProperty(_$http$post, 'start_time', this.startTime), _defineProperty(_$http$post, 'admissionNo', this.admissionNo), _defineProperty(_$http$post, 'course_id', this.course), _defineProperty(_$http$post, 'firstname', this.firstname), _defineProperty(_$http$post, 'middlename', this.middlename), _defineProperty(_$http$post, 'lastname', this.lastname), _defineProperty(_$http$post, 'suffix', this.suffix), _defineProperty(_$http$post, 'nickname', this.nickName), _defineProperty(_$http$post, 'age', this.age), _defineProperty(_$http$post, 'birthday', this.birthday), _defineProperty(_$http$post, 'birth_place', this.birthplace), _defineProperty(_$http$post, 'sex', this.sex), _defineProperty(_$http$post, 'educ_at_id', this.EducAtt), _defineProperty(_$http$post, 'civil', this.selectedCivil), _defineProperty(_$http$post, 'spouse_lastname', this.spouseLastname), _defineProperty(_$http$post, 'spouse_firstname', this.spouseFirstname), _defineProperty(_$http$post, 'spouse_middlename', this.spouseMiddlename), _defineProperty(_$http$post, 'landline', this.landline), _defineProperty(_$http$post, 'mobile', this.mobile), _defineProperty(_$http$post, 'email', this.email), _defineProperty(_$http$post, 'religion', this.religion), _defineProperty(_$http$post, 'citizenship', this.citizenship), _defineProperty(_$http$post, 'present_address', this.presentAddress), _defineProperty(_$http$post, 'present_province_id', this.presentProvinceId), _defineProperty(_$http$post, 'present_city_id', this.presentCityId), _defineProperty(_$http$post, 'present_zipcode', this.presentZipCode), _defineProperty(_$http$post, 'permanent_address', this.permanentAddress), _defineProperty(_$http$post, 'permanent_province_id', this.permanentProvinceId), _defineProperty(_$http$post, 'permanent_city_id', this.permanentCityId), _defineProperty(_$http$post, 'permanent_zipcode', this.permanentZipCode), _defineProperty(_$http$post, 'father_firstname', this.fatherFirstname), _defineProperty(_$http$post, 'father_lastname', this.fatherLastname), _defineProperty(_$http$post, 'father_middlename', this.fatherMiddlename), _defineProperty(_$http$post, 'father_occupation', this.fatherOccupation), _defineProperty(_$http$post, 'father_contact_number', this.fatherContactNo), _defineProperty(_$http$post, 'father_address', this.fatherAddress), _defineProperty(_$http$post, 'father_province_id', this.fatherProvinceId), _defineProperty(_$http$post, 'father_city_id', this.fatherCityId), _defineProperty(_$http$post, 'father_zipcode', this.fatherZipCode), _defineProperty(_$http$post, 'mother_firstname', this.motherFirstname), _defineProperty(_$http$post, 'mother_lastname', this.motherLastname), _defineProperty(_$http$post, 'mother_middlename', this.motherMiddlename), _defineProperty(_$http$post, 'mother_occupation', this.motherOccupation), _defineProperty(_$http$post, 'mother_contact_number', this.motherContactNo), _defineProperty(_$http$post, 'mother_address', this.motherAddress), _defineProperty(_$http$post, 'mother_province_id', this.motherProvinceId), _defineProperty(_$http$post, 'mother_city_id', this.motherCityId), _defineProperty(_$http$post, 'mother_zipcode', this.motherZipCode), _defineProperty(_$http$post, 'name_of_school', this.schoolName), _defineProperty(_$http$post, 'school_address', this.schoolAddress), _defineProperty(_$http$post, 'school_province_id', this.schoolProvinceId), _defineProperty(_$http$post, 'school_city_id', this.schoolCityId), _defineProperty(_$http$post, 'school_zipcode', this.schoolZipCode), _defineProperty(_$http$post, 'siblings', this.siblings), _defineProperty(_$http$post, 'answers', this.answer), _defineProperty(_$http$post, 'requirementsDocs', this.requirementsDocs), _$http$post)).then(function (res) {
+        }, _defineProperty(_$http$post, 'start_time', this.startTime), _defineProperty(_$http$post, 'admissionNo', this.admissionNo), _defineProperty(_$http$post, 'course_id', this.course), _defineProperty(_$http$post, 'firstname', this.firstname), _defineProperty(_$http$post, 'middlename', this.middlename), _defineProperty(_$http$post, 'lastname', this.lastname), _defineProperty(_$http$post, 'suffix', this.suffix), _defineProperty(_$http$post, 'nickname', this.nickName), _defineProperty(_$http$post, 'age', this.age), _defineProperty(_$http$post, 'birthday', this.birthday), _defineProperty(_$http$post, 'birth_place', this.birthplace), _defineProperty(_$http$post, 'sex', this.sex), _defineProperty(_$http$post, 'educ_at_id', this.EducAtt), _defineProperty(_$http$post, 'civil_id', this.selectedCivil), _defineProperty(_$http$post, 'spouse_lastname', this.spouseLastname), _defineProperty(_$http$post, 'spouse_firstname', this.spouseFirstname), _defineProperty(_$http$post, 'spouse_middlename', this.spouseMiddlename), _defineProperty(_$http$post, 'landline', this.landline), _defineProperty(_$http$post, 'mobile', this.mobile), _defineProperty(_$http$post, 'email', this.email), _defineProperty(_$http$post, 'religion', this.religion), _defineProperty(_$http$post, 'citizenship', this.citizenship), _defineProperty(_$http$post, 'present_address', this.presentAddress), _defineProperty(_$http$post, 'present_province_id', this.presentProvinceId), _defineProperty(_$http$post, 'present_city_id', this.presentCityId), _defineProperty(_$http$post, 'present_zipcode', this.presentZipCode), _defineProperty(_$http$post, 'permanent_address', this.permanentAddress), _defineProperty(_$http$post, 'permanent_province_id', this.permanentProvinceId), _defineProperty(_$http$post, 'permanent_city_id', this.permanentCityId), _defineProperty(_$http$post, 'permanent_zipcode', this.permanentZipCode), _defineProperty(_$http$post, 'father_firstname', this.fatherFirstname), _defineProperty(_$http$post, 'father_lastname', this.fatherLastname), _defineProperty(_$http$post, 'father_middlename', this.fatherMiddlename), _defineProperty(_$http$post, 'father_occupation', this.fatherOccupation), _defineProperty(_$http$post, 'father_contact_number', this.fatherContactNo), _defineProperty(_$http$post, 'father_address', this.fatherAddress), _defineProperty(_$http$post, 'father_province_id', this.fatherProvinceId), _defineProperty(_$http$post, 'father_city_id', this.fatherCityId), _defineProperty(_$http$post, 'father_zipcode', this.fatherZipCode), _defineProperty(_$http$post, 'mother_firstname', this.motherFirstname), _defineProperty(_$http$post, 'mother_lastname', this.motherLastname), _defineProperty(_$http$post, 'mother_middlename', this.motherMiddlename), _defineProperty(_$http$post, 'mother_occupation', this.motherOccupation), _defineProperty(_$http$post, 'mother_contact_number', this.motherContactNo), _defineProperty(_$http$post, 'mother_address', this.motherAddress), _defineProperty(_$http$post, 'mother_province_id', this.motherProvinceId), _defineProperty(_$http$post, 'mother_city_id', this.motherCityId), _defineProperty(_$http$post, 'mother_zipcode', this.motherZipCode), _defineProperty(_$http$post, 'name_of_school', this.schoolName), _defineProperty(_$http$post, 'school_address', this.schoolAddress), _defineProperty(_$http$post, 'school_province_id', this.schoolProvinceId), _defineProperty(_$http$post, 'school_city_id', this.schoolCityId), _defineProperty(_$http$post, 'school_zipcode', this.schoolZipCode), _defineProperty(_$http$post, 'siblings', this.siblings), _defineProperty(_$http$post, 'answers', this.answer), _defineProperty(_$http$post, 'requirementsDocs', this.requirementsDocs), _$http$post)).then(function (res) {
 
           data.$store.dispatch('snackbarText', 'Registration completed!');
           data.$store.dispatch('snackbarColor', 'success');
@@ -21055,11 +21061,11 @@ var render = function() {
                       ]
                     },
                     model: {
-                      value: _vm.confirmedEnrolled.enrollee.sex,
+                      value: _vm.sex,
                       callback: function($$v) {
-                        _vm.$set(_vm.confirmedEnrolled.enrollee, "sex", $$v)
+                        _vm.sex = $$v
                       },
-                      expression: "confirmedEnrolled.enrollee.sex"
+                      expression: "sex"
                     }
                   })
                 ],
@@ -21476,6 +21482,7 @@ var render = function() {
                 [
                   _c("v-select", {
                     attrs: {
+                      autocomplete: "",
                       label: "Permanent Province",
                       items: _vm.provinces,
                       "item-value": "id",
@@ -21508,6 +21515,7 @@ var render = function() {
                 [
                   _c("v-select", {
                     attrs: {
+                      autocomplete: "",
                       label: "Permanent City",
                       items: _vm.permanentCities,
                       "item-value": "id",
@@ -21755,6 +21763,7 @@ var render = function() {
                 [
                   _c("v-select", {
                     attrs: {
+                      autocomplete: "",
                       label: "Province",
                       items: _vm.provinces,
                       "item-value": "id",
@@ -21788,6 +21797,7 @@ var render = function() {
                 [
                   _c("v-select", {
                     attrs: {
+                      autocomplete: "",
                       label: "City",
                       items: _vm.fatherCities,
                       "item-value": "id",
@@ -22331,6 +22341,7 @@ var render = function() {
                 [
                   _c("v-select", {
                     attrs: {
+                      autocomplete: "",
                       label: "Province",
                       items: _vm.provinces,
                       "item-value": "id",
@@ -22363,6 +22374,7 @@ var render = function() {
                 [
                   _c("v-select", {
                     attrs: {
+                      autocomplete: "",
                       label: "City",
                       items: _vm.schoolCities,
                       "item-value": "id",
@@ -23748,7 +23760,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   watch: {
-    'confirmedEnrolled.lrn': function confirmedEnrolledLrn(val) {
+    'confirmedEnrolled.enrollee.lrn': function confirmedEnrolledEnrolleeLrn(val) {
       this.$store.dispatch('confirmedEnrolledEnrollee', {
         'field': 'lrn',
         'value': val
@@ -24900,11 +24912,15 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: { label: "LRN", type: "number" },
                             model: {
-                              value: _vm.confirmedEnrolled.lrn,
+                              value: _vm.confirmedEnrolled.enrollee.lrn,
                               callback: function($$v) {
-                                _vm.$set(_vm.confirmedEnrolled, "lrn", $$v)
+                                _vm.$set(
+                                  _vm.confirmedEnrolled.enrollee,
+                                  "lrn",
+                                  $$v
+                                )
                               },
-                              expression: "confirmedEnrolled.lrn"
+                              expression: "confirmedEnrolled.enrollee.lrn"
                             }
                           })
                         ],
@@ -27509,6 +27525,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -27562,6 +27581,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
+    createPDF: function createPDF(confirmEnrolleeId) {
+
+      window.open(window.base + '/api/confirm-enrolled/print/' + confirmEnrolleeId + '?token=' + localStorage.getItem('tokenKey'));
+    },
     initialize: function initialize() {
       this.desserts = [{
         name: 'Frozen Yogurt',
@@ -27705,6 +27728,25 @@ var render = function() {
                         [
                           _c("v-icon", { attrs: { color: "teal" } }, [
                             _vm._v("edit")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "mx-0",
+                          attrs: { icon: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.createPDF(props.item.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("v-icon", { attrs: { color: "info" } }, [
+                            _vm._v("print")
                           ])
                         ],
                         1
@@ -45805,7 +45847,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           data.dialog = false;
 
           data.$store.dispatch('snackbarText', 'You have successfully sign-in!');
-          data.$store.dispatch('snackbarColor', 'info');
+          data.$store.dispatch('snackbarColor', 'success');
           data.$store.dispatch('snackbar', true);
         }).catch(function (error) {
           data.alertText = error.response.data;

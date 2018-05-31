@@ -251,7 +251,7 @@
                   data.dialog = false
 
                   data.$store.dispatch('snackbarText', 'You have successfully sign-in!')
-                  data.$store.dispatch('snackbarColor', 'info')
+                  data.$store.dispatch('snackbarColor', 'success')
                   data.$store.dispatch('snackbar', true)
 
               })

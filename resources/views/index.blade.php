@@ -19,5 +19,6 @@
 
   <script src="{{ asset('js/app.js') }}"></script>
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
 </body>
 </html>
