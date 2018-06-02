@@ -14,17 +14,34 @@
        </v-flex>
        <v-flex xl6 lg6 md6 sm6 xs6>
           <v-layout row wrap>
-            <v-flex xl12 lg12 md12 sm12 xs12>
+            <v-flex xl5 lg5 md5 sm5 xs5 class='mr-2'>
               <v-switch
                 label="Enrollee Status"
                 v-model="confirmedEnrolled.status"
               ></v-switch>
             </v-flex>
-            <v-flex xl12 lg12 md12 sm12 xs12>
+            <v-flex xl6 lg6 md6 sm6 xs6 class='mr-2'>
+              <v-select
+                label="Student Type"
+                :items="studentType"
+                v-model="confirmedEnrolled.enrollee.student_type_id"
+                item-text="name"
+                item-value="id"
+                :rules="[v => !!v || 'Please select a student type.']"
+                required
+                ></v-select>
+            </v-flex>
+            <v-flex xl6 lg6 md6 sm6 xs6 class='mr-2'>
               <v-text-field
               label="LRN"
               :type="'number'"
               v-model="confirmedEnrolled.enrollee.lrn"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xl5 lg5 md5 sm5 xs5>
+              <v-text-field
+              label="ID Number:"
+              v-model="confirmedEnrolled.enrollee.idno"
               ></v-text-field>
             </v-flex>
           </v-layout>
@@ -208,7 +225,7 @@
        <v-select
        label="Civil Status"
        :items="civilStatus"
-       v-model="confirmedEnrolled.enrollee.civil"
+       v-model="confirmedEnrolled.enrollee.civil_id"
        item-value="id"
        item-text="name"
        :rules="[v => !!v || 'This field is required.']"
@@ -902,6 +919,7 @@
         data.$store.dispatch('policies', response.data.policies)
         data.$store.dispatch('civilStatus', response.data.civilStatus)
         data.$store.dispatch('educAtt', response.data.educAtt)
+        data.$store.dispatch('studentType', response.data.studentType)
       }) 
 
       this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id + '?token=' + window.localStorage.getItem('tokenKey'))
@@ -989,6 +1007,10 @@
       },
       endTime(){
         return this.$store.getters.endTime
+      },
+      studentType(){
+
+        return this.$store.getters.studentType
       }
 
     },
@@ -1086,7 +1108,7 @@
         })
         .then(function(res){
 
-          data.$store.dispatch('snackbarText', 'Registration completed!')
+          data.$store.dispatch('snackbarText', 'Updated Successfully!')
           data.$store.dispatch('snackbarColor', 'success')
           data.$store.dispatch('snackbar', true)
         })
@@ -1100,9 +1122,21 @@
     },
   },
   watch: {
+    'confirmedEnrolled.enrollee.student_type_id': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'student_type_id',
+          'value' : val
+      })
+    },
     'confirmedEnrolled.enrollee.lrn': function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'lrn',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.idno': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'idno',
           'value' : val
       })
     },
@@ -1197,9 +1231,9 @@
       })
     },
     
-    'confirmedEnrolled.enrollee.civil': function(val){
+    'confirmedEnrolled.enrollee.civil_id': function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
-          'field' : 'civil',
+          'field' : 'civil_id',
           'value' : val
       })
     },

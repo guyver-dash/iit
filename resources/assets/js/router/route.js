@@ -5,6 +5,7 @@ import profile from './profile/index.vue'
 import admission from './admission/index.vue'
 import editAdmission from './admission/editAdmission.vue'
 import payment from './profile/payment.vue'
+import shs from './profile/shs.vue'
 import enrollees from './enrollees.vue'
 
 export const routes = [
@@ -26,7 +27,7 @@ export const routes = [
 		{ path: '/admin/admission/:id', component: editAdmission, name: 'editAdmission', 
 			meta: { requiresAuth: true}
 		},
-		{ path: '/admin/shs', component: payment, name: 'shs', 
+		{ path: '/admin/shs', component: shs, name: 'shs', 
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/jhs', component: payment, name: 'jhs', 

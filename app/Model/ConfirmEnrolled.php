@@ -33,5 +33,8 @@ class ConfirmEnrolled extends Model
     	return $this->hasOne('App\Model\Schedule', 'id', 'schedule_id');
     }
 
+    public function scopePagination($query){
 
+        return $query->paginate(2);
+    }
 }

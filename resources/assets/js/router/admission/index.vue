@@ -4,13 +4,24 @@
     <v-form v-model="valid" ref="form" lazy-validation>
       
       <v-layout row wrap>
-        <v-flex xl12 lg12 md12 sm12 xs12>
+        <v-flex xl6 lg6 md6 sm6 xs6>
           <h3 class="headline">INSTRUCTIONS:</h3>
           <ol class="ml-4">
            <li>Student-Applicant accomplishes this Application Form properly.</li>
            <li>Fill-up information. Leave the field blank (if not applicable).</li>
            <li>Submit all the requirements as needed.</li>
          </ol>
+       </v-flex>
+       <v-flex xl6 lg6 md6 sm6 xs6>
+          <v-select
+            label="Student Type"
+            :items="studentType"
+            v-model="studentTypeId"
+            item-text="name"
+            item-value="id"
+            :rules="[v => !!v || 'Please select a student type.']"
+            required
+            ></v-select>
        </v-flex>
        <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
@@ -738,6 +749,7 @@
   export default {
     data () {
       return {
+        studentTypeId: '',
         checkbox: '',
         firstname: '',
         middlename: '',
@@ -849,6 +861,7 @@
         data.$store.dispatch('policies', response.data.policies)
         data.$store.dispatch('civilStatus', response.data.civilStatus)
         data.$store.dispatch('educAtt', response.data.educAtt)
+        data.$store.dispatch('studentType', response.data.studentType)
       }) 
     },
     computed: {
@@ -910,6 +923,10 @@
       },
       endTime(){
         return this.$store.getters.endTime
+      },
+      studentType(){
+
+        return this.$store.getters.studentType
       }
 
     },
@@ -997,6 +1014,7 @@
         
        
         this.$http.post(base_api + '/enrollment', {
+          student_type_id: this.studentTypeId,
           start_time: this.startTime,
           end_time: this.endTime,
           semester_id: this.semester,
@@ -1015,7 +1033,7 @@
           birthday: this.birthday,
           birth_place: this.birthplace,
           sex: this.sex,
-          educ_at_id: this.EducAtt,
+          educ_at_id: this.selectedEducAtt,
           civil_id: this.selectedCivil,
           spouse_lastname: this.spouseLastname,
           spouse_firstname: this.spouseFirstname,

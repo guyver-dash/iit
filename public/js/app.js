@@ -12103,6 +12103,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	state: __WEBPACK_IMPORTED_MODULE_2__state_js__["a" /* state */],
 	mutations: {
+		page: function page(state, _page) {
+			state.page = _page;
+		},
+		studentType: function studentType(state, _studentType) {
+			state.studentType = _studentType;
+		},
 		confirmedEnrolled: function confirmedEnrolled(state, _confirmedEnrolled) {
 			state.confirmedEnrolled = _confirmedEnrolled;
 		},
@@ -12207,6 +12213,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		}
 	},
 	actions: {
+		page: function page(store, _page2) {
+			store.commit('page', _page2);
+		},
+		studentType: function studentType(store, _studentType2) {
+			store.commit('studentType', _studentType2);
+		},
 		answersEdit: function answersEdit(store, answers) {
 			store.commit('answersEdit', answers);
 		},
@@ -12352,6 +12364,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		}
 	},
 	getters: {
+		page: function page() {
+			return store.state.page;
+		},
+		studentType: function studentType() {
+			return store.state.studentType;
+		},
 		confirmedEnrolled: function confirmedEnrolled() {
 			return store.state.confirmedEnrolled;
 		},
@@ -17402,7 +17420,9 @@ var index_esm = {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return state; });
 var state = {
+  page: 1,
   authUser: { firstname: '', lastname: '', email: '' },
+  studentType: [],
   confirmedEnrolled: {
     enrollee: {
       course_id: '',
@@ -17472,8 +17492,11 @@ var state = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__admission_editAdmission_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__admission_editAdmission_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__profile_payment_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__enrollees_vue__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__enrollees_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__enrollees_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__profile_shs_vue__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__profile_shs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__profile_shs_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__enrollees_vue__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__enrollees_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__enrollees_vue__);
+
 
 
 
@@ -17489,11 +17512,11 @@ var routes = [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_1__home_index_vu
 	meta: { requiresAuth: true }
 }, { path: '/admin/payment', component: __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue___default.a, name: 'payment',
 	meta: { requiresAuth: true }
-}, { path: '/admin/enrollees', component: __WEBPACK_IMPORTED_MODULE_7__enrollees_vue___default.a, name: 'enrollees',
+}, { path: '/admin/enrollees', component: __WEBPACK_IMPORTED_MODULE_8__enrollees_vue___default.a, name: 'enrollees',
 	meta: { requiresAuth: true }
 }, { path: '/admin/admission/:id', component: __WEBPACK_IMPORTED_MODULE_5__admission_editAdmission_vue___default.a, name: 'editAdmission',
 	meta: { requiresAuth: true }
-}, { path: '/admin/shs', component: __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue___default.a, name: 'shs',
+}, { path: '/admin/shs', component: __WEBPACK_IMPORTED_MODULE_7__profile_shs_vue___default.a, name: 'shs',
 	meta: { requiresAuth: true }
 }, { path: '/admin/jhs', component: __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue___default.a, name: 'jhs',
 	meta: { requiresAuth: true }
@@ -19826,6 +19849,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19833,6 +19867,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      studentTypeId: '',
       checkbox: '',
       firstname: '',
       middlename: '',
@@ -19939,6 +19974,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       data.$store.dispatch('policies', response.data.policies);
       data.$store.dispatch('civilStatus', response.data.civilStatus);
       data.$store.dispatch('educAtt', response.data.educAtt);
+      data.$store.dispatch('studentType', response.data.studentType);
     });
   },
 
@@ -19998,6 +20034,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     endTime: function endTime() {
       return this.$store.getters.endTime;
+    },
+    studentType: function studentType() {
+
+      return this.$store.getters.studentType;
     }
   },
   methods: {
@@ -20077,13 +20117,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _$http$post;
 
         this.$http.post(base_api + '/enrollment', (_$http$post = {
+          student_type_id: this.studentTypeId,
           start_time: this.startTime,
           end_time: this.endTime,
           semester_id: this.semester,
           school_year_id: this.schoolYear,
           year_level_id: this.yearLevel,
           schedule_id: this.schedule
-        }, _defineProperty(_$http$post, 'start_time', this.startTime), _defineProperty(_$http$post, 'admissionNo', this.admissionNo), _defineProperty(_$http$post, 'course_id', this.course), _defineProperty(_$http$post, 'firstname', this.firstname), _defineProperty(_$http$post, 'middlename', this.middlename), _defineProperty(_$http$post, 'lastname', this.lastname), _defineProperty(_$http$post, 'suffix', this.suffix), _defineProperty(_$http$post, 'nickname', this.nickName), _defineProperty(_$http$post, 'age', this.age), _defineProperty(_$http$post, 'birthday', this.birthday), _defineProperty(_$http$post, 'birth_place', this.birthplace), _defineProperty(_$http$post, 'sex', this.sex), _defineProperty(_$http$post, 'educ_at_id', this.EducAtt), _defineProperty(_$http$post, 'civil_id', this.selectedCivil), _defineProperty(_$http$post, 'spouse_lastname', this.spouseLastname), _defineProperty(_$http$post, 'spouse_firstname', this.spouseFirstname), _defineProperty(_$http$post, 'spouse_middlename', this.spouseMiddlename), _defineProperty(_$http$post, 'landline', this.landline), _defineProperty(_$http$post, 'mobile', this.mobile), _defineProperty(_$http$post, 'email', this.email), _defineProperty(_$http$post, 'religion', this.religion), _defineProperty(_$http$post, 'citizenship', this.citizenship), _defineProperty(_$http$post, 'present_address', this.presentAddress), _defineProperty(_$http$post, 'present_province_id', this.presentProvinceId), _defineProperty(_$http$post, 'present_city_id', this.presentCityId), _defineProperty(_$http$post, 'present_zipcode', this.presentZipCode), _defineProperty(_$http$post, 'permanent_address', this.permanentAddress), _defineProperty(_$http$post, 'permanent_province_id', this.permanentProvinceId), _defineProperty(_$http$post, 'permanent_city_id', this.permanentCityId), _defineProperty(_$http$post, 'permanent_zipcode', this.permanentZipCode), _defineProperty(_$http$post, 'father_firstname', this.fatherFirstname), _defineProperty(_$http$post, 'father_lastname', this.fatherLastname), _defineProperty(_$http$post, 'father_middlename', this.fatherMiddlename), _defineProperty(_$http$post, 'father_occupation', this.fatherOccupation), _defineProperty(_$http$post, 'father_contact_number', this.fatherContactNo), _defineProperty(_$http$post, 'father_address', this.fatherAddress), _defineProperty(_$http$post, 'father_province_id', this.fatherProvinceId), _defineProperty(_$http$post, 'father_city_id', this.fatherCityId), _defineProperty(_$http$post, 'father_zipcode', this.fatherZipCode), _defineProperty(_$http$post, 'mother_firstname', this.motherFirstname), _defineProperty(_$http$post, 'mother_lastname', this.motherLastname), _defineProperty(_$http$post, 'mother_middlename', this.motherMiddlename), _defineProperty(_$http$post, 'mother_occupation', this.motherOccupation), _defineProperty(_$http$post, 'mother_contact_number', this.motherContactNo), _defineProperty(_$http$post, 'mother_address', this.motherAddress), _defineProperty(_$http$post, 'mother_province_id', this.motherProvinceId), _defineProperty(_$http$post, 'mother_city_id', this.motherCityId), _defineProperty(_$http$post, 'mother_zipcode', this.motherZipCode), _defineProperty(_$http$post, 'name_of_school', this.schoolName), _defineProperty(_$http$post, 'school_address', this.schoolAddress), _defineProperty(_$http$post, 'school_province_id', this.schoolProvinceId), _defineProperty(_$http$post, 'school_city_id', this.schoolCityId), _defineProperty(_$http$post, 'school_zipcode', this.schoolZipCode), _defineProperty(_$http$post, 'siblings', this.siblings), _defineProperty(_$http$post, 'answers', this.answer), _defineProperty(_$http$post, 'requirementsDocs', this.requirementsDocs), _$http$post)).then(function (res) {
+        }, _defineProperty(_$http$post, 'start_time', this.startTime), _defineProperty(_$http$post, 'admissionNo', this.admissionNo), _defineProperty(_$http$post, 'course_id', this.course), _defineProperty(_$http$post, 'firstname', this.firstname), _defineProperty(_$http$post, 'middlename', this.middlename), _defineProperty(_$http$post, 'lastname', this.lastname), _defineProperty(_$http$post, 'suffix', this.suffix), _defineProperty(_$http$post, 'nickname', this.nickName), _defineProperty(_$http$post, 'age', this.age), _defineProperty(_$http$post, 'birthday', this.birthday), _defineProperty(_$http$post, 'birth_place', this.birthplace), _defineProperty(_$http$post, 'sex', this.sex), _defineProperty(_$http$post, 'educ_at_id', this.selectedEducAtt), _defineProperty(_$http$post, 'civil_id', this.selectedCivil), _defineProperty(_$http$post, 'spouse_lastname', this.spouseLastname), _defineProperty(_$http$post, 'spouse_firstname', this.spouseFirstname), _defineProperty(_$http$post, 'spouse_middlename', this.spouseMiddlename), _defineProperty(_$http$post, 'landline', this.landline), _defineProperty(_$http$post, 'mobile', this.mobile), _defineProperty(_$http$post, 'email', this.email), _defineProperty(_$http$post, 'religion', this.religion), _defineProperty(_$http$post, 'citizenship', this.citizenship), _defineProperty(_$http$post, 'present_address', this.presentAddress), _defineProperty(_$http$post, 'present_province_id', this.presentProvinceId), _defineProperty(_$http$post, 'present_city_id', this.presentCityId), _defineProperty(_$http$post, 'present_zipcode', this.presentZipCode), _defineProperty(_$http$post, 'permanent_address', this.permanentAddress), _defineProperty(_$http$post, 'permanent_province_id', this.permanentProvinceId), _defineProperty(_$http$post, 'permanent_city_id', this.permanentCityId), _defineProperty(_$http$post, 'permanent_zipcode', this.permanentZipCode), _defineProperty(_$http$post, 'father_firstname', this.fatherFirstname), _defineProperty(_$http$post, 'father_lastname', this.fatherLastname), _defineProperty(_$http$post, 'father_middlename', this.fatherMiddlename), _defineProperty(_$http$post, 'father_occupation', this.fatherOccupation), _defineProperty(_$http$post, 'father_contact_number', this.fatherContactNo), _defineProperty(_$http$post, 'father_address', this.fatherAddress), _defineProperty(_$http$post, 'father_province_id', this.fatherProvinceId), _defineProperty(_$http$post, 'father_city_id', this.fatherCityId), _defineProperty(_$http$post, 'father_zipcode', this.fatherZipCode), _defineProperty(_$http$post, 'mother_firstname', this.motherFirstname), _defineProperty(_$http$post, 'mother_lastname', this.motherLastname), _defineProperty(_$http$post, 'mother_middlename', this.motherMiddlename), _defineProperty(_$http$post, 'mother_occupation', this.motherOccupation), _defineProperty(_$http$post, 'mother_contact_number', this.motherContactNo), _defineProperty(_$http$post, 'mother_address', this.motherAddress), _defineProperty(_$http$post, 'mother_province_id', this.motherProvinceId), _defineProperty(_$http$post, 'mother_city_id', this.motherCityId), _defineProperty(_$http$post, 'mother_zipcode', this.motherZipCode), _defineProperty(_$http$post, 'name_of_school', this.schoolName), _defineProperty(_$http$post, 'school_address', this.schoolAddress), _defineProperty(_$http$post, 'school_province_id', this.schoolProvinceId), _defineProperty(_$http$post, 'school_city_id', this.schoolCityId), _defineProperty(_$http$post, 'school_zipcode', this.schoolZipCode), _defineProperty(_$http$post, 'siblings', this.siblings), _defineProperty(_$http$post, 'answers', this.answer), _defineProperty(_$http$post, 'requirementsDocs', this.requirementsDocs), _$http$post)).then(function (res) {
 
           data.$store.dispatch('snackbarText', 'Registration completed!');
           data.$store.dispatch('snackbarColor', 'success');
@@ -20522,7 +20563,7 @@ var render = function() {
             [
               _c(
                 "v-flex",
-                { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
+                { attrs: { xl6: "", lg6: "", md6: "", sm6: "", xs6: "" } },
                 [
                   _c("h3", { staticClass: "headline" }, [
                     _vm._v("INSTRUCTIONS:")
@@ -20544,6 +20585,35 @@ var render = function() {
                     _c("li", [_vm._v("Submit all the requirements as needed.")])
                   ])
                 ]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                { attrs: { xl6: "", lg6: "", md6: "", sm6: "", xs6: "" } },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "Student Type",
+                      items: _vm.studentType,
+                      "item-text": "name",
+                      "item-value": "id",
+                      rules: [
+                        function(v) {
+                          return !!v || "Please select a student type."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.studentTypeId,
+                      callback: function($$v) {
+                        _vm.studentTypeId = $$v
+                      },
+                      expression: "studentTypeId"
+                    }
+                  })
+                ],
+                1
               ),
               _vm._v(" "),
               _c(
@@ -23464,6 +23534,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -23581,6 +23668,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       data.$store.dispatch('policies', response.data.policies);
       data.$store.dispatch('civilStatus', response.data.civilStatus);
       data.$store.dispatch('educAtt', response.data.educAtt);
+      data.$store.dispatch('studentType', response.data.studentType);
     });
 
     this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id + '?token=' + window.localStorage.getItem('tokenKey')).then(function (res) {
@@ -23663,6 +23751,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     endTime: function endTime() {
       return this.$store.getters.endTime;
+    },
+    studentType: function studentType() {
+
+      return this.$store.getters.studentType;
     }
   },
   methods: {
@@ -23748,7 +23840,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         }).then(function (res) {
 
-          data.$store.dispatch('snackbarText', 'Registration completed!');
+          data.$store.dispatch('snackbarText', 'Updated Successfully!');
           data.$store.dispatch('snackbarColor', 'success');
           data.$store.dispatch('snackbar', true);
         });
@@ -23760,9 +23852,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   watch: {
+    'confirmedEnrolled.enrollee.student_type_id': function confirmedEnrolledEnrolleeStudent_type_id(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'student_type_id',
+        'value': val
+      });
+    },
     'confirmedEnrolled.enrollee.lrn': function confirmedEnrolledEnrolleeLrn(val) {
       this.$store.dispatch('confirmedEnrolledEnrollee', {
         'field': 'lrn',
+        'value': val
+      });
+    },
+    'confirmedEnrolled.enrollee.idno': function confirmedEnrolledEnrolleeIdno(val) {
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+        'field': 'idno',
         'value': val
       });
     },
@@ -23857,9 +23961,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
 
-    'confirmedEnrolled.enrollee.civil': function confirmedEnrolledEnrolleeCivil(val) {
+    'confirmedEnrolled.enrollee.civil_id': function confirmedEnrolledEnrolleeCivil_id(val) {
       this.$store.dispatch('confirmedEnrolledEnrollee', {
-        'field': 'civil',
+        'field': 'civil_id',
         'value': val
       });
     },
@@ -24874,13 +24978,8 @@ var render = function() {
                       _c(
                         "v-flex",
                         {
-                          attrs: {
-                            xl12: "",
-                            lg12: "",
-                            md12: "",
-                            sm12: "",
-                            xs12: ""
-                          }
+                          staticClass: "mr-2",
+                          attrs: { xl5: "", lg5: "", md5: "", sm5: "", xs5: "" }
                         },
                         [
                           _c("v-switch", {
@@ -24900,13 +24999,46 @@ var render = function() {
                       _c(
                         "v-flex",
                         {
-                          attrs: {
-                            xl12: "",
-                            lg12: "",
-                            md12: "",
-                            sm12: "",
-                            xs12: ""
-                          }
+                          staticClass: "mr-2",
+                          attrs: { xl6: "", lg6: "", md6: "", sm6: "", xs6: "" }
+                        },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              label: "Student Type",
+                              items: _vm.studentType,
+                              "item-text": "name",
+                              "item-value": "id",
+                              rules: [
+                                function(v) {
+                                  return !!v || "Please select a student type."
+                                }
+                              ],
+                              required: ""
+                            },
+                            model: {
+                              value:
+                                _vm.confirmedEnrolled.enrollee.student_type_id,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.confirmedEnrolled.enrollee,
+                                  "student_type_id",
+                                  $$v
+                                )
+                              },
+                              expression:
+                                "confirmedEnrolled.enrollee.student_type_id"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        {
+                          staticClass: "mr-2",
+                          attrs: { xl6: "", lg6: "", md6: "", sm6: "", xs6: "" }
                         },
                         [
                           _c("v-text-field", {
@@ -24921,6 +25053,30 @@ var render = function() {
                                 )
                               },
                               expression: "confirmedEnrolled.enrollee.lrn"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        {
+                          attrs: { xl5: "", lg5: "", md5: "", sm5: "", xs5: "" }
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: { label: "ID Number:" },
+                            model: {
+                              value: _vm.confirmedEnrolled.enrollee.idno,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.confirmedEnrolled.enrollee,
+                                  "idno",
+                                  $$v
+                                )
+                              },
+                              expression: "confirmedEnrolled.enrollee.idno"
                             }
                           })
                         ],
@@ -25504,11 +25660,15 @@ var render = function() {
                       required: ""
                     },
                     model: {
-                      value: _vm.confirmedEnrolled.enrollee.civil,
+                      value: _vm.confirmedEnrolled.enrollee.civil_id,
                       callback: function($$v) {
-                        _vm.$set(_vm.confirmedEnrolled.enrollee, "civil", $$v)
+                        _vm.$set(
+                          _vm.confirmedEnrolled.enrollee,
+                          "civil_id",
+                          $$v
+                        )
                       },
-                      expression: "confirmedEnrolled.enrollee.civil"
+                      expression: "confirmedEnrolled.enrollee.civil_id"
                     }
                   })
                 ],
@@ -27428,10 +27588,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      search: ''
+    };
+  },
   mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_start_up_js__["a" /* default */]],
   components: {
     enrollees: __WEBPACK_IMPORTED_MODULE_1__components_data_tables_enrollees_vue___default.a
@@ -27439,6 +27617,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     authUser: function authUser() {
       return this.$store.getters.authUser;
+    },
+    page: function page() {
+      return this.$store.getters.page;
+    }
+  },
+  created: function created() {
+    this.changePage();
+  },
+
+  methods: {
+    changePage: function changePage() {
+      var data = this;
+      this.$http.get(base_api + '/confirm-enrolled?page=' + this.page + '&token=' + window.localStorage.getItem('tokenKey')).then(function (res) {
+        data.$store.dispatch('enrollees', res.data.enrollees);
+      }).catch(function (error) {
+        data.$router.push('/');
+      });
+    }
+  },
+  watch: {
+    search: function search(val) {
+      var data = this;
+      this.$http.post(base_api + '/confirm-enrolled/search?token=' + window.localStorage.getItem('tokenKey'), {
+        search: val
+      }).then(function (res) {
+        data.$store.dispatch('enrollees', res.data.enrollees);
+      }).catch();
+    },
+    page: function page() {
+      this.changePage();
     }
   }
 });
@@ -27528,6 +27736,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -27537,23 +27746,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         text: 'Admission No.',
         sortable: true,
         value: 'admission'
-      }, { text: 'Firstname', value: 'firstname', sortable: true }, { text: 'Lastname', value: 'lastname', sortable: true }, { text: 'Status', value: 'status' }, { text: 'Date', value: 'date', sortable: true }, { text: 'Actions', value: 'actions', sortable: false }],
-      desserts: [],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      }
+      }, { text: 'Firstname', value: 'firstname', sortable: true }, { text: 'Lastname', value: 'lastname', sortable: true }, { text: 'Status', value: 'status' }, { text: 'Date', value: 'date', sortable: true }, { text: 'Actions', value: 'actions', sortable: false }]
+
     };
   },
 
@@ -27563,99 +27757,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     enrollees: function enrollees() {
       return this.$store.getters.enrollees;
+    },
+
+    page: {
+      get: function get() {
+        return this.$store.getters.page;
+      },
+      set: function set(val) {
+        this.$store.dispatch('page', val);
+      }
     }
   },
-
-  watch: {
-    dialog: function dialog(val) {
-      val || this.close();
-    }
-  },
-
-  created: function created() {
-    var data = this;
-    this.$http.get(base_api + '/confirm-enrolled?token=' + window.localStorage.getItem('tokenKey')).then(function (res) {
-      data.$store.dispatch('enrollees', res.data.enrollees);
-    }).catch();
-  },
-
 
   methods: {
     createPDF: function createPDF(confirmEnrolleeId) {
 
-      window.open(window.base + '/api/confirm-enrolled/print/' + confirmEnrolleeId + '?token=' + localStorage.getItem('tokenKey'));
-    },
-    initialize: function initialize() {
-      this.desserts = [{
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0
-      }, {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3
-      }, {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0
-      }, {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3
-      }, {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9
-      }, {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0
-      }, {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0
-      }, {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5
-      }, {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9
-      }, {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7
-      }];
+      window.open(window.base + 'api/confirm-enrolled/print/' + confirmEnrolleeId + '?token=' + localStorage.getItem('tokenKey'));
     },
     editItem: function editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
-    deleteItem: function deleteItem(item) {
-      var index = this.desserts.indexOf(item);
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1);
+    deleteItem: function deleteItem(enrolleeId) {
+      var z = confirm('Are you sure you want to delete this item?');
+      if (z == true) {
+        this.$http.delete(window.base + 'api/confirm-enrolled/' + enrolleeId + '?token=' + localStorage.getItem('tokenKey')).then(function (res) {
+          data.$store.dispatch('enrollees', res.data.enrollees);
+        }).catch(function () {});
+      }
     },
     close: function close() {
       var _this = this;
@@ -27688,111 +27818,111 @@ var render = function() {
   return _c(
     "span",
     [
-      _c(
-        "v-data-table",
-        {
-          staticClass: "elevation-1 mt-1",
-          attrs: {
-            headers: _vm.headers,
-            items: _vm.enrollees,
-            "hide-actions": ""
-          },
-          scopedSlots: _vm._u([
-            {
-              key: "items",
-              fn: function(props) {
-                return [
-                  _c("td", [_vm._v(_vm._s(props.item.enrollee.admissionNo))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(props.item.enrollee.firstname))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(props.item.enrollee.lastname))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(props.item.status))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(props.item.enrollee.created_at))]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "justify-center layout px-0" },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          staticClass: "mx-0",
-                          attrs: {
-                            icon: "",
-                            to: "/admin/admission/" + props.item.id
-                          }
-                        },
-                        [
-                          _c("v-icon", { attrs: { color: "teal" } }, [
-                            _vm._v("edit")
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          staticClass: "mx-0",
-                          attrs: { icon: "" },
-                          on: {
-                            click: function($event) {
-                              _vm.createPDF(props.item.id)
-                            }
-                          }
-                        },
-                        [
-                          _c("v-icon", { attrs: { color: "info" } }, [
-                            _vm._v("print")
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          staticClass: "mx-0",
-                          attrs: { icon: "" },
-                          on: {
-                            click: function($event) {
-                              _vm.deleteItem(props.item)
-                            }
-                          }
-                        },
-                        [
-                          _c("v-icon", { attrs: { color: "pink" } }, [
-                            _vm._v("delete")
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ]
-              }
-            }
-          ])
+      _c("v-data-table", {
+        staticClass: "elevation-1 mt-1",
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.enrollees.data,
+          "hide-actions": ""
         },
+        scopedSlots: _vm._u([
+          {
+            key: "items",
+            fn: function(props) {
+              return [
+                _c("td", [_vm._v(_vm._s(props.item.enrollee.admissionNo))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.enrollee.firstname))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.enrollee.lastname))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.status))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.enrollee.created_at))]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "justify-center layout px-0" },
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass: "mx-0",
+                        attrs: {
+                          icon: "",
+                          to: "/admin/admission/" + props.item.id
+                        }
+                      },
+                      [
+                        _c("v-icon", { attrs: { color: "teal" } }, [
+                          _vm._v("edit")
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass: "mx-0",
+                        attrs: { icon: "" },
+                        on: {
+                          click: function($event) {
+                            _vm.createPDF(props.item.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("v-icon", { attrs: { color: "info" } }, [
+                          _vm._v("print")
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass: "mx-0",
+                        attrs: { icon: "" },
+                        on: {
+                          click: function($event) {
+                            _vm.deleteItem(props.item.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("v-icon", { attrs: { color: "pink" } }, [
+                          _vm._v("delete")
+                        ])
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]
+            }
+          }
+        ])
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "text-xs-center pt-2" },
         [
-          _c(
-            "template",
-            { slot: "no-data" },
-            [
-              _c(
-                "v-btn",
-                { attrs: { color: "primary" }, on: { click: _vm.initialize } },
-                [_vm._v("Reset")]
-              )
-            ],
-            1
-          )
+          _c("v-pagination", {
+            attrs: { length: _vm.enrollees.last_page },
+            model: {
+              value: _vm.page,
+              callback: function($$v) {
+                _vm.page = $$v
+              },
+              expression: "page"
+            }
+          })
         ],
-        2
+        1
       )
     ],
     1
@@ -27818,15 +27948,52 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-container",
-    { attrs: { fluid: "", "fill-height": "" } },
+    { staticClass: "ma-2 pa-0" },
     [
       _c(
         "v-layout",
+        { staticClass: "ma-0 pa-0" },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xl3: "", lg3: "", md3: "", sm3: "", xs3: "" } },
+            [_c("h1", { staticClass: "pa-2" }, [_vm._v("Enrollees")])]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-flex",
+            { attrs: { xl9: "", lg9: "", md9: "", sm9: "", xs9: "" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  "append-icon": "search",
+                  label: "Search",
+                  "single-line": "",
+                  "hide-details": ""
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        { staticClass: "ma-0 pa-0" },
         [
           _c(
             "v-flex",
             { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
-            [_c("h1", [_vm._v("Enrollees")]), _vm._v(" "), _c("enrollees")],
+            [_c("enrollees")],
             1
           )
         ],
@@ -50200,6 +50367,200 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(118)
+/* template */
+var __vue_template__ = __webpack_require__(119)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\router\\profile\\shs.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b7744292", Component.options)
+  } else {
+    hotAPI.reload("data-v-b7744292", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 118 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_data_tables_enrollees_vue__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_data_tables_enrollees_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_data_tables_enrollees_vue__);
+var _data$components$crea;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = (_data$components$crea = {
+
+  data: function data() {
+    return {
+      search: ''
+    };
+  },
+  components: {},
+  created: function created() {
+
+    this.changePage();
+  },
+
+  computed: {
+    authUser: function authUser() {
+      return this.$store.getters.authUser;
+    }
+  }
+}, _defineProperty(_data$components$crea, 'components', {
+  enrollees: __WEBPACK_IMPORTED_MODULE_0__components_data_tables_enrollees_vue___default.a
+}), _defineProperty(_data$components$crea, 'methods', {
+  changePage: function changePage() {
+    var data = this;
+    this.$http.get(base_api + '/shs?page=' + this.page + '&token=' + window.localStorage.getItem('tokenKey')).then(function (res) {
+      data.$store.dispatch('enrollees', res.data.enrollees);
+    }).catch(function (error) {
+      data.$router.push('/');
+    });
+  }
+}), _data$components$crea);
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    { staticClass: "ma-2 pa-0" },
+    [
+      _c(
+        "v-layout",
+        { staticClass: "ma-0 pa-0" },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xl3: "", lg3: "", md3: "", sm3: "", xs3: "" } },
+            [_c("h1", { staticClass: "pa-2" }, [_vm._v("SHS")])]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-flex",
+            { attrs: { xl9: "", lg9: "", md9: "", sm9: "", xs9: "" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  "append-icon": "search",
+                  label: "Search",
+                  "single-line": "",
+                  "hide-details": ""
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        { staticClass: "ma-0 pa-0" },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
+            [_c("enrollees")],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-b7744292", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

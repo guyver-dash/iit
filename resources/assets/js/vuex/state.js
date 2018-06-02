@@ -1,5 +1,7 @@
 export const state = {
+     page: 1,
      authUser: {firstname: '', lastname: '', email: ''},
+     studentType:[],
      confirmedEnrolled:{
         enrollee: {
             course_id: '',

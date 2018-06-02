@@ -8,6 +8,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		page(state, page){
+			state.page = page
+		},
+		studentType(state, studentType){
+			state.studentType = studentType
+		},
 		confirmedEnrolled(state, confirmedEnrolled){
 			state.confirmedEnrolled = confirmedEnrolled
 		},
@@ -115,6 +121,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		page(store, page){
+			store.commit('page', page)
+		},
+		studentType(store, studentType){
+			store.commit('studentType', studentType);
+		},
 		answersEdit(store, answers){
 			store.commit('answersEdit', answers);
 		},
@@ -264,6 +276,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		page(){
+			return store.state.page
+		},
+		studentType(){
+			return store.state.studentType
+		},
 		confirmedEnrolled(){
 			return store.state.confirmedEnrolled
 		},

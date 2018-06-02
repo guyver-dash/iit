@@ -21,6 +21,7 @@ use App\Model\EducAtt;
 use App\Model\Sibling;
 use App\Model\ConfirmEnrolled;
 use App\Model\Role;
+use App\Model\StudentType;
 
 class StartUpController extends Controller
 {
@@ -39,6 +40,7 @@ class StartUpController extends Controller
                 'requirements' => Requirement::with('requirementsDoc')->get(),
                 'policies' => Policy::all(),
                 'civilStatus' => CivilStatus::all(),
+                'studentType' => StudentType::all(),
                 'educAtt' => EducAtt::all()
 
     		]);

@@ -18,15 +18,13 @@ class ConfirmedEnrolledController extends Controller
 
     public function index(){
 
-    	return response()->json([
-    			'enrollees' => ConfirmEnrolled::with('enrollee')->get()
-    		]);
+    	return $this->confirmedEnrollee->index();
     	
     }
 
     public function edit($id){
     	return response()->json([
-    			'enrollee' => ConfirmEnrolled::find($id)->with(['enrollee.siblings', 'enrollee.answers.question', 'enrollee.requirementsDoc'])->first()
+    			'enrollee' => ConfirmEnrolled::where('id', $id)->with(['enrollee.siblings', 'enrollee.answers.question', 'enrollee.requirementsDoc'])->first()
     		]);
     }
 
@@ -35,8 +33,23 @@ class ConfirmedEnrolledController extends Controller
         return $this->confirmedEnrollee->update($request, $id);
     }
 
+    public function search(){
+
+        return $this->confirmedEnrollee->search();
+    }
+
     public function print($id){
 
        return $this->confirmedEnrollee->print($id);
+    }
+
+    public function destroy($id){
+
+        return $this->confirmedEnrollee->destroy($id);
+    }
+
+    public function shs(){
+
+        return $this->confirmedEnrollee->shs();
     }
 }

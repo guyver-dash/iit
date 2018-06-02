@@ -9,8 +9,11 @@ Route::get('courses', 'API\Course\CourseController@index');
 Route::get('roles', 'API\StartUpController@getRoles');
 Route::get('enrollees', 'API\Enrollee\EnrolleeController@getEnrollees');
 
+Route::get('shs', 'API\ConfirmEnrolled\ConfirmedEnrolledController@shs');
 Route::get('confirm-enrolled', 'API\ConfirmEnrolled\ConfirmedEnrolledController@index');
 Route::get('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@edit');
+Route::post('confirm-enrolled/search', 'API\ConfirmEnrolled\ConfirmedEnrolledController@search');
+Route::delete('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@destroy');
 Route::get('confirm-enrolled/print/{confirmEnrolleeId}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@print');
 Route::put('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@update');
 Route::post('auth/register', 'API\User\UserController@register');
