@@ -42,6 +42,7 @@ import enrollees from '../components/data-tables/enrollees.vue'
         }
     	},
       created() {
+        this.$store.dispatch('page', 1)
         this.changePage()
       },
       methods: {

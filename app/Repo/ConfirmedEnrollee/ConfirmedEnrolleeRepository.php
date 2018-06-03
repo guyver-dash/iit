@@ -22,7 +22,7 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
             ]);
     }
 
-   
+
 
     public function destroy($id){
         $this->modelName->find($id)->delete();
@@ -46,12 +46,38 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
 
     }
 
-     public function shs(){
+    public function jhs(){
 
         return response()->json([
-                'enrollees' => $this->modelName->whereHas('enrollee', function($query){
-                    $query->where('course_id', '=', 1);
-                })->pagination()
+            'enrollees' => $this->modelName->whereHas('enrollee', function($query){
+                $query->where('course_id', '=', 2);
+            })->pagination()
+            ]);
+    }
+
+    public function searchJhs(){
+        $request = app()->make('request');
+
+        return response()->json([
+            'enrollees' => $this->modelName->whereHas('enrollee', function($query) use ($request){
+                $query->where('course_id', '=', 2);
+                $query->where(function($query) use ($request) {
+                    $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
+                    $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
+
+                });
+
+            })->pagination()
+            ]);
+
+    }
+
+    public function shs(){
+
+        return response()->json([
+            'enrollees' => $this->modelName->whereHas('enrollee', function($query){
+                $query->where('course_id', '=', 1);
+            })->pagination()
             ]);
     }
 
@@ -60,15 +86,15 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
         $request = app()->make('request');
 
         return response()->json([
-                'enrollees' => $this->modelName->whereHas('enrollee', function($query) use ($request){
-                    $query->where('course_id', '=', 1);
-                    $query->where(function($query) use ($request) {
-                        $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
-                        $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
+            'enrollees' => $this->modelName->whereHas('enrollee', function($query) use ($request){
+                $query->where('course_id', '=', 1);
+                $query->where(function($query) use ($request) {
+                    $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
+                    $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
 
-                    });
+                });
 
-                })->pagination()
+            })->pagination()
             ]);
 
     }
@@ -89,6 +115,7 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
         $confirmedEnroll->enrollee->student_type_id = $request->confirmedEnrolled['enrollee']['student_type_id'];
         $confirmedEnroll->enrollee->lrn = $request->confirmedEnrolled['enrollee']['lrn'];
         $confirmedEnroll->enrollee->idno = $request->confirmedEnrolled['enrollee']['idno'];
+        $confirmedEnroll->enrollee->course_id = $request->confirmedEnrolled['enrollee']['course_id'];
         $confirmedEnroll->enrollee->firstname = $request->confirmedEnrolled['enrollee']['firstname'];
         $confirmedEnroll->enrollee->lastname = $request->confirmedEnrolled['enrollee']['lastname'];
         $confirmedEnroll->enrollee->middlename = $request->confirmedEnrolled['enrollee']['middlename'];
@@ -340,11 +367,11 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
 
             </tr>
             <tr>
-               <td><strong>BIRTHDAY: </strong> <u>$birthday</u> </td>
-               <td><strong>BIRTHPLACE</strong>: $birthPlace </td>
-               <td><strong>CIVIL STATUS </strong>: $civil</td>
-           </tr>
-           <tr>
+             <td><strong>BIRTHDAY: </strong> <u>$birthday</u> </td>
+             <td><strong>BIRTHPLACE</strong>: $birthPlace </td>
+             <td><strong>CIVIL STATUS </strong>: $civil</td>
+         </tr>
+         <tr>
             <td><strong>PRESENT ADDRESS</strong>: <u>$presentAddress</u></td>
             <td><strong>CITY</strong>: <u>$presentCity</u></td>
             <td><strong>PROVINCE</strong>: <u>$presentProvince</u></td>
@@ -426,17 +453,17 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
 
             <br /> <br />
             <div style='width: 200px; display: inline-block;'>
-             <u>&nbsp;  &nbsp; $name &nbsp; &nbsp; &nbsp; &nbsp;  </u><br />
-             &nbsp; &nbsp; &nbsp;STUDENT <br />
-             (Printed Name over signatute)
-             <br />
-             <br />
+               <u>&nbsp;  &nbsp; $name &nbsp; &nbsp; &nbsp; &nbsp;  </u><br />
+               &nbsp; &nbsp; &nbsp;STUDENT <br />
+               (Printed Name over signatute)
+               <br />
+               <br />
 
-             __________________________<br />
-             PARENTS/GUARDIANS <br /> (Printed Name over signatute)
-         </div>
+               __________________________<br />
+               PARENTS/GUARDIANS <br /> (Printed Name over signatute)
+           </div>
 
-         <div style='width: 200px;  display: inline-block; '>
+           <div style='width: 200px;  display: inline-block; '>
 
             <u>$now</u>  <br />
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DATE
@@ -458,5 +485,173 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
 return $pdf->stream();
 }
 
+    public function shsPrint($id){
 
+
+        $confirmedEnroll = $this->modelName->where('id', $id)->with(['enrollee.civil', 'enrollee.course', 'yearLevel', 'semester', 'schedule'])->first();
+
+        $lrn = $confirmedEnroll->enrollee->lrn;
+        $primary = $confirmedEnroll->enrollee->primary;
+        $elementary = $confirmedEnroll->enrollee->elementary;
+        $schoolName = $confirmedEnroll->enrollee->name_of_school;
+        $schoolCity = $confirmedEnroll->enrollee->schoolCity->name;
+        $schoolProvince = $confirmedEnroll->enrollee->schoolProvince->name;
+        $schoolAddress = $confirmedEnroll->enrollee->school_address;
+        $schoolZipcode = $confirmedEnroll->enrollee->school_zipcode;
+
+        $name = $confirmedEnroll->enrollee->lastname . ', ' . $confirmedEnroll->enrollee->firstname . ' ' . $confirmedEnroll->enrollee->middlename . ' ' . $confirmedEnroll->enrollee->suffix; 
+        $nickname = $confirmedEnroll->enrollee->nickname;
+        $sex = $confirmedEnroll->enrollee->sex == 1 ? 'Female' : 'Male';
+        $birthday = $confirmedEnroll->enrollee->birthday;
+        $age = $confirmedEnroll->enrollee->age;
+        $birthPlace = $confirmedEnroll->enrollee->birth_place;
+        $civil = $confirmedEnroll->enrollee->toArray()['civil']['name'];
+        $presentAddress = $confirmedEnroll->enrollee->present_address;
+        $presentCity = $confirmedEnroll->enrollee->city->name;
+        $presentProvince = $confirmedEnroll->enrollee->province->name;
+        $presentZipcode = $confirmedEnroll->enrollee->present_zipcode;
+
+        $permanentAddress = $confirmedEnroll->enrollee->permanent_address;
+        $permanentCity = $confirmedEnroll->enrollee->permanentCity->name;
+        $permanentProvince = $confirmedEnroll->enrollee->permanentProvince->name;
+        $permanentZipcode = $confirmedEnroll->enrollee->present_zipcode;
+
+        $landline = $confirmedEnroll->enrollee->landline;
+        $mobile = $confirmedEnroll->enrollee->mobile;
+        $email = $confirmedEnroll->enrollee->email;
+
+        $motherName = $confirmedEnroll->enrollee->mother_lastname . ', ' . $confirmedEnroll->enrollee->mother_firstname . ' ' . $confirmedEnroll->enrollee->mother_middlename;
+        $motherContact = $confirmedEnroll->enrollee->mother_contact_number;
+        $motherOcc = $confirmedEnroll->enrollee->mother_occupation;
+        $motherAddress = $confirmedEnroll->enrollee->mother_address;
+        $motherCity = $confirmedEnroll->enrollee->motherCity->name;
+        $motherProvince = $confirmedEnroll->enrollee->motherProvince->name;
+        $motherZipcode = $confirmedEnroll->enrollee->mother_zipcode;
+
+
+         $qrCode = new QrCode();
+            $qrCode
+            ->setText('QR code by codeitnow.in')
+            ->setSize(300)
+            ->setPadding(10)
+            ->setErrorCorrection('high')
+            ->setForegroundColor(array('r' => 0, 'g' => 0, 'b' => 0, 'a' => 0))
+            ->setBackgroundColor(array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0))
+            ->setLabel('LRN: ' . $lrn)
+            ->setLabelFontSize(16)
+            ->setImageType(QrCode::IMAGE_TYPE_PNG)
+            ;
+            $qrCode = '<img src="data:'.$qrCode->getContentType().';base64,'.$qrCode->generate().'" / width="170" >';
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->setPaper('legal', 'portrait');
+        $pdf->loadHTML("<style>
+            body{
+                font-size: 11px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            table {
+                border: 1px solid black;
+                padding: 5px;
+                width: 100%
+            }
+                        #first tr, #first td, #second tr, #second td, #third tr, #third td, #fourth tr, #fourth td, span{
+            padding: 4px; 
+            font-size: 11px;
+        }
+
+        </style>
+        <div style='position: absolute;'>
+            $qrCode
+        </div>
+        <div style='position: absolute; float: right; border: 1px solid black; width: 114px; height: 100px;'>
+            <br />
+            <br />
+            <br />
+            <p align='center'>2x2 Picture</p>
+        </div>
+        <p align='center' style='padding-left:90px;margin: 0px;'><img src='images/logos/logo.png' width='120' /> <p>
+            <h4 align='center' style='padding:0; margin:0; font-size: 14px;'>Intellisense Institute of Technology</h4>
+            <p align='center' style='padding:0; margin:0; font-size:10px;'>
+                2F Aspac Building, Guizo
+            </p>
+            <p align='center' style='padding:0; margin:0; font-size:10px;'>
+                Mandaue City, Cebu
+                (032) 4172412
+            </p>
+            <br />
+            <br />
+
+                 <p><strong> PERSONAL INFORMATIONS</strong> </p>
+                <table id='second'>
+                    <tr>
+                        <td><strong>NAME: </strong> <u>$name</u></td>
+                        <td><strong>NICKNAME: </strong> <u>$nickname</u></td>
+                        <td><strong>SEX: </strong> <u>$sex</u> </td>
+                        <td><strong>AGE </strong>: <u>$age </u></td>
+
+
+                    </tr>
+                    <tr>
+                     <td><strong>BIRTHDAY: </strong> <u>$birthday</u> </td>
+                     <td><strong>BIRTHPLACE</strong>: $birthPlace </td>
+                     <td><strong>CIVIL STATUS </strong>: $civil</td>
+                 </tr>
+                 <tr>
+                    <td><strong>PRESENT ADDRESS</strong>: <u>$presentAddress</u></td>
+                    <td><strong>CITY</strong>: <u>$presentCity</u></td>
+                    <td><strong>PROVINCE</strong>: <u>$presentProvince</u></td>
+                    <td><strong>ZIPCODE</strong>: <u>$presentZipcode</u></td>
+
+                </tr>
+                <tr>
+                    <td><strong>PERMANENT/PROVINCIAL ADDRESS</strong>: <u>$permanentAddress</u></td>
+                    <td><strong>CITY</strong>: <u>$permanentCity </u></td>
+                    <td><strong>PROVINCE</strong>: <u>$permanentProvince </u></td>
+                    <td><strong>ZIPCODE</strong>: <u>$permanentZipcode </u></td>
+
+                </tr>
+                <tr>
+                    <td><strong>LANDLINE</strong>: <u> $landline </u></td>
+                    <td><strong>MOBILE</strong>: <u>$mobile </u></td>
+                    <td><strong>EMAIL ADDRESS</strong>: <u>$email </u> </td>
+                </tr>
+
+                 <tr>
+                    <td><strong>MOTHER'S NAME</strong>: <u>$motherName</u></td>
+                    <td><strong>OCCUPATION</strong>: <u> $motherOcc </u></td>
+                    <td><strong>CONTACT NUMBER:</strong><u> $motherContact </u></td>
+
+                </tr>
+                <tr>
+                    <td><strong>PRESENT ADDRESS</strong>: <u>$motherAddress </u></td>
+                    <td><strong>CITY </strong>: <u>$motherCity </u></td>
+                    <td><strong>PROVINCE</strong>: <u> $motherProvince </u></td>
+                    <td><strong>ZIPCODE</strong>: <u>$motherZipcode </u></td>
+
+                </tr>
+            </table> 
+
+             <p><strong> SCHOOL BACKGROUND</strong> </p>
+            <table id='fourth'>
+                <tr>
+                    <td><strong>PRIMARY</strong>: <u>$primary</u></td>
+                    <td><strong>ELEMENTARY</strong>: <u>$elementary</u></td>
+                    <td><strong>JUNIOR HIGHSCHOOL</strong>: <u>$schoolName</u></td>
+                </tr>
+                <tr>
+                    <td><strong>PRESENT ADDRESS</strong>: <u>$schoolAddress </u></td>
+                    <td><strong>CITY </strong>: <u>$schoolCity </u></td>
+                    <td><strong>PROVINCE</strong>: <u> $schoolProvince </u></td>
+                    <td><strong>ZIPCODE</strong>: <u>$schoolZipcode </u></td>
+
+                </tr>
+
+            </table>
+
+            "
+        );
+        return $pdf->stream();
+
+    }
 }

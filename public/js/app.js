@@ -17541,8 +17541,11 @@ var state = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__profile_payment_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__profile_shs_vue__ = __webpack_require__(92);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__profile_shs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__profile_shs_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__enrollees_vue__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__enrollees_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__enrollees_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__profile_jhs_vue__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__profile_jhs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__profile_jhs_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__enrollees_vue__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__enrollees_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__enrollees_vue__);
+
 
 
 
@@ -17559,13 +17562,13 @@ var routes = [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_1__home_index_vu
 	meta: { requiresAuth: true }
 }, { path: '/admin/payment', component: __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue___default.a, name: 'payment',
 	meta: { requiresAuth: true }
-}, { path: '/admin/enrollees', component: __WEBPACK_IMPORTED_MODULE_8__enrollees_vue___default.a, name: 'enrollees',
+}, { path: '/admin/enrollees', component: __WEBPACK_IMPORTED_MODULE_9__enrollees_vue___default.a, name: 'enrollees',
 	meta: { requiresAuth: true }
 }, { path: '/admin/admission/:id', component: __WEBPACK_IMPORTED_MODULE_5__admission_editAdmission_vue___default.a, name: 'editAdmission',
 	meta: { requiresAuth: true }
 }, { path: '/admin/shs', component: __WEBPACK_IMPORTED_MODULE_7__profile_shs_vue___default.a, name: 'shs',
 	meta: { requiresAuth: true }
-}, { path: '/admin/jhs', component: __WEBPACK_IMPORTED_MODULE_6__profile_payment_vue___default.a, name: 'jhs',
+}, { path: '/admin/jhs', component: __WEBPACK_IMPORTED_MODULE_8__profile_jhs_vue___default.a, name: 'jhs',
 	meta: { requiresAuth: true }
 }];
 
@@ -19937,6 +19940,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -20011,6 +20029,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       siblingOcc: '',
       siblingNameOfSchool: '',
 
+      primary: '',
+      elementary: '',
       schoolName: '',
       schoolAddress: '',
       schoolProvinceId: '',
@@ -20201,7 +20221,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           school_year_id: this.schoolYear,
           year_level_id: this.yearLevel,
           schedule_id: this.schedule
-        }, _defineProperty(_$http$post, 'start_time', this.startTime), _defineProperty(_$http$post, 'admissionNo', this.admissionNo), _defineProperty(_$http$post, 'course_id', this.course), _defineProperty(_$http$post, 'firstname', this.firstname), _defineProperty(_$http$post, 'middlename', this.middlename), _defineProperty(_$http$post, 'lastname', this.lastname), _defineProperty(_$http$post, 'suffix', this.suffix), _defineProperty(_$http$post, 'nickname', this.nickName), _defineProperty(_$http$post, 'age', this.age), _defineProperty(_$http$post, 'birthday', this.birthday), _defineProperty(_$http$post, 'birth_place', this.birthplace), _defineProperty(_$http$post, 'sex', this.sex), _defineProperty(_$http$post, 'educ_at_id', this.selectedEducAtt), _defineProperty(_$http$post, 'civil_id', this.selectedCivil), _defineProperty(_$http$post, 'spouse_lastname', this.spouseLastname), _defineProperty(_$http$post, 'spouse_firstname', this.spouseFirstname), _defineProperty(_$http$post, 'spouse_middlename', this.spouseMiddlename), _defineProperty(_$http$post, 'landline', this.landline), _defineProperty(_$http$post, 'mobile', this.mobile), _defineProperty(_$http$post, 'email', this.email), _defineProperty(_$http$post, 'religion', this.religion), _defineProperty(_$http$post, 'citizenship', this.citizenship), _defineProperty(_$http$post, 'present_address', this.presentAddress), _defineProperty(_$http$post, 'present_province_id', this.presentProvinceId), _defineProperty(_$http$post, 'present_city_id', this.presentCityId), _defineProperty(_$http$post, 'present_zipcode', this.presentZipCode), _defineProperty(_$http$post, 'permanent_address', this.permanentAddress), _defineProperty(_$http$post, 'permanent_province_id', this.permanentProvinceId), _defineProperty(_$http$post, 'permanent_city_id', this.permanentCityId), _defineProperty(_$http$post, 'permanent_zipcode', this.permanentZipCode), _defineProperty(_$http$post, 'father_firstname', this.fatherFirstname), _defineProperty(_$http$post, 'father_lastname', this.fatherLastname), _defineProperty(_$http$post, 'father_middlename', this.fatherMiddlename), _defineProperty(_$http$post, 'father_occupation', this.fatherOccupation), _defineProperty(_$http$post, 'father_contact_number', this.fatherContactNo), _defineProperty(_$http$post, 'father_address', this.fatherAddress), _defineProperty(_$http$post, 'father_province_id', this.fatherProvinceId), _defineProperty(_$http$post, 'father_city_id', this.fatherCityId), _defineProperty(_$http$post, 'father_zipcode', this.fatherZipCode), _defineProperty(_$http$post, 'mother_firstname', this.motherFirstname), _defineProperty(_$http$post, 'mother_lastname', this.motherLastname), _defineProperty(_$http$post, 'mother_middlename', this.motherMiddlename), _defineProperty(_$http$post, 'mother_occupation', this.motherOccupation), _defineProperty(_$http$post, 'mother_contact_number', this.motherContactNo), _defineProperty(_$http$post, 'mother_address', this.motherAddress), _defineProperty(_$http$post, 'mother_province_id', this.motherProvinceId), _defineProperty(_$http$post, 'mother_city_id', this.motherCityId), _defineProperty(_$http$post, 'mother_zipcode', this.motherZipCode), _defineProperty(_$http$post, 'name_of_school', this.schoolName), _defineProperty(_$http$post, 'school_address', this.schoolAddress), _defineProperty(_$http$post, 'school_province_id', this.schoolProvinceId), _defineProperty(_$http$post, 'school_city_id', this.schoolCityId), _defineProperty(_$http$post, 'school_zipcode', this.schoolZipCode), _defineProperty(_$http$post, 'siblings', this.siblings), _defineProperty(_$http$post, 'answers', this.answer), _defineProperty(_$http$post, 'requirementsDocs', this.requirementsDocs), _$http$post)).then(function (res) {
+        }, _defineProperty(_$http$post, 'start_time', this.startTime), _defineProperty(_$http$post, 'admissionNo', this.admissionNo), _defineProperty(_$http$post, 'course_id', this.course), _defineProperty(_$http$post, 'firstname', this.firstname), _defineProperty(_$http$post, 'middlename', this.middlename), _defineProperty(_$http$post, 'lastname', this.lastname), _defineProperty(_$http$post, 'suffix', this.suffix), _defineProperty(_$http$post, 'nickname', this.nickName), _defineProperty(_$http$post, 'age', this.age), _defineProperty(_$http$post, 'birthday', this.birthday), _defineProperty(_$http$post, 'birth_place', this.birthplace), _defineProperty(_$http$post, 'sex', this.sex), _defineProperty(_$http$post, 'educ_at_id', this.selectedEducAtt), _defineProperty(_$http$post, 'civil_id', this.selectedCivil), _defineProperty(_$http$post, 'spouse_lastname', this.spouseLastname), _defineProperty(_$http$post, 'spouse_firstname', this.spouseFirstname), _defineProperty(_$http$post, 'spouse_middlename', this.spouseMiddlename), _defineProperty(_$http$post, 'landline', this.landline), _defineProperty(_$http$post, 'mobile', this.mobile), _defineProperty(_$http$post, 'email', this.email), _defineProperty(_$http$post, 'religion', this.religion), _defineProperty(_$http$post, 'citizenship', this.citizenship), _defineProperty(_$http$post, 'present_address', this.presentAddress), _defineProperty(_$http$post, 'present_province_id', this.presentProvinceId), _defineProperty(_$http$post, 'present_city_id', this.presentCityId), _defineProperty(_$http$post, 'present_zipcode', this.presentZipCode), _defineProperty(_$http$post, 'permanent_address', this.permanentAddress), _defineProperty(_$http$post, 'permanent_province_id', this.permanentProvinceId), _defineProperty(_$http$post, 'permanent_city_id', this.permanentCityId), _defineProperty(_$http$post, 'permanent_zipcode', this.permanentZipCode), _defineProperty(_$http$post, 'father_firstname', this.fatherFirstname), _defineProperty(_$http$post, 'father_lastname', this.fatherLastname), _defineProperty(_$http$post, 'father_middlename', this.fatherMiddlename), _defineProperty(_$http$post, 'father_occupation', this.fatherOccupation), _defineProperty(_$http$post, 'father_contact_number', this.fatherContactNo), _defineProperty(_$http$post, 'father_address', this.fatherAddress), _defineProperty(_$http$post, 'father_province_id', this.fatherProvinceId), _defineProperty(_$http$post, 'father_city_id', this.fatherCityId), _defineProperty(_$http$post, 'father_zipcode', this.fatherZipCode), _defineProperty(_$http$post, 'mother_firstname', this.motherFirstname), _defineProperty(_$http$post, 'mother_lastname', this.motherLastname), _defineProperty(_$http$post, 'mother_middlename', this.motherMiddlename), _defineProperty(_$http$post, 'mother_occupation', this.motherOccupation), _defineProperty(_$http$post, 'mother_contact_number', this.motherContactNo), _defineProperty(_$http$post, 'mother_address', this.motherAddress), _defineProperty(_$http$post, 'mother_province_id', this.motherProvinceId), _defineProperty(_$http$post, 'mother_city_id', this.motherCityId), _defineProperty(_$http$post, 'mother_zipcode', this.motherZipCode), _defineProperty(_$http$post, 'primary', this.primary), _defineProperty(_$http$post, 'elementary', this.elementary), _defineProperty(_$http$post, 'name_of_school', this.schoolName), _defineProperty(_$http$post, 'school_address', this.schoolAddress), _defineProperty(_$http$post, 'school_province_id', this.schoolProvinceId), _defineProperty(_$http$post, 'school_city_id', this.schoolCityId), _defineProperty(_$http$post, 'school_zipcode', this.schoolZipCode), _defineProperty(_$http$post, 'siblings', this.siblings), _defineProperty(_$http$post, 'answers', this.answer), _defineProperty(_$http$post, 'requirementsDocs', this.requirementsDocs), _$http$post)).then(function (res) {
 
           data.$store.dispatch('snackbarText', 'Registration completed!');
           data.$store.dispatch('snackbarColor', 'success');
@@ -22454,12 +22474,70 @@ var render = function() {
                 "v-flex",
                 {
                   staticClass: "pa-2",
-                  attrs: { xl12: "", lg12: "", md12: "", sm6: "", xs12: "" }
+                  attrs: { xl4: "", lg14: "", md4: "", sm6: "", xs12: "" }
                 },
                 [
                   _c("v-text-field", {
                     attrs: {
-                      label: "Name of school",
+                      label: "Primary",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.primary,
+                      callback: function($$v) {
+                        _vm.primary = $$v
+                      },
+                      expression: "primary"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl4: "", lg4: "", md4: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Elementary",
+                      rules: [
+                        function(v) {
+                          return !!v || "This field is required."
+                        }
+                      ],
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.elementary,
+                      callback: function($$v) {
+                        _vm.elementary = $$v
+                      },
+                      expression: "elementary"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "pa-2",
+                  attrs: { xl4: "", lg4: "", md4: "", sm6: "", xs12: "" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Junior Highschool",
                       rules: [
                         function(v) {
                           return !!v || "This field is required."
@@ -27722,6 +27800,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     authUser: function authUser() {
       return this.$store.getters.authUser;
+    },
+
+    page: {
+      get: function get() {
+        return this.$store.getters.page;
+      },
+      set: function set(val) {
+        this.$store.dispatch('page', val);
+      }
     }
   },
   components: {
@@ -27745,6 +27832,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).then(function (res) {
         data.$store.dispatch('enrollees', res.data.enrollees);
       }).catch();
+    },
+    page: function page() {
+      this.changePage();
     }
   }
 });
@@ -28063,7 +28153,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-container",
-    { staticClass: "ma-2 pa-0" },
+    { staticClass: "ma-2 pa-0", attrs: { fluid: "" } },
     [
       _c(
         "v-layout",
@@ -28072,7 +28162,7 @@ var render = function() {
           _c(
             "v-flex",
             { attrs: { xl3: "", lg3: "", md3: "", sm3: "", xs3: "" } },
-            [_c("h1", { staticClass: "pa-2" }, [_vm._v("SHS")])]
+            [_c("h1", { staticClass: "pa-2" }, [_vm._v("Senior Highschool")])]
           ),
           _vm._v(" "),
           _c(
@@ -28108,7 +28198,7 @@ var render = function() {
           _c(
             "v-flex",
             { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
-            [_c("enrollees", { attrs: { printUrl: "api/example" } })],
+            [_c("enrollees", { attrs: { printUrl: "api/shs/print/" } })],
             1
           )
         ],
@@ -28230,6 +28320,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   created: function created() {
+    this.$store.dispatch('page', 1);
     this.changePage();
   },
 
@@ -50691,6 +50782,221 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(121)
+/* template */
+var __vue_template__ = __webpack_require__(122)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\router\\profile\\jhs.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6fa46d24", Component.options)
+  } else {
+    hotAPI.reload("data-v-6fa46d24", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_data_tables_enrollees_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_data_tables_enrollees_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_data_tables_enrollees_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+  data: function data() {
+    return {
+      search: ''
+    };
+  },
+
+  created: function created() {
+
+    this.changePage();
+    this.$store.dispatch('page', 1);
+  },
+
+  computed: {
+    authUser: function authUser() {
+      return this.$store.getters.authUser;
+    },
+
+    page: {
+      get: function get() {
+        return this.$store.getters.page;
+      },
+      set: function set(val) {
+        this.$store.dispatch('page', val);
+      }
+    }
+  },
+  components: {
+    enrollees: __WEBPACK_IMPORTED_MODULE_0__components_data_tables_enrollees_vue___default.a
+  },
+  methods: {
+    changePage: function changePage() {
+      var data = this;
+      this.$http.get(base_api + '/jhs?page=' + this.page + '&token=' + window.localStorage.getItem('tokenKey')).then(function (res) {
+        data.$store.dispatch('enrollees', res.data.enrollees);
+      }).catch(function (error) {
+        data.$router.push('/');
+      });
+    }
+  },
+  watch: {
+    search: function search(val) {
+      var data = this;
+      this.$http.post(base_api + '/jhs/search?token=' + window.localStorage.getItem('tokenKey'), {
+        search: val
+      }).then(function (res) {
+        data.$store.dispatch('enrollees', res.data.enrollees);
+      }).catch();
+    },
+    page: function page() {
+      this.changePage();
+    }
+  }
+});
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    { staticClass: "ma-2 pa-0", attrs: { fluid: "" } },
+    [
+      _c(
+        "v-layout",
+        { staticClass: "ma-0 pa-0" },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xl3: "", lg3: "", md3: "", sm3: "", xs3: "" } },
+            [_c("h1", { staticClass: "pa-2" }, [_vm._v("Junior Highschool")])]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-flex",
+            { attrs: { xl9: "", lg9: "", md9: "", sm9: "", xs9: "" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  "append-icon": "search",
+                  label: "Search",
+                  "single-line": "",
+                  "hide-details": ""
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        { staticClass: "ma-0 pa-0" },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xl12: "", lg12: "", md12: "", sm12: "", xs12: "" } },
+            [_c("enrollees", { attrs: { printUrl: "api/shs/print/" } })],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6fa46d24", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

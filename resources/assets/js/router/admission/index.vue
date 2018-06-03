@@ -616,10 +616,25 @@
   <span class="subheading">School Background:</span>
 </v-flex>
 <v-layout row wrap>
-  
-  <v-flex xl12 lg12 md12 sm6 xs12 class="pa-2">
+  <v-flex xl4 lg14 md4 sm6 xs12 class="pa-2">
     <v-text-field
-    label="Name of school"
+    label="Primary"
+    v-model="primary"
+    :rules="[v => !!v || 'This field is required.']"
+    required
+    ></v-text-field>
+  </v-flex>
+  <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
+    <v-text-field
+    label="Elementary"
+    v-model="elementary"
+    :rules="[v => !!v || 'This field is required.']"
+    required
+    ></v-text-field>
+  </v-flex>
+  <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
+    <v-text-field
+    label="Junior Highschool"
     v-model="schoolName"
     :rules="[v => !!v || 'This field is required.']"
     required
@@ -822,6 +837,8 @@
         siblingOcc: '',
         siblingNameOfSchool: '',
 
+        primary: '',
+        elementary: '',
         schoolName: '',
         schoolAddress: '',
         schoolProvinceId: '',
@@ -1069,6 +1086,8 @@
           mother_province_id: this.motherProvinceId,
           mother_city_id: this.motherCityId,
           mother_zipcode: this.motherZipCode,
+          primary: this.primary,
+          elementary: this.elementary,
           name_of_school: this.schoolName,
           school_address: this.schoolAddress,
           school_province_id: this.schoolProvinceId,

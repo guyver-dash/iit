@@ -8,8 +8,10 @@ Route::post('enrollment', 'API\StartUpController@enrollment');
 Route::get('courses', 'API\Course\CourseController@index');
 Route::get('roles', 'API\StartUpController@getRoles');
 Route::get('enrollees', 'API\Enrollee\EnrolleeController@getEnrollees');
-
+Route::get('jhs', 'API\ConfirmEnrolled\ConfirmedEnrolledController@jhs');
+Route::post('jhs/search', 'API\ConfirmEnrolled\ConfirmedEnrolledController@searchJhs');
 Route::get('shs', 'API\ConfirmEnrolled\ConfirmedEnrolledController@shs');
+Route::get('shs/print/{confirmId}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@shsPrint');
 Route::post('shs/search', 'API\ConfirmEnrolled\ConfirmedEnrolledController@searchShs');
 Route::get('confirm-enrolled', 'API\ConfirmEnrolled\ConfirmedEnrolledController@index');
 Route::get('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@edit');

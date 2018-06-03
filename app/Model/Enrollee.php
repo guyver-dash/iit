@@ -20,7 +20,7 @@ class Enrollee extends Model
     	'father_occupation', 'father_contact_number', 'father_address', 'father_province_id',
     	'father_city_id', 'father_zipcode', 'mother_firstname', 'mother_lastname', 'mother_middlename',
     	'mother_occupation', 'mother_contact_number', 'mother_address', 'mother_province_id',
-    	'mother_city_id', 'mother_zipcode', 'name_of_school', 'school_address', 'school_province_id',
+    	'mother_city_id', 'mother_zipcode', 'primary', 'elementary', 'name_of_school', 'school_address', 'school_province_id',
     	'school_city_id', 'school_zipcode', 'remarks'
     ];
 

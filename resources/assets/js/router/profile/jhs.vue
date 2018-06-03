@@ -2,7 +2,7 @@
     <v-container class="ma-2 pa-0" fluid>
     <v-layout class="ma-0 pa-0">
       <v-flex xl3 lg3 md3 sm3 xs3>
-         <h1 class="pa-2">Senior Highschool</h1>
+         <h1 class="pa-2">Junior Highschool</h1>
       </v-flex>
       <v-flex xl9 lg9 md9 sm9 xs9>
          <v-text-field
@@ -54,7 +54,7 @@
       methods: {
         changePage(){
           let data = this
-          this.$http.get(base_api + '/shs?page=' + this.page + '&token=' + window.localStorage.getItem('tokenKey')
+          this.$http.get(base_api + '/jhs?page=' + this.page + '&token=' + window.localStorage.getItem('tokenKey')
           )
           .then(function(res){
             data.$store.dispatch('enrollees', res.data.enrollees)
@@ -67,7 +67,7 @@
       watch: {
         search: function(val){
           var data = this
-          this.$http.post(base_api + '/shs/search?token=' + window.localStorage.getItem('tokenKey'),{
+          this.$http.post(base_api + '/jhs/search?token=' + window.localStorage.getItem('tokenKey'),{
               search: val
           })
             .then(function(res){
