@@ -13,6 +13,10 @@ class ConfirmEnrolled extends Model
     	'schedule_id', 'start_time', 'end_time'
     ];
 
+    public function schoolYear(){
+        return $this->hasOne('App\Model\SchoolYear', 'id', 'school_year_id');
+    }
+
     public function enrollee(){
 
     	return $this->hasOne('App\Model\Enrollee', 'id', 'enrollee_id');
@@ -35,6 +39,6 @@ class ConfirmEnrolled extends Model
 
     public function scopePagination($query){
 
-        return $query->paginate(2);
+        return $query->with(['enrollee.course', 'semester', 'schoolYear', 'schedule'])->orderBy('created_at', 'DESC')->paginate(2);
     }
 }

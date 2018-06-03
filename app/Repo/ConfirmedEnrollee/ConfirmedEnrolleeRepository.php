@@ -18,18 +18,11 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
 
     public function index(){
         return response()->json([
-            'enrollees' => $this->modelName->with('enrollee')->orderBy('created_at', 'DESC')->pagination()
+            'enrollees' => $this->modelName->pagination()
             ]);
     }
 
-    public function shs(){
-
-        return response()->json([
-                'enrollees' => $this->modelName->whereHas('enrollee', function($query){
-                    $query->where('course_id', '=', 1);
-                })->with('enrollee')->orderBy('created_at', 'DESC')->pagination()
-            ]);
-    }
+   
 
     public function destroy($id){
         $this->modelName->find($id)->delete();
@@ -45,10 +38,37 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
 
             });
 
-        })->with(['enrollee'])->pagination();
+        })->pagination();
 
         return response()->json([
             'enrollees' => $confirmedEnroll
+            ]);
+
+    }
+
+     public function shs(){
+
+        return response()->json([
+                'enrollees' => $this->modelName->whereHas('enrollee', function($query){
+                    $query->where('course_id', '=', 1);
+                })->pagination()
+            ]);
+    }
+
+    public function searchShs(){
+
+        $request = app()->make('request');
+
+        return response()->json([
+                'enrollees' => $this->modelName->whereHas('enrollee', function($query) use ($request){
+                    $query->where('course_id', '=', 1);
+                    $query->where(function($query) use ($request) {
+                        $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
+                        $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
+
+                    });
+
+                })->pagination()
             ]);
 
     }
@@ -65,6 +85,7 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
         $confirmedEnroll->status = $request->confirmedEnrolled['status'];
         $confirmedEnroll->update();
 
+        $confirmedEnroll->enrollee->remarks = $request->confirmedEnrolled['enrollee']['remarks'];
         $confirmedEnroll->enrollee->student_type_id = $request->confirmedEnrolled['enrollee']['student_type_id'];
         $confirmedEnroll->enrollee->lrn = $request->confirmedEnrolled['enrollee']['lrn'];
         $confirmedEnroll->enrollee->idno = $request->confirmedEnrolled['enrollee']['idno'];

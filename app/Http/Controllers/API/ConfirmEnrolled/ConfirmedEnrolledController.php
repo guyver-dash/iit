@@ -52,4 +52,8 @@ class ConfirmedEnrolledController extends Controller
 
         return $this->confirmedEnrollee->shs();
     }
+
+    public function searchShs(){
+         return $this->confirmedEnrollee->searchShs();
+    }
 }

@@ -10,6 +10,7 @@ Route::get('roles', 'API\StartUpController@getRoles');
 Route::get('enrollees', 'API\Enrollee\EnrolleeController@getEnrollees');
 
 Route::get('shs', 'API\ConfirmEnrolled\ConfirmedEnrolledController@shs');
+Route::post('shs/search', 'API\ConfirmEnrolled\ConfirmedEnrolledController@searchShs');
 Route::get('confirm-enrolled', 'API\ConfirmEnrolled\ConfirmedEnrolledController@index');
 Route::get('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@edit');
 Route::post('confirm-enrolled/search', 'API\ConfirmEnrolled\ConfirmedEnrolledController@search');

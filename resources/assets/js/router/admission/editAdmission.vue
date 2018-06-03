@@ -4,16 +4,12 @@
     <v-form v-model="valid" ref="form" lazy-validation>
       
       <v-layout row wrap>
-        <v-flex xl6 lg6 md6 sm6 xs6>
-          <h3 class="headline">INSTRUCTIONS:</h3>
-          <ol class="ml-4">
-           <li>Student-Applicant accomplishes this Application Form properly.</li>
-           <li>Fill-up information. Leave the field blank (if not applicable).</li>
-           <li>Submit all the requirements as needed.</li>
-         </ol>
-       </v-flex>
+        
        <v-flex xl6 lg6 md6 sm6 xs6>
           <v-layout row wrap>
+            <v-flex xl11 lg11 md11 sm11 xs11>
+               <h1 class="pa-2">Edit Enrollee</h1>
+            </v-flex>
             <v-flex xl5 lg5 md5 sm5 xs5 class='mr-2'>
               <v-switch
                 label="Enrollee Status"
@@ -46,6 +42,13 @@
             </v-flex>
           </v-layout>
        </v-flex>
+       <v-flex xl6 lg6 md6 sm6 xs6 class="pl-3 pb-3 mt-0">
+           <v-text-field
+                v-model="confirmedEnrolled.enrollee.remarks"
+                label="Remarks"
+                textarea
+              ></v-text-field>
+       </v-flex>
        <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
         label="Date"
@@ -56,7 +59,7 @@
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
         <v-text-field
         label="Admission No:"
-        v-model="admissionNo"
+        v-model="confirmedEnrolled.enrollee.admissionNo"
         
         disabled
         ></v-text-field>
@@ -1122,6 +1125,12 @@
     },
   },
   watch: {
+    'confirmedEnrolled.enrollee.remarks': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'remarks',
+          'value' : val
+      })
+    },
     'confirmedEnrolled.enrollee.student_type_id': function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'student_type_id',

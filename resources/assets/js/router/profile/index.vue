@@ -27,6 +27,7 @@
           <roles></roles>
 
           <v-text-field
+          v-if="changePassWord == true"
           label="Change password"
           hint="At least 8 characters"
           :rules="passwordRules"
@@ -35,9 +36,10 @@
           :prepend-icon-cb="() => (e1 = !e1)"
           :type="e1 ? 'password' : 'text'"
           counter
-          >
 
+          >
         </v-text-field>
+        <v-btn color="success" @click="clickPassword()">{{passwordText}}</v-btn>
         <v-btn color="info" @click="submit">Update</v-btn>
       </v-form>
     </v-flex>
@@ -49,6 +51,8 @@
   import roles from '../../components/forms/selects/roles'
   export default {
     data: () => ({
+      changePassWord: false,
+      passwordText: 'Change Password',
       valid: true,
       e1: true,
       valid: false,
@@ -96,6 +100,15 @@
       }
    },
    methods: {
+    clickPassword(){
+      if (this.changePassWord == false) {
+        this.changePassWord = true
+        this.passwordText = 'Hide Password'
+      }else{
+        this.changePassWord = false
+        this.passwordText = 'Change Password'
+      }
+    },
     submit () {
       if (this.$refs.form.validate()) {
           var data = this
@@ -108,7 +121,7 @@
           .then(function(res){
 
                data.$store.dispatch('snackbarText', 'You have successfully updated your profile!')
-               data.$store.dispatch('snackbarColor', 'info')
+               data.$store.dispatch('snackbarColor', 'success')
                data.$store.dispatch('snackbar', true)
           })
           .catch(function(res){

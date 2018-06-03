@@ -1,5 +1,5 @@
 <template>
-	<v-container class="ma-2 pa-0" >
+	<v-container class="ma-2 pa-0" fluid>
     <v-layout class="ma-0 pa-0">
       <v-flex xl3 lg3 md3 sm3 xs3>
          <h1 class="pa-2">Enrollees</h1>
@@ -16,7 +16,7 @@
     </v-layout>
     <v-layout class="ma-0 pa-0">
       <v-flex xl12 lg12 md12 sm12 xs12>
-        <enrollees></enrollees>
+        <enrollees v-bind:printUrl="'api/confirm-enrolled/print/'"></enrollees>
       </v-flex>
     </v-layout>
 	</v-container>

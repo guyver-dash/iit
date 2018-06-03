@@ -7,11 +7,22 @@
       class="elevation-1 mt-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.enrollee.admissionNo }}</td>
+        <td>
+          <v-badge left color="success" v-if="props.item.status == 1">
+
+            <v-icon slot="badge" color="white" small >check</v-icon>
+            <span> {{ props.item.enrollee.idno }}</span>
+          </v-badge>
+          <v-badge left color="error" v-else>
+            <v-icon slot="badge" color="white" small >close</v-icon>
+          </v-badge>
+       </td>
         <td>{{ props.item.enrollee.firstname }}</td>
         <td>{{ props.item.enrollee.lastname }}</td>
-        <td>{{ props.item.status}}</td>
-        <td>{{ props.item.enrollee.created_at }}</td>
+        <td>{{ props.item.schedule.name }}</td>
+        <td>{{ props.item.semester.name }}</td>
+        <td>{{ props.item.school_year.sy }}</td>
+        <td>{{ props.item.enrollee.course.name }}</td>
         <td class="justify-center layout px-0">
           <v-btn icon class="mx-0" :to="'/admin/admission/'+props.item.id">
             <v-icon color="teal">edit</v-icon>
@@ -33,18 +44,21 @@
 </template>
 <script>
   export default {
+    props: ['printUrl'],
     data: () => ({
       dialog: false,
       headers: [
         {
-          text: 'Admission No.',
+          text: 'ID #',
           sortable: true,
-          value: 'admission'
+          value: 'idno'
         },
         { text: 'Firstname', value: 'firstname', sortable: true },
         { text: 'Lastname', value: 'lastname', sortable: true },
-        { text: 'Status', value: 'status' },
-        { text: 'Date', value: 'date', sortable: true},
+        { text: 'Schedule', value: 'schedule', sortable: true},
+        { text: 'Semester', value: 'semester', sortable: true},
+        { text: 'SY', value: 'school_year', sortable: true},
+        { text: 'Course', value: 'course', sortable: true},
         { text: 'Actions', value: 'actions', sortable: false }
       ],
      
@@ -72,7 +86,7 @@
     methods: {
       createPDF(confirmEnrolleeId) {
         
-        window.open(window.base + 'api/confirm-enrolled/print/' + confirmEnrolleeId + '?token=' + localStorage.getItem('tokenKey'));
+        window.open(window.base + this.printUrl + confirmEnrolleeId + '?token=' + localStorage.getItem('tokenKey'));
       },
 
       editItem (item) {

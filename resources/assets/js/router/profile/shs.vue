@@ -16,7 +16,7 @@
     </v-layout>
     <v-layout class="ma-0 pa-0">
       <v-flex xl12 lg12 md12 sm12 xs12>
-        <enrollees></enrollees>
+        <enrollees v-bind:printUrl="'api/example'"></enrollees>
       </v-flex>
     </v-layout>
     </v-container>
@@ -29,12 +29,11 @@
         data: ()=>({
             search: ''
         }),
-    	components: {
-
-    	},
+    
     	created(){
            
         this.changePage()
+        this.$store.dispatch('page', 1);
     	},
     	computed: {
     		authUser(){
@@ -57,5 +56,17 @@
           })
         },
       },
+      watch: {
+        search: function(val){
+          var data = this
+          this.$http.post(base_api + '/shs/search?token=' + window.localStorage.getItem('tokenKey'),{
+              search: val
+          })
+            .then(function(res){
+              data.$store.dispatch('enrollees', res.data.enrollees)
+            })
+            .catch()
+        }
+      }
   }
 </script>

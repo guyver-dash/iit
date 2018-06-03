@@ -89,6 +89,8 @@ class Enrollee extends Model
         return $this->hasOne('App\Model\Course', 'id', 'course_id');
     }
 
+    
+
     public function siblings(){
 
         return $this->belongsToMany('App\Model\Sibling', 'enrollee_sibling', 'enrollee_id', 'sibling_id');
