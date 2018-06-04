@@ -16,7 +16,7 @@
     </v-layout>
     <v-layout class="ma-0 pa-0">
       <v-flex xl12 lg12 md12 sm12 xs12>
-        <enrollees v-bind:printUrl="'api/shs/print/'"></enrollees>
+        <enrollees v-bind:printUrl="'api/jhs/print/'"></enrollees>
       </v-flex>
     </v-layout>
     </v-container>

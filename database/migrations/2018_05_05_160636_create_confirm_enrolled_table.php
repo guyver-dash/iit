@@ -18,6 +18,12 @@ class CreateConfirmEnrolledTable extends Migration
             $table->integer('enrollee_id')->unsigned()->nullable();
             $table->foreign('enrollee_id')->references('id')
                 ->on('enrollees');
+            $table->integer('student_type_id')->unsigned()->nullable();
+            $table->foreign('student_type_id')->references('id')
+                ->on('student_type');
+            $table->integer('course_id')->unsigned()->nullable();
+            $table->foreign('course_id')->references('id')
+                ->on('courses');
             $table->integer('school_year_id')->unsigned()->nullable();
             $table->foreign('school_year_id')->references('id')
                 ->on('school_years');

@@ -10,13 +10,13 @@ class Enrollee extends Model
     
     protected $table = 'enrollees';
     protected $fillable = [
-        'student_type_id', 'lrn', 'idno', 'admissionNo', 'firstname', 'middlename', 'lastname',
+         'lrn', 'idno', 'admissionNo', 'firstname', 'middlename', 'lastname',
     	'suffix', 'nickname', 'age', 'birthday', 'birth_place',
     	'sex', 'civil', 'spouse_lastname', 'spouse_firstname', 'spouse_middlename',
     	'landline', 'mobile', 'email', 'religion', 'citizenship', 'present_address',
     	'present_province_id', 'present_city_id', 'present_barangay', 'present_zipcode',
     	'permanent_address', 'permanent_province_id', 'permanent_city_id', 'permanent_zipcode',
-    	'course_id', 'civil_id', 'educ_at_id', 'father_firstname', 'father_lastname', 'father_middlename',
+    	'civil_id', 'educ_at_id', 'father_firstname', 'father_lastname', 'father_middlename',
     	'father_occupation', 'father_contact_number', 'father_address', 'father_province_id',
     	'father_city_id', 'father_zipcode', 'mother_firstname', 'mother_lastname', 'mother_middlename',
     	'mother_occupation', 'mother_contact_number', 'mother_address', 'mother_province_id',
@@ -35,9 +35,7 @@ class Enrollee extends Model
 
     }
 
-    public function studentType(){
-         return $this->hasOne('App\Model\StudentType', 'id', 'student_type_id');
-    }
+    
 
     public function civil(){
 
@@ -84,11 +82,7 @@ class Enrollee extends Model
          return $this->hasOne('App\Model\Province', 'id', 'school_province_id');
     }
 
-    public function course(){
-
-        return $this->hasOne('App\Model\Course', 'id', 'course_id');
-    }
-
+   
     
 
     public function siblings(){

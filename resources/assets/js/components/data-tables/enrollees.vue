@@ -22,8 +22,11 @@
         <td>{{ props.item.schedule.name }}</td>
         <td>{{ props.item.semester.name }}</td>
         <td>{{ props.item.school_year.sy }}</td>
-        <td>{{ props.item.enrollee.course.name }}</td>
+        <td>{{ props.item.course.name }}</td>
         <td class="justify-center layout px-0">
+          <v-btn icon class="mx-0" @click="payment(props.item.id)">
+            <v-icon color="yellow darken-3" >attach_money</v-icon>
+          </v-btn>
           <v-btn icon class="mx-0" :to="'/admin/admission/'+props.item.id">
             <v-icon color="teal">edit</v-icon>
           </v-btn>
@@ -84,6 +87,9 @@
     
 
     methods: {
+      payment(confirmEnrolleeId){
+          this.$router.push({name: 'payments', params: { id: confirmEnrolleeId }})
+      },
       createPDF(confirmEnrolleeId) {
         
         window.open(window.base + this.printUrl + confirmEnrolleeId + '?token=' + localStorage.getItem('tokenKey'));

@@ -129,7 +129,10 @@ class StartUpController extends Controller
                 'semester_id' => $request->semester_id,
                 'schedule_id' => $request->schedule_id,
                 'start_time' => $request->start_time,
-                'end_time' => $request->end_time
+                'end_time' => $request->end_time,
+                'course_id' => $request->course_id,
+                'student_type_id' => $request->student_type_id
+
             ]);
 
 

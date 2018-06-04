@@ -9,7 +9,7 @@ class ConfirmEnrolled extends Model
     protected $table = 'confirm_enrolled';
 
     protected $fillable = [
-    	'enrollee_id', 'school_year_id', 'year_level_id', 'semester_id',
+    	'course_id', 'student_type_id','enrollee_id', 'school_year_id', 'year_level_id', 'semester_id',
     	'schedule_id', 'start_time', 'end_time'
     ];
 
@@ -39,6 +39,19 @@ class ConfirmEnrolled extends Model
 
     public function scopePagination($query){
 
-        return $query->with(['enrollee.course', 'semester', 'schoolYear', 'schedule'])->orderBy('created_at', 'DESC')->paginate(2);
+        return $this->scopeRelTable($query)->paginate(2);
+    }
+
+    public function scopeRelTable($query){
+        return $query->with(['course', 'semester', 'schoolYear', 'schedule', 'studentType', 'enrollee.civil'])->orderBy('created_at', 'DESC');
+    }
+
+     public function course(){
+
+        return $this->hasOne('App\Model\Course', 'id', 'course_id');
+    }
+
+    public function studentType(){
+         return $this->hasOne('App\Model\StudentType', 'id', 'student_type_id');
     }
 }

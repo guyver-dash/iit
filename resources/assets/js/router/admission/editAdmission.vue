@@ -20,7 +20,7 @@
               <v-select
                 label="Student Type"
                 :items="studentType"
-                v-model="confirmedEnrolled.enrollee.student_type_id"
+                v-model="confirmedEnrolled.student_type_id"
                 item-text="name"
                 item-value="id"
                 :rules="[v => !!v || 'Please select a student type.']"
@@ -69,7 +69,7 @@
         <v-select
         label="Select Course"
         :items="courses"
-        v-model="confirmedEnrolled.enrollee.course_id"
+        v-model="confirmedEnrolled.course_id"
         item-text="name"
         item-value="id"
         :rules="[v => !!v || 'Please select course.']"
@@ -638,16 +638,30 @@
   <span class="subheading">School Background:</span>
 </v-flex>
 <v-layout row wrap>
-  
-  <v-flex xl12 lg12 md12 sm6 xs12 class="pa-2">
+   <v-flex xl4 lg14 md4 sm6 xs12 class="pa-2">
     <v-text-field
-    label="Name of school"
+    label="Primary"
+    v-model="confirmedEnrolled.enrollee.primary"
+    :rules="[v => !!v || 'This field is required.']"
+    required
+    ></v-text-field>
+  </v-flex>
+  <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
+    <v-text-field
+    label="Elementary"
+    v-model="confirmedEnrolled.enrollee.elementary"
+    :rules="[v => !!v || 'This field is required.']"
+    required
+    ></v-text-field>
+  </v-flex>
+  <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2">
+    <v-text-field
+    label="Junior Highschool"
     v-model="confirmedEnrolled.enrollee.name_of_school"
     :rules="[v => !!v || 'This field is required.']"
     required
     ></v-text-field>
   </v-flex>
-  
   
   <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
    <v-select
@@ -774,13 +788,22 @@
   <br />
   <span class="subheading red--text">Your personal information will be kept in strictest confidence. None of your information will be disclosed without your consent.</span>
   <br />
-  <v-btn
+ 
+<v-btn
+  color="success"
+  @click="newEnrollee"
+  :disabled="!valid"
+  >
+  New Enrollee
+</v-btn>
+ <v-btn
   color="info"
   @click="submit"
   :disabled="!valid"
   >
-  submit
+  update
 </v-btn>
+
 </v-flex>
 </v-form>
 </v-container>
@@ -1091,6 +1114,32 @@
         
       })
       },
+      newEnrollee(){
+
+        var data = this
+           if (this.siblingName != '' && this.siblingAge != '' && this.siblingOcc != '' && this.siblingNameOfSchool != '') {
+            this.addSibling()
+          }
+
+
+          if (this.$refs.form.validate()) {
+            
+           
+            this.$http.post(base_api + '/confirm-enrolled/new-enrollee', {
+              confirmedEnrolled: this.confirmedEnrolled,
+              requirementsDocs: this.requirementsDocs,
+              token: localStorage.getItem('tokenKey')
+              
+            })
+            .then(function(res){
+
+              data.$store.dispatch('snackbarText', 'New Enrollee was created successfully')
+              data.$store.dispatch('snackbarColor', 'success')
+              data.$store.dispatch('snackbar', true)
+            })
+            
+          }
+      },
       submit () {
 
        var data = this
@@ -1125,13 +1174,25 @@
     },
   },
   watch: {
+    'confirmedEnrolled.enrollee.primary': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'primary',
+          'value' : val
+      })
+    },
+    'confirmedEnrolled.enrollee.elementary': function(val){
+      this.$store.dispatch('confirmedEnrolledEnrollee', {
+          'field' : 'elementary',
+          'value' : val
+      })
+    },
     'confirmedEnrolled.enrollee.remarks': function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'remarks',
           'value' : val
       })
     },
-    'confirmedEnrolled.enrollee.student_type_id': function(val){
+    'confirmedEnrolled.student_type_id': function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'student_type_id',
           'value' : val
@@ -1155,7 +1216,7 @@
           'value' : val
       })
     },
-     'confirmedEnrolled.enrollee.course_id': function(val){
+     'confirmedEnrolled.course_id': function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'course_id',
           'value' : val

@@ -19,7 +19,7 @@ export const routes = [
 		{ path: '/profile', component: profile, name: 'profile', 
 			meta: { requiresAuth: true}
 		},
-		{ path: '/admin/payment', component: payment, name: 'payment', 
+		{ path: '/admin/payments', component: payment, name: 'payments', 
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/enrollees', component: enrollees, name: 'enrollees', 

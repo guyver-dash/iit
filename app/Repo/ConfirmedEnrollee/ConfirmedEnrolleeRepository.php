@@ -8,6 +8,7 @@ use App\Model\ConfirmEnrolled;
 use App\Model\Sibling;
 use CodeItNow\BarcodeBundle\Utils\QrCode;
 use Carbon\Carbon;
+use App\Model\Enrollee;
 
 class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnrolleeInterface{
 
@@ -22,7 +23,23 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
             ]);
     }
 
+    public function newEnrollee(){
 
+        $request  = app()->make('request');
+        $this->update($request, $request['confirmedEnrolled']['id']);
+        
+        $confirmedEnrolled = $this->modelName->create([
+                'end_time' => $request['confirmedEnrolled']['end_time'],
+                'start_time' => $request['confirmedEnrolled']['start_time'],
+                'schedule_id' => $request['confirmedEnrolled']['schedule_id'],
+                'enrollee_id' => $request['confirmedEnrolled']['enrollee_id'],
+                'school_year_id' => $request['confirmedEnrolled']['school_year_id'],
+                'semester_id' => $request['confirmedEnrolled']['semester_id'],
+                'year_level_id' => $request['confirmedEnrolled']['year_level_id']
+
+            ]);
+        return response()->json([ $request['confirmedEnrolled']['end_time']]);
+    }
 
     public function destroy($id){
         $this->modelName->find($id)->delete();
@@ -49,23 +66,22 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
     public function jhs(){
 
         return response()->json([
-            'enrollees' => $this->modelName->whereHas('enrollee', function($query){
-                $query->where('course_id', '=', 2);
-            })->pagination()
+            'enrollees' => $this->modelName->where('course_id', 2)->relTable()->pagination()
             ]);
     }
 
     public function searchJhs(){
         $request = app()->make('request');
 
-        return response()->json([
-            'enrollees' => $this->modelName->whereHas('enrollee', function($query) use ($request){
-                $query->where('course_id', '=', 2);
-                $query->where(function($query) use ($request) {
-                    $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
-                    $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
+         return response()->json([
+            'enrollees' => $this->modelName
+                ->where('course_id', '=', 2)
+                ->whereHas('enrollee', function($query) use ($request){
+                    $query->where(function($query) use ($request) {
+                        $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
+                        $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
 
-                });
+                    });
 
             })->pagination()
             ]);
@@ -73,11 +89,8 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
     }
 
     public function shs(){
-
         return response()->json([
-            'enrollees' => $this->modelName->whereHas('enrollee', function($query){
-                $query->where('course_id', '=', 1);
-            })->pagination()
+            'enrollees' => $this->modelName->where('course_id', 1)->relTable()->pagination()
             ]);
     }
 
@@ -86,13 +99,14 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
         $request = app()->make('request');
 
         return response()->json([
-            'enrollees' => $this->modelName->whereHas('enrollee', function($query) use ($request){
-                $query->where('course_id', '=', 1);
-                $query->where(function($query) use ($request) {
-                    $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
-                    $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
+            'enrollees' => $this->modelName
+                ->where('course_id', '=', 1)
+                ->whereHas('enrollee', function($query) use ($request){
+                    $query->where(function($query) use ($request) {
+                        $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
+                        $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
 
-                });
+                    });
 
             })->pagination()
             ]);
@@ -109,13 +123,15 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
         $confirmedEnroll->start_time = $request->confirmedEnrolled['start_time'];
         $confirmedEnroll->end_time = $request->confirmedEnrolled['end_time'];
         $confirmedEnroll->status = $request->confirmedEnrolled['status'];
+        $confirmedEnroll->course_id = $request->confirmedEnrolled['course_id'];
+        $confirmedEnroll->student_type_id = $request->confirmedEnrolled['student_type_id'];
         $confirmedEnroll->update();
 
         $confirmedEnroll->enrollee->remarks = $request->confirmedEnrolled['enrollee']['remarks'];
-        $confirmedEnroll->enrollee->student_type_id = $request->confirmedEnrolled['enrollee']['student_type_id'];
+        
         $confirmedEnroll->enrollee->lrn = $request->confirmedEnrolled['enrollee']['lrn'];
         $confirmedEnroll->enrollee->idno = $request->confirmedEnrolled['enrollee']['idno'];
-        $confirmedEnroll->enrollee->course_id = $request->confirmedEnrolled['enrollee']['course_id'];
+       
         $confirmedEnroll->enrollee->firstname = $request->confirmedEnrolled['enrollee']['firstname'];
         $confirmedEnroll->enrollee->lastname = $request->confirmedEnrolled['enrollee']['lastname'];
         $confirmedEnroll->enrollee->middlename = $request->confirmedEnrolled['enrollee']['middlename'];
@@ -213,15 +229,15 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
     }
 
     public function print($id){
-        $confirmedEnroll = $this->modelName->where('id', $id)->with(['enrollee.civil', 'enrollee.course', 'yearLevel', 'semester', 'schedule'])->first();
-        $studentType = $confirmedEnroll->enrollee->studentType->name;
+        $confirmedEnroll = $this->modelName->where('id', $id)->relTable()->first();
+        $studentType = $confirmedEnroll->studentType->name;
         $idno = $confirmedEnroll->enrollee->idno;
         $lrn = $confirmedEnroll->enrollee->lrn;
         $date = $confirmedEnroll->enrollee->created_at;
         $now = Carbon::now()->toDayDateTimeString();
         $yearLevel = $confirmedEnroll->yearLevel->name;
         $semester = $confirmedEnroll->semester->name;
-        $course = $confirmedEnroll->enrollee->course->name;
+        $course = $confirmedEnroll->course->name;
         $schedule = $confirmedEnroll->schedule->name;
 
         $name = $confirmedEnroll->enrollee->lastname . ', ' . $confirmedEnroll->enrollee->firstname . ' ' . $confirmedEnroll->enrollee->middlename . ' ' . $confirmedEnroll->enrollee->suffix; 
@@ -284,11 +300,13 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
         $requirements .= '<span margin-left: 10px; ">' . $req->name . ', </span>';
     }
 
-
+    if(is_null($lrn)){
+        $lrn = 0;
+    }
 
     $qrCode = new QrCode();
     $qrCode
-    ->setText('QR code by codeitnow.in')
+    ->setText($lrn)
     ->setSize(300)
     ->setPadding(10)
     ->setErrorCorrection('high')
@@ -488,7 +506,7 @@ return $pdf->stream();
     public function shsPrint($id){
 
 
-        $confirmedEnroll = $this->modelName->where('id', $id)->with(['enrollee.civil', 'enrollee.course', 'yearLevel', 'semester', 'schedule'])->first();
+        $confirmedEnroll = $this->modelName->where('id', $id)->relTable()->first();
 
         $lrn = $confirmedEnroll->enrollee->lrn;
         $primary = $confirmedEnroll->enrollee->primary;
@@ -528,10 +546,12 @@ return $pdf->stream();
         $motherProvince = $confirmedEnroll->enrollee->motherProvince->name;
         $motherZipcode = $confirmedEnroll->enrollee->mother_zipcode;
 
-
+        if (is_null($lrn)) {
+            $lrn = 0;
+        }
          $qrCode = new QrCode();
             $qrCode
-            ->setText('QR code by codeitnow.in')
+            ->setText($lrn)
             ->setSize(300)
             ->setPadding(10)
             ->setErrorCorrection('high')
