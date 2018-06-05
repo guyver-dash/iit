@@ -8,14 +8,12 @@ import MyPlugin from './plugins/my-vue-plugin.js'
 import startUp from './mixins/start-up.js'
 import master from './components/layouts/master.vue'
 
+
 window.base_api = 'http://localhost/iit/public/api';
 window.base = 'http://localhost/iit/public/';
 
 // window.base_api = 'http://cebu.it.nf/public/api';
 // window.base = 'http://cebu.it.nf/public/';
-
-
-
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 Vue.use(MyPlugin)

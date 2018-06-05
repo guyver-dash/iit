@@ -8,11 +8,17 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		givenAmount(state, givenAmount){
+			state.givenAmount = givenAmount
+		},
 		page(state, page){
 			state.page = page
 		},
 		studentType(state, studentType){
 			state.studentType = studentType
+		},
+		confirmEnrolledPayment(state, confirmEnrolledPayment){
+			state.confirmEnrolledPayment = confirmEnrolledPayment
 		},
 		confirmedEnrolled(state, confirmedEnrolled){
 			state.confirmedEnrolled = confirmedEnrolled
@@ -121,6 +127,9 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		givenAmount(store, givenAmount){
+			store.commit('givenAmount', givenAmount)
+		},
 		page(store, page){
 			store.commit('page', page)
 		},
@@ -155,6 +164,9 @@ export const store = new Vuex.Store({
             	}
 
 			store.commit('removeSiblingEdit', cleanArray)
+		},
+		confirmEnrolledPayment(store, confirmEnrolledPayment){
+			store.commit('confirmEnrolledPayment', confirmEnrolledPayment)
 		},
 		confirmedEnrolledEnrollee(store, payload){
 			store.commit('confirmedEnrolledEnrollee', payload)
@@ -276,11 +288,17 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		givenAmount(){
+			return store.state.givenAmount
+		},
 		page(){
 			return store.state.page
 		},
 		studentType(){
 			return store.state.studentType
+		},
+		confirmEnrolledPayment(){
+			return store.state.confirmEnrolledPayment
 		},
 		confirmedEnrolled(){
 			return store.state.confirmedEnrolled

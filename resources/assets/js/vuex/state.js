@@ -1,7 +1,9 @@
 export const state = {
+     giveAmount: 0,
      page: 1,
      authUser: {firstname: '', lastname: '', email: ''},
      studentType:[],
+     confirmEnrolledPayment: null,
      confirmedEnrolled:{
         enrollee: {
             course_id: '',

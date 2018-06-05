@@ -4,6 +4,7 @@ export default {
         Vue.prototype.$string.toLowerCase = function (str) {
             return str.replace(/\s+/g, '-').toLowerCase();
         };
+        
 
     }
 };

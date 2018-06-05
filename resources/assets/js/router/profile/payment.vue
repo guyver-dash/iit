@@ -16,7 +16,7 @@
     </v-layout>
     <v-layout class="ma-0 pa-0">
       <v-flex xl12 lg12 md12 sm12 xs12>
-        <payments></payments>
+        <payments ref="newPayment" v-bind:confirmid="this.$route.params.id"></payments>
       </v-flex>
     </v-layout>
     </v-container>
@@ -25,19 +25,34 @@
 <script>
   import payments from '../../components/data-tables/payments.vue'
   export default {
-
+        data: ()=>({
+            search: '',
+        }),
     	components: {
             payments
     	},
     	created(){
-           
-           console.log(this.$route.params.id)
+            
+            if (Number.isInteger(this.$route.params.id)) {
+                this.confirmEnrolled()
+            }
+            
 
     	},
     	computed: {
     		authUser(){
     			return this.$store.getters.authUser
     		}
-    	}
+    	},
+        methods: {
+
+            confirmEnrolled(){
+                var data = this
+                this.$http.get(window.base_api + '/confirm-enrolled/' + this.$route.params.id+ '?token=' + localStorage.getItem('tokenKey'))
+                    .then(function(res){
+                        data.$store.dispatch('confirmEnrolledPayment', res.data.enrollee)
+                    })
+            }
+        }
   }
 </script>
