@@ -20,8 +20,7 @@ class BaseRepository{
 
 	public function find( $id ){
 
-		$origId = Obfuscate::decode($id);
-		return $this->modelName->find($origId);
+		return $this->modelName->find($id);
 	}
 
 	public function findNoDecode($id){
@@ -30,8 +29,7 @@ class BaseRepository{
 	}
 
 	public function update($request, $id){
-		
-		return $this->modelName->find($id)->update($request->all());
+		return $this->modelName->find($id)->update($request);
 	}
 
 	public function destroy($id){
@@ -40,8 +38,7 @@ class BaseRepository{
 	}
 	public function where($fieldName, $id){
 
-		$origId = Obfuscate::decode($id);
-		return $this->modelName->where($fieldName, $origId);
+		return $this->modelName->where($fieldName, $id);
 	}
 
 	public function whereIn($fieldName, $array){

@@ -7,7 +7,11 @@ import Vuetify from 'vuetify'
 import MyPlugin from './plugins/my-vue-plugin.js'
 import startUp from './mixins/start-up.js'
 import master from './components/layouts/master.vue'
+import Vue2Filters from 'vue2-filters'
+import lodash from 'lodash';  
 
+Vue.prototype.$lodash = lodash;
+ // console.log(this.$lodash.isEmpty(null));
 
 window.base_api = 'http://localhost/iit/public/api';
 window.base = 'http://localhost/iit/public/';
@@ -17,6 +21,7 @@ window.base = 'http://localhost/iit/public/';
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 Vue.use(MyPlugin)
+Vue.use(Vue2Filters)
 
 //Adding axios globally
 Vue.prototype.$http = axios;

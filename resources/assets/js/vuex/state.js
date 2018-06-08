@@ -1,4 +1,7 @@
 export const state = {
+     payments:[],
+     balances: [],
+     course_ids:[],
      giveAmount: 0,
      page: 1,
      authUser: {firstname: '', lastname: '', email: ''},

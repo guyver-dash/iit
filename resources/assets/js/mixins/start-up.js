@@ -51,6 +51,7 @@ export default {
                     text: 'Profile', 
                     to: '/profile'
                 },
+                { icon: 'format_bold', text: 'Balance', to: '/admin/balance' },
                 { icon: 'attach_money', text: 'Payments', to: '/admin/payments' },
                 { icon: 'assignment_ind', text: 'Enrollees', to: '/admin/enrollees' },
                 { icon: 'folder_shared', text: 'SHS', to: '/admin/shs' },

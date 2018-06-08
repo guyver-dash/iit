@@ -1,12 +1,17 @@
 <template>
-	<div>
-         <input type="text" v-model="displayValue" @blur="isInputActive = false" @focus="isInputActive = true"/>
-        </div>
+    <v-text-field type="text" 
+    :label="label" 
+    prefix="₱" 
+    v-model="displayValue" 
+    @blur="isInputActive = false" 
+    @focus="isInputActive = true"/>
+    	
+    </v-text-field>
 </template>
 
 <script type="text/javascript">
  export default {
-	props: ["value"],
+	props: ["value", "label"],
     data: ()=>({
     	 isInputActive: false
     }),

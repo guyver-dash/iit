@@ -163,9 +163,11 @@ return [
         App\Providers\RoleServiceProvider::class,
         App\Providers\UserServiceProvider::class,
         App\Providers\EnrolleeServiceProvider::class,
+        App\Providers\BalanceServiceProvider::class,
         App\Providers\ConfirmedEnrolleeServiceProvider::class,
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
         Barryvdh\DomPDF\ServiceProvider::class,
+        Riskihajar\Terbilang\TerbilangServiceProvider::class,
     ],
 
     /*
@@ -217,6 +219,7 @@ return [
         'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
         'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Terbilang' => Riskihajar\Terbilang\Facades\Terbilang::class,
 
 
     ],

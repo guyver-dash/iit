@@ -2,7 +2,7 @@
 	<v-container class="ma-2 pa-0" fluid>
     <v-layout class="ma-0 pa-0">
       <v-flex xl3 lg3 md3 sm3 xs3>
-         <h1 class="pa-2">Payments</h1>
+         <h1 class="pa-2">Balance</h1>
       </v-flex>
       <v-flex xl9 lg9 md9 sm9 xs9>
          <v-text-field
@@ -16,26 +16,27 @@
     </v-layout>
     <v-layout class="ma-0 pa-0">
       <v-flex xl12 lg12 md12 sm12 xs12>
-        <payments ref="newPayment" v-bind:confirmid="this.$route.params.id"></payments>
+        <balance ref="newBalance" v-bind:confirmid="this.$route.params.id"></balance>
       </v-flex>
     </v-layout>
     </v-container>
 </template>
 
 <script>
-  import payments from '../../components/data-tables/payments.vue'
+  import balance from '../../components/data-tables/balance.vue'
   export default {
         data: ()=>({
             search: '',
         }),
     	components: {
-            payments
+            balance
     	},
     	created(){
             
             if (Number.isInteger(this.$route.params.id)) {
                 this.confirmEnrolled()
             }
+            
 
     	},
     	computed: {
@@ -52,6 +53,17 @@
                         data.$store.dispatch('confirmEnrolledPayment', res.data.enrollee)
                     })
             }
-        }
+        },
+    watch: {
+      
+      search(val){
+        let data = this
+        this.$http.post(base_api + '/balance/search?token=' + localStorage.getItem('tokenKey'),{
+          search: val
+        }).then(function(res){
+            data.$store.dispatch('balances', res.data.balances);
+        })
+      }
+    }
   }
 </script>

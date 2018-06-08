@@ -8,6 +8,15 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		payments(state, payments){
+			state.payments = payments
+		},
+		balances(state, balances){
+			state.balances = balances
+		},
+		course_ids(state, course_ids){
+			state.course_ids = course_ids
+		},
 		givenAmount(state, givenAmount){
 			state.givenAmount = givenAmount
 		},
@@ -127,6 +136,15 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		payments(store, payments){
+			store.commit('payments', payments)
+		},
+		balances(store, balances){
+			store.commit('balances', balances)
+		},
+		course_ids(store, course_ids){
+			store.commit('course_ids', course_ids)
+		},
 		givenAmount(store, givenAmount){
 			store.commit('givenAmount', givenAmount)
 		},
@@ -288,6 +306,15 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		payments(){
+			return store.state.payments
+		},
+		balances(){
+			return store.state.balances
+		},
+		course_ids(){
+			return store.state.course_ids
+		},
 		givenAmount(){
 			return store.state.givenAmount
 		},

@@ -4,6 +4,7 @@ import dashboard from './dashboard.vue'
 import profile from './profile/index.vue'
 import admission from './admission/index.vue'
 import editAdmission from './admission/editAdmission.vue'
+import balance from './profile/balance.vue'
 import payment from './profile/payment.vue'
 import shs from './profile/shs.vue'
 import jhs from './profile/jhs.vue'
@@ -17,6 +18,9 @@ export const routes = [
 			meta: { requiresAuth: true}
 		},
 		{ path: '/profile', component: profile, name: 'profile', 
+			meta: { requiresAuth: true}
+		},
+		{ path: '/admin/balance', component: balance, name: 'balance', 
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/payments', component: payment, name: 'payments', 

@@ -24,6 +24,9 @@
         <td>{{ props.item.school_year.sy }}</td>
         <td>{{ props.item.course.name }}</td>
         <td class="justify-center layout px-0">
+          <v-btn icon class="mx-0" @click="balance(props.item.id)">
+            <v-icon color="grey" >format_bold</v-icon>
+          </v-btn>
           <v-btn icon class="mx-0" @click="payment(props.item.id)">
             <v-icon color="yellow darken-3" >attach_money</v-icon>
           </v-btn>
@@ -87,6 +90,9 @@
     
 
     methods: {
+      balance(confirmEnrolleeId){
+        this.$router.push({name: 'balance', params: { id: confirmEnrolleeId }})
+      },
       payment(confirmEnrolleeId){
           this.$router.push({name: 'payments', params: { id: confirmEnrolleeId }})
       },
@@ -111,6 +117,9 @@
           .catch(function(){
 
           })
+          this.$store.dispatch('snackbarText', 'Enrollee Deleted Successfully!')
+          this.$store.dispatch('snackbarColor', 'success')
+          this.$store.dispatch('snackbar', true)
         }
       },
 
