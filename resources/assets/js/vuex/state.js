@@ -1,6 +1,7 @@
 export const state = {
      payments:[],
      balances: [],
+     balance_ids:[],
      course_ids:[],
      giveAmount: 0,
      page: 1,

@@ -1,5 +1,70 @@
 <template>
   <div>
+    <v-dialog v-model="dialog2" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">
+            New Payment ({{ payment.confirm_enrolled.enrollee.firstname }} {{ payment.confirm_enrolled.enrollee.lastname }} {{ payment.balance_id }})
+          </span>
+        </v-card-title>
+        <v-card-text>
+          <v-form ref="form" v-model="valid" lazy-validation>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <v-select
+                  :items="balances"
+                  v-model="payment.balance_id"
+                  label="As Payment for"
+                  chips
+                  item-text="name"
+                  item-value="id"
+                  required
+                  :rules="[v => !!v || 'As Payment for is required']"
+                ></v-select>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <v-layout>
+                  <v-flex xs3 sm3 md3 lg3 xl3>
+                    <v-text-field
+                    label="Prefix"
+                    v-model="payment.prefix"
+                    required
+                    :rules="[v => !!v || 'Prefix is required']"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs8 sm8 md8 lg8 xl8>
+                    <v-text-field
+                    label="Receipt No"
+                    v-model="payment.receipt_no"
+                    required
+                    :rules="[v => !!v || 'Receipt no. is required']"
+                    ></v-text-field>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <my-currency-input v-model="payment.amount_charge" v-bind:label="'Paid Amount'"></my-currency-input>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <my-currency-input v-model="payment.amount_given" v-bind:label="'Received Amount'"></my-currency-input>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <span class="title"> Change: </span>
+                <span class="display-1">{{ payment.change|currency('₱ ') }}</span>
+              </v-flex>
+              
+            </v-layout>
+          </v-container>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="update">Update</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="dialog" max-width="500px">
       <v-card>
         <v-card-title>
@@ -8,14 +73,46 @@
           </span>
         </v-card-title>
         <v-card-text>
+          <v-form ref="form" v-model="valid" lazy-validation>
           <v-container grid-list-md>
             <v-layout wrap>
-
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <v-select
+                  :items="balances"
+                  v-model="balance_id"
+                  label="As Payment for"
+                  chips
+                  item-text="name"
+                  item-value="id"
+                  required
+                  :rules="[v => !!v || 'As Payment for is required']"
+                ></v-select>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <v-layout>
+                  <v-flex xs3 sm3 md3 lg3 xl3>
+                    <v-text-field
+                    label="Prefix"
+                    v-model="prefix"
+                    required
+                    :rules="[v => !!v || 'Prefix is required']"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs8 sm8 md8 lg8 xl8>
+                    <v-text-field
+                    label="Receipt No"
+                    v-model="receipt_no"
+                    required
+                    :rules="[v => !!v || 'Receipt no. is required']"
+                    ></v-text-field>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
               <v-flex xs12 sm12 md12 lg12 xl12>
                 <my-currency-input v-model="price" v-bind:label="'Paid Amount'"></my-currency-input>
               </v-flex>
               <v-flex xs12 sm12 md12 lg12 xl12>
-                <my-currency-input v-model="price2" v-bind:label="'Given Amount'"></my-currency-input>
+                <my-currency-input v-model="price2" v-bind:label="'Received Amount'"></my-currency-input>
               </v-flex>
               <v-flex xs12 sm12 md12 lg12 xl12>
                 <span class="title"> Change: </span>
@@ -24,11 +121,12 @@
               
             </v-layout>
           </v-container>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="print">print</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="savePrint">Save &amp; Print</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -47,6 +145,9 @@
           <v-btn icon class="mx-0" @click="editItem(props.item.id)">
             <v-icon color="success">mode_edit</v-icon>
           </v-btn>
+          <v-btn icon class="mx-0" @click="printReceipt(props.item.id)">
+            <v-icon color="info">print</v-icon>
+          </v-btn>
           <v-btn icon class="mx-0" @click="deleteItem(props.item.id)">
             <v-icon color="pink">delete</v-icon>
           </v-btn>
@@ -54,6 +155,9 @@
     </template>
 
   </v-data-table>
+  <div class="text-xs-center pt-2">
+        <v-pagination v-model="page" :length="payments.last_page"></v-pagination>
+  </div>
 </div>
 </template>
 <script>
@@ -65,6 +169,25 @@
       myCurrencyInput
     },
     data: () => ({
+      payment:{
+        balance_id: 0,
+        prefix: '',
+        receipt_no: '',
+        amount_given: 0,
+        amount_charge: 0,
+        change: 0,
+        confirm_enrolled : {
+          enrollee: {
+            firstname: '',
+            lastname: ''
+          }
+        }
+      },
+      dialog2: false,
+      valid: false,
+      prefix: '00',
+      receipt_no: '',
+      balance_id: null,
       page: 1, 
       price: 0,
       price2: 0,
@@ -87,6 +210,12 @@
     }),
 
     computed: {
+      balances: {
+        get(){
+          return this.$store.getters.balances
+        }
+        
+      },
       confirmEnrolledPayment(){
         return this.$store.getters.confirmEnrolledPayment
       },
@@ -112,17 +241,35 @@
         this.dialog = true
       }
       this.allPayments()
+      
     },
 
     methods: {
       givenBlur(val){
         this.givenAmount = val
       },
-      givenFocus(){
-        console.log('fosuc');
+  
+      editItem (id) {
+        this.dialog2 = true
+        let data = this
+        this.$http.get(window.base_api + '/payments/' + id)
+        .then(function(res){
+          data.payment = res.data.payment
+
+          data.$store.dispatch('balances', res.data.balances.balances)
+        })
       },
-      editItem (item) {
-        
+
+      update(){
+        var data = this
+        this.$http.put(window.base_api + '/payments/' + this.payment.id, {
+          payment: this.payment
+        })
+        .then(function(res){
+          data.dialog2 = false
+          data.allPayments()
+
+        })
       },
 
       deleteItem (id) {
@@ -141,34 +288,61 @@
 
       close () {
         this.dialog = false
+        this.dialog2 = false
         
       },
-
-      print() {
+      printReceipt(id){
+         window.open(window.base_api + '/payments/print/' + id + '?token=' + localStorage.getItem('tokenKey'));
+      },
+      savePrint() {
         let data = this
-        this.$http.post(window.base_api + '/payments?&token=' + localStorage.getItem('tokenKey'),{
+
+        if (this.$refs.form.validate()) {
+          this.$http.post(window.base_api + '/payments?&token=' + localStorage.getItem('tokenKey'),{
            confirm_enrollee_id : this.confirmEnrolledPayment.id, 
            amount_charge: this.price, 
            amount_given: this.price2, 
-           change: this.change
-        }).then(function(res){
-            data.allPayments()
-             window.open(window.base_api + '/payments/print/' + res.data.id + '?token=' + localStorage.getItem('tokenKey'));
-        })
-        this.dialog = false
+           change: this.change,
+           prefix: this.prefix,
+           receipt_no: this.receipt_no,
+           balance_id: this.balance_id
+          }).then(function(res){
+              data.allPayments()
+               window.open(window.base_api + '/payments/print/' + res.data.id + '?token=' + localStorage.getItem('tokenKey'));
+          })
+          this.dialog = false
+        }
+        
       },
       allPayments(){
         let data = this
-        this.$http.get(window.base_api + '/payments?page=' + this.page + '&token=' + localStorage.getItem('tokenKey'))
+        this.$http.get(window.base_api + '/payments?confirmEnrolledId='+ this.$route.params.id +'&page=' + this.page + '&token=' + localStorage.getItem('tokenKey'))
         .then(function(res){
             data.$store.dispatch('payments', res.data.payments);
+            data.receipt_no = parseInt(res.data.receipt_no) + 1;
+            if (res.data.confirmEnrolled == null){
+             data.$store.dispatch('balances', []);
+            }else{
+              
+               data.$store.dispatch('balances', res.data.confirmEnrolled.balances);
+            }
         })
+      },
+      deduct(){
+        var total = this.payment.amount_charge - this.payment.amount_given;
+        this.payment.change = total;
       }
     },
     watch: {
       page(val){
         this.allPayments()
-      }
+      },
+      'payment.amount_charge': function(){
+        this.deduct()
+      },
+      'payment.amount_given': function(){
+        this.deduct()
+      },
     }
   }
 </script>

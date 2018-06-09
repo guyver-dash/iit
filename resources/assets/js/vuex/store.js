@@ -11,6 +11,9 @@ export const store = new Vuex.Store({
 		payments(state, payments){
 			state.payments = payments
 		},
+		balance_ids(state, balance_ids){
+			state.balance_ids = balance_ids
+		},
 		balances(state, balances){
 			state.balances = balances
 		},
@@ -138,6 +141,9 @@ export const store = new Vuex.Store({
 	actions: {
 		payments(store, payments){
 			store.commit('payments', payments)
+		},
+		balance_ids(store, balance_ids){
+			store.commit('balance_ids', balance_ids)
 		},
 		balances(store, balances){
 			store.commit('balances', balances)
@@ -308,6 +314,9 @@ export const store = new Vuex.Store({
 	getters: {
 		payments(){
 			return store.state.payments
+		},
+		balance_ids(){
+			return store.state.balance_ids
 		},
 		balances(){
 			return store.state.balances

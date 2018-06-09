@@ -13,6 +13,10 @@ class ConfirmEnrolled extends Model
     	'schedule_id', 'start_time', 'end_time'
     ];
 
+    public function balances(){
+        return $this->belongsToMany('App\Model\Balance', 'balance_confirm_enrolled', 'confirm_enrolled_id', 'balance_id');
+    }
+    
     public function schoolYear(){
         return $this->hasOne('App\Model\SchoolYear', 'id', 'school_year_id');
     }

@@ -484,33 +484,6 @@ module.exports = {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -612,6 +585,33 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ }),
 /* 4 */
@@ -12129,7 +12129,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(39).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(39).setImmediate))
 
 /***/ }),
 /* 13 */
@@ -12152,6 +12152,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	mutations: {
 		payments: function payments(state, _payments) {
 			state.payments = _payments;
+		},
+		balance_ids: function balance_ids(state, _balance_ids) {
+			state.balance_ids = _balance_ids;
 		},
 		balances: function balances(state, _balances) {
 			state.balances = _balances;
@@ -12277,6 +12280,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	actions: {
 		payments: function payments(store, _payments2) {
 			store.commit('payments', _payments2);
+		},
+		balance_ids: function balance_ids(store, _balance_ids2) {
+			store.commit('balance_ids', _balance_ids2);
 		},
 		balances: function balances(store, _balances2) {
 			store.commit('balances', _balances2);
@@ -12443,6 +12449,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	getters: {
 		payments: function payments() {
 			return store.state.payments;
+		},
+		balance_ids: function balance_ids() {
+			return store.state.balance_ids;
 		},
 		balances: function balances() {
 			return store.state.balances;
@@ -12745,7 +12754,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(19);
-module.exports = __webpack_require__(137);
+module.exports = __webpack_require__(135);
 
 
 /***/ }),
@@ -12769,8 +12778,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_layouts_master_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_layouts_master_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue2_filters__ = __webpack_require__(134);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue2_filters___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_vue2_filters__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_lodash__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_lodash__);
 
 
 
@@ -12781,10 +12788,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
-
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.prototype.$lodash = __WEBPACK_IMPORTED_MODULE_10_lodash___default.a;
-// console.log(this.$lodash.isEmpty(null));
 
 window.base_api = 'http://localhost/iit/public/api';
 window.base = 'http://localhost/iit/public/';
@@ -12850,7 +12853,7 @@ module.exports = __webpack_require__(21);
 var utils = __webpack_require__(1);
 var bind = __webpack_require__(6);
 var Axios = __webpack_require__(23);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 
 /**
  * Create an instance of Axios
@@ -12933,7 +12936,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 var utils = __webpack_require__(1);
 var InterceptorManager = __webpack_require__(32);
 var dispatchRequest = __webpack_require__(33);
@@ -13472,7 +13475,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(1);
 var transformData = __webpack_require__(34);
 var isCancel = __webpack_require__(10);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 var isAbsoluteURL = __webpack_require__(35);
 var combineURLs = __webpack_require__(36);
 
@@ -13790,7 +13793,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 40 */
@@ -13983,7 +13986,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(7)))
 
 /***/ }),
 /* 41 */
@@ -17569,6 +17572,7 @@ var index_esm = {
 var state = {
   payments: [],
   balances: [],
+  balance_ids: [],
   course_ids: [],
   giveAmount: 0,
   page: 1,
@@ -29000,6 +29004,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_data_tables_payments_vue__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_data_tables_payments_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_data_tables_payments_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
 //
 //
 //
@@ -29024,6 +29030,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -29053,6 +29060,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$http.get(window.base_api + '/confirm-enrolled/' + this.$route.params.id + '?token=' + localStorage.getItem('tokenKey')).then(function (res) {
                 data.$store.dispatch('confirmEnrolledPayment', res.data.enrollee);
             });
+        },
+
+        newSearch: __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.debounce(function () {
+            var data = this;
+            this.$refs.newPayment.page = 1;
+            this.$http.post(base_api + '/payments/search?token=' + localStorage.getItem('tokenKey'), {
+                search: this.search
+            }).then(function (res) {
+                data.$store.dispatch('payments', res.data.payments);
+            });
+        }, 500)
+    },
+    watch: {
+        search: function search(val) {
+            this.newSearch();
         }
     }
 });
@@ -29170,6 +29192,110 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -29180,6 +29306,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
+      payment: {
+        balance_id: 0,
+        prefix: '',
+        receipt_no: '',
+        amount_given: 0,
+        amount_charge: 0,
+        change: 0,
+        confirm_enrolled: {
+          enrollee: {
+            firstname: '',
+            lastname: ''
+          }
+        }
+      },
+      dialog2: false,
+      valid: false,
+      prefix: '00',
+      receipt_no: '',
+      balance_id: null,
       page: 1,
       price: 0,
       price2: 0,
@@ -29197,6 +29342,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   computed: {
+    balances: {
+      get: function get() {
+        return this.$store.getters.balances;
+      }
+    },
     confirmEnrolledPayment: function confirmEnrolledPayment() {
       return this.$store.getters.confirmEnrolledPayment;
     },
@@ -29226,10 +29376,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     givenBlur: function givenBlur(val) {
       this.givenAmount = val;
     },
-    givenFocus: function givenFocus() {
-      console.log('fosuc');
+    editItem: function editItem(id) {
+      this.dialog2 = true;
+      var data = this;
+      this.$http.get(window.base_api + '/payments/' + id).then(function (res) {
+        data.payment = res.data.payment;
+
+        data.$store.dispatch('balances', res.data.balances.balances);
+      });
     },
-    editItem: function editItem(item) {},
+    update: function update() {
+      var data = this;
+      this.$http.put(window.base_api + '/payments/' + this.payment.id, {
+        payment: this.payment
+      }).then(function (res) {
+        data.dialog2 = false;
+        data.allPayments();
+      });
+    },
     deleteItem: function deleteItem(id) {
       var data = this;
       var z = confirm('Are you sure you want to delete this item?');
@@ -29244,30 +29408,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     close: function close() {
       this.dialog = false;
+      this.dialog2 = false;
     },
-    print: function print() {
+    printReceipt: function printReceipt(id) {
+      window.open(window.base_api + '/payments/print/' + id + '?token=' + localStorage.getItem('tokenKey'));
+    },
+    savePrint: function savePrint() {
       var data = this;
-      this.$http.post(window.base_api + '/payments?&token=' + localStorage.getItem('tokenKey'), {
-        confirm_enrollee_id: this.confirmEnrolledPayment.id,
-        amount_charge: this.price,
-        amount_given: this.price2,
-        change: this.change
-      }).then(function (res) {
-        data.allPayments();
-        window.open(window.base_api + '/payments/print/' + res.data.id + '?token=' + localStorage.getItem('tokenKey'));
-      });
-      this.dialog = false;
+
+      if (this.$refs.form.validate()) {
+        this.$http.post(window.base_api + '/payments?&token=' + localStorage.getItem('tokenKey'), {
+          confirm_enrollee_id: this.confirmEnrolledPayment.id,
+          amount_charge: this.price,
+          amount_given: this.price2,
+          change: this.change,
+          prefix: this.prefix,
+          receipt_no: this.receipt_no,
+          balance_id: this.balance_id
+        }).then(function (res) {
+          data.allPayments();
+          window.open(window.base_api + '/payments/print/' + res.data.id + '?token=' + localStorage.getItem('tokenKey'));
+        });
+        this.dialog = false;
+      }
     },
     allPayments: function allPayments() {
       var data = this;
-      this.$http.get(window.base_api + '/payments?page=' + this.page + '&token=' + localStorage.getItem('tokenKey')).then(function (res) {
+      this.$http.get(window.base_api + '/payments?confirmEnrolledId=' + this.$route.params.id + '&page=' + this.page + '&token=' + localStorage.getItem('tokenKey')).then(function (res) {
         data.$store.dispatch('payments', res.data.payments);
+        data.receipt_no = parseInt(res.data.receipt_no) + 1;
+        if (res.data.confirmEnrolled == null) {
+          data.$store.dispatch('balances', []);
+        } else {
+
+          data.$store.dispatch('balances', res.data.confirmEnrolled.balances);
+        }
       });
+    },
+    deduct: function deduct() {
+      var total = this.payment.amount_charge - this.payment.amount_given;
+      this.payment.change = total;
     }
   },
   watch: {
     page: function page(val) {
       this.allPayments();
+    },
+
+    'payment.amount_charge': function paymentAmount_charge() {
+      this.deduct();
+    },
+    'payment.amount_given': function paymentAmount_given() {
+      this.deduct();
     }
   }
 });
@@ -29288,11 +29480,11 @@ var render = function() {
         {
           attrs: { "max-width": "500px" },
           model: {
-            value: _vm.dialog,
+            value: _vm.dialog2,
             callback: function($$v) {
-              _vm.dialog = $$v
+              _vm.dialog2 = $$v
             },
-            expression: "dialog"
+            expression: "dialog2"
           }
         },
         [
@@ -29303,7 +29495,11 @@ var render = function() {
                 _c("span", { staticClass: "headline" }, [
                   _vm._v(
                     "\n            New Payment (" +
-                      _vm._s(_vm.name) +
+                      _vm._s(_vm.payment.confirm_enrolled.enrollee.firstname) +
+                      " " +
+                      _vm._s(_vm.payment.confirm_enrolled.enrollee.lastname) +
+                      " " +
+                      _vm._s(_vm.payment.balance_id) +
                       ")\n          "
                   )
                 ])
@@ -29313,87 +29509,259 @@ var render = function() {
                 "v-card-text",
                 [
                   _c(
-                    "v-container",
-                    { attrs: { "grid-list-md": "" } },
+                    "v-form",
+                    {
+                      ref: "form",
+                      attrs: { "lazy-validation": "" },
+                      model: {
+                        value: _vm.valid,
+                        callback: function($$v) {
+                          _vm.valid = $$v
+                        },
+                        expression: "valid"
+                      }
+                    },
                     [
                       _c(
-                        "v-layout",
-                        { attrs: { wrap: "" } },
+                        "v-container",
+                        { attrs: { "grid-list-md": "" } },
                         [
                           _c(
-                            "v-flex",
-                            {
-                              attrs: {
-                                xs12: "",
-                                sm12: "",
-                                md12: "",
-                                lg12: "",
-                                xl12: ""
-                              }
-                            },
+                            "v-layout",
+                            { attrs: { wrap: "" } },
                             [
-                              _c("my-currency-input", {
-                                attrs: { label: "Paid Amount" },
-                                model: {
-                                  value: _vm.price,
-                                  callback: function($$v) {
-                                    _vm.price = $$v
-                                  },
-                                  expression: "price"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            {
-                              attrs: {
-                                xs12: "",
-                                sm12: "",
-                                md12: "",
-                                lg12: "",
-                                xl12: ""
-                              }
-                            },
-                            [
-                              _c("my-currency-input", {
-                                attrs: { label: "Given Amount" },
-                                model: {
-                                  value: _vm.price2,
-                                  callback: function($$v) {
-                                    _vm.price2 = $$v
-                                  },
-                                  expression: "price2"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            {
-                              attrs: {
-                                xs12: "",
-                                sm12: "",
-                                md12: "",
-                                lg12: "",
-                                xl12: ""
-                              }
-                            },
-                            [
-                              _c("span", { staticClass: "title" }, [
-                                _vm._v(" Change: ")
-                              ]),
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      items: _vm.balances,
+                                      label: "As Payment for",
+                                      chips: "",
+                                      "item-text": "name",
+                                      "item-value": "id",
+                                      required: "",
+                                      rules: [
+                                        function(v) {
+                                          return (
+                                            !!v || "As Payment for is required"
+                                          )
+                                        }
+                                      ]
+                                    },
+                                    model: {
+                                      value: _vm.payment.balance_id,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.payment, "balance_id", $$v)
+                                      },
+                                      expression: "payment.balance_id"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
                               _vm._v(" "),
-                              _c("span", { staticClass: "display-1" }, [
-                                _vm._v(
-                                  _vm._s(_vm._f("currency")(_vm.change, "₱ "))
-                                )
-                              ])
-                            ]
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "v-layout",
+                                    [
+                                      _c(
+                                        "v-flex",
+                                        {
+                                          attrs: {
+                                            xs3: "",
+                                            sm3: "",
+                                            md3: "",
+                                            lg3: "",
+                                            xl3: ""
+                                          }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Prefix",
+                                              required: "",
+                                              rules: [
+                                                function(v) {
+                                                  return (
+                                                    !!v || "Prefix is required"
+                                                  )
+                                                }
+                                              ]
+                                            },
+                                            model: {
+                                              value: _vm.payment.prefix,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.payment,
+                                                  "prefix",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "payment.prefix"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-flex",
+                                        {
+                                          attrs: {
+                                            xs8: "",
+                                            sm8: "",
+                                            md8: "",
+                                            lg8: "",
+                                            xl8: ""
+                                          }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Receipt No",
+                                              required: "",
+                                              rules: [
+                                                function(v) {
+                                                  return (
+                                                    !!v ||
+                                                    "Receipt no. is required"
+                                                  )
+                                                }
+                                              ]
+                                            },
+                                            model: {
+                                              value: _vm.payment.receipt_no,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.payment,
+                                                  "receipt_no",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "payment.receipt_no"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c("my-currency-input", {
+                                    attrs: { label: "Paid Amount" },
+                                    model: {
+                                      value: _vm.payment.amount_charge,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.payment,
+                                          "amount_charge",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "payment.amount_charge"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c("my-currency-input", {
+                                    attrs: { label: "Received Amount" },
+                                    model: {
+                                      value: _vm.payment.amount_given,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.payment,
+                                          "amount_given",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "payment.amount_given"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c("span", { staticClass: "title" }, [
+                                    _vm._v(" Change: ")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "display-1" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("currency")(
+                                          _vm.payment.change,
+                                          "₱ "
+                                        )
+                                      )
+                                    )
+                                  ])
+                                ]
+                              )
+                            ],
+                            1
                           )
                         ],
                         1
@@ -29429,11 +29797,326 @@ var render = function() {
                       attrs: { color: "blue darken-1", flat: "" },
                       nativeOn: {
                         click: function($event) {
-                          return _vm.print($event)
+                          return _vm.update($event)
                         }
                       }
                     },
-                    [_vm._v("print")]
+                    [_vm._v("Update")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "500px" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [
+                  _vm._v(
+                    "\n            New Payment (" +
+                      _vm._s(_vm.name) +
+                      ")\n          "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-form",
+                    {
+                      ref: "form",
+                      attrs: { "lazy-validation": "" },
+                      model: {
+                        value: _vm.valid,
+                        callback: function($$v) {
+                          _vm.valid = $$v
+                        },
+                        expression: "valid"
+                      }
+                    },
+                    [
+                      _c(
+                        "v-container",
+                        { attrs: { "grid-list-md": "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      items: _vm.balances,
+                                      label: "As Payment for",
+                                      chips: "",
+                                      "item-text": "name",
+                                      "item-value": "id",
+                                      required: "",
+                                      rules: [
+                                        function(v) {
+                                          return (
+                                            !!v || "As Payment for is required"
+                                          )
+                                        }
+                                      ]
+                                    },
+                                    model: {
+                                      value: _vm.balance_id,
+                                      callback: function($$v) {
+                                        _vm.balance_id = $$v
+                                      },
+                                      expression: "balance_id"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "v-layout",
+                                    [
+                                      _c(
+                                        "v-flex",
+                                        {
+                                          attrs: {
+                                            xs3: "",
+                                            sm3: "",
+                                            md3: "",
+                                            lg3: "",
+                                            xl3: ""
+                                          }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Prefix",
+                                              required: "",
+                                              rules: [
+                                                function(v) {
+                                                  return (
+                                                    !!v || "Prefix is required"
+                                                  )
+                                                }
+                                              ]
+                                            },
+                                            model: {
+                                              value: _vm.prefix,
+                                              callback: function($$v) {
+                                                _vm.prefix = $$v
+                                              },
+                                              expression: "prefix"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-flex",
+                                        {
+                                          attrs: {
+                                            xs8: "",
+                                            sm8: "",
+                                            md8: "",
+                                            lg8: "",
+                                            xl8: ""
+                                          }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Receipt No",
+                                              required: "",
+                                              rules: [
+                                                function(v) {
+                                                  return (
+                                                    !!v ||
+                                                    "Receipt no. is required"
+                                                  )
+                                                }
+                                              ]
+                                            },
+                                            model: {
+                                              value: _vm.receipt_no,
+                                              callback: function($$v) {
+                                                _vm.receipt_no = $$v
+                                              },
+                                              expression: "receipt_no"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c("my-currency-input", {
+                                    attrs: { label: "Paid Amount" },
+                                    model: {
+                                      value: _vm.price,
+                                      callback: function($$v) {
+                                        _vm.price = $$v
+                                      },
+                                      expression: "price"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c("my-currency-input", {
+                                    attrs: { label: "Received Amount" },
+                                    model: {
+                                      value: _vm.price2,
+                                      callback: function($$v) {
+                                        _vm.price2 = $$v
+                                      },
+                                      expression: "price2"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                {
+                                  attrs: {
+                                    xs12: "",
+                                    sm12: "",
+                                    md12: "",
+                                    lg12: "",
+                                    xl12: ""
+                                  }
+                                },
+                                [
+                                  _c("span", { staticClass: "title" }, [
+                                    _vm._v(" Change: ")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "display-1" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("currency")(_vm.change, "₱ ")
+                                      )
+                                    )
+                                  ])
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", flat: "" },
+                      nativeOn: {
+                        click: function($event) {
+                          return _vm.close($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", flat: "" },
+                      nativeOn: {
+                        click: function($event) {
+                          return _vm.savePrint($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Save & Print")]
                   )
                 ],
                 1
@@ -29518,6 +30201,25 @@ var render = function() {
                         attrs: { icon: "" },
                         on: {
                           click: function($event) {
+                            _vm.printReceipt(props.item.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("v-icon", { attrs: { color: "info" } }, [
+                          _vm._v("print")
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass: "mx-0",
+                        attrs: { icon: "" },
+                        on: {
+                          click: function($event) {
                             _vm.deleteItem(props.item.id)
                           }
                         }
@@ -29536,7 +30238,25 @@ var render = function() {
             }
           }
         ])
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "text-xs-center pt-2" },
+        [
+          _c("v-pagination", {
+            attrs: { length: _vm.payments.last_page },
+            model: {
+              value: _vm.page,
+              callback: function($$v) {
+                _vm.page = $$v
+              },
+              expression: "page"
+            }
+          })
+        ],
+        1
+      )
     ],
     1
   )
@@ -53662,6 +54382,15 @@ function pluralize (value) {
 
 /***/ }),
 /* 135 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -70771,10 +71500,10 @@ function pluralize (value) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(136)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(140)(module)))
 
 /***/ }),
-/* 136 */
+/* 140 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -70800,12 +71529,6 @@ module.exports = function(module) {
 	return module;
 };
 
-
-/***/ }),
-/* 137 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

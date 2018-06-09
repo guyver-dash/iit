@@ -24,6 +24,7 @@
 
 <script>
   import payments from '../../components/data-tables/payments.vue'
+  import _ from 'lodash'
   export default {
         data: ()=>({
             search: '',
@@ -36,7 +37,8 @@
             if (Number.isInteger(this.$route.params.id)) {
                 this.confirmEnrolled()
             }
-
+             
+      
     	},
     	computed: {
     		authUser(){
@@ -44,14 +46,29 @@
     		}
     	},
         methods: {
-
             confirmEnrolled(){
                 var data = this
-                this.$http.get(window.base_api + '/confirm-enrolled/' + this.$route.params.id+ '?token=' + localStorage.getItem('tokenKey'))
+                this.$http.get(window.base_api + '/confirm-enrolled/' + this.$route.params.id + '?token=' + localStorage.getItem('tokenKey'))
                     .then(function(res){
                         data.$store.dispatch('confirmEnrolledPayment', res.data.enrollee)
                     })
-            }
+            },
+            newSearch: _.debounce(function(){
+                let data = this
+                this.$refs.newPayment.page = 1
+                this.$http.post(base_api + '/payments/search?token=' + localStorage.getItem('tokenKey'),{
+                  search: this.search
+                }).then(function(res){
+                    data.$store.dispatch('payments', res.data.payments);
+                })
+
+            }, 500)
+        },
+        watch: {
+
+          search(val){
+            this.newSearch()
+          }
         }
   }
 </script>

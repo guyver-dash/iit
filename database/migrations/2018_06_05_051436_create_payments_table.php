@@ -18,7 +18,8 @@ class CreatePaymentsTable extends Migration
             $table->integer('balance_id')->unsigned()->nullable();
             $table->foreign('balance_id')->references('id')
                 ->on('balances');
-            $table->string('receipt_no')->nullable();
+            $table->string('prefix')->nullable();    
+            $table->integer('receipt_no')->nullable();
             $table->integer('confirm_enrollee_id')->unsigned()->nullable();
             $table->foreign('confirm_enrollee_id')->references('id')
                 ->on('confirm_enrolled');
