@@ -1,4 +1,6 @@
 export const state = {
+     confirmEnrolledId: '',
+     dueDate: '',
      payments:[],
      balances: [],
      balance_ids:[],

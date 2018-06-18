@@ -10,6 +10,7 @@
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
+              
               <v-flex xs12 sm12 md12 lg12 xl12>
                 <v-text-field type="text" 
                   label="Balance Name" 
@@ -40,14 +41,16 @@
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-              <courses></courses>
+              <enrollees></enrollees>
               <v-flex xs12 sm12 md12 lg12 xl12>
-                <v-text-field type="text" 
-                  label="Balance Name" 
-                  v-model="balanceName" 
+                <v-text-field 
+                  label="Discount" 
+                  v-model="discount" 
+                  type="number"
                   />
                   </v-text-field>
               </v-flex>
+              <courses></courses>
               <v-flex xs12 sm12 md12 lg12 xl12>
                 <my-currency-input v-model="price" v-bind:label="'Amount'"></my-currency-input>
               </v-flex>
@@ -57,7 +60,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="save()">Save</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="attachEnrollee()">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -69,14 +72,34 @@
     >
       <template slot="items" slot-scope="props">
         <td>{{ props.item.name }}</td>
-        <td >{{ props.item.amount|currency('₱ ') }}</td>
-        <td >
-          <v-btn icon class="mx-0" @click="editItem(props.item.id)">
-            <v-icon color="success">mode_edit</v-icon>
-          </v-btn>
-          <v-btn icon class="mx-0" @click="deleteItem(props.item.id)">
-            <v-icon color="pink">delete</v-icon>
-          </v-btn>
+        <td>{{ props.item.amount|currency('₱ ') }}</td>
+        <td>
+         
+          <v-tooltip bottom> 
+            <v-btn slot="activator" icon class="mx-0" @click="addNewStudent(props.item.id)">
+              <v-icon color="grey">add</v-icon>
+            </v-btn>
+            <span>Add New Student</span>
+          </v-tooltip>
+          <v-tooltip bottom> 
+            <v-btn slot="activator" icon class="mx-0" @click="editItem(props.item.id)">
+              <v-icon color="success">mode_edit</v-icon>
+            </v-btn>
+            <span>Edit Balance</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <v-btn slot="activator" icon class="mx-0" @click="balanceEnrollee(props.item.id)">
+              <v-icon color="info">assignment</v-icon>
+            </v-btn>
+            <span>View Attach Enrollee</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <v-btn slot="activator" icon class="mx-0" @click="deleteItem(props.item.id)">
+              <v-icon color="pink">delete</v-icon>
+            </v-btn>
+            <span>Delete Balance</span>
+          </v-tooltip>
+
         </td>
       </template>
      
@@ -89,12 +112,21 @@
 <script>
   import myCurrencyInput from '../../components/currency-format/my-currency-input'
   import courses from '../../components/forms/selects/courses.vue'
+  import enrollees from '../../components/forms/selects/enrollees.vue'
   export default {
     props:['confirmid'],
     components: {
-      myCurrencyInput, courses
+      myCurrencyInput, courses, enrollees
     },
     data: () => ({
+      balanceId: null,
+      input: '',
+      chosenStudent: '',
+      searchStudent: [
+          
+        ],
+      dialog3: false,
+      discount: 0,
       balanceName: '',
       editBalance: {
         name: '',
@@ -129,7 +161,9 @@
     }),
 
     computed: {
-       
+        confirmEnrolledId(){
+          return this.$store.getters.confirmEnrolledId
+        },
         balances(){
           return this.$store.getters.balances
         },
@@ -172,10 +206,27 @@
     },
 
     methods: {
-      
+      searchInput(){
+        var data = this
+        this.$http.get(base_api + '/balance-enrollee-search?string=' + this.chosenStudent + '&token='+ localStorage.getItem('tokenKey'))
+        .then(function(res){
+          data.chosenStudent = res.data.enrollees
+          
+        })
+        
+        
+      },
+      addNewStudent(balanceId){
+        this.dialog = true
+        this.balanceId = balanceId
+      },
+      balanceEnrollee(balanceId){
+        this.$router.push({name: 'balanceEnrollee', params: { id: balanceId }});
+      },
       close () {
         this.dialog = false
         this.dialog2 = false
+        this.dialog3 = false
         
       },
       courses(){
@@ -242,18 +293,37 @@
       save() {
         let data = this
         this.$http.post(base_api + '/balance?token=' + localStorage.getItem('tokenKey'),{
-            name: this.balanceName,
+            balanceId: this.balanceName,
+            discount: this.discount,
             amount: this.price,
             course_ids: this.course_ids,
-            confirmEnrolledId: this.confirmEnrolledPayment.id
+            confirmEnrolledId: this.confirmEnrolledId.id
         }).then(function(res){
             data.balancesM();
+             data.$store.dispatch('snackbarText', 'Balance Created Successfully!')
+            data.$store.dispatch('snackbarColor', 'success')
+            data.$store.dispatch('snackbar', true)
+            data.dialog = false
         });
-        this.$store.dispatch('snackbarText', 'Balance Created Successfully!')
-        this.$store.dispatch('snackbarColor', 'success')
-        this.$store.dispatch('snackbar', true)
-        
-        this.dialog = false
+       
+      },
+
+      attachEnrollee() {
+        let data = this
+        this.$http.post(base_api + '/balance-attach-enrollee?token=' + localStorage.getItem('tokenKey'),{
+            balanceId: this.balanceId,
+            discount: this.discount,
+            amount: this.price,
+            course_ids: this.course_ids,
+            confirmEnrolledId: this.confirmEnrolledId
+        }).then(function(res){
+            data.balancesM();
+            data.$store.dispatch('snackbarText', 'Balance Successfully attach to Enrollee!')
+            data.$store.dispatch('snackbarColor', 'success')
+            data.$store.dispatch('snackbar', true)
+            data.dialog = false
+        });
+       
       }
     },
     watch: {

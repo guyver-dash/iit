@@ -2,7 +2,14 @@
 	<v-container class="ma-2 pa-0" fluid>
     <v-layout class="ma-0 pa-0">
       <v-flex xl3 lg3 md3 sm3 xs3>
-         <h1 class="pa-2">Balance</h1>
+         <v-menu right>
+          <v-btn slot="activator" color="primary" dark>New Balance</v-btn>
+          <v-list>
+            <v-list-tile v-for="(item, index) in items" :key="index" @click="">
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </v-flex>
       <v-flex xl9 lg9 md9 sm9 xs9>
          <v-text-field
@@ -27,6 +34,12 @@
   export default {
         data: ()=>({
             search: '',
+            items: [
+              { title: 'Click Me' },
+              { title: 'Click Me' },
+              { title: 'Click Me' },
+              { title: 'Click Me 2' }
+            ]
         }),
     	components: {
             balance

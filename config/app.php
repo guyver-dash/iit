@@ -168,6 +168,7 @@ return [
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
         Barryvdh\DomPDF\ServiceProvider::class,
         Riskihajar\Terbilang\TerbilangServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
     ],
 
     /*
@@ -220,6 +221,8 @@ return [
         'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Terbilang' => Riskihajar\Terbilang\Facades\Terbilang::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
 
     ],

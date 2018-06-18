@@ -1,5 +1,69 @@
 <template>
   <div>
+    <v-dialog v-model="dialog3" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">
+            Summary Of Payment ({{ payment.confirm_enrolled.enrollee.firstname }} {{ payment.confirm_enrolled.enrollee.lastname }} )
+          </span>
+        </v-card-title>
+        <v-card-text>
+          <v-form ref="paymentSummary" v-model="valid" lazy-validation>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <due-date></due-date>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <my-currency-input v-model="dueAmount" v-bind:label="'Due Amount'"></my-currency-input>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <v-select
+                  :items="examPeriods"
+                  v-model="examPeriod"
+                  label="Exam Period"
+                  chips
+                  item-text="name"
+                  item-value="name"
+                  required
+                  :rules="[v => !!v || 'Exam Period is required']"
+                ></v-select>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <v-select
+                  :items="semesters"
+                  v-model="semester"
+                  label="Semester"
+                  chips
+                  item-text="name"
+                  item-value="id"
+                  required
+                  :rules="[v => !!v || 'Semester is required']"
+                ></v-select>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <v-select
+                  :items="schoolYears"
+                  v-model="schoolYear"
+                  label="School Year"
+                  chips
+                  item-text="sy"
+                  item-value="id"
+                  required
+                  :rules="[v => !!v || 'School Year is required']"
+                ></v-select>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="viewSummary">Summary</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="dialog2" max-width="500px">
       <v-card>
         <v-card-title>
@@ -13,7 +77,7 @@
             <v-layout wrap>
               <v-flex xs12 sm12 md12 lg12 xl12>
                 <v-select
-                  :items="balances"
+                  :items="balancesEdit"
                   v-model="payment.balance_id"
                   label="As Payment for"
                   chips
@@ -126,7 +190,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="savePrint">Save &amp; Print</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="savePrint">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -138,19 +202,41 @@
     >
     <template slot="items" slot-scope="props">
       <td>{{ props.item.confirm_enrolled.enrollee.firstname|capitalize }} {{ props.item.confirm_enrolled.enrollee.lastname|capitalize }}</td>
+      <td>{{ props.item.balance.name }} ({{props.item.balance.amount|currency('₱ ')}}) </td>
       <td>{{ props.item.amount_charge|currency('₱ ') }}</td>
       <td>{{ props.item.amount_given|currency('₱ ') }}</td>
       <td>{{ props.item.change|currency('₱ ') }}</td>
       <td >
-          <v-btn icon class="mx-0" @click="editItem(props.item.id)">
-            <v-icon color="success">mode_edit</v-icon>
+        <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="editItem(props.item.id)">
+            <v-icon color="grey">mode_edit</v-icon>
           </v-btn>
-          <v-btn icon class="mx-0" @click="printReceipt(props.item.id)">
-            <v-icon color="info">print</v-icon>
+          <span>Edit Payment</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="printReceipt(props.item.id)">
+            <v-icon color="success">print</v-icon>
           </v-btn>
-          <v-btn icon class="mx-0" @click="deleteItem(props.item.id)">
+          <span>Print Payment</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="summary(props.item.id)">
+            <v-icon color="blue">assignment</v-icon>
+          </v-btn>
+          <span>Summary of payments</span>
+        </v-tooltip>
+          <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="deleteItem(props.item.id)">
             <v-icon color="pink">delete</v-icon>
           </v-btn>
+          <span>Delete</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="summaryAll(props.item.confirm_enrolled.id)">
+            <v-icon color="purple">date_range</v-icon>
+          </v-btn>
+          <span>Print all payments</span>
+        </v-tooltip>
         </td>
     </template>
 
@@ -162,13 +248,31 @@
 </template>
 <script>
   import myCurrencyInput from '../../components/currency-format/my-currency-input'
+  import dueDate from '../../components/pickers/due-date'
   export default {
    
     props:['confirmid'],
     components: {
-      myCurrencyInput
+      myCurrencyInput, dueDate
     },
     data: () => ({
+      dueAmount: 0,
+      dialog3: false,
+      balancesEdit:[],
+      examPeriod: '',
+      examPeriods: [
+        { id: 0, name: 'Pre-test'},
+        { id: 1,  name: 'Prelim'},
+        { id: 2,  name: 'Midterm'},
+        { id: 3,  name: 'Final'}
+      ],
+      semester: '',
+      semesters: [
+        { id: 1, name: 'First Semester'},
+        { id: 2, name: 'Second Semester'}
+      ],
+      schoolYears: [],
+      schoolYear:'',
       payment:{
         balance_id: 0,
         prefix: '',
@@ -201,6 +305,7 @@
         sortable: false,
         value: 'name'
       },
+      { text: 'Balace', value: 'balance', sortable: false  },
       { text: 'Paid Amount', value: 'paidAmount', sortable: false  },
       { text: 'Given Amount', value: 'givenAmount', sortable: false  },
       { text: 'Change', value: 'change', sortable: false },
@@ -210,6 +315,9 @@
     }),
 
     computed: {
+      dueDate(){
+        return this.$store.getters.dueDate
+      },
       balances: {
         get(){
           return this.$store.getters.balances
@@ -227,7 +335,7 @@
       },
       change(){
 
-        return this.price - this.price2
+        return  this.price2 -this.price
       },
         payments(){
           return this.$store.getters.payments
@@ -252,17 +360,34 @@
       editItem (id) {
         this.dialog2 = true
         let data = this
-        this.$http.get(window.base_api + '/payments/' + id)
+        this.$http.get(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey'))
         .then(function(res){
           data.payment = res.data.payment
-
-          data.$store.dispatch('balances', res.data.balances.balances)
+          data.balancesEdit = res.data.balances.balances
         })
+      },
+      summary(id){
+        let data = this
+        this.$http.get(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey'))
+        .then(function(res){
+          data.payment = res.data.payment
+          data.balancesEdit = res.data.balances.balances
+          data.schoolYears = res.data.schoolYears
+        })
+        this.dialog3 = true
+
+      },
+      viewSummary(){
+        window.open(window.base_api + '/payments/view/summary?dueAmount=' + this.dueAmount + '&examPeriod=' + this.examPeriod + '&confirmEnrolledId=' + this.payment.confirm_enrollee_id + '&dueDate='+ this.dueDate + '&schoolYear=' + this.schoolYear +'&semester=' + this.semester + '&token='+ localStorage.getItem('tokenKey'));
+      },
+
+      summaryAll(confirmEnrolledId){
+        window.open(window.base_api + '/payments/all/summary?confirmEnrolledId=' + confirmEnrolledId + '&token='+ localStorage.getItem('tokenKey'));
       },
 
       update(){
         var data = this
-        this.$http.put(window.base_api + '/payments/' + this.payment.id, {
+        this.$http.put(window.base_api + '/payments/' + this.payment.id + '?token=' + localStorage.getItem('tokenKey'), {
           payment: this.payment
         })
         .then(function(res){
@@ -276,7 +401,7 @@
         var data = this
         var z = confirm('Are you sure you want to delete this item?')
         if (z === true) {
-          this.$http.delete(window.base_api + '/payments/' + id)
+          this.$http.delete(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey'))
           .then(function(res){
             data.allPayments()
             data.$store.dispatch('snackbarText', 'Balance Deleted Successfully!')
@@ -289,6 +414,7 @@
       close () {
         this.dialog = false
         this.dialog2 = false
+        this.dialog3 = false
         
       },
       printReceipt(id){
@@ -308,7 +434,7 @@
            balance_id: this.balance_id
           }).then(function(res){
               data.allPayments()
-               window.open(window.base_api + '/payments/print/' + res.data.id + '?token=' + localStorage.getItem('tokenKey'));
+               // window.open(window.base_api + '/payments/print/' + res.data.id + '?token=' + localStorage.getItem('tokenKey'));
           })
           this.dialog = false
         }

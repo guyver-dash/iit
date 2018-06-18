@@ -9,7 +9,7 @@ class Payment extends Model
 {
     
     protected $table = 'payments';
-    protected $fillable = ['confirm_enrollee_id', 'amount_charge', 'amount_given', 'change', 'prefix', 'balance_id', 'receipt_no'];
+    protected $fillable = ['confirm_enrollee_id', 'amount_charge', 'amount_given', 'change', 'prefix', 'balance_id', 'receipt_no', 'total_amount_given'];
     
     public function scopePaginationPay($query){
     	return $query->paginate(2);

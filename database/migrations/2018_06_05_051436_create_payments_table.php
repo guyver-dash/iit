@@ -26,6 +26,7 @@ class CreatePaymentsTable extends Migration
             $table->decimal('amount_given');
             $table->decimal('change');
             $table->decimal('amount_charge');
+            $table->decimal('total_amount_given')->default(0);
             $table->timestamps();
         });
     }

@@ -24,4 +24,8 @@ class Balance extends Model
 
     	return (float) $val;
     }
+
+    
+
+    
 }

@@ -24,21 +24,30 @@
         <td>{{ props.item.school_year.sy }}</td>
         <td>{{ props.item.course.name }}</td>
         <td class="justify-center layout px-0">
-          <v-btn icon class="mx-0" @click="balance(props.item.id)">
-            <v-icon color="grey" >format_bold</v-icon>
+          <v-tooltip bottom>
+            <v-btn slot="activator" icon class="mx-0" @click="payment(props.item.id)">
+              <v-icon color="success" >credit_card</v-icon>
+            </v-btn>
+            <span>New Payment</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <v-btn slot="activator" icon class="mx-0" @click="createPDF(props.item.id)">
+              <v-icon color="info">print</v-icon>
+            </v-btn>
+            <span>Print Enrollee</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="deleteItem(props.item.id)">
+            <v-icon color="red">delete</v-icon>
           </v-btn>
-          <v-btn icon class="mx-0" @click="payment(props.item.id)">
-            <v-icon color="yellow darken-3" >attach_money</v-icon>
-          </v-btn>
-          <v-btn icon class="mx-0" :to="'/admin/admission/'+props.item.id">
-            <v-icon color="teal">edit</v-icon>
-          </v-btn>
-          <v-btn icon class="mx-0" @click="createPDF(props.item.id)">
-            <v-icon color="info">print</v-icon>
-          </v-btn>
-          <v-btn icon class="mx-0" @click="deleteItem(props.item.id)">
-            <v-icon color="pink">delete</v-icon>
-          </v-btn>
+          <span>Delete Enrollee</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <v-btn slot="activator" icon class="mx-0" :to="'/admin/admission/'+props.item.id">
+              <v-icon color="purple">edit</v-icon>
+            </v-btn>
+            <span>Edit Enrollee</span>
+          </v-tooltip>
         </td>
       </template>
       </v-data-table>

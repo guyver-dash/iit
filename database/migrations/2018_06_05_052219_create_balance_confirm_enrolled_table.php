@@ -21,6 +21,7 @@ class CreateBalanceConfirmEnrolledTable extends Migration
             $table->integer('balance_id')->unsigned()->nullable();
             $table->foreign('balance_id')->references('id')
                 ->on('balances');
+            $table->integer('discount_amount')->nullable();
             $table->timestamps();
         });
     }

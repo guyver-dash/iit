@@ -8,6 +8,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		confirmEnrolledId(state, confirmEnrolledId){
+			state.confirmEnrolledId = confirmEnrolledId
+		},
+		dueDate(state, dueDate){
+			state.dueDate = dueDate
+		},
 		payments(state, payments){
 			state.payments = payments
 		},
@@ -139,6 +145,13 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		
+		confirmEnrolledId(store, confirmEnrolledId){
+			store.commit('confirmEnrolledId', confirmEnrolledId)
+		},
+		dueDate(store, dueDate){
+			store.commit('dueDate', dueDate)
+		},
 		payments(store, payments){
 			store.commit('payments', payments)
 		},
@@ -312,6 +325,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		confirmEnrolledId(){
+			return store.state.confirmEnrolledId
+		},
+		dueDate(){
+			return store.state.dueDate
+		},
 		payments(){
 			return store.state.payments
 		},

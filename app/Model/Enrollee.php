@@ -38,7 +38,7 @@ class Enrollee extends Model
     
     public function confirmEnrolled(){
 
-        return $this->belongsTo('App\ConfirmEnrolled');
+        return $this->hasOne('App\Model\ConfirmEnrolled', 'enrollee_id', 'id');
     }
     public function civil(){
 

@@ -8,6 +8,7 @@ import balance from './profile/balance.vue'
 import payment from './profile/payment.vue'
 import shs from './profile/shs.vue'
 import jhs from './profile/jhs.vue'
+import balanceEnrollee from './profile/balance-enrollee.vue'
 import enrollees from './enrollees.vue'
 
 export const routes = [
@@ -21,6 +22,9 @@ export const routes = [
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/balance', component: balance, name: 'balance', 
+			meta: { requiresAuth: true}
+		},
+		{ path: '/admin/balance-enrollee', component: balanceEnrollee, name: 'balanceEnrollee', 
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/payments', component: payment, name: 'payments', 

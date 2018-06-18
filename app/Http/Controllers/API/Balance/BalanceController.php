@@ -62,5 +62,34 @@ class BalanceController extends Controller
             ]);
     }
 
+    public function balanceEnrollees($id){
+
+        return response()->json([
+                'enrollees' => $this->balance->balanceEnrollees($id),
+                'balance' => $this->balance->where('id', $id)->first()
+            ]);
+    }
+
+    public function deleteConfirmEnrolled($balanceId, $confirmEnrollId){
+
+        
+        return response()->json([
+                'success' => $this->balance->deleteConfirmEnrolled($balanceId, $confirmEnrollId)
+            ]);
+    }
+
+    public function enrolleeSearch(){
+
+        return response()->json([
+                'enrollees' => $this->balance->enrolleeSearch()
+            ]);
+    }
+
+    public function attachEnrollee(){
+
+       return  $this->balance->attachEnrollee();
+
+    }
+
 
 }
