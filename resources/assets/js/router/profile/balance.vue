@@ -2,14 +2,7 @@
 	<v-container class="ma-2 pa-0" fluid>
     <v-layout class="ma-0 pa-0">
       <v-flex xl3 lg3 md3 sm3 xs3>
-         <v-menu right>
-          <v-btn slot="activator" color="primary" dark>New Balance</v-btn>
-          <v-list>
-            <v-list-tile v-for="(item, index) in items" :key="index" @click="">
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
+         <v-btn slot="activator" color="primary" dark @click="dialog3Show">New Balance</v-btn>
       </v-flex>
       <v-flex xl9 lg9 md9 sm9 xs9>
          <v-text-field
@@ -21,7 +14,7 @@
         ></v-text-field>
       </v-flex>
     </v-layout>
-    <v-layout class="ma-0 pa-0">
+    <v-layout class="ma-0 pa-0 mt-2">
       <v-flex xl12 lg12 md12 sm12 xs12>
         <balance ref="newBalance" v-bind:confirmid="this.$route.params.id"></balance>
       </v-flex>
@@ -58,7 +51,9 @@
     		}
     	},
         methods: {
-
+            dialog3Show(){
+              this.$refs.newBalance.dialog3 = true
+            },
             confirmEnrolled(){
                 var data = this
                 this.$http.get(window.base_api + '/confirm-enrolled/' + this.$route.params.id+ '?token=' + localStorage.getItem('tokenKey'))

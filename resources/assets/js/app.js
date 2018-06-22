@@ -8,17 +8,42 @@ import MyPlugin from './plugins/my-vue-plugin.js'
 import startUp from './mixins/start-up.js'
 import master from './components/layouts/master.vue'
 import Vue2Filters from 'vue2-filters'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 
-window.base_api = 'http://localhost/iit/public/api';
-window.base = 'http://localhost/iit/public/';
+// window.base_api = 'http://localhost/iit/public/api';
+// window.base = 'http://localhost/iit/public/';
 
-// window.base_api = 'http://cebu.it.nf/public/api';
-// window.base = 'http://cebu.it.nf/public/';
+window.base_api = 'http://cebu.it.nf/public/api';
+window.base = 'http://cebu.it.nf/public/';
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 Vue.use(MyPlugin)
 Vue.use(Vue2Filters)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyATumGc3ktPcZyeOItj1YLUV9o2wB9ZU1M',
+    libraries: 'places', // This is required if you use the Autocomplete plugin
+    // OR: libraries: 'places,drawing'
+    // OR: libraries: 'places,drawing,visualization'
+    // (as you require)
+
+    //// If you want to set the version, you can do so:
+    // v: '3.26',
+  },
+
+  //// If you intend to programmatically custom event listener code
+  //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
+  //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
+  //// you might need to turn this on.
+  // autobindAllEvents: false,
+
+  //// If you want to manually install components, e.g.
+  //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
+  //// Vue.component('GmapMarker', GmapMarker)
+  //// then disable the following:
+  // installComponents: true,
+})
 
 //Adding axios globally
 Vue.prototype.$http = axios;

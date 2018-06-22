@@ -2,14 +2,16 @@
 	<div>
     <v-data-table
       :headers="headers"
-      :items="enrollees.data"
+      :items="balanceEnrollees.data"
       hide-actions
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.enrollee.lastname }}, {{ props.item.enrollee.firstname }}</td>
+        <td> {{ props.item.enrollee.firstname }} {{ props.item.enrollee.lastname }}</td>
         <td>{{ balance.name }}</td>
         <td>{{ balance.amount|currency('₱ ') }}</td>
+        <td>{{ props.item.balances[0].pivot.discount }}%</td>
+        <td>{{ props.item.balances[0].pivot.created_at }}</td>
         <td>
         <v-tooltip bottom>
             <v-btn slot="activator" icon class="mx-0" @click="deleteItem(balance.id, props.item.id)">
@@ -23,7 +25,7 @@
      
     </v-data-table>
     <div class="text-xs-center pt-2">
-        <v-pagination v-model="page" :length="enrollees.last_page"></v-pagination>
+        <v-pagination v-model="page" :length="balanceEnrollees.last_page"></v-pagination>
     </div>
   </div>
 </template>
@@ -32,8 +34,6 @@
 	export default {
 		data: () => ({
 			page: 1,
-			enrollees: [],
-			balance: null,
 			headers: [
 		        {
 		          text: 'Student Name',
@@ -54,6 +54,18 @@
 		          sortable: false,
 		        },
 		        { 
+		          text: 'Discount', 
+		          value: 'discount',
+		          align: 'left',
+		          sortable: false,
+		        },
+		        { 
+		          text: 'Date', 
+		          value: 'date',
+		          align: 'left',
+		          sortable: false,
+		        },
+		        { 
 		          text: 'Action', 
 		          value: 'action',
 		          align: 'left',
@@ -61,10 +73,20 @@
 		        }
 		      ],
 		}),
+		computed: {
+			balanceEnrollees(){
+				return this.$store.getters.balanceEnrollees
+			},
+			balance(){
+				return this.$store.getters.balance
+			}
+		},
 		created(){
 
 			this.getEnrollees()
-
+			if (this.$route.params.id == null) {
+				this.$router.push('balance')
+			}
 		},
 		methods: {
 
@@ -72,8 +94,8 @@
 				let data = this
 				this.$http.get(base_api + '/balance-enrollee/' + this.$route.params.id + '?page=' + this.page + '&token=' + localStorage.getItem('tokenKey'))
 					.then(function(res){
-						data.enrollees = res.data.enrollees
-						data.balance = res.data.balance
+						data.$store.dispatch('balanceEnrollees', res.data.enrollees)
+						data.$store.dispatch('balance', res.data.balance) 
 					})
 			},
 			deleteItem(balanceId, confirmEnrollId){

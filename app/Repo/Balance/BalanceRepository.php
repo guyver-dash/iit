@@ -22,36 +22,6 @@ class BalanceRepository extends BaseRepository implements BalanceInterface{
 		return $this->modelName->orderBy('created_at', 'DESC')->paginateBal();
 	}
 
-	public function store($request){
-		$balance = $this->modelName->create($request->all());
-		if (count($request->course_ids) > 0) {
-			
-			foreach ($request->course_ids as $course_id) {
-				
-				$confirmEnrolled = ConfirmEnrolled::where('course_id', $course_id)->get();
-				foreach ($confirmEnrolled  as $value) {
-					$newBalance = $this->modelName->find($balance->id);
-					$newBalance->confirmEnrolled()->attach($balance->id,[
-						'balance_id' => $balance->id,
-						'confirm_enrolled_id' => $value->id,
-						'discount' => $request->discount
-					]);
-				}
-				
-			}
-		}
-		else{
-
-			$newBalance = $this->modelName->find($balance->id);
-			$newBalance->confirmEnrolled()->attach($balance->id,[
-					'balance_id' => $balance->id,
-					'confirm_enrolled_id' => $request->confirmEnrolledId,
-					'discount' => $request->discount
-				]);
-		}
-
-		
-	}
 
 	public function destroy($id){
 
@@ -91,45 +61,77 @@ class BalanceRepository extends BaseRepository implements BalanceInterface{
 	public function balanceEnrollees($id){
 
 		$request = app()->make('request');
-		$balances = $this->modelName->where('id', $id)->with('confirmEnrolled.enrollee')->first();
-		return $balances;
+
+		$confirmEnrolled = ConfirmEnrolled::whereHas('balances', function($query) use ($request) {
+			$query->where('balance_id', $request->id);
+					
+		})->with(['balances', 'enrollee'])
+		->paginate(2);
+
 		$page = $request->page;
 		$perPage = 2;
-
-		$paginator = new LengthAwarePaginator(
-		    $balances->confirmEnrolled->forPage($page, $perPage), $balances->confirmEnrolled->count(), $perPage, $page
-		);
-		return $paginator;
+		
+		return $confirmEnrolled;
 	}
 
 
 	public function deleteConfirmEnrolled($balanceId, $confirmEnrollId){
 
-		$balance = $this->modelName
-			->whereHas('confirmEnrolled', function($query) use ($confirmEnrollId) {
+		return \DB::table('balance_confirm_enrolled')
+			->where('balance_id', $balanceId)
+			->where('confirm_enrolled_id', $confirmEnrollId)
+			->delete();
 
-					$query->where('confirm_enrolled_id', $confirmEnrollId);
-		})->get();
-
-		return $balance;
 	}
 
 	public function attachEnrollee(){
 
 		$request = app()->make('request');
 
-		$balance = $this->modelName->find($request->balanceId);
-		$balance->confirmEnrolled()->attach($request->balanceId, [
-				'balance_id' => $request->balanceId,
-				'discount' => $request->discount,
-				'confirm_enrolled_id' => $request->confirmEnrolledId
-			]);
+		if (count($request->course_ids) > 0) {
+			
+			foreach ($request->course_ids as $course_id) {
+				
+				$confirmEnrolled = ConfirmEnrolled::where('course_id', $course_id)->get();
+				foreach ($confirmEnrolled  as $value) {
+					$balance = $this->modelName->find($request->balanceId);
+					$balance->confirmEnrolled()->attach($request->balanceId, [
+							'balance_id' => $request->balanceId,
+							'discount' => $request->discount,
+							'confirm_enrolled_id' => $value->id
+						]);
+				}
+				
+			}
+		}
+		else{
 
-		return response()->json([
-				'success' => true
-			]);
+			$balance = $this->modelName->find($request->balanceId);
+			$balance->confirmEnrolled()->attach($request->balanceId, [
+					'balance_id' => $request->balanceId,
+					'discount' => $request->discount,
+					'confirm_enrolled_id' => $request->confirmEnrolledId
+				]);
+		}
+
+		
 	}
 
+	public function balanceEnrolleeSearch(){
 
-	
+		$request = app()->make('request');
+
+        return $confirmedEnroll = ConfirmEnrolled::whereHas('enrollee', function($query) use ($request) {
+            $query->where(function($query) use ($request) {
+                $query->orWhere('firstname', 'LIKE', '%'. $request->string . '%');
+                $query->orWhere('lastname', 'LIKE', '%'. $request->string . '%');
+
+            });
+
+        })->whereHas('balances', function($query) use ($request) {
+            	$query->where('balance_id', $request->balanceId);
+        })
+        ->with(['enrollee', 'balances'])->paginate(2);
+
+	}
 }

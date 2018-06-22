@@ -23,6 +23,7 @@ Route::get('balance/{id}', 'API\Balance\BalanceController@edit');
 Route::get('balance-enrollee/{id}', 'API\Balance\BalanceController@balanceEnrollees');
 Route::post('balance-attach-enrollee', 'API\Balance\BalanceController@attachEnrollee');
 Route::delete('balance-confirm-enrolled/{balanceId}/{confirmEnrollId}', 'API\Balance\BalanceController@deleteConfirmEnrolled');
+Route::get('balance-enrollee-search-attach', 'API\Balance\BalanceController@balanceEnrolleeSearch');
 Route::get('balance-enrollee-search', 'API\Balance\BalanceController@enrolleeSearch');
 Route::put('balance/{id}', 'API\Balance\BalanceController@update');
 Route::post('balance', 'API\Balance\BalanceController@store');

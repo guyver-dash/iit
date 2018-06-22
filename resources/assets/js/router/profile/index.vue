@@ -49,7 +49,9 @@
 
 <script>
   import roles from '../../components/forms/selects/roles'
+  import startUp from '../../mixins/start-up.js'
   export default {
+    mixins: [startUp],
     data: () => ({
       changePassWord: false,
       passwordText: 'Change Password',

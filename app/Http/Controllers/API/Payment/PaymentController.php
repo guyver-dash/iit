@@ -355,9 +355,9 @@ class PaymentController extends Controller
         $amount = $payment->amount;
         $amountWords = ucwords(Terbilang::make($payment->amount_charge, ' Pesos'));
         $balance = $payment->balance->name;
-        $paidAmount = $payment->amount_charge;
-        $givenAmount = $payment->amount_given;
-        $change = $payment->change;
+        $paidAmount = '&#8369;' . number_format($payment->amount_charge,  2, '.', ',');
+        $givenAmount = '&#8369;' . number_format($payment->amount_given,  2, '.', ',');
+        $change = '&#8369;' . number_format($payment->change,  2, '.', ',');
 
         $pdf->loadHTML("
             <style>
@@ -404,10 +404,9 @@ class PaymentController extends Controller
                 </p>
             </div>
             <div style='clear:both'>
-                <p> <strong>Due Amount:: </strong>&#8369; $paidAmount <br />
-                    <strong>Received Amount:: </strong>&#8369; $givenAmount <br />
-                    <strong>Change: </strong>
-                    <span>&#8369;</span> $change <br />
+                <p> <strong>Due Amount:: </strong>$paidAmount <br />
+                    <strong>Received Amount:: </strong> $givenAmount <br />
+                    <strong>Change: </strong>$change <br />
                 </p>
             </div>
             <div style='border-top: 1px dotted grey;'>

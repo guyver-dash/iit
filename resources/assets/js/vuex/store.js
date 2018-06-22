@@ -8,6 +8,9 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		balanceEnrollees(state, balanceEnrollees){
+			state.balanceEnrollees = balanceEnrollees
+		},
 		confirmEnrolledId(state, confirmEnrolledId){
 			state.confirmEnrolledId = confirmEnrolledId
 		},
@@ -19,6 +22,9 @@ export const store = new Vuex.Store({
 		},
 		balance_ids(state, balance_ids){
 			state.balance_ids = balance_ids
+		},
+		balance(state, balance){
+			state.balance = balance
 		},
 		balances(state, balances){
 			state.balances = balances
@@ -145,7 +151,9 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
-		
+		balanceEnrollees(store, balanceEnrollees){
+			store.commit('balanceEnrollees', balanceEnrollees)
+		},
 		confirmEnrolledId(store, confirmEnrolledId){
 			store.commit('confirmEnrolledId', confirmEnrolledId)
 		},
@@ -157,6 +165,9 @@ export const store = new Vuex.Store({
 		},
 		balance_ids(store, balance_ids){
 			store.commit('balance_ids', balance_ids)
+		},
+		balance(store, balance){
+			store.commit('balance', balance)
 		},
 		balances(store, balances){
 			store.commit('balances', balances)
@@ -325,6 +336,9 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		balanceEnrollees(){
+			return store.state.balanceEnrollees
+		},
 		confirmEnrolledId(){
 			return store.state.confirmEnrolledId
 		},
@@ -336,6 +350,9 @@ export const store = new Vuex.Store({
 		},
 		balance_ids(){
 			return store.state.balance_ids
+		},
+		balance(){
+			return store.state.balance
 		},
 		balances(){
 			return store.state.balances

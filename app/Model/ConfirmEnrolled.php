@@ -14,7 +14,7 @@ class ConfirmEnrolled extends Model
     ];
 
     public function balances(){
-        return $this->belongsToMany('App\Model\Balance', 'balance_confirm_enrolled', 'confirm_enrolled_id', 'balance_id');
+        return $this->belongsToMany('App\Model\Balance', 'balance_confirm_enrolled', 'confirm_enrolled_id', 'balance_id')->withPivot(['discount','created_at'])->orderBy('pivot_created_at','desc')->withTimestamps();
     }
     
     public function schoolYear(){

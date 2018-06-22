@@ -52,7 +52,7 @@
               </v-list-tile-content>
             </v-list-tile>
           </v-list-group>
-          <v-list-tile v-else :to="item.to" :key="item.text">
+          <v-list-tile v-else :to="item.to" :key="item.text" @click="sidebarClick(item.text)">
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
@@ -86,9 +86,9 @@
       ></v-text-field>
       <v-spacer></v-spacer>
         <v-btn icon  v-if="userLogin"
-        :to="'/dashboard'" 
+        :to="'/profile'" 
         >
-          <v-icon>dashboard</v-icon>
+          <v-icon>account_circle</v-icon>
         </v-btn>
         <v-btn icon  v-if="userLogin" @click.stop="logout">
           <v-icon>power_settings_new</v-icon>
@@ -99,10 +99,6 @@
       >
         <v-icon>lock</v-icon>
       </v-btn>
-      <v-btn icon class="mr-4">
-        <v-icon>account_circle</v-icon>
-      </v-btn>
-
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-content>
@@ -230,8 +226,9 @@
     },
     methods: {
         sidebarClick(value){
-          if(value === 'Admission'){
-              this.$store.dispatch('dialogAdmission', true)
+          if(value === 'Facebook Page'){
+              window.open('https://www.facebook.com/pg/iitmandaue/posts/?ref=page_internal')
+              this.$router.push('/');
           }
         },
         signin(){
@@ -270,7 +267,7 @@
                data.$router.push('/')
                data.$store.dispatch('userLogin', false)
                data.$store.dispatch('snackbarText', 'You have successfully log-out!')
-               data.$store.dispatch('snackbarColor', 'info')
+               data.$store.dispatch('snackbarColor', 'success')
                data.$store.dispatch('snackbar', true)
                window.localStorage.setItem('roles', null)
                window.localStorage.setItem('userLogin', false)

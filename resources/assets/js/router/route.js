@@ -1,5 +1,6 @@
 import store from '../vuex/store.js'
 import home from './home/index.vue'
+import contact from './home/contact.vue'
 import dashboard from './dashboard.vue'
 import profile from './profile/index.vue'
 import admission from './admission/index.vue'
@@ -14,6 +15,7 @@ import enrollees from './enrollees.vue'
 export const routes = [
 	
 		{ path: '/', component: home, name: 'home'}, 
+		{ path: '/contact-us', component: contact, name: 'contact'},
 		{ path: '/admission', component: admission, name: 'admission'},
 		{ path: '/dashboard', component: dashboard, name: 'dashboard' , 
 			meta: { requiresAuth: true}

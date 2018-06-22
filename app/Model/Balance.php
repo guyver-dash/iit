@@ -12,7 +12,7 @@ class Balance extends Model
 
     public function confirmEnrolled(){
 
-    	 return $this->belongsToMany('App\Model\ConfirmEnrolled', 'balance_confirm_enrolled', 'balance_id', 'confirm_enrolled_id');
+    	 return $this->belongsToMany('App\Model\ConfirmEnrolled', 'balance_confirm_enrolled', 'balance_id', 'confirm_enrolled_id')->withPivot('discount')->withTimestamps();
     }
 
     public function scopePaginateBal($query){

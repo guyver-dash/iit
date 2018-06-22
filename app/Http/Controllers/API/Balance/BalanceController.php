@@ -65,8 +65,8 @@ class BalanceController extends Controller
     public function balanceEnrollees($id){
 
         return response()->json([
-                'enrollees' => $this->balance->balanceEnrollees($id),
-                'balance' => $this->balance->where('id', $id)->first()
+                'balance' => $this->balance->where('id', $id)->first(),
+                'enrollees' => $this->balance->balanceEnrollees($id)
             ]);
     }
 
@@ -87,8 +87,18 @@ class BalanceController extends Controller
 
     public function attachEnrollee(){
 
-       return  $this->balance->attachEnrollee();
+       return response()->json([
+            'sucess' => $this->balance->attachEnrollee()
+        ]);
 
+    }
+
+    public function balanceEnrolleeSearch(){
+        $request = app()->make('request');
+        return response()->json([
+            'balance' => $this->balance->where('id', $request->balanceId)->first(),
+            'enrollees' => $this->balance->balanceEnrolleeSearch()
+        ]);
     }
 
 

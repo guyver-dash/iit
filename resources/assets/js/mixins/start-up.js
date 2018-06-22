@@ -46,7 +46,6 @@ export default {
         if (roles.includes('admin')){
         	 this.$store.dispatch('items', [
                 { icon: 'home', text: 'Home', to: '/' },
-                 { icon: 'dashboard', text: 'Dashboard', to: '/dashboard' },
                 { icon: 'account_circle', 
                     text: 'Profile', 
                     to: '/profile'

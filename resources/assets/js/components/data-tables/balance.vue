@@ -1,5 +1,36 @@
 <template>
   <div>
+    <v-dialog v-model="dialog3" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">
+            New Balance
+          </span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <v-text-field type="text" 
+                  label="Balance Name" 
+                  v-model="balanceName" 
+                  />
+                  </v-text-field>
+              </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                <my-currency-input v-model="balanceAmount" v-bind:label="'Amount'"></my-currency-input>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="save()">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="dialog2" max-width="500px">
       <v-card>
         <v-card-title>
@@ -35,7 +66,7 @@
       <v-card>
         <v-card-title>
           <span class="headline">
-            New Balance {{ name }} 
+            Attach Enrollee
           </span>
         </v-card-title>
         <v-card-text>
@@ -51,9 +82,6 @@
                   </v-text-field>
               </v-flex>
               <courses></courses>
-              <v-flex xs12 sm12 md12 lg12 xl12>
-                <my-currency-input v-model="price" v-bind:label="'Amount'"></my-currency-input>
-              </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
@@ -128,6 +156,7 @@
       dialog3: false,
       discount: 0,
       balanceName: '',
+      balanceAmount: 0,
       editBalance: {
         name: '',
         amount: 0
@@ -201,6 +230,7 @@
           this.dialog = true
         }
         this.$store.dispatch('page', 1);
+
         this.courses()
         this.balancesM()
     },
@@ -229,6 +259,7 @@
         this.dialog3 = false
         
       },
+
       courses(){
         let data = this
         this.$http.get(base_api + '/courses')
@@ -293,17 +324,14 @@
       save() {
         let data = this
         this.$http.post(base_api + '/balance?token=' + localStorage.getItem('tokenKey'),{
-            balanceId: this.balanceName,
-            discount: this.discount,
-            amount: this.price,
-            course_ids: this.course_ids,
-            confirmEnrolledId: this.confirmEnrolledId.id
+            name: this.balanceName,
+            amount: this.balanceAmount,
         }).then(function(res){
             data.balancesM();
              data.$store.dispatch('snackbarText', 'Balance Created Successfully!')
             data.$store.dispatch('snackbarColor', 'success')
             data.$store.dispatch('snackbar', true)
-            data.dialog = false
+            data.dialog3 = false
         });
        
       },
@@ -313,15 +341,14 @@
         this.$http.post(base_api + '/balance-attach-enrollee?token=' + localStorage.getItem('tokenKey'),{
             balanceId: this.balanceId,
             discount: this.discount,
-            amount: this.price,
             course_ids: this.course_ids,
             confirmEnrolledId: this.confirmEnrolledId
         }).then(function(res){
-            data.balancesM();
             data.$store.dispatch('snackbarText', 'Balance Successfully attach to Enrollee!')
             data.$store.dispatch('snackbarColor', 'success')
             data.$store.dispatch('snackbar', true)
             data.dialog = false
+            data.$store.dispatch('course_ids', []);
         });
        
       }
