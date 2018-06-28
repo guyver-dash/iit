@@ -66,7 +66,7 @@ class BalanceRepository extends BaseRepository implements BalanceInterface{
 			$query->where('balance_id', $request->id);
 					
 		})->with(['balances', 'enrollee'])
-		->paginate(2);
+		->paginate(15);
 
 		$page = $request->page;
 		$perPage = 2;

@@ -9,6 +9,8 @@ use App\Model\SchoolYear;
 use App\Model\ConfirmEnrolled;
 use Riskihajar\Terbilang\Facades\Terbilang;
 use Carbon\Carbon;
+use App\Model\Balance;
+
 class PaymentController extends Controller
 {
 
@@ -221,14 +223,13 @@ class PaymentController extends Controller
             ->whereHas('confirmEnrolled', function($query) use ($request) {
                 $query->where('semester_id', $request->semester);
                 $query->where('school_year_id', $request->schoolYear);
-            })->with(['confirmEnrolled.enrollee', 'confirmEnrolled', 'balance'])->orderBy('created_at', 'DESC')->get();
+            })->with(['confirmEnrolled.enrollee', 'balance.confirmEnrolled'])->orderBy('created_at', 'DESC')->get();
         if ( count($payments) > 0) {
             
         $examPeriod = $request->examPeriod;
         $semester = $payment->confirmEnrolled->semester->name;
         $schoolYear = $payment->confirmEnrolled->schoolYear->sy;
         $date = Carbon::now()->toDayDateTimeString();
-
         $idno = $payment->confirmEnrolled->enrollee->idno;
         $name = $payment->confirmEnrolled->enrollee->lastname  . ', ' . $payment->confirmEnrolled->enrollee->firstname;
         $course = $payment->confirmEnrolled->course->name;
@@ -237,17 +238,40 @@ class PaymentController extends Controller
         $trPaid = '';
         $amountDue = '&#8369;' . number_format($request->dueAmount,  2, '.', ',');
         $dueDate =  Carbon::parse($request->dueDate)->format('l jS \\of F Y'); 
+        $balanceIdChecker = '';
         foreach ($payments as $value) {
+            $searchBal = Balance::where('id', $value->balance->id)
+                        ->whereHas('confirmEnrolled', function($query) use ($payment, $value) {
+                            $query->where('confirm_enrolled_id', $payment->confirmEnrolled->id);
+                        })->with('confirmEnrolled')->first();
+            $discount = collect($searchBal->confirmEnrolled)
+                            ->where('pivot.confirm_enrolled_id', $payment->confirmEnrolled->id)
+                            ->where('pivot.balance_id', $value->balance->id)
+                            ->first()->pivot->discount;
             $amountPaid = '&#8369;' . number_format($value->amount_charge,  2, '.', ',');
             $balanceName = $value->balance->name;
-            $balance = '&#8369;' . number_format($value->balance->amount,  2, '.', ',');
-
-            $remain = '&#8369;' . number_format($value->balance->amount -  $value->total_amount_given,  2, '.', ',');
             $createdAt = $value->created_at;
+
+            if ($discount > 0) {
+                $discountShow = ' Less: ' .  $discount . '%';
+                $balance = '&#8369;' . number_format($value->balance->amount,  2, '.', ',');
+                $newBalance = $value->balance->amount - $value->balance->amount * $discount/100;
+                $newBalanceFormatted =  '&#8369;' . number_format($newBalance,  2, '.', ',');
+                $remain = '&#8369;' . number_format($newBalance -  $value->total_amount_given,  2, '.', ',');
+            }else{
+                $balance = '&#8369;' . number_format($value->balance->amount,  2, '.', ',');
+                $discountShow = '';
+                $newBalanceFormatted = '';
+                $remain = '&#8369;' . number_format($value->balance->amount - $value->total_amount_given,  2, '.', ',');
+
+            }
+            
 
             $trPaid .= "<tr>
                         <td> $balanceName </td>
-                        <td> $balance</td>
+                        <td> $balance $discountShow <br />
+                            <span style='color:green'>$newBalanceFormatted</span>
+                        </td>
                         <td> $amountPaid </td>
                         <td> $remain </td>
                         <td>$createdAt</td>
@@ -306,7 +330,6 @@ class PaymentController extends Controller
                     <strong>Name: </strong>  $name <br />
                     <strong>Course: </strong> $course<br />
                     <strong>Schedule: </strong> $schedule <br />
-                    <strong>Tuition Fee Discount: </strong>
                 </p>
             </div>
             <table id='first' border='1'>

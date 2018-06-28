@@ -12,7 +12,7 @@ class Payment extends Model
     protected $fillable = ['confirm_enrollee_id', 'amount_charge', 'amount_given', 'change', 'prefix', 'balance_id', 'receipt_no', 'total_amount_given'];
     
     public function scopePaginationPay($query){
-    	return $query->paginate(2);
+    	return $query->paginate(15);
     }
 
     public function getAmountGivenAttribute($val){

@@ -1,5 +1,8 @@
 import store from '../vuex/store.js'
 import home from './home/index.vue'
+import school from './home/school.vue'
+import students from './home/students.vue'
+import industryPartner from './home/industry-partner.vue'
 import contact from './home/contact.vue'
 import dashboard from './dashboard.vue'
 import profile from './profile/index.vue'
@@ -7,6 +10,7 @@ import admission from './admission/index.vue'
 import editAdmission from './admission/editAdmission.vue'
 import balance from './profile/balance.vue'
 import payment from './profile/payment.vue'
+import trainingPayments from './profile/training-payments.vue'
 import shs from './profile/shs.vue'
 import jhs from './profile/jhs.vue'
 import balanceEnrollee from './profile/balance-enrollee.vue'
@@ -15,7 +19,10 @@ import enrollees from './enrollees.vue'
 export const routes = [
 	
 		{ path: '/', component: home, name: 'home'}, 
+		{ path: '/school', component: school, name: 'school'},
+		{ path: '/students', component: students, name: 'students'},
 		{ path: '/contact-us', component: contact, name: 'contact'},
+		{ path: '/industry-partner', component: industryPartner, name: 'industryPartner'},
 		{ path: '/admission', component: admission, name: 'admission'},
 		{ path: '/dashboard', component: dashboard, name: 'dashboard' , 
 			meta: { requiresAuth: true}
@@ -30,6 +37,9 @@ export const routes = [
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/payments', component: payment, name: 'payments', 
+			meta: { requiresAuth: true}
+		},
+		{ path: '/admin/training-payments', component: trainingPayments, name: 'trainingPayments', 
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/enrollees', component: enrollees, name: 'enrollees', 

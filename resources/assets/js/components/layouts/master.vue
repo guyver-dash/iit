@@ -41,6 +41,7 @@
               v-for="(child, i) in item.children"
               :key="i"
               @click=""
+              :to="child.to"
             >
               <v-list-tile-action v-if="child.icon">
                 <v-icon>{{ child.icon }}</v-icon>
@@ -174,17 +175,23 @@
       </v-card>
     </v-dialog>
     <admission></admission>
+
     <main-snack-bar v-bind:text="snackbarText" v-bind:color="snackbarColor"></main-snack-bar>
+    <new-footer></new-footer>
+    <loader v-bind:value="loader" v-bind:message="loaderMessage"></loader>
   </v-app>
 </template>
 
 <script>
   import admission from '../../components/dialog/admission.vue'
   import mainSnackBar from '../../components/snackbar/snackbar.vue'
+  import newFooter from '../../components/layouts/footer.vue'
+  import loader from '../../components/dialog/loader.vue'
 
   export default {
     data: () => ({
-     
+      loader: false,
+      loaderMessage: '',
       e1: true,
       dialog: false,
       alertText: '',
@@ -205,7 +212,7 @@
      
     }),
     components: {
-      admission, mainSnackBar
+      admission, mainSnackBar, newFooter, loader
     },
     computed: {
       items(){
@@ -234,8 +241,9 @@
         signin(){
           var data = this
           if(this.$refs.login.validate()){
+              this.loader = true
+              this.loaderMessage = 'Logging in...'
               this.$http.post(base_api + '/auth/login',{
-
                 email: this.email,
                 password: this.password
               }).then((res)=>{
@@ -250,11 +258,13 @@
                   data.$store.dispatch('snackbarText', 'You have successfully sign-in!')
                   data.$store.dispatch('snackbarColor', 'success')
                   data.$store.dispatch('snackbar', true)
+                  data.loader = false
 
               })
               .catch(function(error){
                 data.alertText = error.response.data
                 data.loginAlert = true
+                data.loader = false
               })
           }
           

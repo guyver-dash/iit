@@ -1,4 +1,6 @@
 export const state = {
+     loader: false,
+     loaderMessage: '',
      confirmEnrolledId: '',
      balanceEnrollees: [],
      dueDate: '',
@@ -53,23 +55,21 @@ export const state = {
      civilStatus: [],
      educAtt:[],
      items: [
-        { icon: 'home', text: 'Home', to: '/' },
-        {
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: 'About',
-          to: '/about-us',
-          model: false,
-          children: [
-            { text: 'School' },
-            { text: 'Students' },
-            { text: 'DepEd' },
-            { text: 'TESDA' },
-            { text: 'Industry Partner' }
-          ]
-        },
-        { icon: 'assignment_ind', text: 'Admission', to: '/admission' },
-        { icon: 'phone', text: 'Contact Us', to: '/contact-us'},
-        { icon: 'tag_faces', text: 'Facebook Page', to: '/facebook-page' }
-      ]
+                { icon: 'home', text: 'Home', to: '/' },
+                {
+                  icon: 'keyboard_arrow_up',
+                  'icon-alt': 'keyboard_arrow_down',
+                  text: 'About',
+                  to: '/about-us',
+                  model: false,
+                  children: [
+                    { text: 'School', to: '/school' },
+                    { text: 'Students' , to: '/students'},
+                    { text: 'Industry Partner', to: '/industry-partner' }
+                  ]
+                },
+                { icon: 'assignment_ind', text: 'Admission', to: '/admission' },
+                { icon: 'phone', text: 'Contact Us', to: '/contact-us'},
+                { icon: 'tag_faces', text: 'Facebook Page', to: '/facebook-page' }
+              ]
 }

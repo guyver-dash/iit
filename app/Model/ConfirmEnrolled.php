@@ -43,7 +43,7 @@ class ConfirmEnrolled extends Model
 
     public function scopePagination($query){
 
-        return $this->scopeRelTable($query)->paginate(2);
+        return $this->scopeRelTable($query)->paginate(15);
     }
 
     public function scopeRelTable($query){

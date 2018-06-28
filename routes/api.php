@@ -17,6 +17,7 @@ Route::get('payments/print/{id}', 'API\Payment\PaymentController@print');
 Route::post('payments/search', 'API\Payment\PaymentController@search');
 Route::get('payments/view/summary', 'API\Payment\PaymentController@summary');
 Route::get('payments/all/summary', 'API\Payment\PaymentController@summaryAll');
+Route::resource('training-payments', 'API\TrainingPayments\TrainingPaymentsController');
 Route::delete('balance/{id}', 'API\Balance\BalanceController@destroy');
 Route::get('balance', 'API\Balance\BalanceController@index');
 Route::get('balance/{id}', 'API\Balance\BalanceController@edit');

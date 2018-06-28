@@ -8,6 +8,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		loaderMessage(state, loaderMessage){
+			state.loader = loaderMessage
+		},
+		loader(state, loader){
+			state.loader = loader
+		},
 		balanceEnrollees(state, balanceEnrollees){
 			state.balanceEnrollees = balanceEnrollees
 		},
@@ -151,6 +157,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		loaderMessage(store, loaderMessage){
+			store.commit('loaderMessage', loaderMessage)
+		},
+		loader(store, loader){
+			store.commit('loader', loader)
+		},
 		balanceEnrollees(store, balanceEnrollees){
 			store.commit('balanceEnrollees', balanceEnrollees)
 		},
@@ -336,6 +348,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		loaderMessage(){
+			return store.state.loaderMessage
+		},
+		loader(){
+			return store.state.loader
+		},
 		balanceEnrollees(){
 			return store.state.balanceEnrollees
 		},

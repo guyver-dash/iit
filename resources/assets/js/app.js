@@ -11,11 +11,11 @@ import Vue2Filters from 'vue2-filters'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
 
-// window.base_api = 'http://localhost/iit/public/api';
-// window.base = 'http://localhost/iit/public/';
+window.base_api = 'http://localhost/iit/public/api';
+window.base = 'http://localhost/iit/public/';
 
-window.base_api = 'http://cebu.it.nf/public/api';
-window.base = 'http://cebu.it.nf/public/';
+// window.base_api = 'http://cebu.it.nf/public/api';
+// window.base = 'http://cebu.it.nf/public/';
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 Vue.use(MyPlugin)

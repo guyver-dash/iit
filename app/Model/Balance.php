@@ -17,7 +17,7 @@ class Balance extends Model
 
     public function scopePaginateBal($query){
 
-    	return $query->paginate(2);
+    	return $query->paginate(15);
     }
 
     public function getAmountAttribute($val){
