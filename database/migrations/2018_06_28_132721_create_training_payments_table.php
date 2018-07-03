@@ -19,7 +19,8 @@ class CreateTrainingPaymentsTable extends Migration
             $table->string('lastname');
             $table->decimal('paid_amount')->default(0);
             $table->decimal('received_amount')->default(0);
-            $table->string('remarks');
+            $table->decimal('change')->default(0);
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

@@ -10,6 +10,7 @@ import master from './components/layouts/master.vue'
 import Vue2Filters from 'vue2-filters'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
+export const EventBus = new Vue();
 
 window.base_api = 'http://localhost/iit/public/api';
 window.base = 'http://localhost/iit/public/';

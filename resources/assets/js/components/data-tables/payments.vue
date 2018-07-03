@@ -307,7 +307,7 @@
       },
       { text: 'Balace', value: 'balance', sortable: false  },
       { text: 'Paid Amount', value: 'paidAmount', sortable: false  },
-      { text: 'Given Amount', value: 'givenAmount', sortable: false  },
+      { text: 'Received Amount', value: 'givenAmount', sortable: false  },
       { text: 'Change', value: 'change', sortable: false },
       { text: 'Action', value: 'action', sortable: false }
       ],

@@ -350,7 +350,7 @@ class PaymentController extends Controller
                 </p>
             <div style='border-top: 1px dotted grey;'>
                 <p>
-                    <strong>Received by: </strong> Arcenal Jr, Victor Dimpas (Finance Officer)<br>
+                    <strong>Received by: </strong> Rosello, Fairlane (Finance Officer)<br>
 
                 </p>
                 <p align='center'>
@@ -376,6 +376,7 @@ class PaymentController extends Controller
         $course = $payment->confirmEnrolled->course->name;
         $name = $payment->confirmEnrolled->enrollee->lastname . ', ' . $payment->confirmEnrolled->enrollee->firstname;
         $amount = $payment->amount;
+        $receiptNo = $payment->prefix . '-' . $payment->receipt_no;
         $amountWords = ucwords(Terbilang::make($payment->amount_charge, ' Pesos'));
         $balance = $payment->balance->name;
         $paidAmount = '&#8369;' . number_format($payment->amount_charge,  2, '.', ',');
@@ -414,7 +415,7 @@ class PaymentController extends Controller
             <div style='width: 300px;float:left;'>
                 <p>
                     <strong>Paid Date: </strong> $payDate <br>
-                    <strong>Receipt No.:</strong> <br />
+                    <strong>Receipt No.:</strong> $receiptNo <br />
                     <strong>Student ID No.:  </strong> $studentIdNo <br />
                     <strong>Course: </strong> $course
 
@@ -434,7 +435,64 @@ class PaymentController extends Controller
             </div>
             <div style='border-top: 1px dotted grey;'>
                 <p>
-                    <strong>Received by: </strong> Arcenal Jr, Victor Dimpas (Finance Officer)<br>
+                    <strong>Received by: </strong> Rosello, Fairlane (Finance Officer)<br>
+
+                </p>
+                <p align='center'>
+                    All Rights Reserved @IIT 2015<br />
+                    <strong>Disclaimer: </strong> 
+                    This is a temporary receipt.
+                </p>
+            </div>
+
+            <br />
+            <br />
+            <div style='border-top: 1px dotted grey;'></div>
+            <br />
+            <br />
+            <br />
+            <br />
+                <img src='images/logos/logo.png' width='120' style='padding: 0px;margin: 0px; margin-top: -20px; float: right' />
+            <div style='margin-left: 100px;'>
+            <div style='padding:0; margin:0; font-size:12px;' align='center'> <strong> Intellisense Institute of Technology </strong> </div>
+             <div align='center' style='padding:0; margin:0; font-size:10px;'>
+                2F Aspac Building, Guizo
+            </div>
+             <p align='center' style='padding:0; margin:0; font-size:10px;'>
+                    Mandaue City, Cebu
+                    (032) 4172412
+                </p>
+
+
+                <p align='center'> <strong style='font-size: 14px;'> ACKNOWLEDGEMENT RECEIPT </strong> </p>
+                <br />
+                <br />
+                
+            </div>
+            <div style='width: 300px;float:left;'>
+                <p>
+                    <strong>Paid Date: </strong> $payDate <br>
+                    <strong>Receipt No.:</strong> $receiptNo <br />
+                    <strong>Student ID No.:  </strong> $studentIdNo <br />
+                    <strong>Course: </strong> $course
+
+                </p>
+            </div>
+            <div>
+                <p> <strong>Received from: </strong> $name <br />
+                    <strong>The sum of Peso/s: </strong> $amountWords <br />
+                    <strong>As Payment for: </strong> $balance<br />
+                </p>
+            </div>
+            <div style='clear:both'>
+                <p> <strong>Due Amount:: </strong>$paidAmount <br />
+                    <strong>Received Amount:: </strong> $givenAmount <br />
+                    <strong>Change: </strong>$change <br />
+                </p>
+            </div>
+            <div style='border-top: 1px dotted grey;'>
+                <p>
+                    <strong>Received by: </strong> Rosello, Fairlane (Finance Officer)<br>
 
                 </p>
                 <p align='center'>

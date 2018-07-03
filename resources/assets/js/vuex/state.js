@@ -1,4 +1,6 @@
 export const state = {
+     trainingPayments:[],
+     newTrainingDialog: false,
      loader: false,
      loaderMessage: '',
      confirmEnrolledId: '',

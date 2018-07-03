@@ -8,6 +8,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		trainingPayments(state, payload){
+			state.trainingPayments = payload
+		},
+		newTrainingDialog(state, payload){
+			state.newTrainingDialog = payload
+		},
 		loaderMessage(state, loaderMessage){
 			state.loader = loaderMessage
 		},
@@ -157,6 +163,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		trainingPayments(store, payload){
+			store.commit('trainingPayments', payload)
+		},
+		newTrainingDialog(store, payload){
+			store.commit('newTrainingDialog', payload)
+		},
 		loaderMessage(store, loaderMessage){
 			store.commit('loaderMessage', loaderMessage)
 		},
@@ -348,6 +360,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		trainingPayments(){
+			return store.state.trainingPayments
+		},
+		newTrainingDialog(){
+			return store.state.newTrainingDialog
+		},
 		loaderMessage(){
 			return store.state.loaderMessage
 		},
