@@ -15,6 +15,8 @@ class CreateTrainingPaymentsTable extends Migration
     {
         Schema::create('trainingpayments', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('prefix')->nullable();    
+            $table->integer('receipt_no')->default(0);
             $table->string('firstname');
             $table->string('lastname');
             $table->decimal('paid_amount')->default(0);

@@ -190,7 +190,7 @@ class PaymentController extends Controller
             </table> 
             <div style='border-top: 1px dotted grey;'>
                 <p>
-                    <strong>Received by: </strong> Arcenal Jr, Victor Dimpas (Finance Officer)<br>
+                    <strong>Received by: </strong> Rosello, Fairlane (Finance Officer)<br>
 
                 </p>
                 <p align='center'>
@@ -250,7 +250,7 @@ class PaymentController extends Controller
                             ->first()->pivot->discount;
             $amountPaid = '&#8369;' . number_format($value->amount_charge,  2, '.', ',');
             $balanceName = $value->balance->name;
-            $createdAt = $value->created_at;
+            $createdAt = $value->created_at->toDayDateTimeString();
 
             if ($discount > 0) {
                 $discountShow = ' Less: ' .  $discount . '%';
@@ -371,7 +371,7 @@ class PaymentController extends Controller
 
         $payment = Payment::where('id', $id)->with(['confirmEnrolled.enrollee', 'confirmEnrolled.course'])->first();
 
-        $payDate = $payment->created_at;
+        $payDate = $payment->created_at->toDayDateTimeString();
         $studentIdNo = $payment->confirmEnrolled->enrollee->idno;
         $course = $payment->confirmEnrolled->course->name;
         $name = $payment->confirmEnrolled->enrollee->lastname . ', ' . $payment->confirmEnrolled->enrollee->firstname;

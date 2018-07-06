@@ -1,4 +1,18 @@
 export const state = {
+     checkCollectionPayment: true,
+     checkCollectionTrainingPayment: false,
+     startCollectionDate: '',
+     endCollectionDate: '',
+     editTrainingPayment: {
+                firstname: '',
+                lastname: '',
+                paid_amount: 0,
+                received_amount: 0,
+                change: '',
+                remarks: '',
+                created_at: ''
+            },
+     paymentDate: '',
      trainingPayments:[],
      newTrainingDialog: false,
      loader: false,

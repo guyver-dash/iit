@@ -7,7 +7,7 @@
 		class="elevation-1"
 		>
 		<template slot="items" slot-scope="props">
-			<td>{{ props.item.firstname|capitalize}} {{ props.item.firstname|capitalize}}</td>
+			<td>{{ props.item.firstname|capitalize}} {{ props.item.lastname|capitalize}}</td>
 			<td>{{ props.item.paid_amount|currency('₱ ') }}</td>
 			<td>{{ props.item.received_amount|currency('₱ ') }}</td>
 			<td>{{ props.item.change|currency('₱ ') }}</td>
@@ -50,6 +50,30 @@
 				<v-form ref="trainingPayment" v-model="valid" lazy-validation>
 					<v-container grid-list-md>
 						<v-layout wrap>
+							<v-flex xs12 sm12 md12 lg12 xl12>	
+								<payment-date> </payment-date>
+							</v-flex>
+							<v-flex xs12 sm12 md12 lg12 xl12>
+								<v-layout>
+
+									<v-flex xs3 sm3 md3 lg3 xl3>
+										<v-text-field
+										label="Prefix"
+										v-model="prefix"
+										required
+										:rules="[v => !!v || 'Prefix is required']"
+										></v-text-field>
+									</v-flex>
+									<v-flex xs8 sm8 md8 lg8 xl8>
+										<v-text-field
+										label="Receipt No"
+										v-model="receipt_no"
+										required
+										:rules="[v => !!v || 'Receipt no. is required']"
+										></v-text-field>
+									</v-flex>
+								</v-layout>
+							</v-flex>
 							<v-flex xs12 sm12 md12 lg12 xl12>
 								<v-text-field type="text" 
 								label="Firstname" 
@@ -98,55 +122,80 @@
 </v-card>
 </v-dialog>
 
-	<v-dialog v-model="editTrainingDialog" max-width="500px">
-		<v-card>
-			<v-card-title>
-				<span class="headline">
-					Edit Training Payment
-				</span>
-			</v-card-title>
-			<v-card-text>
-				<v-form ref="editTrainingPayment" v-model="valid" lazy-validation>
-					<v-container grid-list-md>
-						<v-layout wrap>
+<v-dialog v-model="editTrainingDialog" max-width="500px">
+	<v-card>
+		<v-card-title>
+			<span class="headline">
+				Edit Training Payment
+			</span>
+		</v-card-title>
+		<v-card-text>
+			<v-form ref="editTrainingPayment" v-model="valid" lazy-validation>
+				<v-container grid-list-md>
+
+					<v-layout wrap>
+						<v-flex xs12 sm12 md12 lg12 xl12>	
+								<edit-payment-date> </edit-payment-date>
+							</v-flex>
 							<v-flex xs12 sm12 md12 lg12 xl12>
-								<v-text-field type="text" 
-								label="Firstname" 
-								v-model="editTrainingPayment.firstname"
-								:rules="[v => !!v || 'Firstname field is required']"
-								/>
-							</v-text-field>
-						</v-flex>
+								<v-layout>
+
+									<v-flex xs3 sm3 md3 lg3 xl3>
+										<v-text-field
+										label="Prefix"
+										v-model="editTrainingPayment.prefix"
+										required
+										:rules="[v => !!v || 'Prefix is required']"
+										></v-text-field>
+									</v-flex>
+									<v-flex xs8 sm8 md8 lg8 xl8>
+										<v-text-field
+										label="Receipt No"
+										v-model="editTrainingPayment.receipt_no"
+										required
+										:rules="[v => !!v || 'Receipt no. is required']"
+										></v-text-field>
+									</v-flex>
+								</v-layout>
+							</v-flex>
 						<v-flex xs12 sm12 md12 lg12 xl12>
 							<v-text-field type="text" 
-							label="Lastname" 
-							v-model="editTrainingPayment.lastname"
-							:rules="[v => !!v || 'Lastname field is required']"
+							label="Firstname" 
+							v-model="editTrainingPayment.firstname"
+							:rules="[v => !!v || 'Firstname field is required']"
 							/>
 						</v-text-field>
 					</v-flex>
 					<v-flex xs12 sm12 md12 lg12 xl12>
-						<my-currency-input v-model="editTrainingPayment.paid_amount" v-bind:label="'Paid Amount'"></my-currency-input>
-					</v-flex>
-					<v-flex xs12 sm12 md12 lg12 xl12>
-						<my-currency-input v-model="editTrainingPayment.received_amount" v-bind:label="'Received Amount'"></my-currency-input>
-					</v-flex>
-					<v-flex xs12 sm12 md12 lg12 xl12>
-						<span class="title"> Change: </span>
-						<span class="display-1">{{ editTrainingPayment.change|currency('₱ ') }}</span>
-					</v-flex>
-					<v-flex xs12 sm12 md12 lg12 xl12 v-if="showRemarks==true">
 						<v-text-field type="text" 
-						label="Remarks" 
-						v-model="editTrainingPayment.remarks"
-						textarea
+						label="Lastname" 
+						v-model="editTrainingPayment.lastname"
+						:rules="[v => !!v || 'Lastname field is required']"
 						/>
 					</v-text-field>
 				</v-flex>
-			</v-layout>
-		</v-container>
-	</v-form>
-	
+				<v-flex xs12 sm12 md12 lg12 xl12>
+					<my-currency-input v-model="editTrainingPayment.paid_amount" v-bind:label="'Paid Amount'"></my-currency-input>
+				</v-flex>
+				<v-flex xs12 sm12 md12 lg12 xl12>
+					<my-currency-input v-model="editTrainingPayment.received_amount" v-bind:label="'Received Amount'"></my-currency-input>
+				</v-flex>
+				<v-flex xs12 sm12 md12 lg12 xl12>
+					<span class="title"> Change: </span>
+					<span class="display-1">{{   editTrainingPayment.received_amount - editTrainingPayment.paid_amount|currency('₱ ') }}</span>
+				</v-flex>
+				<v-flex xs12 sm12 md12 lg12 xl12 v-if="showRemarks==true">
+					<v-text-field type="text" 
+					label="Remarks" 
+					v-model="editTrainingPayment.remarks"
+					textarea
+					/>
+				</v-text-field>
+			</v-flex>
+		</v-layout>
+	</v-container>
+</v-form>
+
 </v-card-text>
 <v-card-actions>
 	<v-spacer></v-spacer>
@@ -161,17 +210,14 @@
 
 <script>
 	import myCurrencyInput from '../../components/currency-format/my-currency-input'
+	import paymentDate from '../../components/pickers/created-at'
+	import editPaymentDate from '../../components/pickers/edit-payment-date'
 	export default {
 		data: () => ({
+			prefix: '00',
+			receipt_no: '',
 			editTrainingDialog: false,
-			editTrainingPayment: {
-				firstname: '',
-				lastname: '',
-				paid_amount: 0,
-				received_amount: 0,
-				change: '',
-				remarks: ''
-			},
+			
 			valid: false,
 			paidAmount: 0,
 			receivedAmount: 0,
@@ -197,10 +243,11 @@
 
 		}),
 		components: {
-			myCurrencyInput
+			myCurrencyInput, paymentDate, editPaymentDate
 		},
 		created(){
 			this.getTrainingPayments()
+
 		},
 		computed: {
 			trainingPayments(){
@@ -208,9 +255,25 @@
 			},
 			newTrainingDialog(){
 				return this.$store.getters.newTrainingDialog
+			},
+			paymentDate(){
+				return this.$store.getters.paymentDate
+			},
+			editTrainingPayment(){
+				return this.$store.getters.editTrainingPayment
 			}
 		},
 		methods: {
+			getReceipt(){
+				let data = this
+				this.$http.get(window.base_api + '/training-payments-receipt-no?token=' + localStorage.getItem('tokenKey'))
+				.then(function(res){
+					if (res.data.receiptNo != null) {
+						data.receipt_no = res.data.receiptNo + 1
+					}
+
+				})
+			},
 			getTrainingPayments(){
 				let data = this
 				this.$http.get(window.base_api + '/training-payments?page=' + this.page +'&token=' + localStorage.getItem('tokenKey'))
@@ -237,13 +300,13 @@
 				this.editTrainingDialog = true
 				this.$http.get(window.base_api + '/training-payments/' + trainingId + '/edit?token=' + localStorage.getItem('tokenKey'))
 				.then(function(res){
-					data.editTrainingPayment = res.data.trainingPayment;
+					data.$store.dispatch('editTrainingPayment', res.data.trainingPayment);
 				})
 			},
 			deleteItem(trainingId){
 				var data = this
-		        var z = confirm('Are you sure you want to delete this item?')
-		        if (z === true) {
+				var z = confirm('Are you sure you want to delete this item?')
+				if (z === true) {
 					this.$http.delete(window.base_api + '/training-payments/' + trainingId + '?token=' + localStorage.getItem('tokenKey'))
 					.then(function(res){
 						data.getTrainingPayments();
@@ -256,11 +319,12 @@
 						data.$store.dispatch('snackbarColor', 'error')
 						data.$store.dispatch('snackbar', true)
 					}); 
-		        }
+				}
 				
 			},
 			update(){
 				let data = this
+
 				if (this.$refs.editTrainingPayment.validate()) {
 					this.$http.put(window.base_api + '/training-payments/' + this.editTrainingPayment.id + '?token=' + localStorage.getItem('tokenKey'), this.editTrainingPayment)
 					.then(function(res){
@@ -289,7 +353,10 @@
 						paid_amount: this.paidAmount,
 						received_amount: this.receivedAmount,
 						change: this.change,
-						remarks: this.remarks
+						remarks: this.remarks,
+						prefix: this.prefix,
+						receipt_no: this.receipt_no,
+						created_at: this.paymentDate
 
 					})
 					.then(function(res){
@@ -310,6 +377,14 @@
 			deduct(){
 				var change =  this.receivedAmount - this.paidAmount;
 				this.change = change;
+			},
+			createChange(paidAmount, receivedAmount){
+				let change = 0;  
+				change = paidAmount - receivedAmount;
+
+				this.$store.dispatch('editTrainingPaymentField', {
+					'change' : change
+				});
 			}
 		},
 		watch: {
@@ -322,11 +397,43 @@
 			receivedAmount(){
 				this.deduct()
 			},
-			'editTrainingPayment.paid_amount': function(){
-				this.editTrainingPayment.change =  this.editTrainingPayment.received_amount - this.editTrainingPayment.paid_amount;
+			'editTrainingPayment.paid_amount': function(val){
+				this.$store.dispatch('editTrainingPaymentField', {
+					'paid_amount' : val
+				});
+				
+							
 			},
-			'editTrainingPayment.received_amount': function(){
-				this.editTrainingPayment.change = this.editTrainingPayment.received_amount - this.editTrainingPayment.paid_amount;
+			'editTrainingPayment.received_amount': function(val){
+				this.$store.dispatch('editTrainingPaymentField', {
+					'received_amount' : val
+				});
+				
+			},
+			'editTrainingPayment.prefix': function(val){
+				this.$store.dispatch('editTrainingPaymentField', {
+					'prefix' : val
+				});
+			},
+			'editTrainingPayment.receipt_no': function(val){
+				this.$store.dispatch('editTrainingPaymentField', {
+					'receipt_no' : val
+				});
+			},
+			'editTrainingPayment.firstname': function(val){
+				this.$store.dispatch('editTrainingPaymentField', {
+					'firstname' : val
+				});
+			},
+			'editTrainingPayment.lastname': function(val){
+				this.$store.dispatch('editTrainingPaymentField', {
+					'lastname' : val
+				});
+			},
+			'editTrainingPayment.remarks': function(val){
+				this.$store.dispatch('editTrainingPaymentField', {
+					'remarks' : val
+				});
 			}
 		}
 

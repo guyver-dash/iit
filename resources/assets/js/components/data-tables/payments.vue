@@ -68,13 +68,16 @@
       <v-card>
         <v-card-title>
           <span class="headline">
-            New Payment ({{ payment.confirm_enrolled.enrollee.firstname }} {{ payment.confirm_enrolled.enrollee.lastname }} {{ payment.balance_id }})
+            Edit Payment ({{ payment.confirm_enrolled.enrollee.firstname }} {{ payment.confirm_enrolled.enrollee.lastname }} {{ payment.balance_id }})
           </span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" v-model="valid" lazy-validation>
           <v-container grid-list-md>
             <v-layout wrap>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+              <edit-payment-date></edit-payment-date>
+              </v-flex>
               <v-flex xs12 sm12 md12 lg12 xl12>
                 <v-select
                   :items="balancesEdit"
@@ -140,6 +143,9 @@
           <v-form ref="form" v-model="valid" lazy-validation>
           <v-container grid-list-md>
             <v-layout wrap>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+              <payment-date> </payment-date>
+              </v-flex>
               <v-flex xs12 sm12 md12 lg12 xl12>
                 <v-select
                   :items="balances"
@@ -249,11 +255,13 @@
 <script>
   import myCurrencyInput from '../../components/currency-format/my-currency-input'
   import dueDate from '../../components/pickers/due-date'
+  import paymentDate from '../../components/pickers/created-at'
+  import editPaymentDate from '../../components/pickers/edit-payment-date'
   export default {
    
     props:['confirmid'],
     components: {
-      myCurrencyInput, dueDate
+      myCurrencyInput, dueDate, paymentDate, editPaymentDate
     },
     data: () => ({
       dueAmount: 0,
@@ -315,6 +323,9 @@
     }),
 
     computed: {
+      paymentDate(){
+        return this.$store.getters.paymentDate
+      },
       dueDate(){
         return this.$store.getters.dueDate
       },
@@ -363,6 +374,7 @@
         this.$http.get(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey'))
         .then(function(res){
           data.payment = res.data.payment
+          data.$store.dispatch('paymentDate', res.data.payment.created_at.substring(0, 10));
           data.balancesEdit = res.data.balances.balances
         })
       },
@@ -431,7 +443,8 @@
            change: this.change,
            prefix: this.prefix,
            receipt_no: this.receipt_no,
-           balance_id: this.balance_id
+           balance_id: this.balance_id,
+           created_at: this.paymentDate
           }).then(function(res){
               data.allPayments()
                // window.open(window.base_api + '/payments/print/' + res.data.id + '?token=' + localStorage.getItem('tokenKey'));

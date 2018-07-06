@@ -55,7 +55,8 @@ export default {
                 { icon: 'attach_money', text: 'Training Payments', to: '/admin/training-payments' },
                 { icon: 'assignment_ind', text: 'Enrollees', to: '/admin/enrollees' },
                 { icon: 'folder_shared', text: 'SHS', to: '/admin/shs' },
-                { icon: 'folder_shared', text: 'JHS', to: '/admin/jhs'}
+                { icon: 'folder_shared', text: 'JHS', to: '/admin/jhs'},
+                { icon: 'donut_small', text: 'Collection Reports', to: '/admin/collections'}
               ])
 
         }

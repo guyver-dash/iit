@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\TrainingPayment;
 use Riskihajar\Terbilang\Facades\Terbilang;
+use Carbon\Carbon;
 
 class TrainingPaymentsController extends Controller
 {
@@ -87,10 +88,19 @@ class TrainingPaymentsController extends Controller
     public function update(Request $request, $id)
     {
         $trainingPayment = TrainingPayment::find($id);
-        $trainingPayment->update($request->all());
+        $trainingPayment->update([
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'prefix' => $request->prefix,
+                'receipt_no' => $request->receipt_no,
+                'paid_amount' => $request->paid_amount,
+                'received_amount' => $request->received_amount,
+                'change' => $request->received_amount - $request->paid_amount,
+                'created_at' => $request->created_at,
+            ]);
         return response()->json([
 
-                $request->all()
+                true
             ]);
     }
 
@@ -123,6 +133,13 @@ class TrainingPaymentsController extends Controller
             ]);
     }
 
+    public function receiptNo(){
+
+        return response()->json([
+                'receiptNo' => TrainingPayment::max('receipt_no')
+            ]);
+    }
+
     public function print($id){
         $pdf = \App::make('dompdf.wrapper');
         $pdf->setPaper('legal', 'portrait');
@@ -130,13 +147,14 @@ class TrainingPaymentsController extends Controller
         $trainingPayment = TrainingPayment::where('id', $id)->first();
 
 
-        $payDate = $trainingPayment->created_at;
+        $payDate = substr(Carbon::parse($trainingPayment->created_at)->toDayDateTimeString(), 0, -8);
 
         $name = $trainingPayment->firstname . ' ' . $trainingPayment->lastname;
         $amountWords = ucwords(Terbilang::make($trainingPayment->paid_amount, ' Pesos'));
         $paidAmount = '&#8369;' . number_format($trainingPayment->paid_amount,  2, '.', ',');
         $givenAmount = '&#8369;' . number_format($trainingPayment->received_amount,  2, '.', ',');
         $change = '&#8369;' . number_format($trainingPayment->change,  2, '.', ',');
+        $receiptNo = $trainingPayment->prefix . '-' .$trainingPayment->receipt_no;
         $pdf->loadHTML("
             <style>
                 *{
@@ -169,7 +187,7 @@ class TrainingPaymentsController extends Controller
             <div style='width: 300px;float:left;'>
                 <p>
                     <strong>Paid Date: </strong> $payDate <br>
-                    <strong>Receipt No.:</strong> <br />
+                    <strong>Receipt No.:</strong> $receiptNo <br />
                     <strong>Received from: </strong> $name <br />
                 </p>
             </div>

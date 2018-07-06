@@ -8,6 +8,27 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		checkCollectionPayment(state, payload){
+			state.checkCollectionPayment = payload
+		},
+		checkCollectionTrainingPayment(state, payload){
+			state.checkCollectionTrainingPayment = payload
+		},
+		endCollectionDate(state, payload){
+			state.endCollectionDate = payload
+		},
+		startCollectionDate(state, payload){
+			state.startCollectionDate = payload
+		},
+		editTrainingPaymentField(state, payload){
+			state.editTrainingPayment[payload['field']] = payload['value']
+		},
+		editTrainingPayment(state, payload){
+			state.editTrainingPayment = payload
+		},
+		paymentDate(state, payload){
+			state.paymentDate = payload
+		},
 		trainingPayments(state, payload){
 			state.trainingPayments = payload
 		},
@@ -163,6 +184,27 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		checkCollectionTrainingPayment(store, payload){
+			store.commit('checkCollectionTrainingPayment', payload)
+		},
+		checkCollectionPayment(store, payload){
+			store.commit('checkCollectionPayment', payload)
+		},
+		endCollectionDate(store, payload){
+			store.commit('endCollectionDate', payload)
+		},
+		startCollectionDate(store, payload){
+			store.commit('startCollectionDate', payload)
+		},
+		editTrainingPaymentField(store, payload){
+			store.commit('editTrainingPaymentField', payload)
+		},
+		editTrainingPayment(store, payload){
+			store.commit('editTrainingPayment', payload)
+		},
+		paymentDate(store, payload){
+			store.commit('paymentDate', payload)
+		},
 		trainingPayments(store, payload){
 			store.commit('trainingPayments', payload)
 		},
@@ -360,6 +402,24 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		checkCollectionTrainingPayment(){
+			return store.state.checkCollectionTrainingPayment
+		},
+		checkCollectionPayment(){
+			return store.state.checkCollectionPayment
+		},
+		endCollectionDate(){
+			return store.state.endCollectionDate
+		},
+		startCollectionDate(){
+			return store.state.startCollectionDate
+		},
+		editTrainingPayment(){
+			return store.state.editTrainingPayment
+		},
+		paymentDate(){
+			return store.state.paymentDate
+		},
 		trainingPayments(){
 			return store.state.trainingPayments
 		},

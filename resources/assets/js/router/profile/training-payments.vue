@@ -17,7 +17,7 @@
   </v-layout>
   <v-layout class="ma-0 pa-0 mt-2">
      <v-flex xl12 lg12 md12 sm12 xs12>
-      <new-training-payments> </new-training-payments>
+      <new-training-payments ref="getReceipt"> </new-training-payments>
     </v-flex>
   </v-layout>
 </v-container>
@@ -38,6 +38,8 @@
     methods: {
       newPayment(){
         this.$store.dispatch('newTrainingDialog', true);
+        this.$refs.getReceipt.getReceipt();
+       
       },
       searchNewTrainingPayments(){
         let data = this
