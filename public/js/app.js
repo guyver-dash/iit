@@ -35949,7 +35949,7 @@ var index_esm = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return state; });
 var state = {
   checkCollectionPayment: true,
-  checkCollectionTrainingPayment: false,
+  checkCollectionTrainingPayment: true,
   startCollectionDate: '',
   endCollectionDate: '',
   editTrainingPayment: {

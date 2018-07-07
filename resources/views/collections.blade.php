@@ -34,7 +34,18 @@
             <td></td>
             <td>{{ $payment->confirmEnrolled->course->name }}</td>
             <td>{{ $payment->balance->name }}</td>
-            <td>&#8369; {{number_format($payment->amount_charge,  2, '.', ',')}}</td>
+            <td>{{$payment->amount_charge}}</td>
+        </tr>
+    @endforeach
+     @foreach($trainingPayments as $tp)
+        <tr>
+            <td>{{ $tp->prefix . '-' . $tp->receipt_no }}</td>
+            <td>{{ $tp->lastname }}</td>
+            <td>{{ $tp->firstname }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{$tp->paid_amount}}</td>
         </tr>
     @endforeach
         <tr>
@@ -44,8 +55,54 @@
             <td></td>
             <td></td>
             <td> TOTAL COLLECTION</td>
-            <td>&#8369; {{ $payments->sum('amount_charge') }}</td>
+            <td>&#8369; {{ number_format($payments->sum('amount_charge') + $trainingPayments->sum('paid_amount')) }}</td>
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        <tr>
+            <td>I. TOTAL COLLECTION</td>
+            <td>&#8369; {{ number_format($payments->sum('amount_charge') + $trainingPayments->sum('paid_amount'),  2, '.', ',') }}</td>
+        </tr>
+        <tr>
+            <td>GROSS FOR TODAY</td>
+        </tr>
+        <tr>
+            <td>LESS EXPENSES FOR TODAY</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>ITEMIZED AT THE BACK:</td>
+            <td>________________________</td>
+        </tr>
+        <tr>
+            <td>TOTAL NET COLLECTION</td>
+        </tr>
 
+        <tr>
+            <td>AMOUNT RECEIVED BY:</td>
+            <td></td>
+            <td></td>
+            
+            <td>PREPARED BY</td>
+        </tr>
+        <tr>
+            <td>____________________________</td>
+            <td></td>
+            <td></td>
+            
+            <td>_____________________________</td>
+        </tr>
+        <tr>
+            <td>CHECKED BY:</td>
+            <td></td>
+            <td></td>
+            <td>AUDITED BY:</td>
+        </tr>
+        <tr>
+            <td>____________________________</td>
+            <td></td>
+            <td></td>
+            <td>_____________________________</td>
         </tr>
     </tbody>
 </table>

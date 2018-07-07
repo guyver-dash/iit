@@ -5,6 +5,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <link href="https://unpkg.com/vuetify@1.0.18/dist/vuetify.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{{ asset('images/logos/logo.ico') }}" type="image/gif" sizes="16x16">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <meta charset="utf-8">
     <meta name="google-site-verification" content="a096MhEyuLCzFKqtl3Ry7j5qVMzgUkl38EwE7CQSA2w" />

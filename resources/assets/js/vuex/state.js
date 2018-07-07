@@ -1,6 +1,6 @@
 export const state = {
      checkCollectionPayment: true,
-     checkCollectionTrainingPayment: false,
+     checkCollectionTrainingPayment: true,
      startCollectionDate: '',
      endCollectionDate: '',
      editTrainingPayment: {
