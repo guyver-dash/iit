@@ -63,6 +63,31 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
 
     }
 
+    public function ict(){
+
+        return response()->json([
+            'enrollees' => $this->modelName->where('course_id', 3)->relTable()->pagination()
+            ]);
+    }
+
+    public function searchIct(){
+        $request = app()->make('request');
+
+         return response()->json([
+            'enrollees' => $this->modelName
+                ->where('course_id', '=', 2)
+                ->whereHas('enrollee', function($query) use ($request){
+                    $query->where(function($query) use ($request) {
+                        $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
+                        $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
+
+                    });
+
+            })->pagination()
+            ]);
+
+    }
+
     public function jhs(){
 
         return response()->json([

@@ -75,6 +75,20 @@ class ConfirmedEnrolledController extends Controller
          return $this->confirmedEnrollee->shsPrint($id);
     }
 
+    public function ict(){
+
+        return $this->confirmedEnrollee->ict();
+    }
+    public function searchIct(){
+        
+         return $this->confirmedEnrollee->searchIct();
+    }
+
+    public function ictPrint($id){
+        
+         return $this->confirmedEnrollee->shsPrint($id);
+    }
+
     public function newEnrollee(){
 
         return $this->confirmedEnrollee->newEnrollee();

@@ -178,7 +178,7 @@
 
     <main-snack-bar v-bind:text="snackbarText" v-bind:color="snackbarColor"></main-snack-bar>
     <new-footer></new-footer>
-    <loader v-bind:value="loader" v-bind:message="loaderMessage"></loader>
+    <loader></loader>
   </v-app>
 </template>
 
@@ -190,8 +190,7 @@
 
   export default {
     data: () => ({
-      loader: false,
-      loaderMessage: '',
+      
       e1: true,
       dialog: false,
       alertText: '',
@@ -229,6 +228,12 @@
       },
       snackbarColor(){
         return this.$store.getters.snackbarColor
+      },
+      loader(){
+        return this.$store.getters.loader
+      },
+      loaderMessage(){
+        return this.$store.getters.loaderMessage
       }
     },
     methods: {
@@ -241,8 +246,8 @@
         signin(){
           var data = this
           if(this.$refs.login.validate()){
-              this.loader = true
-              this.loaderMessage = 'Logging in...'
+              this.$store.dispatch('loaderMessage', 'Logging in...')
+              this.$store.dispatch('loader', true) 
               this.$http.post(base_api + '/auth/login',{
                 email: this.email,
                 password: this.password
@@ -258,13 +263,13 @@
                   data.$store.dispatch('snackbarText', 'You have successfully sign-in!')
                   data.$store.dispatch('snackbarColor', 'success')
                   data.$store.dispatch('snackbar', true)
-                  data.loader = false
+                  data.$store.dispatch('loader', false) 
 
               })
               .catch(function(error){
                 data.alertText = error.response.data
                 data.loginAlert = true
-                data.loader = false
+                data.$store.dispatch('loader', false) 
               })
           }
           

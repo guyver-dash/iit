@@ -34,6 +34,9 @@ Route::get('balance-enrollee-search', 'API\Balance\BalanceController@enrolleeSea
 Route::put('balance/{id}', 'API\Balance\BalanceController@update');
 Route::post('balance', 'API\Balance\BalanceController@store');
 Route::post('balance/search', 'API\Balance\BalanceController@search');
+Route::get('ict', 'API\ConfirmEnrolled\ConfirmedEnrolledController@ict');
+Route::post('ict/search', 'API\ConfirmEnrolled\ConfirmedEnrolledController@searchIct');
+Route::get('ict/print/{confirmId}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@ictPrint');
 Route::get('jhs', 'API\ConfirmEnrolled\ConfirmedEnrolledController@jhs');
 Route::post('jhs/search', 'API\ConfirmEnrolled\ConfirmedEnrolledController@searchJhs');
 Route::get('jhs/print/{confirmId}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@jhsPrint');

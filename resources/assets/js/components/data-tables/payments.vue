@@ -207,6 +207,8 @@
     class="elevation-1"
     >
     <template slot="items" slot-scope="props">
+      <td>{{ props.item.confirm_enrolled.enrollee.idno }}</td>
+      <td>{{ props.item.prefix }}-{{ props.item.receipt_no }}</td>
       <td>{{ props.item.confirm_enrolled.enrollee.firstname|capitalize }} {{ props.item.confirm_enrolled.enrollee.lastname|capitalize }}</td>
       <td>{{ props.item.balance.name }} ({{props.item.balance.amount|currency('₱ ')}}) </td>
       <td>{{ props.item.amount_charge|currency('₱ ') }}</td>
@@ -307,6 +309,18 @@
       isInputActive: false,
       paidAmount: '',
       headers: [
+      {
+        text: 'ID No.',
+        align: 'left',
+        sortable: false,
+        value: 'idno'
+      },
+      {
+        text: 'OR',
+        align: 'left',
+        sortable: false,
+        value: 'or'
+      },
       {
         text: 'Name',
         align: 'left',

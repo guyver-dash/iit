@@ -95,6 +95,7 @@ class BalanceRepository extends BaseRepository implements BalanceInterface{
 				$confirmEnrolled = ConfirmEnrolled::where('course_id', $course_id)->get();
 				foreach ($confirmEnrolled  as $value) {
 					$balance = $this->modelName->find($request->balanceId);
+					$balance->confirmEnrolled()->detach();
 					$balance->confirmEnrolled()->attach($request->balanceId, [
 							'balance_id' => $request->balanceId,
 							'discount' => $request->discount,
@@ -107,6 +108,7 @@ class BalanceRepository extends BaseRepository implements BalanceInterface{
 		else{
 
 			$balance = $this->modelName->find($request->balanceId);
+			$balance->confirmEnrolled()->detach();
 			$balance->confirmEnrolled()->attach($request->balanceId, [
 					'balance_id' => $request->balanceId,
 					'discount' => $request->discount,

@@ -812,6 +812,7 @@
   import editStartTime from '../../components/pickers/edit-start-time.vue'
   import editEndTime from '../../components/pickers/edit-end-time.vue'
   import editDatePicker from '../../components/pickers/edit-date-picker.vue'
+  import _ from 'lodash'
 
   export default {
     data () {
@@ -930,6 +931,10 @@
       editStartTime, editEndTime, editDatePicker
     },
     created(){
+      
+      this.$store.dispatch('loaderMessage', 'Fetching...') ;
+      this.$store.dispatch('loader', true);
+
       let data = this
       this.$http
       .get(base_api + '/start-up')
@@ -946,7 +951,11 @@
         data.$store.dispatch('civilStatus', response.data.civilStatus)
         data.$store.dispatch('educAtt', response.data.educAtt)
         data.$store.dispatch('studentType', response.data.studentType)
-      }) 
+
+      })
+      .catch(function(res){
+         data.$store.dispatch('loader', false);
+      })
 
       this.$http.get(base_api + '/confirm-enrolled/' + this.$route.params.id + '?token=' + window.localStorage.getItem('tokenKey'))
         .then(function(res){
@@ -967,8 +976,12 @@
               data.requirementsDocs = res.data.enrollee.enrollee.requirements_doc.map(function(req){
                   return req.id
               })
+
+               data.$store.dispatch('loader', false);
             
-        })
+        }).catch(function(res){
+         data.$store.dispatch('loader', false);
+      })
         
     },
     computed: {
@@ -1174,189 +1187,188 @@
     },
   },
   watch: {
-    'confirmedEnrolled.enrollee.primary': function(val){
+    'confirmedEnrolled.enrollee.primary':  _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'primary',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.elementary': function(val){
+    }, 100), 
+    'confirmedEnrolled.enrollee.elementary': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'elementary',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.remarks': function(val){
+    }, 100), 
+    'confirmedEnrolled.enrollee.remarks': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'remarks',
           'value' : val
       })
-    },
-    'confirmedEnrolled.student_type_id': function(val){
+    }, 200), 
+    'confirmedEnrolled.student_type_id': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'student_type_id',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.lrn': function(val){
+    }, 200), 
+    'confirmedEnrolled.enrollee.lrn': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'lrn',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.idno': function(val){
+    }, 300), 
+    'confirmedEnrolled.enrollee.idno': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'idno',
           'value' : val
       })
-    },
-    'confirmedEnrolled.status': function(val){
+    }, 300), 
+    'confirmedEnrolled.status': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'status',
           'value' : val
       })
-    },
-     'confirmedEnrolled.course_id': function(val){
+    }, 400), 
+     'confirmedEnrolled.course_id':  _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'course_id',
           'value' : val
       })
-    },
-    'confirmedEnrolled.school_year_id': function(val){
+    }, 400), 
+    'confirmedEnrolled.school_year_id': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'school_year_id',
           'value' : val
       })
-    },
-    'confirmedEnrolled.year_level_id': function(val){
+    }, 500), 
+    'confirmedEnrolled.year_level_id': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'year_level_id',
           'value' : val
       })
-    },
-    'confirmedEnrolled.semester_id': function(val){
+    }, 500), 
+    'confirmedEnrolled.semester_id': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'semester_id',
           'value' : val
       })
-    },
-    'confirmedEnrolled.schedule_id': function(val){
+    }, 600), 
+    'confirmedEnrolled.schedule_id': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'schedule_id',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.lastname': function(val){
+    }, 600), 
+    'confirmedEnrolled.enrollee.lastname': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'lastname',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.firstname': function(val){
+    }, 700), 
+    'confirmedEnrolled.enrollee.firstname': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'firstname',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.middlename': function(val){
+    }, 700), 
+    'confirmedEnrolled.enrollee.middlename': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'middlename',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.suffix': function(val){
+    }, 800), 
+    'confirmedEnrolled.enrollee.suffix': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'suffix',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.nickname': function(val){
+    }, 800), 
+    'confirmedEnrolled.enrollee.nickname': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'nickname',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.age': function(val){
+    }, 900), 
+    'confirmedEnrolled.enrollee.age': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'age',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.birth_place': function(val){
+    }, 900), 
+    'confirmedEnrolled.enrollee.birth_place': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'birth_place',
           'value' : val
       })
-    },  
-    'confirmedEnrolled.enrollee.educ_at_id': function(val){
+    }, 1000), 
+    'confirmedEnrolled.enrollee.educ_at_id': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'educ_at_id',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.sex': function(val){
+    }, 1000), 
+    'confirmedEnrolled.enrollee.sex': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'sex',
           'value' : val
       })
-    },
-    
-    'confirmedEnrolled.enrollee.civil_id': function(val){
+    }, 1100), 
+    'confirmedEnrolled.enrollee.civil_id': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'civil_id',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.landline': function(val){
+    }, 1100),
+    'confirmedEnrolled.enrollee.landline': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'landline',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.spouse_lastname': function(val){
+    }, 1200),
+    'confirmedEnrolled.enrollee.spouse_lastname': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'spouse_lastname',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.spouse_firstname': function(val){
+    }, 1200),
+    'confirmedEnrolled.enrollee.spouse_firstname':  _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'spouse_firstname',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.spouse_middlename': function(val){
+    }, 1300),
+    'confirmedEnrolled.enrollee.spouse_middlename': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'spouse_middlename',
           'value' : val
       })
-    },
+    }, 1300),
 
-    'confirmedEnrolled.enrollee.mobile': function(val){
+    'confirmedEnrolled.enrollee.mobile': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'mobile',
           'value' : val
       })
-    },
-     'confirmedEnrolled.enrollee.email': function(val){
+    }, 1400),
+     'confirmedEnrolled.enrollee.email': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'email',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.religion': function(val){
+    }, 1400),
+    'confirmedEnrolled.enrollee.religion':  _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'religion',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.citizenship': function(val){
+    }, 1500),
+    'confirmedEnrolled.enrollee.citizenship': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'citizenship',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.present_province_id' : function(val){
+    }, 1500),
+    'confirmedEnrolled.enrollee.present_province_id' : _.debounce(function(val){
       var data = this
       this.$http.get(base_api + '/cities/' + val)
       .then(function(res){
@@ -1366,8 +1378,8 @@
           'field' : 'present_province_id',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.present_city_id' : function(val){
+    }, 4000), 
+    'confirmedEnrolled.enrollee.present_city_id' : _.debounce(function(val){
       var data = this
       this.$http.get(base_api + '/get-city-zipcode/' + val)
       .then(function(res){
@@ -1380,15 +1392,14 @@
           'field' : 'present_city_id',
           'value' : val
       })
-      
-    },
-    'confirmedEnrolled.enrollee.present_address': function(val){
+    }, 3900), 
+    'confirmedEnrolled.enrollee.present_address': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'present_address',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.permanent_province_id': function(val){
+    }, 1700),
+    'confirmedEnrolled.enrollee.permanent_province_id': _.debounce(function(val){
       var data = this
       this.$http.get(base_api + '/cities/' + val)
       .then(function(res){
@@ -1398,9 +1409,8 @@
           'field' : 'permanent_province_id',
           'value' : val
       })
-
-    },
-    'confirmedEnrolled.enrollee.permanent_city_id': function(val){
+    }, 3800), 
+    'confirmedEnrolled.enrollee.permanent_city_id': _.debounce(function(val){
       var data = this
       this.$http.get(base_api + '/get-city-zipcode/' + val)
       .then(function(res){
@@ -1414,45 +1424,46 @@
           'field' : 'permanent_city_id',
           'value' : val
         })
-    },
-    'confirmedEnrolled.enrollee.permanent_address': function(val){
+    }, 3700),
+    'confirmedEnrolled.enrollee.permanent_address': _.debounce(function(val){
+      var data = this
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'permanent_address',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.father_lastname': function(val){
+    }, 1800),
+    'confirmedEnrolled.enrollee.father_lastname': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'father_lastname',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.father_firstname': function(val){
+    }, 1900),
+    'confirmedEnrolled.enrollee.father_firstname': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'father_firstname',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.father_middlename': function(val){
-      this.$store.dispatch('confirmedEnrolledEnrollee', {
+    }, 1900),
+    'confirmedEnrolled.enrollee.father_middlename': _.debounce(function(val){
+       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'father_middlename',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.father_occupation': function(val){
-      this.$store.dispatch('confirmedEnrolledEnrollee', {
+    }, 2000),
+    'confirmedEnrolled.enrollee.father_occupation': _.debounce(function(val){
+       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'father_occupation',
           'value' : val
       })
-    },
-     'confirmedEnrolled.enrollee.father_contact_number': function(val){
-      this.$store.dispatch('confirmedEnrolledEnrollee', {
+    }, 2000),
+     'confirmedEnrolled.enrollee.father_contact_number': _.debounce(function(val){
+       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'father_contact_number',
           'value' : val
       })
-    },
+    }, 2100),
 
-    'confirmedEnrolled.enrollee.father_province_id': function(val){
+    'confirmedEnrolled.enrollee.father_province_id': _.debounce(function(val){
       var data = this
       this.$http.get(base_api + '/cities/' + val)
       .then(function(res){
@@ -1462,9 +1473,8 @@
           'field' : 'father_province_id',
           'value' : val
       })
-
-    },
-    'confirmedEnrolled.enrollee.father_city_id': function(val){
+    }, 3600),
+    'confirmedEnrolled.enrollee.father_city_id': _.debounce(function(val){
       var data = this
       this.$http.get(base_api + '/get-city-zipcode/' + val)
       .then(function(res){
@@ -1478,45 +1488,44 @@
           'field' : 'father_city_id',
           'value' : val
         })
-    },
-    'confirmedEnrolled.enrollee.father_address': function(val){
+    }, 3500),
+    'confirmedEnrolled.enrollee.father_address': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'father_address',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.mother_firstname': function(val){
+    }, 2200),
+    'confirmedEnrolled.enrollee.mother_firstname': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'mother_firstname',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.mother_lastname': function(val){
+    }, 2300),
+    'confirmedEnrolled.enrollee.mother_lastname': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'mother_lastname',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.mother_middlename': function(val){
+    }, 2300),
+    'confirmedEnrolled.enrollee.mother_middlename':  _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'mother_middlename',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.mother_occupation': function(val){
+    }, 2400),
+    'confirmedEnrolled.enrollee.mother_occupation': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'mother_occupation',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.mother_contact_number': function(val){
+    }, 2400),
+    'confirmedEnrolled.enrollee.mother_contact_number': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'mother_contact_number',
           'value' : val
       })
-    },
-
-    'confirmedEnrolled.enrollee.mother_province_id': function(val){
+    }, 2500),
+    'confirmedEnrolled.enrollee.mother_province_id': _.debounce(function(val){
       var data = this
       this.$http.get(base_api + '/cities/' + val)
       .then(function(res){
@@ -1526,9 +1535,8 @@
           'field' : 'mother_province_id',
           'value' : val
       })
-
-    },
-    'confirmedEnrolled.enrollee.mother_city_id': function(val){
+    }, 3400),
+    'confirmedEnrolled.enrollee.mother_city_id': _.debounce(function(val){
       var data = this
       this.$http.get(base_api + '/get-city-zipcode/' + val)
       .then(function(res){
@@ -1542,22 +1550,21 @@
           'field' : 'mother_city_id',
           'value' : val
         })
-    },
-    'confirmedEnrolled.enrollee.mother_address': function(val){
+    }, 3300),
+    'confirmedEnrolled.enrollee.mother_address': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'mother_address',
           'value' : val
       })
-    },
-
-    'confirmedEnrolled.enrollee.name_of_school': function(val){
+    }, 2600),
+    'confirmedEnrolled.enrollee.name_of_school': _.debounce(function(val){
       this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'name_of_school',
           'value' : val
       })
-    },
-    'confirmedEnrolled.enrollee.school_province_id': function(val){
-        var data = this
+    }, 2700),
+    'confirmedEnrolled.enrollee.school_province_id': _.debounce(function(val){
+      var data = this
         this.$http.get(base_api + '/cities/' + val)
         .then(function(res){
           data.schoolCities = res.data.cities
@@ -1566,10 +1573,9 @@
             'field' : 'school_province_id',
             'value' : val
         })
-
-    },
-    'confirmedEnrolled.enrollee.school_city_id': function(val){
-      var data = this
+    }, 3200),
+    'confirmedEnrolled.enrollee.school_city_id': _.debounce(function(val){
+     var data = this
       this.$http.get(base_api + '/get-city-zipcode/' + val)
       .then(function(res){
         data.$store.dispatch('confirmedEnrolledEnrollee', {
@@ -1582,31 +1588,33 @@
           'field' : 'school_city_id',
           'value' : val
         })
-    },
-    'confirmedEnrolled.enrollee.school_address': function(val){
-      this.$store.dispatch('confirmedEnrolledEnrollee', {
+    }, 3100),
+    'confirmedEnrolled.enrollee.school_address': _.debounce(function(val){
+
+     this.$store.dispatch('confirmedEnrolledEnrollee', {
           'field' : 'school_address',
           'value' : val
       })
-    },
-    answer1:function(val){
-      this.$store.dispatch('answersEdit',{
+    }, 2800),
+    'answer1': _.debounce(function(val){
+     this.$store.dispatch('answersEdit',{
         'index': 0,
         'value' : val
       });
-    },
-    answer2:function(val){
-      this.$store.dispatch('answersEdit',{
+    }, 2900), 
+    'answer2':_.debounce(function(val){
+     this.$store.dispatch('answersEdit',{
         'index': 1,
         'value' : val
       });
-    },
-    answer3:function(val){
-      this.$store.dispatch('answersEdit',{
+    }, 2900), 
+    'answer3': _.debounce(function(val){
+     this.$store.dispatch('answersEdit',{
         'index': 2,
         'value' : val
       });
-    }
+     
+    }, 3000)
   }
 }
 </script>

@@ -96,7 +96,7 @@ class BalanceController extends Controller
     public function balanceEnrolleeSearch(){
         $request = app()->make('request');
         return response()->json([
-            'balance' => $this->balance->where('id', $request->balanceId)->first(),
+            'balance' => $this->balance->where('id', $request->balanceId)->get(),
             'enrollees' => $this->balance->balanceEnrolleeSearch()
         ]);
     }

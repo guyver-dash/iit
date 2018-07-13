@@ -19,10 +19,12 @@
        </td>
         <td>{{ props.item.enrollee.firstname }}</td>
         <td>{{ props.item.enrollee.lastname }}</td>
-        <td>{{ props.item.schedule.name }}</td>
-        <td>{{ props.item.semester.name }}</td>
+        <td>
+          <span v-if="props.item.schedule != null">{{ props.item.schedule.name }}</span>
+        </td>
+        <td><span v-if="props.item.semester != null">{{ props.item.semester.name }}</span></td>
         <td>{{ props.item.school_year.sy }}</td>
-        <td>{{ props.item.course.name }}</td>
+        <td><span v-if="props.item.course != null">{{ props.item.course.name }} </span></td>
         <td class="justify-center layout px-0">
           <v-tooltip bottom>
             <v-btn slot="activator" icon class="mx-0" @click="payment(props.item.id)">

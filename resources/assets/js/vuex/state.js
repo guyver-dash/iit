@@ -1,4 +1,6 @@
 export const state = {
+     loader: false,
+      loaderMessage: '',
      checkCollectionPayment: true,
      checkCollectionTrainingPayment: true,
      startCollectionDate: '',

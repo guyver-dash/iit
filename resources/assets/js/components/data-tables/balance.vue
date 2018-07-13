@@ -74,12 +74,7 @@
             <v-layout wrap>
               <enrollees></enrollees>
               <v-flex xs12 sm12 md12 lg12 xl12>
-                <v-text-field 
-                  label="Discount" 
-                  v-model="discount" 
-                  type="number"
-                  />
-                  </v-text-field>
+                <my-currency-input v-model="discount" v-bind:label="'Discount Amount'"></my-currency-input>
               </v-flex>
               <courses></courses>
             </v-layout>

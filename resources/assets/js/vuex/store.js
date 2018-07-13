@@ -8,6 +8,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		loaderMessage(state, payload){
+			state.loaderMessage = payload
+		},
+		loader(state, payload){
+			state.loader = payload
+		},
 		checkCollectionPayment(state, payload){
 			state.checkCollectionPayment = payload
 		},
@@ -34,12 +40,6 @@ export const store = new Vuex.Store({
 		},
 		newTrainingDialog(state, payload){
 			state.newTrainingDialog = payload
-		},
-		loaderMessage(state, loaderMessage){
-			state.loader = loaderMessage
-		},
-		loader(state, loader){
-			state.loader = loader
 		},
 		balanceEnrollees(state, balanceEnrollees){
 			state.balanceEnrollees = balanceEnrollees
@@ -184,6 +184,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		loaderMessage(store, payload){
+			store.commit('loaderMessage', payload)
+		},
+		loader(store, payload){
+			store.commit('loader', payload)
+		},
 		checkCollectionTrainingPayment(store, payload){
 			store.commit('checkCollectionTrainingPayment', payload)
 		},
@@ -210,12 +216,6 @@ export const store = new Vuex.Store({
 		},
 		newTrainingDialog(store, payload){
 			store.commit('newTrainingDialog', payload)
-		},
-		loaderMessage(store, loaderMessage){
-			store.commit('loaderMessage', loaderMessage)
-		},
-		loader(store, loader){
-			store.commit('loader', loader)
 		},
 		balanceEnrollees(store, balanceEnrollees){
 			store.commit('balanceEnrollees', balanceEnrollees)
@@ -402,6 +402,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		loaderMessage(){
+			return store.state.loaderMessage
+		},
+		loader(){
+			return store.state.loader
+		},
 		checkCollectionTrainingPayment(){
 			return store.state.checkCollectionTrainingPayment
 		},

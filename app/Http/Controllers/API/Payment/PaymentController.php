@@ -97,27 +97,65 @@ class PaymentController extends Controller
 
         $payments = Payment::where('confirm_enrollee_id', $request->confirmEnrolledId)
             ->with(['confirmEnrolled.enrollee', 'confirmEnrolled', 'balance'])->orderBy('created_at', 'DESC')->get();
+        $payment = Payment::where('confirm_enrollee_id', $request->confirmEnrolledId)
+            ->with(['confirmEnrolled.enrollee', 'confirmEnrolled', 'balance'])->orderBy('created_at', 'DESC')->first();
+
         if ( count($payments) > 0) {
             
+        $examPeriod = $request->examPeriod;
+        $semester = $payment->confirmEnrolled->semester->name;
+        $schoolYear = $payment->confirmEnrolled->schoolYear->sy;
         $date = Carbon::now()->toDayDateTimeString();
-
-        $idno = $payments[0]->confirmEnrolled->enrollee->idno;
-        $name = $payments[0]->confirmEnrolled->enrollee->lastname  . ', ' . $payments[0]->confirmEnrolled->enrollee->firstname;
-        $course = $payments[0]->confirmEnrolled->course->name;
-        $schedule = $payments[0]->confirmEnrolled->schedule->name;
+        $or = $payment->prefix . '-' . $payment->receipt_no;
+        $idno = $payment->confirmEnrolled->enrollee->idno;
+        $name = $payment->confirmEnrolled->enrollee->lastname  . ', ' . $payment->confirmEnrolled->enrollee->firstname;
+        $course = $payment->confirmEnrolled->course->name;
+        $schedule = $payment->confirmEnrolled->schedule->name;
 
         $trPaid = '';
+        $amountDue = '&#8369;' . number_format($request->dueAmount,  2, '.', ',');
+        $dueDate =  Carbon::parse($request->dueDate)->format('l jS \\of F Y'); 
+        $balanceIdChecker = '';
         foreach ($payments as $value) {
+            $searchBal = Balance::where('id', $value->balance->id)
+                        ->whereHas('confirmEnrolled', function($query) use ($payment, $value) {
+                            $query->where('confirm_enrolled_id', $payment->confirmEnrolled->id);
+                        })->with('confirmEnrolled')->first();
+
+            if ($searchBal != null) {
+                            $discount = collect($searchBal->confirmEnrolled)
+                            ->where('pivot.confirm_enrolled_id', $payment->confirmEnrolled->id)
+                            ->where('pivot.balance_id', $value->balance->id)
+                            ->first()->pivot->discount;
+            }            
+            
+
             $amountPaid = '&#8369;' . number_format($value->amount_charge,  2, '.', ',');
             $balanceName = $value->balance->name;
-            $balance = '&#8369;' . number_format($value->balance->amount,  2, '.', ',');
+            $createdAt = substr($value->created_at->toDayDateTimeString(), 0, -7);
 
-            $remain = '&#8369;' . number_format($value->balance->amount -  $value->total_amount_given,  2, '.', ',');
-            $createdAt = $value->created_at;
+
+            if ($discount > 0) {
+                $discountShow = "<br /> Less: " .  number_format($discount,  2, '.', ',');
+                $balance = '&#8369;' . number_format($value->balance->amount,  2, '.', ',');
+                $newBalance = $value->balance->amount - $discount;
+                $newBalanceFormatted =  '&#8369;' . number_format($newBalance,  2, '.', ',');
+                $remain = '&#8369;' . number_format($newBalance -  $value->total_amount_given,  2, '.', ',');
+            }else{
+                $balance = '&#8369;' . number_format($value->balance->amount,  2, '.', ',');
+                $discountShow = '';
+                $newBalanceFormatted = '';
+                $remain = '&#8369;' . number_format($value->balance->amount - $value->total_amount_given,  2, '.', ',');
+
+            }
+            
 
             $trPaid .= "<tr>
+                        <td>$or</td>
                         <td> $balanceName </td>
-                        <td> $balance</td>
+                        <td> $balance $discountShow <br />
+                            <span style='color:green'>$newBalanceFormatted</span>
+                        </td>
                         <td> $amountPaid </td>
                         <td> $remain </td>
                         <td>$createdAt</td>
@@ -133,7 +171,7 @@ class PaymentController extends Controller
                     font-family:'DeJaVu Sans Mono',monospace;
                 }
                 body{
-                    font-size: 11px;
+                    font-size: 8px;
                     font-family: Arial, Helvetica, sans-serif;
                 }
                 table, table th, table td {
@@ -147,7 +185,7 @@ class PaymentController extends Controller
 
                 <img src='images/logos/logo.png' width='120' style='padding: 0px;margin: 0px; margin-top: -20px; float: right' />
             <div style='margin-left: 100px;'>
-            <div style='padding:0; margin:0; font-size:12px;' align='center'> <strong> Intellisense Institute of Technology </strong> </div>
+            <div style='padding:0; margin:0; font-size:9px;' align='center'> <strong> Intellisense Institute of Technology </strong> </div>
              <div align='center' style='padding:0; margin:0; font-size:10px;'>
                 2F Aspac Building, Guizo
             </div>
@@ -157,27 +195,28 @@ class PaymentController extends Controller
                 </p>
 
 
-                <p align='center'> <strong style='font-size: 14px;'> SUMMARY OF PAYMENTS </strong> </p>
-                <br />
-                <br />
+                <p align='center'> <strong style='font-size: 14px;'> STATEMENT OF ACCOUNT </strong> </p>
                 
             </div>
             <div style='width: 300px;float:left;'>
                 <p>
                     <strong>Date: </strong> $date <br />
-                    <strong>Student ID No.: </strong>   $idno<br />
-                    <strong>Name: </strong>  $name <br />
+                    <strong>Exam Period: </strong> $examPeriod<br>
+                    <strong>Semester:</strong> $semester<br />
+                    <strong>School Year:  </strong>  $schoolYear<br />
+
                 </p>
             </div>
             <div>
-                <p> 
+                <p> <strong>Student ID No.: </strong>   $idno<br />
+                    <strong>Name: </strong>  $name <br />
                     <strong>Course: </strong> $course<br />
                     <strong>Schedule: </strong> $schedule <br />
-                    <strong>Tuition Fee Discount: </strong>
                 </p>
             </div>
             <table id='first' border='1'>
                 <tr>
+                    <th>OR</th>
                     <th>Balance Name</th>
                     <th>Balance Amount</th>
                     <th>Paid</th>
@@ -188,6 +227,10 @@ class PaymentController extends Controller
                 $trPaid
 
             </table> 
+             <p style='color:red;'> 
+                    <strong>Amount Due: </strong> $amountDue <br />
+                    <strong>Due Date: $dueDate </strong>
+                </p>
             <div style='border-top: 1px dotted grey;'>
                 <p>
                     <strong>Received by: </strong> Rosello, Fairlane (Finance Officer)<br>
@@ -215,10 +258,6 @@ class PaymentController extends Controller
                 $query->where('school_year_id', $request->schoolYear);
             })->with(['confirmEnrolled.enrollee', 'confirmEnrolled', 'balance'])->first();
 
-      
-        
-
-        
         $payments = Payment::orWhere('confirm_enrollee_id', $request->confirmEnrolledId)
             ->whereHas('confirmEnrolled', function($query) use ($request) {
                 $query->where('semester_id', $request->semester);
@@ -230,6 +269,7 @@ class PaymentController extends Controller
         $semester = $payment->confirmEnrolled->semester->name;
         $schoolYear = $payment->confirmEnrolled->schoolYear->sy;
         $date = Carbon::now()->toDayDateTimeString();
+        $or = $payment->prefix . '-' . $payment->receipt_no;
         $idno = $payment->confirmEnrolled->enrollee->idno;
         $name = $payment->confirmEnrolled->enrollee->lastname  . ', ' . $payment->confirmEnrolled->enrollee->firstname;
         $course = $payment->confirmEnrolled->course->name;
@@ -244,18 +284,24 @@ class PaymentController extends Controller
                         ->whereHas('confirmEnrolled', function($query) use ($payment, $value) {
                             $query->where('confirm_enrolled_id', $payment->confirmEnrolled->id);
                         })->with('confirmEnrolled')->first();
-            $discount = collect($searchBal->confirmEnrolled)
+
+            if ($searchBal != null) {
+                            $discount = collect($searchBal->confirmEnrolled)
                             ->where('pivot.confirm_enrolled_id', $payment->confirmEnrolled->id)
                             ->where('pivot.balance_id', $value->balance->id)
                             ->first()->pivot->discount;
+            }            
+            
+
             $amountPaid = '&#8369;' . number_format($value->amount_charge,  2, '.', ',');
             $balanceName = $value->balance->name;
-            $createdAt = $value->created_at->toDayDateTimeString();
+            $createdAt = substr($value->created_at->toDayDateTimeString(), 0, -7);
+
 
             if ($discount > 0) {
-                $discountShow = ' Less: ' .  $discount . '%';
+                $discountShow = "<br /> Less: " .  number_format($discount,  2, '.', ',');
                 $balance = '&#8369;' . number_format($value->balance->amount,  2, '.', ',');
-                $newBalance = $value->balance->amount - $value->balance->amount * $discount/100;
+                $newBalance = $value->balance->amount - $discount;
                 $newBalanceFormatted =  '&#8369;' . number_format($newBalance,  2, '.', ',');
                 $remain = '&#8369;' . number_format($newBalance -  $value->total_amount_given,  2, '.', ',');
             }else{
@@ -268,6 +314,7 @@ class PaymentController extends Controller
             
 
             $trPaid .= "<tr>
+                        <td>$or</td>
                         <td> $balanceName </td>
                         <td> $balance $discountShow <br />
                             <span style='color:green'>$newBalanceFormatted</span>
@@ -287,7 +334,7 @@ class PaymentController extends Controller
                     font-family:'DeJaVu Sans Mono',monospace;
                 }
                 body{
-                    font-size: 11px;
+                    font-size: 8px;
                     font-family: Arial, Helvetica, sans-serif;
                 }
                 table, table th, table td {
@@ -301,7 +348,7 @@ class PaymentController extends Controller
 
                 <img src='images/logos/logo.png' width='120' style='padding: 0px;margin: 0px; margin-top: -20px; float: right' />
             <div style='margin-left: 100px;'>
-            <div style='padding:0; margin:0; font-size:12px;' align='center'> <strong> Intellisense Institute of Technology </strong> </div>
+            <div style='padding:0; margin:0; font-size:9px;' align='center'> <strong> Intellisense Institute of Technology </strong> </div>
              <div align='center' style='padding:0; margin:0; font-size:10px;'>
                 2F Aspac Building, Guizo
             </div>
@@ -312,8 +359,6 @@ class PaymentController extends Controller
 
 
                 <p align='center'> <strong style='font-size: 14px;'> STATEMENT OF ACCOUNT </strong> </p>
-                <br />
-                <br />
                 
             </div>
             <div style='width: 300px;float:left;'>
@@ -334,6 +379,7 @@ class PaymentController extends Controller
             </div>
             <table id='first' border='1'>
                 <tr>
+                    <th>OR</th>
                     <th>Balance Name</th>
                     <th>Balance Amount</th>
                     <th>Paid</th>

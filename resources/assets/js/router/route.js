@@ -13,6 +13,7 @@ import payment from './profile/payment.vue'
 import trainingPayments from './profile/training-payments.vue'
 import shs from './profile/shs.vue'
 import jhs from './profile/jhs.vue'
+import ict from './profile/ict.vue'
 import collections from './profile/collections.vue'
 import balanceEnrollee from './profile/balance-enrollee.vue'
 import enrollees from './enrollees.vue'
@@ -53,6 +54,9 @@ export const routes = [
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/jhs', component: jhs, name: 'jhs', 
+			meta: { requiresAuth: true}
+		},
+		{ path: '/admin/ict', component: ict, name: 'ict', 
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/collections', component: collections, name: 'collections', 
