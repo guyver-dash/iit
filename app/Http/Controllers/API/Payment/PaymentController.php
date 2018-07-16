@@ -106,7 +106,7 @@ class PaymentController extends Controller
         $semester = $payment->confirmEnrolled->semester->name;
         $schoolYear = $payment->confirmEnrolled->schoolYear->sy;
         $date = Carbon::now()->toDayDateTimeString();
-        $or = $payment->prefix . '-' . $payment->receipt_no;
+        
         $idno = $payment->confirmEnrolled->enrollee->idno;
         $name = $payment->confirmEnrolled->enrollee->lastname  . ', ' . $payment->confirmEnrolled->enrollee->firstname;
         $course = $payment->confirmEnrolled->course->name;
@@ -116,7 +116,9 @@ class PaymentController extends Controller
         $amountDue = '&#8369;' . number_format($request->dueAmount,  2, '.', ',');
         $dueDate =  Carbon::parse($request->dueDate)->format('l jS \\of F Y'); 
         $balanceIdChecker = '';
+        $discount = 0 ;
         foreach ($payments as $value) {
+            $or = $value->prefix . '-' . $value->receipt_no;
             $searchBal = Balance::where('id', $value->balance->id)
                         ->whereHas('confirmEnrolled', function($query) use ($payment, $value) {
                             $query->where('confirm_enrolled_id', $payment->confirmEnrolled->id);
@@ -279,7 +281,9 @@ class PaymentController extends Controller
         $amountDue = '&#8369;' . number_format($request->dueAmount,  2, '.', ',');
         $dueDate =  Carbon::parse($request->dueDate)->format('l jS \\of F Y'); 
         $balanceIdChecker = '';
+        $discount = 0 ;
         foreach ($payments as $value) {
+            $or = $value->prefix . '-' . $value->receipt_no;
             $searchBal = Balance::where('id', $value->balance->id)
                         ->whereHas('confirmEnrolled', function($query) use ($payment, $value) {
                             $query->where('confirm_enrolled_id', $payment->confirmEnrolled->id);
