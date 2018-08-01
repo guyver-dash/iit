@@ -15,6 +15,7 @@ import shs from './profile/shs.vue'
 import jhs from './profile/jhs.vue'
 import ict from './profile/ict.vue'
 import collections from './profile/collections.vue'
+import database from './profile/database.vue'
 import balanceEnrollee from './profile/balance-enrollee.vue'
 import enrollees from './enrollees.vue'
 
@@ -60,6 +61,9 @@ export const routes = [
 			meta: { requiresAuth: true}
 		},
 		{ path: '/admin/collections', component: collections, name: 'collections', 
+			meta: { requiresAuth: true}
+		},
+		{ path: '/admin/database', component: database, name: 'database', 
 			meta: { requiresAuth: true}
 		}
 	

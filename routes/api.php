@@ -22,6 +22,7 @@ Route::get('training-payments-search', 'API\TrainingPayments\TrainingPaymentsCon
 Route::get('training-payments-print/{id}', 'API\TrainingPayments\TrainingPaymentsController@print');
 Route::get('training-payments-summary/{id}', 'API\TrainingPayments\TrainingPaymentsController@summary');
 Route::get('collections/export', 'API\Collections\CollectionController@export');
+Route::get('database/export', 'API\Collections\CollectionController@dbExport');
 Route::resource('training-payments', 'API\TrainingPayments\TrainingPaymentsController');
 Route::delete('balance/{id}', 'API\Balance\BalanceController@destroy');
 Route::get('balance', 'API\Balance\BalanceController@index');

@@ -57,7 +57,8 @@ export default {
                 { icon: 'folder_shared', text: 'SHS', to: '/admin/shs' },
                 { icon: 'folder_shared', text: 'JHS', to: '/admin/jhs'},
                 { icon: 'folder_shared', text: 'ICT', to: '/admin/ict'},
-                { icon: 'donut_small', text: 'Collection Reports', to: '/admin/collections'}
+                { icon: 'donut_small', text: 'Collection Reports', to: '/admin/collections'},
+                { icon: 'supervisor_account', text: 'Enrollees DB', to: '/admin/database'}
               ])
 
         }
