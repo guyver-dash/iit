@@ -20,11 +20,21 @@ class PaymentController extends Controller
     
     public function index(){
         $request = app()->make('request');
-    	return response()->json([
-    			'payments' => Payment::with(['confirmEnrolled.enrollee', 'balance'])->orderBy('created_at', 'DESC')->paginationPay(),
+        if ($request->sortBy == 'false') {
+            return response()->json([
+                'payments' => Payment::with(['confirmEnrolled.enrollee', 'balance'])
+                    ->orderBy('receipt_no', 'DESC')->paginationPay(),
                 'confirmEnrolled' => ConfirmEnrolled::where('id', $request->confirmEnrolledId)->with('balances')->first(),
                 'receipt_no' => Payment::max('receipt_no')
-    		]);
+            ]);
+        }else{
+            return response()->json([
+                'payments' => Payment::with(['confirmEnrolled.enrollee', 'balance'])->orderBy('created_at', 'DESC')->paginationPay(),
+                'confirmEnrolled' => ConfirmEnrolled::where('id', $request->confirmEnrolledId)->with('balances')->first(),
+                'receipt_no' => Payment::max('receipt_no')
+            ]);
+        }
+    	
     }
 
     public function edit($id){

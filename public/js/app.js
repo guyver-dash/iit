@@ -49245,6 +49245,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -49258,6 +49274,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
+      arOr: true,
+      pagination: {
+        sortBy: 'or',
+        descending: false
+      },
       dueAmount: 0,
       dialog3: false,
       balancesEdit: [],
@@ -49298,16 +49319,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sortable: false,
         value: 'idno'
       }, {
-        text: 'OR',
+        text: 'OR|AR',
         align: 'left',
-        sortable: false,
+        sortable: true,
         value: 'or'
       }, {
         text: 'Name',
         align: 'left',
         sortable: false,
         value: 'name'
-      }, { text: 'Balace', value: 'balance', sortable: false }, { text: 'Paid Amount', value: 'paidAmount', sortable: false }, { text: 'Received Amount', value: 'givenAmount', sortable: false }, { text: 'Change', value: 'change', sortable: false }, { text: 'Action', value: 'action', sortable: false }]
+      }, { text: 'Balace', value: 'balance', sortable: false }, { text: 'Paid Amount', value: 'paidAmount', sortable: false }, { text: 'Received Amount', value: 'givenAmount', sortable: false }, { text: 'Change', value: 'change', sortable: false }, { text: 'Date', value: 'date', sortable: false }, { text: 'Action', value: 'action', sortable: false }]
 
     };
   },
@@ -49351,6 +49372,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
+    changeSort: function changeSort(column) {
+      this.pagination.sortBy = column;
+      if (this.pagination.descending == true) {
+        this.pagination.descending = false;
+        this.arOr = true;
+      } else {
+        this.pagination.descending = true;
+        this.arOr = false;
+      }
+      this.allPayments();
+    },
     givenBlur: function givenBlur(val) {
       this.givenAmount = val;
     },
@@ -49429,7 +49461,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     allPayments: function allPayments() {
       var data = this;
-      this.$http.get(window.base_api + '/payments?confirmEnrolledId=' + this.$route.params.id + '&page=' + this.page + '&token=' + localStorage.getItem('tokenKey')).then(function (res) {
+      this.$http.get(window.base_api + '/payments?confirmEnrolledId=' + this.$route.params.id + '&page=' + this.page + '&sortBy=' + this.arOr + '&token=' + localStorage.getItem('tokenKey')).then(function (res) {
         data.$store.dispatch('payments', res.data.payments);
         data.receipt_no = parseInt(res.data.receipt_no) + 1;
         if (res.data.confirmEnrolled == null) {
@@ -50948,6 +50980,46 @@ var render = function() {
         },
         scopedSlots: _vm._u([
           {
+            key: "headers",
+            fn: function(props) {
+              return [
+                _c(
+                  "tr",
+                  _vm._l(props.headers, function(header) {
+                    return _c(
+                      "th",
+                      {
+                        key: header.text,
+                        class: [
+                          "column sortable",
+                          _vm.pagination.descending ? "desc" : "asc"
+                        ],
+                        on: {
+                          click: function($event) {
+                            _vm.changeSort(header.value)
+                          }
+                        }
+                      },
+                      [
+                        _vm.pagination.descending == false
+                          ? _c("v-icon", { attrs: { small: "" } }, [
+                              _vm._v("arrow_upward")
+                            ])
+                          : _c("v-icon", { attrs: { small: "" } }, [
+                              _vm._v("arrow_downward")
+                            ]),
+                        _vm._v(
+                          "\n          " + _vm._s(header.text) + "\n        "
+                        )
+                      ],
+                      1
+                    )
+                  })
+                )
+              ]
+            }
+          },
+          {
             key: "items",
             fn: function(props) {
               return [
@@ -51006,8 +51078,13 @@ var render = function() {
                   _vm._v(_vm._s(_vm._f("currency")(props.item.change, "₱ ")))
                 ]),
                 _vm._v(" "),
+                _c("td", [
+                  _vm._v(_vm._s(props.item.created_at.substring(0, 10)))
+                ]),
+                _vm._v(" "),
                 _c(
                   "td",
+                  { staticClass: "justify-center layout px-0" },
                   [
                     _c(
                       "v-tooltip",

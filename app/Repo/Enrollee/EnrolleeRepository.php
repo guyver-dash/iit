@@ -14,7 +14,7 @@ class EnrolleeRepository extends BaseRepository implements EnrolleeInterface{
     public function getEnrollees(){
         
         return response()->json([
-        		'enrollees' => $this->modelName->with(['answers', 'requirementsDoc', 'siblings'])->get()
+        		'enrollees' => $this->modelName->with(['answers', 'requirementsDoc', 'siblings'])->orderBy('idno', 'desc')->get()
         	]);
     }	
 }

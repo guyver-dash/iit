@@ -206,21 +206,6 @@
     hide-actions
     class="elevation-1"
     >
-    <template slot="headers" slot-scope="props">
-      <tr>
-        <th
-          v-for="header in props.headers"
-          :key="header.text"
-          :class="['column sortable', pagination.descending ? 'desc' : 'asc']"
-          @click="changeSort(header.value)"
-        >
-          <v-icon small v-if="pagination.descending == false">arrow_upward</v-icon>
-          <v-icon small v-else>arrow_downward</v-icon>
-          {{ header.text }}
-        </th>
-
-      </tr>
-    </template>
     <template slot="items" slot-scope="props">
       <td>{{ props.item.confirm_enrolled.enrollee.idno }}</td>
       <td>{{ props.item.prefix }}-{{ props.item.receipt_no }}</td>
@@ -282,11 +267,6 @@
       myCurrencyInput, dueDate, paymentDate, editPaymentDate
     },
     data: () => ({
-      arOr: true,
-      pagination: {
-        sortBy: 'or',
-        descending: false
-      },
       dueAmount: 0,
       dialog3: false,
       balancesEdit:[],
@@ -400,17 +380,6 @@
     },
 
     methods: {
-      changeSort (column) {
-        this.pagination.sortBy = column
-        if ( this.pagination.descending == true) {
-          this.pagination.descending = false
-          this.arOr = true
-        } else {
-          this.pagination.descending = true
-          this.arOr = false
-        }
-        this.allPayments()
-      },
       givenBlur(val){
         this.givenAmount = val
       },
@@ -502,7 +471,7 @@
       },
       allPayments(){
         let data = this
-        this.$http.get(window.base_api + '/payments?confirmEnrolledId='+ this.$route.params.id +'&page=' + this.page + '&sortBy=' + this.arOr + '&token=' + localStorage.getItem('tokenKey'))
+        this.$http.get(window.base_api + '/payments?confirmEnrolledId='+ this.$route.params.id +'&page=' + this.page + '&token=' + localStorage.getItem('tokenKey'))
         .then(function(res){
             data.$store.dispatch('payments', res.data.payments);
             data.receipt_no = parseInt(res.data.receipt_no) + 1;

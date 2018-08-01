@@ -19,7 +19,8 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
 
     public function index(){
         return response()->json([
-            'enrollees' => $this->modelName->pagination()
+            'enrollees' => $this->modelName->with(['course', 'semester', 'schoolYear', 'schedule', 'studentType', 'enrollee.civil', 'enrollee' => function($query){
+                }])->orderBy('created_at', 'DESC')->paginate(15)
             ]);
     }
 
