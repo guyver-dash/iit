@@ -11,6 +11,7 @@
 			<td>{{ props.item.paid_amount|currency('₱ ') }}</td>
 			<td>{{ props.item.received_amount|currency('₱ ') }}</td>
 			<td>{{ props.item.change|currency('₱ ') }}</td>
+			<td>{{ props.item.created_at}}</td>
 			<td>
 				<v-tooltip bottom>
 					<v-btn slot="activator" icon class="mx-0" @click="edit(props.item.id)">
@@ -238,6 +239,7 @@
 			{ text: 'Paid Amount', value: 'paidAmount', sortable: false  },
 			{ text: 'Received Amount', value: 'givenAmount', sortable: false  },
 			{ text: 'Change', value: 'change', sortable: false },
+			{ text: 'Date', value: 'date', sortable: false },
 			{ text: 'Action', value: 'action', sortable: false }
 			],
 

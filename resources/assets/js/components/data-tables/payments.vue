@@ -200,9 +200,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-data-table
+    <!-- <v-data-table
     :headers="headers"
-    :items="payments.data"
+    :items="paymentsData"
     hide-actions
     class="elevation-1"
     >
@@ -264,7 +264,64 @@
         </td>
     </template>
 
-  </v-data-table>
+  </v-data-table> -->
+  <div class="elevation-1">
+  <table class="datatable table">
+    <tr class="datatable__progress">
+      <th>Receipt No.</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Balance</th>
+      <th>Paid Amt</th>
+      <th>Received Amt</th>
+      <th>Change</th>
+      <th>Date</th>
+      <th style="width:210px">Action</th>
+    </tr>
+    <tr v-for="payment in payments.data">
+      <td>{{ payment.prefix }}-{{ payment.receipt_no }}</td>
+      <td>{{ payment.confirm_enrolled.enrollee.idno }}</td>
+      <td>{{ payment.confirm_enrolled.enrollee.firstname|capitalize }} {{ payment.confirm_enrolled.enrollee.lastname|capitalize }}</td>
+      <td>{{ payment.balance.name }} ({{ payment.balance.amount|currency('₱ ') }})</td>
+      <td>{{ payment.amount_charge|currency('₱ ') }}</td>
+      <td>{{ payment.amount_given|currency('₱ ') }}</td>
+      <td>{{ payment.change|currency('₱ ') }}</td>
+      <td>{{ payment.created_at.substring(0, 10) }}</td>
+      <td>
+        <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="editItem(payment.id)">
+            <v-icon color="grey">mode_edit</v-icon>
+          </v-btn>
+          <span>Edit Payment</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="printReceipt(payment.id)">
+            <v-icon color="success">print</v-icon>
+          </v-btn>
+          <span>Print Payment</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="summary(payment.id)">
+            <v-icon color="blue">assignment</v-icon>
+          </v-btn>
+          <span>Summary of payments</span>
+        </v-tooltip>
+          <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="deleteItem(payment.id)">
+            <v-icon color="pink">delete</v-icon>
+          </v-btn>
+          <span>Delete</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+          <v-btn slot="activator" icon class="mx-0" @click="summaryAll(payment.confirm_enrolled.id)">
+            <v-icon color="purple">date_range</v-icon>
+          </v-btn>
+          <span>Print all payments</span>
+        </v-tooltip>
+        </td>
+    </tr>
+  </table>
+  </div>
   <div class="text-xs-center pt-2">
         <v-pagination v-model="page" :length="payments.last_page"></v-pagination>
   </div>
@@ -275,9 +332,10 @@
   import dueDate from '../../components/pickers/due-date'
   import paymentDate from '../../components/pickers/created-at'
   import editPaymentDate from '../../components/pickers/edit-payment-date'
+  import _ from 'lodash'
   export default {
    
-    props:['confirmid'],
+    props:['confirmid'], 
     components: {
       myCurrencyInput, dueDate, paymentDate, editPaymentDate
     },
@@ -348,7 +406,7 @@
         sortable: false,
         value: 'name'
       },
-      { text: 'Balace', value: 'balance', sortable: false  },
+      { text: 'Balance', value: 'balance', sortable: false  },
       { text: 'Paid Amount', value: 'paidAmount', sortable: false  },
       { text: 'Received Amount', value: 'givenAmount', sortable: false  },
       { text: 'Change', value: 'change', sortable: false },
@@ -384,10 +442,16 @@
 
         return  this.price2 -this.price
       },
-        payments(){
-          return this.$store.getters.payments
-      }
+        paymentsData(){
+         
+           let payments = this.$store.getters.payments.data
 
+           console.log(_.orderBy(payments, 'receipt_no', 'desc')) 
+           return _.orderBy(payments, 'receipt_no', 'desc')
+      },
+       payments(){
+           return this.$store.getters.payments
+      },
 
     },
 
@@ -532,3 +596,15 @@
     }
   }
 </script>
+<style type="text/css" scoped>
+  table{
+    padding: 5px;
+    border-collapse: collapse;
+    
+  }
+  table tr th, table tr td{
+    border-bottom: 1px solid gray;
+    padding: 5px;
+  }
+
+</style>
