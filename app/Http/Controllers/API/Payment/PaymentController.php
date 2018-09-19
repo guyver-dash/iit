@@ -255,6 +255,7 @@ class PaymentController extends Controller
         $request = app()->make('request');
         $pdf = \App::make('dompdf.wrapper');
         $pdf->setPaper('legal', 'portrait');
+        
 
         $payment = Payment::orWhere('confirm_enrollee_id', $request->confirmEnrolledId)
             ->whereHas('confirmEnrolled', function($query) use ($request) {
@@ -284,6 +285,12 @@ class PaymentController extends Controller
         $dueDate =  Carbon::parse($request->dueDate)->format('l jS \\of F Y'); 
         $balanceIdChecker = '';
         $discount = 0 ;
+
+
+        $conEnrolled = ConfirmEnrolled::where('id', $request->confirmEnrolledId)->with(['balances', 'payments'])->first();
+        $allPayments = '&#8369;' . number_format($conEnrolled->payments()->sum('amount_charge'),  2, '.', ',');
+        $allBalances = $conEnrolled->balances->toArray();
+        
         foreach ($payments as $value) {
             $or = $value->prefix . '-' . $value->receipt_no;
             $searchBal = Balance::where('id', $value->balance->id)
@@ -332,6 +339,7 @@ class PaymentController extends Controller
                        ";
 
         }
+
 
 
         $pdf->loadHTML("
@@ -396,7 +404,9 @@ class PaymentController extends Controller
                 $trPaid
 
             </table> 
-             <p style='color:red;'> 
+            <br />
+                <strong style='font-size: 10px;'>Total Paid: </strong><span style='font-size: 10px;'>$allPayments</span>
+                <p style='color:red; font-size: 12px;'> 
                     <strong>Amount Due: </strong> $amountDue <br />
                     <strong>Due Date: $dueDate </strong>
                 </p>

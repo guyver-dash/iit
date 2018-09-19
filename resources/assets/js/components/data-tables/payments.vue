@@ -53,6 +53,14 @@
                   :rules="[v => !!v || 'School Year is required']"
                 ></v-select>
               </v-flex>
+              <v-flex xs12 sm12 md12 lg12 xl12>
+                 <v-text-field
+                    textarea
+                    label="Remarks"
+                    v-model="remarks"
+                    required
+                    ></v-text-field>
+              </v-flex>
             </v-layout>
           </v-container>
           </v-form>
@@ -200,71 +208,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <!-- <v-data-table
-    :headers="headers"
-    :items="paymentsData"
-    hide-actions
-    class="elevation-1"
-    >
-    <template slot="headers" slot-scope="props">
-      <tr>
-        <th
-          v-for="header in props.headers"
-          :key="header.text"
-          :class="['column sortable', pagination.descending ? 'desc' : 'asc']"
-          @click="changeSort(header.value)"
-        >
-          <v-icon small v-if="pagination.descending == false">arrow_upward</v-icon>
-          <v-icon small v-else>arrow_downward</v-icon>
-          {{ header.text }}
-        </th>
 
-      </tr>
-    </template>
-    <template slot="items" slot-scope="props">
-      <td>{{ props.item.confirm_enrolled.enrollee.idno }}</td>
-      <td>{{ props.item.prefix }}-{{ props.item.receipt_no }}</td>
-      <td>{{ props.item.confirm_enrolled.enrollee.firstname|capitalize }} {{ props.item.confirm_enrolled.enrollee.lastname|capitalize }}</td>
-      <td>{{ props.item.balance.name }} ({{props.item.balance.amount|currency('₱ ')}}) </td>
-      <td>{{ props.item.amount_charge|currency('₱ ') }}</td>
-      <td>{{ props.item.amount_given|currency('₱ ') }}</td>
-      <td>{{ props.item.change|currency('₱ ') }}</td>
-      <td>{{ props.item.created_at.substring(0, 10) }}</td>
-      <td class="justify-center layout px-0">
-        <v-tooltip bottom>
-          <v-btn slot="activator" icon class="mx-0" @click="editItem(props.item.id)">
-            <v-icon color="grey">mode_edit</v-icon>
-          </v-btn>
-          <span>Edit Payment</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-          <v-btn slot="activator" icon class="mx-0" @click="printReceipt(props.item.id)">
-            <v-icon color="success">print</v-icon>
-          </v-btn>
-          <span>Print Payment</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-          <v-btn slot="activator" icon class="mx-0" @click="summary(props.item.id)">
-            <v-icon color="blue">assignment</v-icon>
-          </v-btn>
-          <span>Summary of payments</span>
-        </v-tooltip>
-          <v-tooltip bottom>
-          <v-btn slot="activator" icon class="mx-0" @click="deleteItem(props.item.id)">
-            <v-icon color="pink">delete</v-icon>
-          </v-btn>
-          <span>Delete</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-          <v-btn slot="activator" icon class="mx-0" @click="summaryAll(props.item.confirm_enrolled.id)">
-            <v-icon color="purple">date_range</v-icon>
-          </v-btn>
-          <span>Print all payments</span>
-        </v-tooltip>
-        </td>
-    </template>
-
-  </v-data-table> -->
   <div class="elevation-1">
   <table class="datatable table">
     <tr class="datatable__progress">
@@ -340,6 +284,7 @@
       myCurrencyInput, dueDate, paymentDate, editPaymentDate
     },
     data: () => ({
+      remarks: '',
       arOr: true,
       pagination: {
         sortBy: 'or',
@@ -501,7 +446,7 @@
 
       },
       viewSummary(){
-        window.open(window.base_api + '/payments/view/summary?dueAmount=' + this.dueAmount + '&examPeriod=' + this.examPeriod + '&confirmEnrolledId=' + this.payment.confirm_enrollee_id + '&dueDate='+ this.dueDate + '&schoolYear=' + this.schoolYear +'&semester=' + this.semester + '&token='+ localStorage.getItem('tokenKey'));
+        window.open(window.base_api + '/payments/view/summary?dueAmount=' + this.dueAmount + '&examPeriod=' + this.examPeriod + '&confirmEnrolledId=' + this.payment.confirm_enrollee_id + '&dueDate='+ this.dueDate + '&schoolYear=' + this.schoolYear +'&semester=' + this.semester +'&remarks=' + this.remarks + '&token='+ localStorage.getItem('tokenKey'));
       },
 
       summaryAll(confirmEnrolledId){
@@ -605,6 +550,10 @@
   table tr th, table tr td{
     border-bottom: 1px solid gray;
     padding: 5px;
+  }
+
+  tr:hover{
+    background-color: #E1E1E1;
   }
 
 </style>

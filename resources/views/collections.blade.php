@@ -21,6 +21,7 @@
         <th>Course</th>
         <th>Balance Name</th>
         <th>Paid Amount</th>
+        <th>Date Paid</th>
         <th>SU</th>
         <th>ID</th>
         <th>Old Balance</th>
@@ -35,6 +36,7 @@
             <td>{{ $payment->confirmEnrolled->course->name }}</td>
             <td>{{ $payment->balance->name }}</td>
             <td>{{$payment->amount_charge}}</td>
+            <td>{{$payment->created_at}}</td>
         </tr>
     @endforeach
      @foreach($trainingPayments as $tp)
@@ -46,6 +48,7 @@
             <td></td>
             <td></td>
             <td>{{$tp->paid_amount}}</td>
+            <td>{{$tp->created_at}}</td>
         </tr>
     @endforeach
         <tr>

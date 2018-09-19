@@ -89,7 +89,7 @@
     </v-dialog>
     <v-data-table
       :headers="headers"
-      :items="balances.data"
+      :items="balancesData"
       hide-actions
       class="elevation-1"
     >
@@ -136,6 +136,7 @@
   import myCurrencyInput from '../../components/currency-format/my-currency-input'
   import courses from '../../components/forms/selects/courses.vue'
   import enrollees from '../../components/forms/selects/enrollees.vue'
+  import _ from 'lodash'
   export default {
     props:['confirmid'],
     components: {
@@ -187,6 +188,9 @@
     computed: {
         confirmEnrolledId(){
           return this.$store.getters.confirmEnrolledId
+        },
+        balancesData(){
+          return _.values(this.$store.getters.balances.data)
         },
         balances(){
           return this.$store.getters.balances

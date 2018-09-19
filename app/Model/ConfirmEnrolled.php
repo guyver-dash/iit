@@ -13,6 +13,9 @@ class ConfirmEnrolled extends Model
     	'schedule_id', 'start_time', 'end_time'
     ];
 
+    public function payments(){
+        return $this->hasOne('App\Model\Payment', 'confirm_enrollee_id', 'id');
+    }
     public function balances(){
         return $this->belongsToMany('App\Model\Balance', 'balance_confirm_enrolled', 'confirm_enrolled_id', 'balance_id')->withPivot(['discount','created_at'])->orderBy('pivot_created_at','desc')->withTimestamps();
     }

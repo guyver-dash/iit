@@ -16,8 +16,7 @@
     </v-layout>
     <v-layout class="ma-0 pa-0">
       <v-flex xl12 lg12 md12 sm12 xs12>
-       <!--  <payments ref="newPayment" v-bind:confirmid="this.$route.params.id"></payments> -->
-       <payments></payments>
+        <payments ref="newPayment" v-bind:confirmid="this.$route.params.id"></payments>
       </v-flex>
     </v-layout>
     </v-container>
