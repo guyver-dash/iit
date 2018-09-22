@@ -7,10 +7,12 @@
 		class="elevation-1"
 		>
 		<template slot="items" slot-scope="props">
+			<td>{{ props.item.prefix }}-{{ props.item.receipt_no }}</td>
 			<td>{{ props.item.firstname|capitalize}} {{ props.item.lastname|capitalize}}</td>
 			<td>{{ props.item.paid_amount|currency('₱ ') }}</td>
 			<td>{{ props.item.received_amount|currency('₱ ') }}</td>
 			<td>{{ props.item.change|currency('₱ ') }}</td>
+			<td>{{ props.item.remarks }}</td>
 			<td>{{ props.item.created_at}}</td>
 			<td>
 				<v-tooltip bottom>
@@ -44,7 +46,7 @@
 		<v-card>
 			<v-card-title>
 				<span class="headline">
-					New Training Payment
+					New Other Payment
 				</span>
 			</v-card-title>
 			<v-card-text>
@@ -127,7 +129,7 @@
 	<v-card>
 		<v-card-title>
 			<span class="headline">
-				Edit Training Payment
+				Edit Other Payment
 			</span>
 		</v-card-title>
 		<v-card-text>
@@ -215,7 +217,7 @@
 	import editPaymentDate from '../../components/pickers/edit-payment-date'
 	export default {
 		data: () => ({
-			prefix: '00',
+			prefix: 'RN',
 			receipt_no: '',
 			editTrainingDialog: false,
 			
@@ -231,6 +233,12 @@
 			page: 1,
 			headers: [
 			{
+				text: 'Receipt No.',
+				align: 'left',
+				sortable: false,
+				value: 'receipt_no'
+			},
+			{
 				text: 'Name',
 				align: 'left',
 				sortable: false,
@@ -239,6 +247,7 @@
 			{ text: 'Paid Amount', value: 'paidAmount', sortable: false  },
 			{ text: 'Received Amount', value: 'givenAmount', sortable: false  },
 			{ text: 'Change', value: 'change', sortable: false },
+			{ text: 'Remarks', value: 'remarks', sortable: false },
 			{ text: 'Date', value: 'date', sortable: false },
 			{ text: 'Action', value: 'action', sortable: false }
 			],

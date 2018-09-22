@@ -18351,7 +18351,7 @@ module.exports = g;
             this.$store.dispatch('items', [{ icon: 'home', text: 'Home', to: '/' }, { icon: 'account_circle',
                 text: 'Profile',
                 to: '/profile'
-            }, { icon: 'format_bold', text: 'Balance', to: '/admin/balance' }, { icon: 'attach_money', text: 'Payments', to: '/admin/payments' }, { icon: 'attach_money', text: 'Training Payments', to: '/admin/training-payments' }, { icon: 'assignment_ind', text: 'Enrollees', to: '/admin/enrollees' }, { icon: 'folder_shared', text: 'SHS', to: '/admin/shs' }, { icon: 'folder_shared', text: 'JHS', to: '/admin/jhs' }, { icon: 'folder_shared', text: 'ICT', to: '/admin/ict' }, { icon: 'donut_small', text: 'Collection Reports', to: '/admin/collections' }, { icon: 'supervisor_account', text: 'Enrollees DB', to: '/admin/database' }]);
+            }, { icon: 'format_bold', text: 'Balance', to: '/admin/balance' }, { icon: 'attach_money', text: 'Payments', to: '/admin/payments' }, { icon: 'attach_money', text: 'Other Payments', to: '/admin/training-payments' }, { icon: 'assignment_ind', text: 'Enrollees', to: '/admin/enrollees' }, { icon: 'folder_shared', text: 'SHS', to: '/admin/shs' }, { icon: 'folder_shared', text: 'JHS', to: '/admin/jhs' }, { icon: 'folder_shared', text: 'ICT', to: '/admin/ict' }, { icon: 'donut_small', text: 'Collection Reports', to: '/admin/collections' }, { icon: 'supervisor_account', text: 'Enrollees DB', to: '/admin/database' }]);
         }
     }
 });
@@ -31111,11 +31111,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var EventBus = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a();
 
-window.base_api = 'http://localhost/iit/public/api';
-window.base = 'http://localhost/iit/public/';
+// window.base_api = 'http://localhost/iit/public/api';
+// window.base = 'http://localhost/iit/public';
 
-// window.base_api = 'http://cebu.it.nf/public/api';
-// window.base = 'http://cebu.it.nf/public/';
+window.base_api = 'http://iitcebu.net/public/api';
+window.base = 'http://iitcebu.net/public';
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_vuetify___default.a);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_6__plugins_my_vue_plugin_js__["a" /* default */]);
@@ -51805,6 +51805,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -51812,7 +51814,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			prefix: '00',
+			prefix: 'RN',
 			receipt_no: '',
 			editTrainingDialog: false,
 
@@ -51827,11 +51829,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			remarksDesc: 'Add Remarks',
 			page: 1,
 			headers: [{
+				text: 'Receipt No.',
+				align: 'left',
+				sortable: false,
+				value: 'receipt_no'
+			}, {
 				text: 'Name',
 				align: 'left',
 				sortable: false,
 				value: 'name'
-			}, { text: 'Paid Amount', value: 'paidAmount', sortable: false }, { text: 'Received Amount', value: 'givenAmount', sortable: false }, { text: 'Change', value: 'change', sortable: false }, { text: 'Date', value: 'date', sortable: false }, { text: 'Action', value: 'action', sortable: false }]
+			}, { text: 'Paid Amount', value: 'paidAmount', sortable: false }, { text: 'Received Amount', value: 'givenAmount', sortable: false }, { text: 'Change', value: 'change', sortable: false }, { text: 'Remarks', value: 'remarks', sortable: false }, { text: 'Date', value: 'date', sortable: false }, { text: 'Action', value: 'action', sortable: false }]
 
 		};
 	},
@@ -52043,6 +52050,14 @@ var render = function() {
               return [
                 _c("td", [
                   _vm._v(
+                    _vm._s(props.item.prefix) +
+                      "-" +
+                      _vm._s(props.item.receipt_no)
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(
                     _vm._s(_vm._f("capitalize")(props.item.firstname)) +
                       " " +
                       _vm._s(_vm._f("capitalize")(props.item.lastname))
@@ -52064,6 +52079,8 @@ var render = function() {
                 _c("td", [
                   _vm._v(_vm._s(_vm._f("currency")(props.item.change, "₱ ")))
                 ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.remarks))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(props.item.created_at))]),
                 _vm._v(" "),
@@ -52201,7 +52218,7 @@ var render = function() {
             [
               _c("v-card-title", [
                 _c("span", { staticClass: "headline" }, [
-                  _vm._v("\n\t\t\t\t\tNew Training Payment\n\t\t\t\t")
+                  _vm._v("\n\t\t\t\t\tNew Other Payment\n\t\t\t\t")
                 ])
               ]),
               _vm._v(" "),
@@ -52604,7 +52621,7 @@ var render = function() {
             [
               _c("v-card-title", [
                 _c("span", { staticClass: "headline" }, [
-                  _vm._v("\n\t\t\t\tEdit Training Payment\n\t\t\t")
+                  _vm._v("\n\t\t\t\tEdit Other Payment\n\t\t\t")
                 ])
               ]),
               _vm._v(" "),
@@ -53077,7 +53094,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("New Training Payment")]
+                [_vm._v("New Other Payment")]
               )
             ],
             1

@@ -52,7 +52,7 @@ export default {
                 },
                 { icon: 'format_bold', text: 'Balance', to: '/admin/balance' },
                 { icon: 'attach_money', text: 'Payments', to: '/admin/payments' },
-                { icon: 'attach_money', text: 'Training Payments', to: '/admin/training-payments' },
+                { icon: 'attach_money', text: 'Other Payments', to: '/admin/training-payments' },
                 { icon: 'assignment_ind', text: 'Enrollees', to: '/admin/enrollees' },
                 { icon: 'folder_shared', text: 'SHS', to: '/admin/shs' },
                 { icon: 'folder_shared', text: 'JHS', to: '/admin/jhs'},

@@ -96,6 +96,7 @@ class TrainingPaymentsController extends Controller
                 'paid_amount' => $request->paid_amount,
                 'received_amount' => $request->received_amount,
                 'change' => $request->received_amount - $request->paid_amount,
+                'remarks' => $request->remarks,
                 'created_at' => $request->created_at,
             ]);
         return response()->json([
@@ -155,6 +156,7 @@ class TrainingPaymentsController extends Controller
         $givenAmount = '&#8369;' . number_format($trainingPayment->received_amount,  2, '.', ',');
         $change = '&#8369;' . number_format($trainingPayment->change,  2, '.', ',');
         $receiptNo = $trainingPayment->prefix . '-' .$trainingPayment->receipt_no;
+        $remarks = $trainingPayment->remarks;
         $pdf->loadHTML("
             <style>
                 *{
@@ -201,6 +203,7 @@ class TrainingPaymentsController extends Controller
                     <strong>Received Amount:: </strong> $givenAmount <br />
                     <strong>Change: </strong>$change <br />
                 </p>
+                <p> <strong>Remarks: </strong> $remarks </p>
             </div>
             <div style='border-top: 1px dotted grey;'>
                 <p>
@@ -255,6 +258,7 @@ class TrainingPaymentsController extends Controller
                     <strong>Received Amount:: </strong> $givenAmount <br />
                     <strong>Change: </strong>$change <br />
                 </p>
+                <p> <strong>Remarks: </strong> $remarks </p>
             </div>
             <div style='border-top: 1px dotted grey;'>
                 <p>

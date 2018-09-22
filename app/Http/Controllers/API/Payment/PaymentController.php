@@ -290,6 +290,7 @@ class PaymentController extends Controller
         $conEnrolled = ConfirmEnrolled::where('id', $request->confirmEnrolledId)->with(['balances', 'payments'])->first();
         $allPayments = '&#8369;' . number_format($conEnrolled->payments()->sum('amount_charge'),  2, '.', ',');
         $allBalances = $conEnrolled->balances->toArray();
+        $remarks = $request->remarks;
         
         foreach ($payments as $value) {
             $or = $value->prefix . '-' . $value->receipt_no;
@@ -410,6 +411,10 @@ class PaymentController extends Controller
                     <strong>Amount Due: </strong> $amountDue <br />
                     <strong>Due Date: $dueDate </strong>
                 </p>
+            <div style='font-size: 12px;'>
+                <strong>Remarks: </strong>$remarks
+            </div>
+            <br />
             <div style='border-top: 1px dotted grey;'>
                 <p>
                     <strong>Received by: </strong> Rosello, Fairlane (Finance Officer)<br>

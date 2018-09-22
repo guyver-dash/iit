@@ -12,11 +12,11 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 
 export const EventBus = new Vue();
 
-window.base_api = 'http://localhost/iit/public/api';
-window.base = 'http://localhost/iit/public/';
+// window.base_api = 'http://localhost/iit/public/api';
+// window.base = 'http://localhost/iit/public';
 
-// window.base_api = 'http://cebu.it.nf/public/api';
-// window.base = 'http://cebu.it.nf/public/';
+window.base_api = 'http://iitcebu.net/public/api';
+window.base = 'http://iitcebu.net/public';
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 Vue.use(MyPlugin)

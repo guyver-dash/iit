@@ -2,7 +2,7 @@
 	<v-container class="ma-2 pa-0" fluid>
     <v-layout class="ma-0 pa-0 mt-2">
       <v-flex xl3 lg3 md3 sm3 xs3>
-       <v-btn color="primary" dark @click="newPayment()">New Training Payment</v-btn>
+       <v-btn color="primary" dark @click="newPayment()">New Other Payment</v-btn>
      </v-flex>
      <v-flex xl7 lg7 md7 sm7 xs7>
          <v-text-field
