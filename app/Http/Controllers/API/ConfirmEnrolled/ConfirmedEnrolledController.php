@@ -24,7 +24,7 @@ class ConfirmedEnrolledController extends Controller
 
     public function edit($id){
     	return response()->json([
-    			'enrollee' => ConfirmEnrolled::where('id', $id)->with(['enrollee.siblings', 'enrollee.answers.question', 'enrollee.requirementsDoc'])->first()
+    			'enrollee' => ConfirmEnrolled::where('id', $id)->with(['enrollee.siblings', 'enrollee.answers.question', 'enrollee.requirementsDoc', 'semester', 'schoolYear'])->first()
     		]);
     }
 

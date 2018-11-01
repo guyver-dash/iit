@@ -1,4 +1,6 @@
 export const state = {
+     selectedSchoolYear: 1,
+     selectedSemester: '',
      loader: false,
       loaderMessage: '',
      checkCollectionPayment: true,

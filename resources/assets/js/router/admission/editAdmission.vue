@@ -932,7 +932,7 @@
     },
     created(){
       
-      this.$store.dispatch('loaderMessage', 'Fetching...') ;
+      this.$store.dispatch('loaderMessage', 'Loading enrollee...') ;
       this.$store.dispatch('loader', true);
 
       let data = this
@@ -977,11 +977,13 @@
                   return req.id
               })
 
-               data.$store.dispatch('loader', false);
+              
             
         }).catch(function(res){
          data.$store.dispatch('loader', false);
-      })
+        }).finally(function(){
+          data.turnOffLoading()
+        })
         
     },
     computed: {
@@ -1054,7 +1056,9 @@
 
     },
     methods: {
-      
+      turnOffLoading: _.debounce(function(){
+        this.$store.dispatch('loader', false);
+      }, 5000),
       schoolYearChange(schoolYear){
         if(schoolYear != ''){
           this.schoolYearError = []

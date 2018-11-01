@@ -24,7 +24,8 @@ class InvoicesExport implements FromView
 	    		->where('created_at', '<=', $request->endDate)
             	->get(),
             'startDate' => Carbon::parse($request->startDate)->toDayDateTimeString(),
-            'endDate' => Carbon::parse($request->endDate)->toDayDateTimeString()
+            'endDate' => Carbon::parse($request->endDate)->toDayDateTimeString(),
+            'request' => $request
         ]);
     }
 }

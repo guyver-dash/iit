@@ -225,13 +225,19 @@
     <tr v-for="payment in payments.data">
       <td>{{ payment.prefix }}-{{ payment.receipt_no }}</td>
       <td>{{ payment.confirm_enrolled.enrollee.idno }}</td>
-      <td>{{ payment.confirm_enrolled.enrollee.firstname|capitalize }} {{ payment.confirm_enrolled.enrollee.lastname|capitalize }}</td>
+      <td>{{ payment.confirm_enrolled.enrollee.firstname|capitalize }} {{ payment.confirm_enrolled.enrollee.lastname|capitalize }} <br />({{payment.confirm_enrolled.semester.name }} {{payment.confirm_enrolled.school_year.sy }})</td>
       <td>{{ payment.balance.name }} ({{ payment.balance.amount|currency('₱ ') }})</td>
       <td>{{ payment.amount_charge|currency('₱ ') }}</td>
       <td>{{ payment.amount_given|currency('₱ ') }}</td>
       <td>{{ payment.change|currency('₱ ') }}</td>
       <td>{{ payment.created_at.substring(0, 10) }}</td>
       <td>
+        <v-tooltip bottom>
+            <v-btn slot="activator" icon class="mx-0" @click="newPayment(payment.confirm_enrolled.id)">
+              <v-icon color="success" >credit_card</v-icon>
+            </v-btn>
+            <span>New Payment</span>
+          </v-tooltip>
         <v-tooltip bottom>
           <v-btn slot="activator" icon class="mx-0" @click="editItem(payment.id)">
             <v-icon color="grey">mode_edit</v-icon>
@@ -379,7 +385,7 @@
       },
       name(){
         if (this.$store.getters.confirmEnrolledPayment != null) {
-          return this.confirmEnrolledPayment.enrollee.firstname + ' ' +this.confirmEnrolledPayment.enrollee.lastname
+          return this.confirmEnrolledPayment.enrollee.firstname + ' ' +this.confirmEnrolledPayment.enrollee.lastname + '-' + this.confirmEnrolledPayment.semester.name + ' ' + this.confirmEnrolledPayment.school_year.sy + ''
         }
 
       },
@@ -409,6 +415,28 @@
     },
 
     methods: {
+      newPayment(confirmEnrolleeId){
+       let data = this
+         this.$http.get(window.base_api + '/confirm-enrolled/' + confirmEnrolleeId + '?token=' + localStorage.getItem('tokenKey'))
+                    .then(function(res){
+                        data.$store.dispatch('confirmEnrolledPayment', res.data.enrollee)
+                    })
+
+        this.$http.get(window.base_api + '/payments?confirmEnrolledId='+ confirmEnrolleeId +'&page=' + this.page + '&sortBy=' + this.arOr + '&token=' + localStorage.getItem('tokenKey'))
+        .then(function(res){
+            data.$store.dispatch('payments', res.data.payments);
+            data.receipt_no = parseInt(res.data.receipt_no) + 1;
+            if (res.data.confirmEnrolled == null){
+             data.$store.dispatch('balances', []);
+            }else{
+              
+               data.$store.dispatch('balances', res.data.confirmEnrolled.balances);
+            }
+        })
+
+        this.dialog = true
+
+      },
       changeSort (column) {
         this.pagination.sortBy = column
         if ( this.pagination.descending == true) {

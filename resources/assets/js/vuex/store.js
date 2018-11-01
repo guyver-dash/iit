@@ -8,6 +8,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state,
 	mutations: {
+		selectedSchoolYear(state, payload){
+			state.selectedSchoolYear = payload
+		},
+		selectedSemester(state, payload){
+			state.selectedSemester = payload
+		},
 		loaderMessage(state, payload){
 			state.loaderMessage = payload
 		},
@@ -184,6 +190,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		selectedSchoolYear(store, payload){
+			store.commit('selectedSchoolYear', payload)
+		},
+		selectedSemester(store, payload){
+			store.commit('selectedSemester', payload)
+		},
 		loaderMessage(store, payload){
 			store.commit('loaderMessage', payload)
 		},
@@ -402,6 +414,12 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		selectedSchoolYear(){
+			return store.state.selectedSchoolYear
+		},
+		selectedSemester(){
+			return store.state.selectedSemester
+		},
 		loaderMessage(){
 			return store.state.loaderMessage
 		},

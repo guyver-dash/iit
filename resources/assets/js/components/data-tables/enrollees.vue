@@ -121,7 +121,7 @@
       deleteItem (enrolleeId) {
         var z = confirm('Are you sure you want to delete this item?') 
         if (z == true) {
-          this.$http.delete(window.base + 'api/confirm-enrolled/' + enrolleeId + '?token=' + localStorage.getItem('tokenKey'))
+          this.$http.post(window.base + '/api/confirm-enrolled-delete/' + enrolleeId + '?token=' + localStorage.getItem('tokenKey'))
           .then(function(res){
               data.$store.dispatch('enrollees', res.data.enrollees)
           })

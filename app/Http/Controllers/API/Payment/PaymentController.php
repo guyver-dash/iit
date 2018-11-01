@@ -21,7 +21,7 @@ class PaymentController extends Controller
     public function index(){
         $request = app()->make('request');
         return response()->json([
-                'payments' => Payment::with(['confirmEnrolled.enrollee', 'balance'])
+                'payments' => Payment::with(['confirmEnrolled.enrollee', 'balance', 'confirmEnrolled.semester', 'confirmEnrolled.schoolYear'])
                     ->orderBy('receipt_no', 'DESC')->paginationPay(),
                 'confirmEnrolled' => ConfirmEnrolled::where('id', $request->confirmEnrolledId)->with('balances')->first(),
                 'receipt_no' => Payment::max('receipt_no')
@@ -80,13 +80,17 @@ class PaymentController extends Controller
 
     public function search(){
         $request = app()->make('request');
-        $payments = Payment::whereHas('enrollee', function($query) use ($request) {
+        $payments = Payment::whereHas('confirmEnrolled', function($query) use ($request) {
+                    $query->where('semester_id', '=', $request->semesterId);
+                    $query->where('school_year_id', '=', $request->schoolYearId);
+                })
+                ->whereHas('enrollee', function($query) use ($request) {
                 $query->where(function($query) use ($request) {
                     $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
                     $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
 
                 });
-            })->with(['confirmEnrolled.enrollee', 'balance'])->paginationPay();
+            })->with(['confirmEnrolled.enrollee', 'balance', 'confirmEnrolled.semester', 'confirmEnrolled.schoolYear'])->paginationPay();
 
         return response()->json([
             'payments' => $payments
@@ -396,7 +400,7 @@ class PaymentController extends Controller
                 <tr>
                     <th>OR</th>
                     <th>Balance Name</th>
-                    <th>Balance Amount</th>
+                    <th>Amount Due</th>
                     <th>Paid</th>
                     <th>Remaining</th>
                     <th>Paid Date</th>

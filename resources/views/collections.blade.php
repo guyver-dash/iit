@@ -27,30 +27,34 @@
         <th>Old Balance</th>
 
     </tr>
-    @foreach($payments as $payment)
-        <tr>
-            <td>{{ $payment->prefix . '-' . $payment->receipt_no }}</td>
-            <td>{{ $payment->confirmEnrolled->enrollee->lastname }}</td>
-            <td>{{ $payment->confirmEnrolled->enrollee->firstname }}</td>
-            <td></td>
-            <td>{{ $payment->confirmEnrolled->course->name }}</td>
-            <td>{{ $payment->balance->name }}</td>
-            <td>{{$payment->amount_charge}}</td>
-            <td>{{$payment->created_at}}</td>
-        </tr>
-    @endforeach
-     @foreach($trainingPayments as $tp)
-        <tr>
-            <td>{{ $tp->prefix . '-' . $tp->receipt_no }}</td>
-            <td>{{ $tp->lastname }}</td>
-            <td>{{ $tp->firstname }}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>{{$tp->paid_amount}}</td>
-            <td>{{$tp->created_at}}</td>
-        </tr>
-    @endforeach
+    @if($request->payment == 'true')
+        @foreach($payments as $payment)
+            <tr>
+                <td>{{ $payment->prefix . '-' . $payment->receipt_no }}</td>
+                <td>{{ $payment->confirmEnrolled->enrollee->lastname }}</td>
+                <td>{{ $payment->confirmEnrolled->enrollee->firstname }}</td>
+                <td></td>
+                <td>{{ $payment->confirmEnrolled->course->name }}</td>
+                <td>{{ $payment->balance->name }}</td>
+                <td>{{$payment->amount_charge}}</td>
+                <td>{{$payment->created_at}}</td>
+            </tr>
+        @endforeach
+    @endif
+    @if($request->trainingPayment == 'true')
+         @foreach($trainingPayments as $tp)
+            <tr>
+                <td>{{ $tp->prefix . '-' . $tp->receipt_no }}</td>
+                <td>{{ $tp->lastname }}</td>
+                <td>{{ $tp->firstname }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{$tp->paid_amount}}</td>
+                <td>{{$tp->created_at}}</td>
+            </tr>
+        @endforeach
+    @endif
         <tr>
             <td></td>
             <td></td>

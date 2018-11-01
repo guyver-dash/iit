@@ -49,13 +49,14 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
     public function search(){
 
         $request = app()->make('request');
-        $confirmedEnroll = $this->modelName->whereHas('enrollee', function($query) use ($request) {
+        $confirmedEnroll = $this->modelName->where('semester_id', '=', $request->semesterId)
+        ->where('school_year_id', '=', $request->schoolYearId)
+        ->whereHas('enrollee', function($query) use ($request) {
             $query->where(function($query) use ($request) {
                 $query->orWhere('firstname', 'LIKE', '%'. $request->search . '%');
                 $query->orWhere('lastname', 'LIKE', '%'. $request->search . '%');
 
             });
-
         })->pagination();
 
         return response()->json([

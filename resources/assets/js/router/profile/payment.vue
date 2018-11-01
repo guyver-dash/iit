@@ -1,10 +1,10 @@
 <template>
 	<v-container class="ma-2 pa-0" fluid>
     <v-layout class="ma-0 pa-0">
-      <v-flex xl3 lg3 md3 sm3 xs3>
+      <v-flex xs2>
          <h1 class="pa-2">Payments</h1>
       </v-flex>
-      <v-flex xl9 lg9 md9 sm9 xs9>
+      <v-flex xs4>
          <v-text-field
           v-model="search"
           append-icon="search"
@@ -12,6 +12,12 @@
           single-line
           hide-details
         ></v-text-field>
+      </v-flex>
+      <v-flex xs2>
+          <semester-select></semester-select>
+      </v-flex>
+      <v-flex xs2>
+          <school-years></school-years>
       </v-flex>
     </v-layout>
     <v-layout class="ma-0 pa-0">
@@ -24,13 +30,19 @@
 
 <script>
   import payments from '../../components/data-tables/payments.vue'
+
+  import semestersSY from '../../mixins/semestersSY.js'
+
+  import semesterSelect from '../../components/select/semester'
+  import schoolYears from '../../components/select/schoolYears'
   import _ from 'lodash'
   export default {
+      mixins: [semestersSY],
         data: ()=>({
             search: '',
         }),
     	components: {
-            payments
+            payments, semesterSelect, schoolYears
     	},
     	created(){
             
@@ -43,7 +55,13 @@
     	computed: {
     		authUser(){
     			return this.$store.getters.authUser
-    		}
+    		},
+        selectedSemester(){
+          return this.$store.getters.selectedSemester
+        },
+        selectedSchoolYear(){
+          return this.$store.getters.selectedSchoolYear
+        }
     	},
         methods: {
             confirmEnrolled(){
@@ -57,7 +75,9 @@
                 let data = this
                 this.$refs.newPayment.page = 1
                 this.$http.post(base_api + '/payments/search?token=' + localStorage.getItem('tokenKey'),{
-                  search: this.search
+                  search: this.search,
+                  semesterId: this.selectedSemester,
+                  schoolYearId: this.selectedSchoolYear
                 }).then(function(res){
                     data.$store.dispatch('payments', res.data.payments);
                 })
@@ -67,6 +87,12 @@
         watch: {
 
           search(val){
+            this.newSearch()
+          },
+          selectedSemester(){
+            this.newSearch()
+          },
+          selectedSchoolYear(){
             this.newSearch()
           }
         }

@@ -1,10 +1,10 @@
 <template>
 	<v-container class="ma-2 pa-0" fluid>
     <v-layout class="ma-0 pa-0">
-      <v-flex xl3 lg3 md3 sm3 xs3>
+      <v-flex xs2>
          <h1 class="pa-2">Enrollees</h1>
       </v-flex>
-      <v-flex xl9 lg9 md9 sm9 xs9>
+      <v-flex xs4>
          <v-text-field
           v-model="search"
           append-icon="search"
@@ -13,10 +13,16 @@
           hide-details
         ></v-text-field>
       </v-flex>
+      <v-flex xs2>
+        <semester-select></semester-select>
+      </v-flex>
+      <v-flex xs2>
+         <school-years></school-years>
+      </v-flex>
     </v-layout>
     <v-layout class="ma-0 pa-0">
       <v-flex xl12 lg12 md12 sm12 xs12>
-        <enrollees v-bind:printUrl="'api/confirm-enrolled/print/'"></enrollees>
+        <enrollees v-bind:printUrl="'/api/confirm-enrolled/print/'"></enrollees>
       </v-flex>
     </v-layout>
 	</v-container>
@@ -24,14 +30,21 @@
 
 <script>
 import startUp from '../mixins/start-up.js'
+import semestersSY from '../mixins/semestersSY.js'
 import enrollees from '../components/data-tables/enrollees.vue'
+
+import semesterSelect from '../components/select/semester'
+import schoolYears from '../components/select/schoolYears'
   export default {
+
       data: ()=>({
         search: ''
       }),
-      mixins: [startUp],
+      mixins: [startUp, semestersSY],
       components:{
-        enrollees
+        enrollees,
+        semesterSelect,
+        schoolYears
       },
     	computed: {
     		authUser(){
@@ -39,11 +52,23 @@ import enrollees from '../components/data-tables/enrollees.vue'
     		},
         page(){
           return this.$store.getters.page
+        },
+        semesters(){
+          return this.$store.getters.semesters
+        },
+        schoolYears(){
+          return this.$store.getters.schoolYears
+        },
+        selectedSemester(){
+          return this.$store.getters.selectedSemester
+        },
+        selectedSchoolYear(){
+          return this.$store.getters.selectedSchoolYear
         }
     	},
       created() {
         this.$store.dispatch('page', 1)
-        this.changePage()
+        this.changePage();
       },
       methods: {
         changePage(){
@@ -57,20 +82,31 @@ import enrollees from '../components/data-tables/enrollees.vue'
             data.$router.push('/')
           })
         },
-      },
-      watch: {
-        search: function(val){
+        searchString(){
           var data = this
           this.$http.post(base_api + '/confirm-enrolled/search?token=' + window.localStorage.getItem('tokenKey'),{
-              search: val
+              search: this.search,
+              semesterId: this.selectedSemester,
+              schoolYearId: this.selectedSchoolYear
           })
             .then(function(res){
               data.$store.dispatch('enrollees', res.data.enrollees)
             })
             .catch()
+        }
+      },
+      watch: {
+        search: function(val){
+          this.searchString()
         },
         page(){
           this.changePage()
+        },
+        selectedSemester(){
+          this.searchString()
+        },
+        selectedSchoolYear(){
+          this.searchString()
         }
       }
   }

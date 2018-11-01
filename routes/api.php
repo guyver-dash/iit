@@ -48,7 +48,7 @@ Route::get('confirm-enrolled', 'API\ConfirmEnrolled\ConfirmedEnrolledController@
 Route::post('confirm-enrolled/new-enrollee', 'API\ConfirmEnrolled\ConfirmedEnrolledController@newEnrollee');
 Route::get('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@edit');
 Route::post('confirm-enrolled/search', 'API\ConfirmEnrolled\ConfirmedEnrolledController@search');
-Route::delete('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@destroy');
+Route::post('confirm-enrolled-delete/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@destroy');
 Route::get('confirm-enrolled/print/{confirmEnrolleeId}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@print');
 Route::put('confirm-enrolled/{id}', 'API\ConfirmEnrolled\ConfirmedEnrolledController@update');
 Route::post('auth/register', 'API\User\UserController@register');
@@ -58,3 +58,6 @@ Route::post('profile-update', 'API\User\UserController@profileUpdate');
 Route::group(['middleware' => ['jwt.auth', 'role:admin']], function () {
     Route::get('user', 'API\User\UserController@getAuthUser');
 });
+
+Route::resource('semester', 'API\Semester\SemesterController');
+Route::resource('school_year', 'API\SchoolYear\SchoolYearController');
