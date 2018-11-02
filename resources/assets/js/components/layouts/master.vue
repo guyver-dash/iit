@@ -120,7 +120,7 @@
       fixed
       class="mr-3 hidden-xs-only"
     >
-      <v-avatar size="100px" tile class="mt-4 pt-3">
+      <v-avatar size="100px" tile >
           <img
             :src= "base + '/images/logos/logo.png'"
             alt="Vuetify"
@@ -157,7 +157,7 @@
                     v-model="password"
                     :rules="passwordRules"
                     :prepend-icon= "e1 ? 'visibility' : 'visibility_off'""
-                    :prepend-icon-cb="() => (e1 = !e1)"
+                    @click:prepend="() => (e1 = !e1)"
                     :type="e1 ? 'password' : 'text'"
                     counter
                     >
@@ -186,7 +186,7 @@
   import admission from '../../components/dialog/admission.vue'
   import mainSnackBar from '../../components/snackbar/snackbar.vue'
   import newFooter from '../../components/layouts/footer.vue'
-  import loader from '../../components/dialog/loader.vue'
+  import loader from '../../components/dialog/loading.vue'
 
   export default {
     data: () => ({

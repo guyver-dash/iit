@@ -87,8 +87,10 @@ class BalanceController extends Controller
 
     public function attachEnrollee(){
 
+        $this->balance->attachEnrollee();
+        
        return response()->json([
-            'sucess' => $this->balance->attachEnrollee()
+            'sucess' => true
         ]);
 
     }

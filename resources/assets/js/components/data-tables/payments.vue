@@ -54,12 +54,11 @@
                 ></v-select>
               </v-flex>
               <v-flex xs12 sm12 md12 lg12 xl12>
-                 <v-text-field
-                    textarea
+                 <v-textarea
                     label="Remarks"
                     v-model="remarks"
                     required
-                    ></v-text-field>
+                    ></v-textarea>
               </v-flex>
             </v-layout>
           </v-container>

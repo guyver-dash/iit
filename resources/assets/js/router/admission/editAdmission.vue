@@ -1058,7 +1058,7 @@
     methods: {
       turnOffLoading: _.debounce(function(){
         this.$store.dispatch('loader', false);
-      }, 5000),
+      }, 6000),
       schoolYearChange(schoolYear){
         if(schoolYear != ''){
           this.schoolYearError = []

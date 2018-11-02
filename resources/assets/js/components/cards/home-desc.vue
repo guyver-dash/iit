@@ -6,8 +6,8 @@
          <v-toolbar color="indigo" dark>
             <v-toolbar-title>{{ title }}</v-toolbar-title>
           </v-toolbar>
-        <v-card-media :src="image" :height="height">
-        </v-card-media>
+        <v-img :src="image" :height="height">
+        </v-img>
         <v-card-title primary-title>
           <div>
             <div>{{ desc }}</div>

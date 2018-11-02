@@ -24,7 +24,10 @@
 
 <script>
   import balance from '../../components/data-tables/balance.vue'
+  import semestersSY from '../../mixins/semestersSY.js'
+
   export default {
+      mixins:[semestersSY],
         data: ()=>({
             search: '',
             items: [

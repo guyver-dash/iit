@@ -27,7 +27,7 @@
       </v-flex>
 
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-        <v-select
+        <v-autocomplete
                 label="Select Course"
                 :items="courses"
                 v-model="course"
@@ -35,10 +35,10 @@
                 item-value="id"
                 :rules="[v => !!v || 'Please select course.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-        <v-select
+        <v-autocomplete
                 label="School Year"
                 :items="schoolYears"
                 v-model="schoolYear"
@@ -47,10 +47,10 @@
                 :rules="[v => !!v || 'Please select school year.']"
                 @change="schoolYearChange"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-        <v-select
+        <v-autocomplete
                 label="Year level"
                 :items="yearLevels"
                 v-model="yearLevel"
@@ -58,10 +58,10 @@
                 item-text="name"
                 :rules="[v => !!v || 'Please select year level.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-        <v-select
+        <v-autocomplete
                 label="Semester"
                 :items="semesters"
                 v-model="semester"
@@ -69,10 +69,10 @@
                 item-text="name"
                 :rules="[v => !!v || 'Please select semester.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-        <v-select
+        <v-autocomplete
                 label="Schedule"
                 :items="schedules"
                 v-model="schedule"
@@ -80,7 +80,7 @@
                 item-text="name"
                 :rules="[v => !!v || 'Please select schedule.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
 
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -164,7 +164,7 @@
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-           <v-select
+           <v-autocomplete
                 label="Educational Attainment"
                 :items="educAtt"
                 v-model="selectedEducAtt"
@@ -172,20 +172,20 @@
                 item-text="name"
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-           <v-select
+           <v-autocomplete
                 label="Sex"
                 :items="sexs"
                 v-model="sex"
                 item-value="text"
                 required
                 :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-           <v-select
+           <v-autocomplete
                 label="Civil Status"
                 :items="civilStatus"
                 v-model="selectedCivil"
@@ -193,7 +193,7 @@
                 item-text="name"
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
      
 
@@ -271,7 +271,7 @@
     </v-flex>
     <v-layout row wrap>
        <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-             <v-select
+             <v-autocomplete
                 autocomplete
                 label="Present Province"
                 :items="provinces"
@@ -280,10 +280,10 @@
                 item-value="id"
                 required
                 :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-select
+            <v-autocomplete
                 autocomplete
                 label="Present City"
                 :items="presentCities"
@@ -292,7 +292,7 @@
                 item-value="id"
                 required
                 :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
@@ -305,14 +305,13 @@
       </v-flex>
       
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-text-field
+            <v-textarea
                 label="Present Address(House No:, street)"
                 v-model="presentAddress"
                 color="grey"
-                textarea
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-text-field>
+              ></v-textarea>
       </v-flex>
     </v-layout>
 
@@ -322,7 +321,7 @@
     </v-flex>
     <v-layout row wrap>
        <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-             <v-select
+             <v-autocomplete
                 label="Permanent Province"
                 :items="provinces"
                 v-model="permanentProvinceId"
@@ -330,10 +329,10 @@
                 item-text="name"
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-select
+            <v-autocomplete
                 label="Permanent City"
                 :items="permanentCities"
                 v-model="permanentCityId"
@@ -341,7 +340,7 @@
                 item-text="name"
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
@@ -353,14 +352,13 @@
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-text-field
+            <v-textarea
                 label="Permanent Address(House No:, street)"
                 v-model="permanentAddress"
                 color="grey"
-                textarea
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-text-field>
+              ></v-textarea>
       </v-flex>
     </v-layout>
 
@@ -416,7 +414,7 @@
       </v-flex>
       
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-             <v-select
+             <v-autocomplete
                 label="Province"
                 :items="provinces"
                 v-model="fatherProvinceId"
@@ -425,10 +423,10 @@
                 autocomplete
                 required
                 :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-select
+            <v-autocomplete
                 label="City"
                 :items="fatherCities"
                 v-model="fatherCityId"
@@ -437,7 +435,7 @@
                 autocomplete
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
      
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
@@ -450,14 +448,14 @@
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-text-field
+                
+            <v-textarea
                 label="Present Address(House No:, street)"
                 v-model="fatherAddress"
                 color="grey"
-                textarea
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-text-field>
+              ></v-textarea>
       </v-flex>
     </v-layout>
 
@@ -506,7 +504,7 @@
       </v-flex>
       
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-             <v-select
+             <v-autocomplete
                 autocomplete
                 label="Province"
                 :items="provinces"
@@ -515,10 +513,10 @@
                 item-text="name"
                 required
                 :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-select
+            <v-autocomplete
                 autocomplete
                 label="City"
                 :items="motherCities"
@@ -527,7 +525,7 @@
                 item-text="name"
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
@@ -539,14 +537,13 @@
               ></v-text-field>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-text-field
+            <v-textarea
                 label="Present Address(House No:, street)"
                 v-model="motherAddress"
                 color="grey"
-                textarea
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-text-field>
+              ></v-textarea>
       </v-flex>
     </v-layout>
 
@@ -610,7 +607,7 @@
       
      
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-             <v-select
+             <v-autocomplete
                 label="Province"
                 :items="provinces"
                 v-model="schoolProvinceId"
@@ -618,10 +615,10 @@
                 item-text="name"
                 required
                 :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-select
+            <v-autocomplete
                 label="City"
                 :items="schoolCities"
                 v-model="schoolCityId"
@@ -629,7 +626,7 @@
                 item-text="name"
                 required
                 :rules="[v => !!v || 'This field is required.']"
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
            <v-text-field
@@ -641,14 +638,13 @@
               ></v-text-field>
       </v-flex>
        <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2">
-            <v-text-field
+            <v-textarea
                 label="Present Address(House No:, street)"
                 v-model="schoolAddress"
                 color="grey"
-                textarea
                 :rules="[v => !!v || 'This field is required.']"
                 required
-              ></v-text-field>
+              ></v-textarea>
       </v-flex>
     </v-layout>
 
@@ -657,13 +653,13 @@
     <v-layout row wrap>
       
       <v-flex xl4 lg4 md4 sm6 xs12 class="pa-2" v-for="question in questions" :key="question.id">
-            <v-select
+            <v-autocomplete
                 :label="question.name"
                 :items="question.answers"
                 item-value="id"
                 item-text="name"
                 @change="myAnswer"
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
      
     </v-layout>
@@ -677,14 +673,14 @@
     <v-layout row wrap>
       
       <v-flex xl3 lg3 md3 sm6 xs12 class="pa-2" v-for="requirement in requirements" :key="requirement.id">
-            <v-select
+            <v-autocomplete
                 :label="requirement.name"
                 :items="requirement.requirements_doc"
                 v-model="requirementsDocs"
                 item-value="id"
                 item-text="name"
                 multiple
-              ></v-select>
+              ></v-autocomplete>
       </v-flex>
         
       <v-flex xl12 lg12 md12 sm12 xs12 class="pa-2">

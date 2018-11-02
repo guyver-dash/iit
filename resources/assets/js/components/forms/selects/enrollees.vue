@@ -1,15 +1,17 @@
 <template>
       <v-flex xl12 lg12 md12 sm12 xs12>
-        <v-select
+        <v-autocomplete
           :items="enrollees"
           v-model="enrollee"
           label="Search Student"
           chips
           item-text="name"
           item-value="id"
-          autocomplete
+          clearable
           :search-input.sync="searchInput"
-        ></v-select>
+        >
+
+        </v-autocomplete>
       </v-flex>
 </template>
 <script>
@@ -25,26 +27,42 @@ import _ from 'lodash'
           return this.$store.getters.enrollees
         }
         
+      },
+      selectedSemester(){
+        return this.$store.getters.selectedSemester
+      },
+      selectedSchoolYear(){
+        return this.$store.getters.selectedSchoolYear
       }
     },
-    watch: {
-      enrollees(val){
-         this.$store.dispatch('enrollees', val)
-      },
-      searchInput: _.debounce(function(){
+    methods: {
+      searchEnrollee: _.debounce(function(){
         let data = this
         if (this.searchInput != null) {
           console.log(this.searchInput)
-          this.$http.get( base_api + '/balance-enrollee-search?string=' + this.searchInput + '&token=' + localStorage.getItem('tokenKey'))
+          this.$http.get( base_api + '/balance-enrollee-search?string=' + this.searchInput + '&semesterId='+ this.selectedSemester+'&schoolYearId='+ this.selectedSchoolYear +'&token=' + localStorage.getItem('tokenKey'))
           .then(function(res){
             data.$store.dispatch('enrollees', res.data.enrollees)
           })
         }
         
       }, 500)
-      ,
+    },
+    watch: {
+      enrollees(val){
+         this.$store.dispatch('enrollees', val)
+      },
+      searchInput(){
+        this.searchEnrollee()
+      },
       enrollee(val){
         this.$store.dispatch('confirmEnrolledId', val)
+      },
+      selectedSemester(){
+        this.searchEnrollee()
+      },
+      selectedSchoolYear(){
+        this.searchEnrollee()
       }
     }
   }

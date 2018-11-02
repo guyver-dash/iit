@@ -41,19 +41,23 @@ class BalanceRepository extends BaseRepository implements BalanceInterface{
 	public function enrolleeSearch(){
 
 		$request = app()->make('request');
-        $confirmedEnroll = ConfirmEnrolled::whereHas('enrollee', function($query) use ($request) {
-            $query->where(function($query) use ($request) {
+        $confirmedEnroll = ConfirmEnrolled::where('semester_id', $request->semesterId)
+        	->where('school_year_id', $request->schoolYearId)
+        	->whereHas('enrollee', function($query) use ($request) {
+
+            	$query->where(function($query) use ($request) {
                 $query->orWhere('firstname', 'LIKE', '%'. $request->string . '%');
                 $query->orWhere('lastname', 'LIKE', '%'. $request->string . '%');
 
             });
 
-        })->with('enrollee')->take(10)->get();
+        })->with(['enrollee', 'semester', 'schoolYear'])->take(10)->get();
+
         return $confirmedEnroll->map(function ($item, $key) {
         	//id is a confirm_enroll_id
 				    return [ 
 				    	'id' => $item->id, 
-				    	'name' => $item->enrollee->firstname . ' ' . $item->enrollee->lastname
+				    	'name' => $item->enrollee->firstname . ' ' . $item->enrollee->lastname . '(' . $item->semester->name . '-' . $item->schoolYear->sy . ')'
 				    ];
 				});
 	}
@@ -92,7 +96,11 @@ class BalanceRepository extends BaseRepository implements BalanceInterface{
 			
 			foreach ($request->course_ids as $course_id) {
 				
-				$confirmEnrolled = ConfirmEnrolled::where('course_id', $course_id)->get();
+				$confirmEnrolled = ConfirmEnrolled::where('course_id', $course_id)
+					->where('semester_id', $request->semesterId)
+					->where('school_year_id', $request->schoolYearId)
+					->get();
+				
 				foreach ($confirmEnrolled  as $value) {
 					$balance = $this->modelName->find($request->balanceId);
 					$balance->confirmEnrolled()->newPivotStatementForId( $request->confirmEnrolledId )
@@ -109,6 +117,8 @@ class BalanceRepository extends BaseRepository implements BalanceInterface{
 			}
 		}
 		else{
+
+
 
 			$balance = $this->modelName->find($request->balanceId);
 			
