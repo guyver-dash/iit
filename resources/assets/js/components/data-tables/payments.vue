@@ -277,310 +277,407 @@
 </div>
 </template>
 <script>
-  import myCurrencyInput from '../../components/currency-format/my-currency-input'
-  import dueDate from '../../components/pickers/due-date'
-  import paymentDate from '../../components/pickers/created-at'
-  import editPaymentDate from '../../components/pickers/edit-payment-date'
-  import _ from 'lodash'
-  export default {
-   
-    props:['confirmid'], 
-    components: {
-      myCurrencyInput, dueDate, paymentDate, editPaymentDate
+import myCurrencyInput from "../../components/currency-format/my-currency-input";
+import dueDate from "../../components/pickers/due-date";
+import paymentDate from "../../components/pickers/created-at";
+import editPaymentDate from "../../components/pickers/edit-payment-date";
+import _ from "lodash";
+export default {
+  props: ["confirmid"],
+  components: {
+    myCurrencyInput,
+    dueDate,
+    paymentDate,
+    editPaymentDate
+  },
+  data: () => ({
+    remarks: "",
+    arOr: true,
+    pagination: {
+      sortBy: "or",
+      descending: false
     },
-    data: () => ({
-      remarks: '',
-      arOr: true,
-      pagination: {
-        sortBy: 'or',
-        descending: false
-      },
-      dueAmount: 0,
-      dialog3: false,
-      balancesEdit:[],
-      examPeriod: '',
-      examPeriods: [
-        { id: 0, name: 'Pre-test'},
-        { id: 1,  name: 'Prelim'},
-        { id: 2,  name: 'Midterm'},
-        { id: 3,  name: 'Final'}
-      ],
-      semester: '',
-      semesters: [
-        { id: 1, name: 'First Semester'},
-        { id: 2, name: 'Second Semester'}
-      ],
-      schoolYears: [],
-      schoolYear:'',
-      payment:{
-        balance_id: 0,
-        prefix: '',
-        receipt_no: '',
-        amount_given: 0,
-        amount_charge: 0,
-        change: 0,
-        confirm_enrolled : {
-          enrollee: {
-            firstname: '',
-            lastname: ''
-          }
+    dueAmount: 0,
+    dialog3: false,
+    balancesEdit: [],
+    examPeriod: "",
+    examPeriods: [
+      { id: 0, name: "Pre-test" },
+      { id: 1, name: "Prelim" },
+      { id: 2, name: "Midterm" },
+      { id: 3, name: "Final" }
+    ],
+    semester: "",
+    semesters: [
+      { id: 1, name: "First Semester" },
+      { id: 2, name: "Second Semester" }
+    ],
+    schoolYears: [],
+    schoolYear: "",
+    payment: {
+      balance_id: 0,
+      prefix: "",
+      receipt_no: "",
+      amount_given: 0,
+      amount_charge: 0,
+      change: 0,
+      confirm_enrolled: {
+        enrollee: {
+          firstname: "",
+          lastname: ""
         }
-      },
-      dialog2: false,
-      valid: false,
-      prefix: '00',
-      receipt_no: '',
-      balance_id: null,
-      page: 1, 
-      price: 0,
-      price2: 0,
-      dialog: false,
-      isInputActive: false,
-      paidAmount: '',
-      headers: [
+      }
+    },
+    dialog2: false,
+    valid: false,
+    prefix: "00",
+    receipt_no: "",
+    balance_id: null,
+    page: 1,
+    price: 0,
+    price2: 0,
+    dialog: false,
+    isInputActive: false,
+    paidAmount: "",
+    headers: [
       {
-        text: 'ID No.',
-        align: 'left',
+        text: "ID No.",
+        align: "left",
         sortable: false,
-        value: 'idno'
+        value: "idno"
       },
       {
-        text: 'OR|AR',
-        align: 'left',
+        text: "OR|AR",
+        align: "left",
         sortable: true,
-        value: 'or'
+        value: "or"
       },
       {
-        text: 'Name',
-        align: 'left',
+        text: "Name",
+        align: "left",
         sortable: false,
-        value: 'name'
+        value: "name"
       },
-      { text: 'Balance', value: 'balance', sortable: false  },
-      { text: 'Paid Amount', value: 'paidAmount', sortable: false  },
-      { text: 'Received Amount', value: 'givenAmount', sortable: false  },
-      { text: 'Change', value: 'change', sortable: false },
-      { text: 'Date', value: 'date', sortable: false },
-      { text: 'Action', value: 'action', sortable: false }
-      ],
-     
-    }),
+      { text: "Balance", value: "balance", sortable: false },
+      { text: "Paid Amount", value: "paidAmount", sortable: false },
+      { text: "Received Amount", value: "givenAmount", sortable: false },
+      { text: "Change", value: "change", sortable: false },
+      { text: "Date", value: "date", sortable: false },
+      { text: "Action", value: "action", sortable: false }
+    ]
+  }),
 
-    computed: {
-      paymentDate(){
-        return this.$store.getters.paymentDate
-      },
-      dueDate(){
-        return this.$store.getters.dueDate
-      },
-      balances: {
-        get(){
-          return this.$store.getters.balances
-        }
-        
-      },
-      confirmEnrolledPayment(){
-        return this.$store.getters.confirmEnrolledPayment
-      },
-      name(){
-        if (this.$store.getters.confirmEnrolledPayment != null) {
-          return this.confirmEnrolledPayment.enrollee.firstname + ' ' +this.confirmEnrolledPayment.enrollee.lastname + '-' + this.confirmEnrolledPayment.semester.name + ' ' + this.confirmEnrolledPayment.school_year.sy + ''
-        }
-
-      },
-      change(){
-
-        return  this.price2 -this.price
-      },
-        paymentsData(){
-         
-           let payments = this.$store.getters.payments.data
-
-           console.log(_.orderBy(payments, 'receipt_no', 'desc')) 
-           return _.orderBy(payments, 'receipt_no', 'desc')
-      },
-       payments(){
-           return this.$store.getters.payments
-      },
-
+  computed: {
+    paymentDate() {
+      return this.$store.getters.paymentDate;
     },
-
-    created () {
-      if ( Number.isInteger(this.confirmid)) {
-        this.dialog = true
-      }
-      this.allPayments()
-      
+    dueDate() {
+      return this.$store.getters.dueDate;
     },
-
-    methods: {
-      newPayment(confirmEnrolleeId){
-       let data = this
-         this.$http.get(window.base_api + '/confirm-enrolled/' + confirmEnrolleeId + '?token=' + localStorage.getItem('tokenKey'))
-                    .then(function(res){
-                        data.$store.dispatch('confirmEnrolledPayment', res.data.enrollee)
-                    })
-
-        this.$http.get(window.base_api + '/payments?confirmEnrolledId='+ confirmEnrolleeId +'&page=' + this.page + '&sortBy=' + this.arOr + '&token=' + localStorage.getItem('tokenKey'))
-        .then(function(res){
-            data.$store.dispatch('payments', res.data.payments);
-            data.receipt_no = parseInt(res.data.receipt_no) + 1;
-            if (res.data.confirmEnrolled == null){
-             data.$store.dispatch('balances', []);
-            }else{
-              
-               data.$store.dispatch('balances', res.data.confirmEnrolled.balances);
-            }
-        })
-
-        this.dialog = true
-
-      },
-      changeSort (column) {
-        this.pagination.sortBy = column
-        if ( this.pagination.descending == true) {
-          this.pagination.descending = false
-          this.arOr = true
-        } else {
-          this.pagination.descending = true
-          this.arOr = false
-        }
-        this.allPayments()
-      },
-      givenBlur(val){
-        this.givenAmount = val
-      },
-  
-      editItem (id) {
-        this.dialog2 = true
-        let data = this
-        this.$http.get(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey'))
-        .then(function(res){
-          data.payment = res.data.payment
-          data.$store.dispatch('paymentDate', res.data.payment.created_at.substring(0, 10));
-          data.balancesEdit = res.data.balances.balances
-        })
-      },
-      summary(id){
-        let data = this
-        this.$http.get(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey'))
-        .then(function(res){
-          data.payment = res.data.payment
-          data.balancesEdit = res.data.balances.balances
-          data.schoolYears = res.data.schoolYears
-        })
-        this.dialog3 = true
-
-      },
-      viewSummary(){
-        window.open(window.base_api + '/payments/view/summary?dueAmount=' + this.dueAmount + '&examPeriod=' + this.examPeriod + '&confirmEnrolledId=' + this.payment.confirm_enrollee_id + '&dueDate='+ this.dueDate + '&schoolYear=' + this.schoolYear +'&semester=' + this.semester +'&remarks=' + this.remarks + '&token='+ localStorage.getItem('tokenKey'));
-      },
-
-      summaryAll(confirmEnrolledId){
-        window.open(window.base_api + '/payments/all/summary?confirmEnrolledId=' + confirmEnrolledId + '&token='+ localStorage.getItem('tokenKey'));
-      },
-
-      update(){
-        var data = this
-        this.$http.put(window.base_api + '/payments/' + this.payment.id + '?token=' + localStorage.getItem('tokenKey'), {
-          payment: this.payment
-        })
-        .then(function(res){
-          data.dialog2 = false
-          data.allPayments()
-
-        })
-      },
-
-      deleteItem (id) {
-        var data = this
-        var z = confirm('Are you sure you want to delete this item?')
-        if (z === true) {
-          this.$http.delete(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey'))
-          .then(function(res){
-            data.allPayments()
-            data.$store.dispatch('snackbarText', 'Balance Deleted Successfully!')
-            data.$store.dispatch('snackbarColor', 'success')
-            data.$store.dispatch('snackbar', true)
-          })
-        }
-      },
-
-      close () {
-        this.dialog = false
-        this.dialog2 = false
-        this.dialog3 = false
-        
-      },
-      printReceipt(id){
-         window.open(window.base_api + '/payments/print/' + id + '?token=' + localStorage.getItem('tokenKey'));
-      },
-      savePrint() {
-        let data = this
-
-        if (this.$refs.form.validate()) {
-          this.$http.post(window.base_api + '/payments?&token=' + localStorage.getItem('tokenKey'),{
-           confirm_enrollee_id : this.confirmEnrolledPayment.id, 
-           amount_charge: this.price, 
-           amount_given: this.price2, 
-           change: this.change,
-           prefix: this.prefix,
-           receipt_no: this.receipt_no,
-           balance_id: this.balance_id,
-           created_at: this.paymentDate
-          }).then(function(res){
-              data.allPayments()
-               // window.open(window.base_api + '/payments/print/' + res.data.id + '?token=' + localStorage.getItem('tokenKey'));
-          })
-          this.dialog = false
-        }
-        
-      },
-      allPayments(){
-        let data = this
-        this.$http.get(window.base_api + '/payments?confirmEnrolledId='+ this.$route.params.id +'&page=' + this.page + '&sortBy=' + this.arOr + '&token=' + localStorage.getItem('tokenKey'))
-        .then(function(res){
-            data.$store.dispatch('payments', res.data.payments);
-            data.receipt_no = parseInt(res.data.receipt_no) + 1;
-            if (res.data.confirmEnrolled == null){
-             data.$store.dispatch('balances', []);
-            }else{
-              
-               data.$store.dispatch('balances', res.data.confirmEnrolled.balances);
-            }
-        })
-      },
-      deduct(){
-        var total = this.payment.amount_charge - this.payment.amount_given;
-        this.payment.change = total;
+    balances: {
+      get() {
+        return this.$store.getters.balances;
       }
     },
-    watch: {
-      page(val){
-        this.allPayments()
-      },
-      'payment.amount_charge': function(){
-        this.deduct()
-      },
-      'payment.amount_given': function(){
-        this.deduct()
-      },
+    confirmEnrolledPayment() {
+      return this.$store.getters.confirmEnrolledPayment;
+    },
+    name() {
+      if (this.$store.getters.confirmEnrolledPayment != null) {
+        return (
+          this.confirmEnrolledPayment.enrollee.firstname +
+          " " +
+          this.confirmEnrolledPayment.enrollee.lastname +
+          "-" +
+          this.confirmEnrolledPayment.semester.name +
+          " " +
+          this.confirmEnrolledPayment.school_year.sy +
+          ""
+        );
+      }
+    },
+    change() {
+      return this.price2 - this.price;
+    },
+    paymentsData() {
+      let payments = this.$store.getters.payments.data;
+
+      console.log(_.orderBy(payments, "receipt_no", "desc"));
+      return _.orderBy(payments, "receipt_no", "desc");
+    },
+    payments() {
+      return this.$store.getters.payments;
+    }
+  },
+
+  created() {
+    if (Number.isInteger(this.confirmid)) {
+      this.dialog = true;
+    }
+    this.allPayments();
+  },
+
+  methods: {
+    newPayment(confirmEnrolleeId) {
+      let data = this;
+      this.$http
+        .get(
+          window.base_api +
+            "/confirm-enrolled/" +
+            confirmEnrolleeId +
+            "?token=" +
+            localStorage.getItem("tokenKey")
+        )
+        .then(function(res) {
+          data.$store.dispatch("confirmEnrolledPayment", res.data.enrollee);
+        });
+
+      this.$http
+        .get(
+          window.base_api +
+            "/payments?confirmEnrolledId=" +
+            confirmEnrolleeId +
+            "&page=" +
+            this.page +
+            "&sortBy=" +
+            this.arOr +
+            "&token=" +
+            localStorage.getItem("tokenKey")
+        )
+        .then(function(res) {
+          data.$store.dispatch("payments", res.data.payments);
+          data.receipt_no = parseInt(res.data.receipt_no) + 1;
+          if (res.data.confirmEnrolled == null) {
+            data.$store.dispatch("balances", []);
+          } else {
+            data.$store.dispatch("balances", res.data.confirmEnrolled.balances);
+          }
+        });
+
+      this.dialog = true;
+    },
+    changeSort(column) {
+      this.pagination.sortBy = column;
+      if (this.pagination.descending == true) {
+        this.pagination.descending = false;
+        this.arOr = true;
+      } else {
+        this.pagination.descending = true;
+        this.arOr = false;
+      }
+      this.allPayments();
+    },
+    givenBlur(val) {
+      this.givenAmount = val;
+    },
+
+    editItem(id) {
+      this.dialog2 = true;
+      let data = this;
+      this.$http
+        .get(
+          window.base_api +
+            "/payments/" +
+            id +
+            "?token=" +
+            localStorage.getItem("tokenKey")
+        )
+        .then(function(res) {
+          data.payment = res.data.payment;
+          data.$store.dispatch(
+            "paymentDate",
+            res.data.payment.created_at.substring(0, 10)
+          );
+          data.balancesEdit = res.data.balances.balances;
+        });
+    },
+    summary(id) {
+      let data = this;
+      this.$http
+        .get(
+          window.base_api +
+            "/payments/" +
+            id +
+            "?token=" +
+            localStorage.getItem("tokenKey")
+        )
+        .then(function(res) {
+          data.payment = res.data.payment;
+          data.balancesEdit = res.data.balances.balances;
+          data.schoolYears = res.data.schoolYears;
+        });
+      this.dialog3 = true;
+    },
+    viewSummary() {
+      window.open(
+        window.base_api +
+          "/payments/view/summary?dueAmount=" +
+          this.dueAmount +
+          "&examPeriod=" +
+          this.examPeriod +
+          "&confirmEnrolledId=" +
+          this.payment.confirm_enrollee_id +
+          "&dueDate=" +
+          this.dueDate +
+          "&schoolYear=" +
+          this.schoolYear +
+          "&semester=" +
+          this.semester +
+          "&remarks=" +
+          this.remarks +
+          "&token=" +
+          localStorage.getItem("tokenKey")
+      );
+    },
+
+    summaryAll(confirmEnrolledId) {
+      window.open(
+        window.base_api +
+          "/payments/all/summary?confirmEnrolledId=" +
+          confirmEnrolledId +
+          "&token=" +
+          localStorage.getItem("tokenKey")
+      );
+    },
+
+    update() {
+      var data = this;
+      this.$http
+        .put(
+          window.base_api +
+            "/payments/" +
+            this.payment.id +
+            "?token=" +
+            localStorage.getItem("tokenKey"),
+          {
+            payment: this.payment
+          }
+        )
+        .then(function(res) {
+          data.dialog2 = false;
+          data.allPayments();
+        });
+    },
+
+    deleteItem(id) {
+      var data = this;
+      var z = confirm("Are you sure you want to delete this item?");
+      if (z === true) {
+        this.$http
+          .delete(
+            window.base_api +
+              "/payments/" +
+              id +
+              "?token=" +
+              localStorage.getItem("tokenKey")
+          )
+          .then(function(res) {
+            data.allPayments();
+            data.$store.dispatch(
+              "snackbarText",
+              "Balance Deleted Successfully!"
+            );
+            data.$store.dispatch("snackbarColor", "success");
+            data.$store.dispatch("snackbar", true);
+          });
+      }
+    },
+
+    close() {
+      this.dialog = false;
+      this.dialog2 = false;
+      this.dialog3 = false;
+    },
+    printReceipt(id) {
+      window.open(
+        window.base_api +
+          "/payments/print/" +
+          id +
+          "?token=" +
+          localStorage.getItem("tokenKey")
+      );
+    },
+    savePrint() {
+      let data = this;
+
+      if (this.$refs.form.validate()) {
+        this.$http
+          .post(
+            window.base_api +
+              "/payments?&token=" +
+              localStorage.getItem("tokenKey"),
+            {
+              confirm_enrollee_id: this.confirmEnrolledPayment.id,
+              amount_charge: this.price,
+              amount_given: this.price2,
+              change: this.change,
+              prefix: this.prefix,
+              receipt_no: this.receipt_no,
+              balance_id: this.balance_id,
+              created_at: this.paymentDate
+            }
+          )
+          .then(function(res) {
+            data.allPayments();
+            // window.open(window.base_api + '/payments/print/' + res.data.id + '?token=' + localStorage.getItem('tokenKey'));
+          });
+        this.dialog = false;
+      }
+    },
+    allPayments() {
+      let data = this;
+      this.$http
+        .get(
+          window.base_api +
+            "/payments?confirmEnrolledId=" +
+            this.$route.params.id +
+            "&page=" +
+            this.page +
+            "&sortBy=" +
+            this.arOr +
+            "&token=" +
+            localStorage.getItem("tokenKey")
+        )
+        .then(function(res) {
+          data.$store.dispatch("payments", res.data.payments);
+          data.receipt_no = parseInt(res.data.receipt_no) + 1;
+          if (res.data.confirmEnrolled == null) {
+            data.$store.dispatch("balances", []);
+          } else {
+            data.$store.dispatch("balances", res.data.confirmEnrolled.balances);
+          }
+        });
+    },
+    deduct() {
+      var total = this.payment.amount_charge - this.payment.amount_given;
+      this.payment.change = total;
+    }
+  },
+  watch: {
+    page(val) {
+      this.allPayments();
+    },
+    "payment.amount_charge": function() {
+      this.deduct();
+    },
+    "payment.amount_given": function() {
+      this.deduct();
     }
   }
+};
 </script>
 <style type="text/css" scoped>
-  table{
-    padding: 5px;
-    border-collapse: collapse;
-    
-  }
-  table tr th, table tr td{
-    border-bottom: 1px solid gray;
-    padding: 5px;
-  }
+table {
+  padding: 5px;
+  border-collapse: collapse;
+}
+table tr th,
+table tr td {
+  border-bottom: 1px solid gray;
+  padding: 5px;
+}
 
-  tr:hover{
-    background-color: #E1E1E1;
-  }
-
+tr:hover {
+  background-color: #e1e1e1;
+}
 </style>

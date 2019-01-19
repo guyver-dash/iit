@@ -31205,7 +31205,7 @@ exports.default = function (input) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36);
-module.exports = __webpack_require__(261);
+module.exports = __webpack_require__(259);
 
 
 /***/ }),
@@ -31228,9 +31228,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mixins_start_up_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_layouts_master_vue__ = __webpack_require__(209);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_layouts_master_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_layouts_master_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue2_filters__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue2_filters__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue2_filters___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_vue2_filters__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vue2_google_maps__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vue2_google_maps__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vue2_google_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_vue2_google_maps__);
 
 
@@ -31246,11 +31246,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var EventBus = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a();
 
-window.base_api = 'http://localhost/iit/public/api';
-window.base = 'http://localhost/iit/public';
+// window.base_api = 'http://localhost:8099/iit/public/api';
+// window.base = 'http://localhost:8099/iit/public/';
 
-// window.base_api = 'http://iitcebu.net/public/api';
-// window.base = 'http://iitcebu.net/public';
+
+window.base_api = 'http://iitcebu.net/public/api';
+window.base = 'http://iitcebu.net/public/';
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_vuetify___default.a);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_6__plugins_my_vue_plugin_js__["a" /* default */]);
@@ -36348,6 +36349,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -36774,6 +36798,85 @@ var render = function() {
         1
       ),
       _vm._v(" "),
+      _c("v-flex", { attrs: { xs12: "" } }, [
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "p",
+          { staticClass: "headline" },
+          [
+            _c("center", [
+              _vm._v(
+                "\n          Technology is everywhere and in every part of our culture. "
+              ),
+              _c("br"),
+              _vm._v(
+                " It affects how we live, work, play, and most importantly learn. \n          "
+              )
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "p",
+          { staticClass: "subheading" },
+          [
+            _c("center", [
+              _vm._v(
+                "\n          Together with technology, we at IIT enhance learning by providing well-rounded education through the following:\n          "
+              )
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("ul", { staticClass: "subheading pl-5 ml-5" }, [
+          _c("li", [
+            _vm._v("providing each student with hands-on computer experience")
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _vm._v(
+              "making available community classrooms where students see actual workplace and job"
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _vm._v(
+              "organizing life coaching, motivational sessions all year round"
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _vm._v(
+              "simulated sessions in job search activities like portfolio planning, construction and job interviews."
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "p",
+          { staticClass: "subheading" },
+          [
+            _c("center", [
+              _vm._v(
+                " Technology in the classroom and on campus can make a difference in Education if used properly.  "
+              ),
+              _c("br"),
+              _vm._v(
+                "It will prepare students for their future careers where it starts "
+              ),
+              _c("br"),
+              _c("h3", { staticClass: "headline" }, [_vm._v("HERE @IIT!")])
+            ])
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
       _c(
         "v-flex",
         { attrs: { xl6: "", lg6: "", md6: "", sm6: "", xs12: "" } },
@@ -36908,6 +37011,14 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_cards_school_img_vue__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_cards_school_img_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_cards_school_img_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37148,10 +37259,51 @@ var render = function() {
                 _vm._v("About the School")
               ]),
               _vm._v(" "),
-              _c("p", [
+              _c("p", { staticClass: "subheading" }, [
                 _vm._v(
-                  "We are a private Technical-Vocational Education and Training Center located at the A & J Building, A.C. Cortes Avenue, Mandaue City, Cebu, Philippines. We offer 2-year Associate courses and short-term programs.\n\n        We are registered under the Securities & Exchange Commission (SEC) under registration No.CS201533190. "
+                  "IIT is a private technical-vocational institution accredited by the "
+                ),
+                _c("strong", [
+                  _vm._v(
+                    " Technical Education Skills Development Authority (TESDA) "
+                  )
+                ]),
+                _vm._v(" and the "),
+                _c("strong", [_vm._v("Department of Education (DepEd) ")]),
+                _vm._v(
+                  " offering skills training in computer (handware and software), business office/clerical support and senior high school.\n        "
                 )
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "subheading" }, [
+                _vm._v(
+                  "\n          We train students the non-traditional way with the use of community classrooms, industry partners, on-the-job training and many more. "
+                ),
+                _c("br"),
+                _vm._v(
+                  "Among the requirements for graduation are mock interviews and career panels. "
+                ),
+                _c("br"),
+                _vm._v(
+                  "Needless to say, all students go through rigorous training in the preparation of "
+                ),
+                _c("strong", [
+                  _vm._v("portfolio and letters of introduction/application.")
+                ]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(
+                  " We are proud to say that not so many graduates have these opportunities before graduation.\n        "
+                )
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "subheading" }, [
+                _vm._v(
+                  "\n          It is our hope that you will send your youth to IIT to learn and be trained to be responsible professionals and constituents.\n\n          "
+                ),
+                _c("br"),
+                _vm._v("We are proud to be the skills academy."),
+                _c("strong", [_vm._v(" “Your new career starts here!”")])
               ])
             ]
           ),
@@ -37234,6 +37386,9 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_cards_students_img_vue__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_cards_students_img_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_cards_students_img_vue__);
+//
+//
+//
 //
 //
 //
@@ -37471,9 +37626,40 @@ var render = function() {
                 _vm._v("About the Students")
               ]),
               _vm._v(" "),
+              _c("p", { staticClass: "subheading" }, [
+                _vm._v("IIT students generally take interests in "),
+                _c("strong", [_vm._v("Information Technology (IT) ")]),
+                _vm._v(
+                  ".  Our students belong to the underprivileged to middle class segment of society.  Approximately 50% are working in full time and/or part time jobs."
+                )
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "subheading" }, [
+                _vm._v("We cultivate in our students the values of "),
+                _c("strong", [_vm._v("INNOVATIVENESS, INTEGRITY & TEAMWORK.")])
+              ]),
+              _vm._v(" "),
               _c("p", [
                 _vm._v(
-                  "Student responsibility occurs when students take an active role in their learning by recognizing they are accountable for their academic success. Student responsibility is demonstrated when students make choices and take actions which lead them toward their educational goals."
+                  "We at IIT understand the importance of creating a culture of innovation in classrooms thus, we don’t just prepare our senior high school students to be “college ready.” "
+                ),
+                _c("br"),
+                _vm._v(
+                  " They, together with post-secondary students are given a grounding on creativity, inventiveness to be “innovation ready.”  "
+                ),
+                _c("br"),
+                _vm._v(
+                  "Our instruction is geared toward producing graduates who "
+                ),
+                _c("strong", [
+                  _vm._v(
+                    "think critically and creatively, communicate effectively and collaborate."
+                  )
+                ]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(
+                  " Students are required to work cooperatively with classmates, with each other towards a shared purpose."
                 )
               ])
             ]
@@ -37999,6 +38185,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -38081,21 +38270,34 @@ var render = function() {
                   _c("h3", { staticClass: "headline" }, [
                     _vm._v("Intellisense Institute of Technology, Inc.")
                   ]),
-                  _vm._v("\n            Aspac Building, Guizo,\n            "),
-                  _c("br"),
-                  _vm._v(
-                    "\n            Mandaue City, Cebu, Phils. 6014\n            "
-                  ),
-                  _c("br"),
                   _vm._v(" "),
-                  _c("v-icon", [_vm._v("phone")]),
-                  _vm._v("  (032) 417-2412 "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("v-icon", [_vm._v("phone_iphone")]),
-                  _vm._v(" 0942-3421878|0923-2045056|0932-2012354\n          ")
-                ],
-                1
+                  _c(
+                    "p",
+                    { staticClass: "subheading" },
+                    [
+                      _vm._v("2F Aspac Bank Building\t\t"),
+                      _c("br"),
+                      _vm._v("\n            M. C. Briones Avenue, Guizo, "),
+                      _c("br"),
+                      _vm._v("\n            Mandaue City, Cebu, Phils. 6014 "),
+                      _c("br"),
+                      _vm._v(
+                        "\n            (Landmark:  Maguikay fly over, National Hiway)\n            "
+                      ),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("v-icon", [_vm._v("phone")]),
+                      _vm._v("  (032) 417-2412 "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("v-icon", [_vm._v("phone_iphone")]),
+                      _vm._v(" +63 942-3421878\n             ")
+                    ],
+                    1
+                  )
+                ]
               ),
               _vm._v(" "),
               _c("br")
@@ -49392,7 +49594,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\ntable[data-v-029065f8]{\n  padding: 5px;\n  border-collapse: collapse;\n}\ntable tr th[data-v-029065f8], table tr td[data-v-029065f8]{\n  border-bottom: 1px solid gray;\n  padding: 5px;\n}\ntr[data-v-029065f8]:hover{\n  background-color: #E1E1E1;\n}\n\n", ""]);
+exports.push([module.i, "\ntable[data-v-029065f8] {\r\n  padding: 5px;\r\n  border-collapse: collapse;\n}\ntable tr th[data-v-029065f8],\r\ntable tr td[data-v-029065f8] {\r\n  border-bottom: 1px solid gray;\r\n  padding: 5px;\n}\ntr[data-v-029065f8]:hover {\r\n  background-color: #e1e1e1;\n}\r\n", ""]);
 
 // exports
 
@@ -49698,70 +49900,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
-  props: ['confirmid'],
+  props: ["confirmid"],
   components: {
-    myCurrencyInput: __WEBPACK_IMPORTED_MODULE_0__components_currency_format_my_currency_input___default.a, dueDate: __WEBPACK_IMPORTED_MODULE_1__components_pickers_due_date___default.a, paymentDate: __WEBPACK_IMPORTED_MODULE_2__components_pickers_created_at___default.a, editPaymentDate: __WEBPACK_IMPORTED_MODULE_3__components_pickers_edit_payment_date___default.a
+    myCurrencyInput: __WEBPACK_IMPORTED_MODULE_0__components_currency_format_my_currency_input___default.a,
+    dueDate: __WEBPACK_IMPORTED_MODULE_1__components_pickers_due_date___default.a,
+    paymentDate: __WEBPACK_IMPORTED_MODULE_2__components_pickers_created_at___default.a,
+    editPaymentDate: __WEBPACK_IMPORTED_MODULE_3__components_pickers_edit_payment_date___default.a
   },
   data: function data() {
     return {
-      remarks: '',
+      remarks: "",
       arOr: true,
       pagination: {
-        sortBy: 'or',
+        sortBy: "or",
         descending: false
       },
       dueAmount: 0,
       dialog3: false,
       balancesEdit: [],
-      examPeriod: '',
-      examPeriods: [{ id: 0, name: 'Pre-test' }, { id: 1, name: 'Prelim' }, { id: 2, name: 'Midterm' }, { id: 3, name: 'Final' }],
-      semester: '',
-      semesters: [{ id: 1, name: 'First Semester' }, { id: 2, name: 'Second Semester' }],
+      examPeriod: "",
+      examPeriods: [{ id: 0, name: "Pre-test" }, { id: 1, name: "Prelim" }, { id: 2, name: "Midterm" }, { id: 3, name: "Final" }],
+      semester: "",
+      semesters: [{ id: 1, name: "First Semester" }, { id: 2, name: "Second Semester" }],
       schoolYears: [],
-      schoolYear: '',
+      schoolYear: "",
       payment: {
         balance_id: 0,
-        prefix: '',
-        receipt_no: '',
+        prefix: "",
+        receipt_no: "",
         amount_given: 0,
         amount_charge: 0,
         change: 0,
         confirm_enrolled: {
           enrollee: {
-            firstname: '',
-            lastname: ''
+            firstname: "",
+            lastname: ""
           }
         }
       },
       dialog2: false,
       valid: false,
-      prefix: '00',
-      receipt_no: '',
+      prefix: "00",
+      receipt_no: "",
       balance_id: null,
       page: 1,
       price: 0,
       price2: 0,
       dialog: false,
       isInputActive: false,
-      paidAmount: '',
+      paidAmount: "",
       headers: [{
-        text: 'ID No.',
-        align: 'left',
+        text: "ID No.",
+        align: "left",
         sortable: false,
-        value: 'idno'
+        value: "idno"
       }, {
-        text: 'OR|AR',
-        align: 'left',
+        text: "OR|AR",
+        align: "left",
         sortable: true,
-        value: 'or'
+        value: "or"
       }, {
-        text: 'Name',
-        align: 'left',
+        text: "Name",
+        align: "left",
         sortable: false,
-        value: 'name'
-      }, { text: 'Balance', value: 'balance', sortable: false }, { text: 'Paid Amount', value: 'paidAmount', sortable: false }, { text: 'Received Amount', value: 'givenAmount', sortable: false }, { text: 'Change', value: 'change', sortable: false }, { text: 'Date', value: 'date', sortable: false }, { text: 'Action', value: 'action', sortable: false }]
-
+        value: "name"
+      }, { text: "Balance", value: "balance", sortable: false }, { text: "Paid Amount", value: "paidAmount", sortable: false }, { text: "Received Amount", value: "givenAmount", sortable: false }, { text: "Change", value: "change", sortable: false }, { text: "Date", value: "date", sortable: false }, { text: "Action", value: "action", sortable: false }]
     };
   },
 
@@ -49783,19 +49986,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     name: function name() {
       if (this.$store.getters.confirmEnrolledPayment != null) {
-        return this.confirmEnrolledPayment.enrollee.firstname + ' ' + this.confirmEnrolledPayment.enrollee.lastname + '-' + this.confirmEnrolledPayment.semester.name + ' ' + this.confirmEnrolledPayment.school_year.sy + '';
+        return this.confirmEnrolledPayment.enrollee.firstname + " " + this.confirmEnrolledPayment.enrollee.lastname + "-" + this.confirmEnrolledPayment.semester.name + " " + this.confirmEnrolledPayment.school_year.sy + "";
       }
     },
     change: function change() {
-
       return this.price2 - this.price;
     },
     paymentsData: function paymentsData() {
-
       var payments = this.$store.getters.payments.data;
 
-      console.log(__WEBPACK_IMPORTED_MODULE_4_lodash___default.a.orderBy(payments, 'receipt_no', 'desc'));
-      return __WEBPACK_IMPORTED_MODULE_4_lodash___default.a.orderBy(payments, 'receipt_no', 'desc');
+      console.log(__WEBPACK_IMPORTED_MODULE_4_lodash___default.a.orderBy(payments, "receipt_no", "desc"));
+      return __WEBPACK_IMPORTED_MODULE_4_lodash___default.a.orderBy(payments, "receipt_no", "desc");
     },
     payments: function payments() {
       return this.$store.getters.payments;
@@ -49813,18 +50014,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     newPayment: function newPayment(confirmEnrolleeId) {
       var data = this;
-      this.$http.get(window.base_api + '/confirm-enrolled/' + confirmEnrolleeId + '?token=' + localStorage.getItem('tokenKey')).then(function (res) {
-        data.$store.dispatch('confirmEnrolledPayment', res.data.enrollee);
+      this.$http.get(window.base_api + "/confirm-enrolled/" + confirmEnrolleeId + "?token=" + localStorage.getItem("tokenKey")).then(function (res) {
+        data.$store.dispatch("confirmEnrolledPayment", res.data.enrollee);
       });
 
-      this.$http.get(window.base_api + '/payments?confirmEnrolledId=' + confirmEnrolleeId + '&page=' + this.page + '&sortBy=' + this.arOr + '&token=' + localStorage.getItem('tokenKey')).then(function (res) {
-        data.$store.dispatch('payments', res.data.payments);
+      this.$http.get(window.base_api + "/payments?confirmEnrolledId=" + confirmEnrolleeId + "&page=" + this.page + "&sortBy=" + this.arOr + "&token=" + localStorage.getItem("tokenKey")).then(function (res) {
+        data.$store.dispatch("payments", res.data.payments);
         data.receipt_no = parseInt(res.data.receipt_no) + 1;
         if (res.data.confirmEnrolled == null) {
-          data.$store.dispatch('balances', []);
+          data.$store.dispatch("balances", []);
         } else {
-
-          data.$store.dispatch('balances', res.data.confirmEnrolled.balances);
+          data.$store.dispatch("balances", res.data.confirmEnrolled.balances);
         }
       });
 
@@ -49847,15 +50047,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     editItem: function editItem(id) {
       this.dialog2 = true;
       var data = this;
-      this.$http.get(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey')).then(function (res) {
+      this.$http.get(window.base_api + "/payments/" + id + "?token=" + localStorage.getItem("tokenKey")).then(function (res) {
         data.payment = res.data.payment;
-        data.$store.dispatch('paymentDate', res.data.payment.created_at.substring(0, 10));
+        data.$store.dispatch("paymentDate", res.data.payment.created_at.substring(0, 10));
         data.balancesEdit = res.data.balances.balances;
       });
     },
     summary: function summary(id) {
       var data = this;
-      this.$http.get(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey')).then(function (res) {
+      this.$http.get(window.base_api + "/payments/" + id + "?token=" + localStorage.getItem("tokenKey")).then(function (res) {
         data.payment = res.data.payment;
         data.balancesEdit = res.data.balances.balances;
         data.schoolYears = res.data.schoolYears;
@@ -49863,14 +50063,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.dialog3 = true;
     },
     viewSummary: function viewSummary() {
-      window.open(window.base_api + '/payments/view/summary?dueAmount=' + this.dueAmount + '&examPeriod=' + this.examPeriod + '&confirmEnrolledId=' + this.payment.confirm_enrollee_id + '&dueDate=' + this.dueDate + '&schoolYear=' + this.schoolYear + '&semester=' + this.semester + '&remarks=' + this.remarks + '&token=' + localStorage.getItem('tokenKey'));
+      window.open(window.base_api + "/payments/view/summary?dueAmount=" + this.dueAmount + "&examPeriod=" + this.examPeriod + "&confirmEnrolledId=" + this.payment.confirm_enrollee_id + "&dueDate=" + this.dueDate + "&schoolYear=" + this.schoolYear + "&semester=" + this.semester + "&remarks=" + this.remarks + "&token=" + localStorage.getItem("tokenKey"));
     },
     summaryAll: function summaryAll(confirmEnrolledId) {
-      window.open(window.base_api + '/payments/all/summary?confirmEnrolledId=' + confirmEnrolledId + '&token=' + localStorage.getItem('tokenKey'));
+      window.open(window.base_api + "/payments/all/summary?confirmEnrolledId=" + confirmEnrolledId + "&token=" + localStorage.getItem("tokenKey"));
     },
     update: function update() {
       var data = this;
-      this.$http.put(window.base_api + '/payments/' + this.payment.id + '?token=' + localStorage.getItem('tokenKey'), {
+      this.$http.put(window.base_api + "/payments/" + this.payment.id + "?token=" + localStorage.getItem("tokenKey"), {
         payment: this.payment
       }).then(function (res) {
         data.dialog2 = false;
@@ -49879,13 +50079,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     deleteItem: function deleteItem(id) {
       var data = this;
-      var z = confirm('Are you sure you want to delete this item?');
+      var z = confirm("Are you sure you want to delete this item?");
       if (z === true) {
-        this.$http.delete(window.base_api + '/payments/' + id + '?token=' + localStorage.getItem('tokenKey')).then(function (res) {
+        this.$http.delete(window.base_api + "/payments/" + id + "?token=" + localStorage.getItem("tokenKey")).then(function (res) {
           data.allPayments();
-          data.$store.dispatch('snackbarText', 'Balance Deleted Successfully!');
-          data.$store.dispatch('snackbarColor', 'success');
-          data.$store.dispatch('snackbar', true);
+          data.$store.dispatch("snackbarText", "Balance Deleted Successfully!");
+          data.$store.dispatch("snackbarColor", "success");
+          data.$store.dispatch("snackbar", true);
         });
       }
     },
@@ -49895,13 +50095,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.dialog3 = false;
     },
     printReceipt: function printReceipt(id) {
-      window.open(window.base_api + '/payments/print/' + id + '?token=' + localStorage.getItem('tokenKey'));
+      window.open(window.base_api + "/payments/print/" + id + "?token=" + localStorage.getItem("tokenKey"));
     },
     savePrint: function savePrint() {
       var data = this;
 
       if (this.$refs.form.validate()) {
-        this.$http.post(window.base_api + '/payments?&token=' + localStorage.getItem('tokenKey'), {
+        this.$http.post(window.base_api + "/payments?&token=" + localStorage.getItem("tokenKey"), {
           confirm_enrollee_id: this.confirmEnrolledPayment.id,
           amount_charge: this.price,
           amount_given: this.price2,
@@ -49919,14 +50119,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     allPayments: function allPayments() {
       var data = this;
-      this.$http.get(window.base_api + '/payments?confirmEnrolledId=' + this.$route.params.id + '&page=' + this.page + '&sortBy=' + this.arOr + '&token=' + localStorage.getItem('tokenKey')).then(function (res) {
-        data.$store.dispatch('payments', res.data.payments);
+      this.$http.get(window.base_api + "/payments?confirmEnrolledId=" + this.$route.params.id + "&page=" + this.page + "&sortBy=" + this.arOr + "&token=" + localStorage.getItem("tokenKey")).then(function (res) {
+        data.$store.dispatch("payments", res.data.payments);
         data.receipt_no = parseInt(res.data.receipt_no) + 1;
         if (res.data.confirmEnrolled == null) {
-          data.$store.dispatch('balances', []);
+          data.$store.dispatch("balances", []);
         } else {
-
-          data.$store.dispatch('balances', res.data.confirmEnrolled.balances);
+          data.$store.dispatch("balances", res.data.confirmEnrolled.balances);
         }
       });
     },
@@ -49940,10 +50139,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.allPayments();
     },
 
-    'payment.amount_charge': function paymentAmount_charge() {
+    "payment.amount_charge": function paymentAmount_charge() {
       this.deduct();
     },
-    'payment.amount_given': function paymentAmount_given() {
+    "payment.amount_given": function paymentAmount_given() {
       this.deduct();
     }
   }
@@ -79101,7 +79300,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(210)
 /* template */
-var __vue_template__ = __webpack_require__(230)
+var __vue_template__ = __webpack_require__(228)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -79151,7 +79350,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_snackbar_snackbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_snackbar_snackbar_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_layouts_footer_vue__ = __webpack_require__(222);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_layouts_footer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_layouts_footer_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_dialog_loading_vue__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_dialog_loading_vue__ = __webpack_require__(225);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_dialog_loading_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_dialog_loading_vue__);
 //
 //
@@ -83357,12 +83556,175 @@ if (false) {
 }
 
 /***/ }),
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(226)
+/* template */
+var __vue_template__ = __webpack_require__(227)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\dialog\\loading.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-96952c82", Component.options)
+  } else {
+    hotAPI.reload("data-v-96952c82", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 226 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dialog: false
+    };
+  },
+
+  computed: {
+    loader: {
+      get: function get() {
+        return this.$store.getters.loader;
+      },
+      set: function set(val) {
+        this.$store.dispatch('loader', val);
+      }
+    }
+  },
+  watch: {
+    dialog: function dialog(val) {
+      var _this = this;
+
+      if (!val) return;
+
+      setTimeout(function () {
+        return _this.$store.dispatch('loader', val);
+      }, 4000);
+    }
+  }
+});
+
+/***/ }),
+/* 227 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "text-xs-center" },
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { "hide-overlay": "", persistent: "", width: "300" },
+          model: {
+            value: _vm.loader,
+            callback: function($$v) {
+              _vm.loader = $$v
+            },
+            expression: "loader"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            { attrs: { color: "purple darken-2", dark: "" } },
+            [
+              _c(
+                "v-card-text",
+                [
+                  _vm._v("\n        Loading...\n        "),
+                  _c("v-progress-linear", {
+                    staticClass: "mb-0",
+                    attrs: { indeterminate: "", color: "white" }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-96952c82", module.exports)
+  }
+}
+
+/***/ }),
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -83911,7 +84273,7 @@ if (false) {
 }
 
 /***/ }),
-/* 231 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -84600,7 +84962,7 @@ function pluralize (value) {
 });
 
 /***/ }),
-/* 232 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84621,43 +84983,43 @@ exports.gmapApi = gmapApi;
 
 var _manager = __webpack_require__(6);
 
-var _marker = __webpack_require__(233);
+var _marker = __webpack_require__(231);
 
 var _marker2 = _interopRequireDefault(_marker);
 
-var _polyline = __webpack_require__(234);
+var _polyline = __webpack_require__(232);
 
 var _polyline2 = _interopRequireDefault(_polyline);
 
-var _polygon = __webpack_require__(235);
+var _polygon = __webpack_require__(233);
 
 var _polygon2 = _interopRequireDefault(_polygon);
 
-var _circle = __webpack_require__(236);
+var _circle = __webpack_require__(234);
 
 var _circle2 = _interopRequireDefault(_circle);
 
-var _rectangle = __webpack_require__(237);
+var _rectangle = __webpack_require__(235);
 
 var _rectangle2 = _interopRequireDefault(_rectangle);
 
-var _infoWindow = __webpack_require__(238);
+var _infoWindow = __webpack_require__(236);
 
 var _infoWindow2 = _interopRequireDefault(_infoWindow);
 
-var _map = __webpack_require__(242);
+var _map = __webpack_require__(240);
 
 var _map2 = _interopRequireDefault(_map);
 
-var _streetViewPanorama = __webpack_require__(248);
+var _streetViewPanorama = __webpack_require__(246);
 
 var _streetViewPanorama2 = _interopRequireDefault(_streetViewPanorama);
 
-var _placeInput = __webpack_require__(254);
+var _placeInput = __webpack_require__(252);
 
 var _placeInput2 = _interopRequireDefault(_placeInput);
 
-var _autocomplete = __webpack_require__(257);
+var _autocomplete = __webpack_require__(255);
 
 var _autocomplete2 = _interopRequireDefault(_autocomplete);
 
@@ -84745,7 +85107,7 @@ function gmapApi() {
 }
 
 /***/ }),
-/* 233 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84889,7 +85251,7 @@ exports.default = (0, _mapElementFactory2.default)({
 });
 
 /***/ }),
-/* 234 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84982,7 +85344,7 @@ exports.default = (0, _mapElementFactory2.default)({
 });
 
 /***/ }),
-/* 235 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85125,7 +85487,7 @@ exports.default = (0, _mapElementFactory2.default)({
 });
 
 /***/ }),
-/* 236 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85177,7 +85539,7 @@ exports.default = (0, _mapElementFactory2.default)({
 });
 
 /***/ }),
-/* 237 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85224,15 +85586,15 @@ exports.default = (0, _mapElementFactory2.default)({
 });
 
 /***/ }),
-/* 238 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(239)
+var __vue_script__ = __webpack_require__(237)
 /* template */
-var __vue_template__ = __webpack_require__(241)
+var __vue_template__ = __webpack_require__(239)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -85271,7 +85633,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 239 */
+/* 237 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -85290,10 +85652,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ((function (x) {
   return x.default || x;
-})(__webpack_require__(240)));
+})(__webpack_require__(238)));
 
 /***/ }),
-/* 240 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85393,7 +85755,7 @@ exports.default = (0, _mapElementFactory2.default)({
 });
 
 /***/ }),
-/* 241 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -85413,19 +85775,19 @@ if (false) {
 }
 
 /***/ }),
-/* 242 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(243)
+  __webpack_require__(241)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(245)
+var __vue_script__ = __webpack_require__(243)
 /* template */
-var __vue_template__ = __webpack_require__(247)
+var __vue_template__ = __webpack_require__(245)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -85464,13 +85826,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 243 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(244);
+var content = __webpack_require__(242);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -85490,7 +85852,7 @@ if(false) {
 }
 
 /***/ }),
-/* 244 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -85504,7 +85866,7 @@ exports.push([module.i, "\n.vue-map-container {\n  position: relative;\n}\n.vue-
 
 
 /***/ }),
-/* 245 */
+/* 243 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -85522,10 +85884,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ((function (x) {
   return x.default || x;
-})(__webpack_require__(246)));
+})(__webpack_require__(244)));
 
 /***/ }),
-/* 246 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85718,7 +86080,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 247 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -85749,19 +86111,19 @@ if (false) {
 }
 
 /***/ }),
-/* 248 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(249)
+  __webpack_require__(247)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(251)
+var __vue_script__ = __webpack_require__(249)
 /* template */
-var __vue_template__ = __webpack_require__(253)
+var __vue_template__ = __webpack_require__(251)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -85800,13 +86162,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 249 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(250);
+var content = __webpack_require__(248);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -85826,7 +86188,7 @@ if(false) {
 }
 
 /***/ }),
-/* 250 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -85840,7 +86202,7 @@ exports.push([module.i, "\n.vue-street-view-pano-container {\n  position: relati
 
 
 /***/ }),
-/* 251 */
+/* 249 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -85855,10 +86217,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ((function (x) {
   return x.default || x;
-})(__webpack_require__(252)));
+})(__webpack_require__(250)));
 
 /***/ }),
-/* 252 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86027,7 +86389,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 253 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -86059,15 +86421,15 @@ if (false) {
 }
 
 /***/ }),
-/* 254 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(255)
+var __vue_script__ = __webpack_require__(253)
 /* template */
-var __vue_template__ = __webpack_require__(256)
+var __vue_template__ = __webpack_require__(254)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -86106,7 +86468,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 255 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86220,7 +86582,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 256 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -86248,15 +86610,15 @@ if (false) {
 }
 
 /***/ }),
-/* 257 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(258)
+var __vue_script__ = __webpack_require__(256)
 /* template */
-var __vue_template__ = __webpack_require__(260)
+var __vue_template__ = __webpack_require__(258)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -86295,7 +86657,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 258 */
+/* 256 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -86308,10 +86670,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ((function (x) {
   return x.default || x;
-})(__webpack_require__(259)));
+})(__webpack_require__(257)));
 
 /***/ }),
-/* 259 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86409,7 +86771,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 260 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -86433,181 +86795,10 @@ if (false) {
 }
 
 /***/ }),
-/* 261 */
+/* 259 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(266)
-/* template */
-var __vue_template__ = __webpack_require__(267)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\dialog\\loading.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-96952c82", Component.options)
-  } else {
-    hotAPI.reload("data-v-96952c82", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 266 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      dialog: false
-    };
-  },
-
-  computed: {
-    loader: {
-      get: function get() {
-        return this.$store.getters.loader;
-      },
-      set: function set(val) {
-        this.$store.dispatch('loader', val);
-      }
-    }
-  },
-  watch: {
-    dialog: function dialog(val) {
-      var _this = this;
-
-      if (!val) return;
-
-      setTimeout(function () {
-        return _this.$store.dispatch('loader', val);
-      }, 4000);
-    }
-  }
-});
-
-/***/ }),
-/* 267 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "text-xs-center" },
-    [
-      _c(
-        "v-dialog",
-        {
-          attrs: { "hide-overlay": "", persistent: "", width: "300" },
-          model: {
-            value: _vm.loader,
-            callback: function($$v) {
-              _vm.loader = $$v
-            },
-            expression: "loader"
-          }
-        },
-        [
-          _c(
-            "v-card",
-            { attrs: { color: "purple darken-2", dark: "" } },
-            [
-              _c(
-                "v-card-text",
-                [
-                  _vm._v("\n        Loading...\n        "),
-                  _c("v-progress-linear", {
-                    staticClass: "mb-0",
-                    attrs: { indeterminate: "", color: "white" }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-96952c82", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

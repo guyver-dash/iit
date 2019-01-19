@@ -6,12 +6,15 @@
           <div class="text-md-left text-lg-left text-xl-left text-sm-center text-xs-center">
 
           <h3 class="headline">Intellisense Institute of Technology, Inc.</h3>
-            Aspac Building, Guizo,
+            <p class="subheading">2F Aspac Bank Building		<br />
+            M. C. Briones Avenue, Guizo, <br />
+            Mandaue City, Cebu, Phils. 6014 <br />
+            (Landmark:  Maguikay fly over, National Hiway)
             <br />
-            Mandaue City, Cebu, Phils. 6014
             <br />
             <v-icon>phone</v-icon>  (032) 417-2412 <br />
-            <v-icon>phone_iphone</v-icon> 0942-3421878|0923-2045056|0932-2012354
+            <v-icon>phone_iphone</v-icon> +63 942-3421878
+             </p>
           </div>
           <br />
        </v-flex>

@@ -267,11 +267,13 @@ class PaymentController extends Controller
                 $query->where('school_year_id', $request->schoolYear);
             })->with(['confirmEnrolled.enrollee', 'confirmEnrolled', 'balance'])->first();
 
-        $payments = Payment::orWhere('confirm_enrollee_id', $request->confirmEnrolledId)
+        $payments = Payment::where('confirm_enrollee_id', $request->confirmEnrolledId)
             ->whereHas('confirmEnrolled', function($query) use ($request) {
                 $query->where('semester_id', $request->semester);
                 $query->where('school_year_id', $request->schoolYear);
             })->with(['confirmEnrolled.enrollee', 'balance.confirmEnrolled'])->orderBy('created_at', 'DESC')->get();
+        
+
         if ( count($payments) > 0) {
             
         $examPeriod = $request->examPeriod;

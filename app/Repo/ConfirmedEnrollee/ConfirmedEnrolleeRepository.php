@@ -27,7 +27,6 @@ class ConfirmedEnrolleeRepository extends BaseRepository implements ConfirmedEnr
     public function newEnrollee(){
 
         $request  = app()->make('request');
-        $this->update($request, $request['confirmedEnrolled']['id']);
         
         $confirmedEnrolled = $this->modelName->create([
                 'end_time' => $request['confirmedEnrolled']['end_time'],

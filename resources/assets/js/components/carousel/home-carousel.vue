@@ -5,6 +5,29 @@
 				    <v-carousel-item v-for="(item,i) in items" :src="item.src" :key="i"></v-carousel-item>
 				</v-carousel>
 		</v-flex>
+
+    <v-flex xs12>
+      <br />
+        <p class="headline">
+          <center>
+          Technology is everywhere and in every part of our culture. <br /> It affects how we live, work, play, and most importantly learn. 
+          </center>
+        </p>
+        <p class="subheading">
+          <center>
+          Together with technology, we at IIT enhance learning by providing well-rounded education through the following:
+          </center>
+        </p>
+        <ul class="subheading pl-5 ml-5">
+            <li>providing each student with hands-on computer experience</li>
+            <li>making available community classrooms where students see actual workplace and job</li>
+            <li>organizing life coaching, motivational sessions all year round</li>
+            <li>simulated sessions in job search activities like portfolio planning, construction and job interviews.</li>
+        </ul>
+        <br />
+        <p class="subheading"> <center> Technology in the classroom and on campus can make a difference in Education if used properly.  <br />It will prepare students for their future careers where it starts <br /><h3 class="headline">HERE @IIT!</h3> </center>
+        </p>
+		</v-flex>
 		<v-flex xl6 lg6 md6 sm6 xs12>
       <home-special v-bind:image="lecture3"  v-bind:title="'K12 READY!'"></home-special>
 			<home-desc v-bind:image="lecture1" v-bind:title="title1" v-bind:desc="desc1" v-bind:height="'300px'"></home-desc>
