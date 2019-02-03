@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "laravel-echo": "^1.4.0",
+        "node-sass": "^4.11.0",
         "pusher-js": "^4.2.2",
         "v-debounce": "github:vuejs-tips/v-debounce",
         "v-money": "github:vuejs-tips/v-money",
