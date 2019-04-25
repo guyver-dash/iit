@@ -27,7 +27,9 @@ export default {
         }
 
         var roles = window.localStorage.getItem('roles')
-
+        if (roles === null){
+            return;
+        }
         if (roles.includes('registrar')){
         	this.$store.dispatch('items', [
                 { icon: 'home', text: 'Home', to: '/' },

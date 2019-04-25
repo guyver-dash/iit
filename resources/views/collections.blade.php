@@ -22,6 +22,7 @@
         <th>Balance Name</th>
         <th>Paid Amount</th>
         <th>Date Paid</th>
+		<th>Remarks</th>
         <th>SU</th>
         <th>ID</th>
         <th>Old Balance</th>
@@ -52,6 +53,7 @@
                 <td></td>
                 <td>{{$tp->paid_amount}}</td>
                 <td>{{$tp->created_at}}</td>
+				 <td>{{$tp->remarks}}</td>
             </tr>
         @endforeach
     @endif

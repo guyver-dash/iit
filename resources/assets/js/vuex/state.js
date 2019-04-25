@@ -51,7 +51,7 @@ export const state = {
      },
      password: '',
      enrollees: [],
-     roles: [],
+     roles: ['default'],
      role: [],
      userLogin: false,
      registrationCompleted: false,

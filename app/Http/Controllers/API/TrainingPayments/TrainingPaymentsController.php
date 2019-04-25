@@ -21,7 +21,7 @@ class TrainingPaymentsController extends Controller
     public function index()
     {
         return response()->json([
-                'trainingPayments' => TrainingPayment::orderBy('created_at', 'DESC')->paginate(15)
+                'trainingPayments' => TrainingPayment::orderBy('receipt_no', 'DESC')->paginate(15)
             ]);
     }
 

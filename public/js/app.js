@@ -18339,7 +18339,9 @@ module.exports = g;
         }
 
         var roles = window.localStorage.getItem('roles');
-
+        if (roles === null) {
+            return;
+        }
         if (roles.includes('registrar')) {
             this.$store.dispatch('items', [{ icon: 'home', text: 'Home', to: '/' }, { icon: 'dashboard', text: 'Dashboard', to: '/dashboard' }, { icon: 'account_circle',
                 text: 'Profile',
@@ -31285,6 +31287,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_10_vue
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.prototype.$http = __WEBPACK_IMPORTED_MODULE_0_axios___default.a;
 
 var router = new __WEBPACK_IMPORTED_MODULE_2_vue_router__["a" /* default */]({
+  mode: 'history',
   routes: __WEBPACK_IMPORTED_MODULE_4__router_route_js__["a" /* routes */]
 });
 
@@ -36090,7 +36093,7 @@ var state = (_state = {
 
   },
   school_year_id: ''
-}), _defineProperty(_state, 'password', ''), _defineProperty(_state, 'enrollees', []), _defineProperty(_state, 'roles', []), _defineProperty(_state, 'role', []), _defineProperty(_state, 'userLogin', false), _defineProperty(_state, 'registrationCompleted', false), _defineProperty(_state, 'startTime', ''), _defineProperty(_state, 'endTime', ''), _defineProperty(_state, 'birthday', ''), _defineProperty(_state, 'siblings', null), _defineProperty(_state, 'snackbar', false), _defineProperty(_state, 'snackbarColor', ''), _defineProperty(_state, 'snackbarText', ''), _defineProperty(_state, 'provinces', []), _defineProperty(_state, 'dialogAdmission', false), _defineProperty(_state, 'schoolYears', []), _defineProperty(_state, 'yearLevel', []), _defineProperty(_state, 'semesters', []), _defineProperty(_state, 'schedules', []), _defineProperty(_state, 'courses', []), _defineProperty(_state, 'questions', []), _defineProperty(_state, 'requirements', []), _defineProperty(_state, 'policies', []), _defineProperty(_state, 'civilStatus', []), _defineProperty(_state, 'educAtt', []), _defineProperty(_state, 'items', [{ icon: 'home', text: 'Home', to: '/' }, {
+}), _defineProperty(_state, 'password', ''), _defineProperty(_state, 'enrollees', []), _defineProperty(_state, 'roles', ['default']), _defineProperty(_state, 'role', []), _defineProperty(_state, 'userLogin', false), _defineProperty(_state, 'registrationCompleted', false), _defineProperty(_state, 'startTime', ''), _defineProperty(_state, 'endTime', ''), _defineProperty(_state, 'birthday', ''), _defineProperty(_state, 'siblings', null), _defineProperty(_state, 'snackbar', false), _defineProperty(_state, 'snackbarColor', ''), _defineProperty(_state, 'snackbarText', ''), _defineProperty(_state, 'provinces', []), _defineProperty(_state, 'dialogAdmission', false), _defineProperty(_state, 'schoolYears', []), _defineProperty(_state, 'yearLevel', []), _defineProperty(_state, 'semesters', []), _defineProperty(_state, 'schedules', []), _defineProperty(_state, 'courses', []), _defineProperty(_state, 'questions', []), _defineProperty(_state, 'requirements', []), _defineProperty(_state, 'policies', []), _defineProperty(_state, 'civilStatus', []), _defineProperty(_state, 'educAtt', []), _defineProperty(_state, 'items', [{ icon: 'home', text: 'Home', to: '/' }, {
   icon: 'keyboard_arrow_up',
   'icon-alt': 'keyboard_arrow_down',
   text: 'About',
