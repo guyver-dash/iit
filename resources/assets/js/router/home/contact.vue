@@ -12,8 +12,8 @@
             (Landmark:  Maguikay fly over, National Hiway)
             <br />
             <br />
-            <v-icon>phone</v-icon>  (032) 417-2412 <br />
-            <v-icon>phone_iphone</v-icon> +63 942-3421878
+            <v-icon>phone</v-icon>  (032)-3165477 <br />
+            <v-icon>phone_iphone</v-icon> 0917-1166853
              </p>
           </div>
           <br />
@@ -24,7 +24,7 @@
               <div><h4>{{infoContent}} </h4></div>
               <div>{{ address }}</div>
               <div>{{ address2 }}</div>
-              <div>(032) 417-2412</div>
+              <div>(032)-3165477</div>
             </gmap-info-window>
 
             <gmap-marker :key="i" v-for="(m,i) in markers" :position="m.position" :clickable="true" @click="toggleInfoWindow(m,i)"></gmap-marker>

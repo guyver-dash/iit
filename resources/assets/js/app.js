@@ -15,7 +15,8 @@ export const EventBus = new Vue();
 // window.base_api = 'http://localhost:8099/iit/public/api';
 // window.base = 'http://localhost:8099/iit/public/';
 
-
+// window.base_api = 'http://localhost/iit/public/api';
+// window.base = 'http://localhost/iit/public/';
 window.base_api = 'http://iitcebu.net/public/api';
 window.base = 'http://iitcebu.net/public/';
 Vue.use(Vuetify)

@@ -122,7 +122,7 @@
     >
       <v-avatar size="100px" tile >
           <img
-            :src= "base + '/images/logos/logo.png'"
+            :src="base + '/images/logos/logo.png'"
             alt="Vuetify"
           >
        </v-avatar>
